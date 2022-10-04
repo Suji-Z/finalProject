@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html th:fragment="layout (content)" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="~{layout/sources :: link_script}"></div>
+<div th:replace="~{layout/header :: main_header}"></div>
+<div th:replace="${content}"></div>
+</body>
+<div th:replace="~{layout/footer :: footer}"></div>
+</html>
