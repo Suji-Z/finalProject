@@ -784,7 +784,7 @@ section {
 }
 
 .flight_Search_boxed span {
-    display: block;
+    //display: block;
     font-size: 12px;
     padding-top: 5px;
     text-overflow: ellipsis;
@@ -877,8 +877,6 @@ section {
 }
 
 .traveller-calulate-persons .label-select-btn {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     margin-bottom: 10px;
@@ -897,7 +895,8 @@ section {
 
 
 .traveller-calulate-persons .muiButton-label {
-    font-size: 14px;
+    font-size: 20px;
+    font-family: 'MICEGothic Bold';
 }
 
 .traveller-calulate-persons .cabin-selection h6 {
