@@ -12,27 +12,27 @@ public class EstimateController {
 
     @GetMapping("/list")
     public String estimate() {
-        return "layout/estimateList";
+        return "estimate/estimateList";
     }
 
     @GetMapping("/upload")
     public String insert() {
-        return "layout/estimateInquiry";
+        return "estimate/estimateInquiry";
     }
 
     @GetMapping("/inquiry/article")
     public String article() {
-        return "layout/estimateInquiryArticle";
+        return "estimate/estimateInquiryArticle";
     }
 
     @GetMapping("/reply")
     public String estimatereply() {
-        return "layout/estimateReply";
+        return "estimate/estimateReply";
     }
 
     @GetMapping("/reply/article")
     public String estimatereplyarticle() {
-        return "layout/estimateReplyArticle";
+        return "estimate/estimateReplyArticle";
     }
 
 }
