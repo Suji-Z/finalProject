@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>견적 문의</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><span><i class="fas fa-circle"></i></span> Package</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tour Booking Submission Areas -->
+<section id="tour_booking_submission" class="section_padding" style="margin: auto">
+  <div class="col-lg-8">
+  </div>
+  <div class="container" style="margin: auto; width: 70%">
+    <div class="row">
+
+      <div class="col-lg-13">
+        <div class="tou_booking_form_Wrapper">
+
+          <div class="booking_tour_form">
+            <h3 class="heading_theme">견적문의</h3>
+            <div class="tour_booking_form_box">
+              <div class="your_info_arae">
+                <ul>
+                  <li><span style="text-align:center;width: 14%">제목</span>
+                    <span>4인가족 제주도여행 문의드립니다. 강아지도 있어요.</span></li>
+                  <li><span style="text-align:center;width: 14%">여행 지역</span>
+                    <span>제주시 | 중문</span>
+                  </li>
+                  <li><span style="text-align:center;width: 14%">인원</span>
+                    <span>
+                      성인 &nbsp; 5 명 <br><br>
+                      아동 &nbsp; 1 명 <br><br>
+                      유아 &nbsp; 0 명 </span>
+                  </li>
+                  <li><span style="text-align:center;width: 14%">여행기간</span>
+                    <span>출발일 | 2022-11-08<br><br>
+                      도착일 | 2022-12-07</span>
+                  </li>
+                  <li><span style="text-align:center;width: 14%">가격</span>
+                    <span>501만원 이상</span></li>
+
+                  <li><span style="text-align:center;width: 14%">기타문의사항</span>
+                    <span>
+                      <textarea type="text" style="width: 650px;border: none; resize: none;background-color:white;" rows="8" disabled="disabled">강아지는 무료죠? 귀여우니까 오히려 할인 해주셔야하는거 아닌가요?
+                      </textarea>
+                    </span>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="common_form_submit">
+    <button class="btn btn_theme btn_md">수정</button>
+    <button class="btn btn_theme btn_md">삭제</button>
+  </div>
+
+</section>
+
+</body></html>
