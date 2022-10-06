@@ -784,7 +784,7 @@ section {
 }
 
 .flight_Search_boxed span {
-    display: block;
+    //display: block;
     font-size: 12px;
     padding-top: 5px;
     text-overflow: ellipsis;
@@ -877,8 +877,6 @@ section {
 }
 
 .traveller-calulate-persons .label-select-btn {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     margin-bottom: 10px;
@@ -897,7 +895,8 @@ section {
 
 
 .traveller-calulate-persons .muiButton-label {
-    font-size: 14px;
+    font-size: 20px;
+    font-family: 'MICEGothic Bold';
 }
 
 .traveller-calulate-persons .cabin-selection h6 {
@@ -2272,7 +2271,17 @@ section {
     background-size: cover;
 }
 
+#jeju_banner {
+    background-image: url('../img/banner/jeju.png');
+    padding: 200px 0 130px 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .common_bannner_text {
+    text-align: center;
+}
+.jeju_bannner_text {
     text-align: center;
 }
 
@@ -2473,6 +2482,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     display: flex;
     align-items: center;
     padding-top: 25px;
+}
+.valid_date_area2{
+    display: flex;
+    padding-top: 25px;
+    justify-content: flex-end;
 }
 
 .valid_date_area_one {
@@ -2852,7 +2866,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     justify-content: left;
     align-items: center;
     margin-bottom: 100px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .all_review_star {
@@ -2892,7 +2906,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .all_review_text p {
     padding-top: 15px;
-    font-size: 22px;
+    font-size: 15px;
+    font-family: Pretendard-Regular;
 }
 
 .all_review_small_img {
