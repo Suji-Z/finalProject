@@ -11,28 +11,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EstimateController {
 
     @GetMapping("/list")
-    public String estimate() {
-        return "layout/estimateList";
+    public String estimateList() {
+        return "estimate/estimateList";
     }
 
     @GetMapping("/upload")
-    public String insert() {
-        return "layout/estimateInquiry";
+    public String estimateInquiry() {
+        return "estimate/estimateInquiry";
     }
 
     @GetMapping("/inquiry/article")
-    public String article() {
-        return "layout/estimateInquiryArticle";
+    public String estimateInquiryArticle() {
+        return "estimate/estimateInquiryArticle";
     }
 
     @GetMapping("/reply")
-    public String estimatereply() {
-        return "layout/estimateReply";
+    public String estimateReply() {
+        return "estimate/estimateReply";
     }
 
     @GetMapping("/reply/article")
-    public String estimatereplyarticle() {
-        return "layout/estimateReplyArticle";
+    public String estimateReplyArticle() {
+        return "estimate/estimateReplyArticle";
     }
 
 }
