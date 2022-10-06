@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+<div class="preloader" style="display: none;">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>나의 리뷰</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
+              dashboard</a></li>
+            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Area -->
+<section id="dashboard_main_arae" class="section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+            <div class="dashboard_sidebar_user">
+                           
+                 <h2>My Page</h2>
+                           
+                  </div>
+
+                      <div class="dashboard_menu_area">
+                         <ul>
+                                
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">내 정보 수정</a></li>
+                                            <li><a href="flight-booking.html">회원 탈퇴</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">예약내역</a></li>
+                                            <li><a href="flight-booking.html">취소내역</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">여행 1:1 문의</a></li>
+                                            <li><a href="flight-booking.html">개선/건의하기</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                
+                                <li><a href="dashboard.html"><b>마일리지</b></a></li>
+                                <li><a href="dashboard.html"><b>할인쿠폰</b></a></li>
+                                
+                               
+                            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8-sally">
+        <div class="dashboard_common_table">
+          <h3>나의 여행후기</h3>
+          <div class="table-responsive-lg table_common_area">
+            <table class="table">
+              <thead>
+              <tr>
+                <th width="130">예약번호</th>
+                <th width="150">상품명</th>
+                <th width="200">제목</th>
+                <th width="100">등록일</th>
+             
+
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>01</td>
+                <td>제주 어쩌구</td>
+                <td>너무너무 만족했습니다!!!!</td>
+                <td>2022-09-25</td>
+              
+
+            
+              </tbody>
+            </table>
+          </div>
+         
+        </div>
+          <br/><br/><br/>
+          
+          <div class="others-options d-flex align-items-center">
+                                <div class="option-item">
+                                    <a href="#" class="search-box">
+                                        </a>
+                                </div>
+                                
+                            </div>
+          <div class="search-overlay">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="search-overlay-layer"></div>
+                <div class="search-overlay-layer"></div>
+                <div class="search-overlay-layer"></div>
+                <div class="search-overlay-close">
+                    <span class="search-overlay-close-line"></span>
+                    <span class="search-overlay-close-line"></span>
+                </div>
+                <div class="search-overlay-form">
+                    <form>
+                        <div class="dashboard_common_table">
+          <h3>나의 리뷰</h3>
+          <div class="table-responsive-lg table_common_area">
+            <table class="table">
+              <thead>
+              <tr>
+                <th width="130">예약번호</th>
+                <th width="150">상품명</th>
+                <th width="200">제목</th>
+                <th width="100">등록일</th>
+             
+
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>01</td>
+                <td><a href="packagedetail.html"> 제주 어쩌구</td></a>
+                <td>너무너무 만족했습니다!!!!</td>
+                <td>2022-09-25</td>
+              
+
+            
+              </tbody>
+            </table>
+          </div>
+         
+        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+          
+          <div class="option-item">
+                                    <a href="#" class="search-box"><i class="fas fa-search"></i></a>
+                                </div>
+
+          
+          
+          <div class="faqs_item_wrapper">
+                                 <div class="dashboard_common_table">
+                                     <h3>나의 리뷰</h3>
+                                <div class="faqs_main_item">
+                                    
+                                    </div>
+                                     <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingThree">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                    aria-expanded="false" aria-controls="collapseThree">
+                                                   <p>정말 재미있었어요!</p>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p>|</p>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p>제주 어쩌구</p>
+                                                     &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p>|</p>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    
+                                                
+                                    
+                                        
+                                        <div class="review_star_all">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                                    
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p>|</p>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p>2022-09-25</p>
+                                   
+                                </button>
+                                            </h2>
+                                            <div id="collapseThree" class="accordion-collapse collapse"
+                                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+  <p>" 너무 일정이 빡빡해요ㅠㅠㅠ 자유시간 좀 더주세요ㅠ"</p>
+                                                    <br/>
+                                                    <a href="review_Jeju_List.html">상품 바로가기 <i class="fas fa-arrow-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+        <div class="pagination_area">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">«</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">»</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+          </div>
+    </div>
+  </div>
+</section>
+
+
+</body></html>
