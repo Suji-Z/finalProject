@@ -21,7 +21,7 @@
                     <div class="common_bannner_text">
                         <h2>회원가입</h2>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><span><i class="fas fa-circle"></i></span> Join</li>
                         </ul>
                     </div>
@@ -43,25 +43,31 @@
                         <div class="booking_tour_form" >
                             <h3 class="heading_theme">회원가입</h3>
                             <div class="tour_booking_form_box">
+
+         <form th:action="@{/join}" th:object="${memberCreate}" method="post">
               <div class="your_info_arae">
                 <ul>
-                  <li>
+                  <li  style="border-bottom-color: white">
+
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                    <span style="text-align:center;">이메일</span>
+                    <label style="text-align:center;" th:for="email">이메일</label>
                     </div>
-                    <div class="form-group col-lg-4">
-                    <input type="text" class="shform-control" name="" style="border-radius: 3px;font-size: 10pt" placeholder="이메일을 입력해주세요">
-                    </div>
-                    <div class="form-group col-lg-3">
-                           <select class="form-select" aria-label="Default select example" style="height: 35px;font-size: 10pt">
-                                <option value="naver">@naver.com</option>
-                                <option value="daum">@hanmail.net</option>
-                                <option value="google">@google.com</option>
-                           </select>
-                      </div> &nbsp;&nbsp;
+                    <div class="form-group col-lg-7">
+                    <input type="email" class="shform-control" th:field="*{email}" style="border-radius: 3px;font-size: 10pt" placeholder="이메일을 입력해주세요(예: abc123@naver.com)">
+                    </div>&nbsp;&nbsp;
+
                       <div class="">
-                        <button class="btn btn_theme" style="height: 35px;font-size: 11pt">중복확인</button>
-                    </div>
+                        <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" th:onclick="emailCheck()">중복확인</button>
+                      </div>
+
+                    <li style="margin-top: -30px">
+                        <div class="col-lg-2">
+                        </div>
+                        <div>
+                        <span id="emailAvailable" class="valid-feedback" style="display: none"></span><span id="emailNotAvailable" class="invalid-feedback" style="display: none"></span>
+                        </div>
+                    </li>
+
                   </li>
                     
                 <li>
@@ -69,7 +75,7 @@
                       <span style="text-align:center;">비밀번호</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" name="" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
+                      <input type="text" class="shform-control" th:field="*{password1}" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
                     </div>
                   </li>
                    
@@ -78,7 +84,7 @@
                       <span style="text-align:center;">비밀번호<br/>재확인</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" name="" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
+                      <input type="text" class="shform-control" th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
                     </div>
                   </li>
                     
@@ -87,7 +93,7 @@
                       <span style="text-align:center;">이름</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" name="" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
+                      <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
                     </div>
                   </li>
                    
@@ -96,7 +102,7 @@
                       <span style="text-align:center;">연락처</span>
                     </div>
                     <div class="form-group col-lg-5">
-                      <input type="text" class="shform-control" name="" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
+                      <input type="text" class="shform-control" th:field="*{phone_num}" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
                     </div>&nbsp;&nbsp;
                     <div class="">
                     <button class="btn btn_theme" style="height: 35px;font-size: 11pt">인증번호 받기</button>
@@ -118,7 +124,7 @@
                       <span style="text-align:center;">생년월일</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" name="" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
+                      <input type="text" class="shform-control" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
                     </div>
                   </li>
                  
@@ -167,21 +173,24 @@
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <span style="text-align:center;">선호테마</span>
                     </div>
-                    
-                    <div>
-                      <input type="checkbox">&nbsp;힐링&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <input type="checkbox">&nbsp;액티비티&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <div class="col-lg-10">
+                      <input type="checkbox">&nbsp;힐링
+                      <input type="checkbox">&nbsp;액티비티
                       <input type="checkbox">&nbsp;골프
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <input type="checkbox">&nbsp;호캉스
-                        <br/>
-                      <input type="checkbox">&nbsp;가족여행&nbsp;
-                      <input type="checkbox">&nbsp;식도락여행&nbsp;&nbsp;
-                      <input type="checkbox">&nbsp;문화/예술&nbsp;
-                      <input type="checkbox">&nbsp;애견동반<br/>
-                        <span style="margin: auto"><br/>최대 3개까지 선택 가능합니다.</span>
-                    </div>
+                     </div>
                   </li>
+                    <li>
+                        <div class="col-lg-2"></div>
+
+                      <input type="checkbox">&nbsp;가족여행
+                      <input type="checkbox">&nbsp;식도락여행
+                      <input type="checkbox">&nbsp;문화/예술
+                      <input type="checkbox">&nbsp;애견동반
+
+                    </li>
+                        <span style="margin: auto"><br/>최대 3개까지 선택 가능합니다.</span>
 
 
                 </ul>
@@ -194,9 +203,9 @@
             </div>
         </div>
         <div class="common_form_submit">
-            <button class="btn btn_theme btn_md">가입하기</button>
+            <button class="btn btn_theme btn_md" type="submit">가입하기</button>
         </div>
-
+        </form>
     </section>
 
 
