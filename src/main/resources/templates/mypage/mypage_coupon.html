@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<!-- preloader Area -->
+<div class="preloader" style="display: none;">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>내 쿠폰함</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
+              dashboard</a></li>
+            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Area -->
+<section id="dashboard_main_arae" class="section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+            <div class="dashboard_sidebar_user">
+                           
+                            <h2>My Page</h2>
+                           
+                        </div>
+
+          <div class="dashboard_menu_area">
+             <ul>
+                                
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">내 정보 수정</a></li>
+                                            <li><a href="flight-booking.html">회원 탈퇴</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">예약내역</a></li>
+                                            <li><a href="flight-booking.html">취소내역</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">여행 1:1 문의</a></li>
+                                            <li><a href="flight-booking.html">개선/건의하기</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                
+                                <li><a href="dashboard.html"><b>마일리지</b></a></li>
+                                <li><a href="dashboard.html"  class="active" ><b>할인쿠폰</b></a></li>
+                                
+                               
+                            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8-sally">
+        <div class="dashboard_common_table">
+         <div>
+            <h3>내 쿠폰함</h3>
+          <div class="table-responsive-lg table_common_area">
+            <table class="table">
+              <thead>
+              <tr>
+                
+                <th width="680">쿠폰명</th>
+                <th width="155">할인액/율</th>
+                <th width="225">쿠폰 유효기간</th>
+               
+                
+
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>웰컴쿠폰(신규회원 가입)</td>
+                <td align="center">10%</td>
+                <td>2022-12-31</td>
+               
+
+              </tr>
+                  
+             
+              </tbody>
+            </table>
+          </div>
+             </div>
+            
+         
+        </div>
+          
+          <br/><br/><br/>
+          <div>
+          <div class="dashboard_common_table">
+             <h3>이용안내</h3>
+              <br/>
+                    <span style="font-size: 20px">
+                    <ol><li>ㅇㅇ투어 홈페이지에서 예약/결제시에만 사용이 가능합니다.</li>
+                        <li>사용 조건이 상이할 수 있으므로, 반드시 쿠폰 상세 조건을 확인 후 이용하시기 바랍니다.</li>
+                    <li>예약/결제시 예약자 본인이 직접 선택하여 적용 가능합니다. (담당자 적용 불가)</li>
+                    <li>쿠폰은 어떠한 경우에도 금전적으로 환산하거나 타인에게 유상 또는 무상으로 양도할 수 없습니다.</li>
+                    <li>유효기간이 만료된 쿠폰은 자동 소멸 되며 원복 되지 않습니다.</li>
+
+                    <li>쿠폰 변경/취소/신규적용을 원하실 경우, 기존 예약건을 취소한 후 재예약을 진행해주시기 바랍니다.</li>
+                    <li>구매에 사용된 쿠폰은 취소 및 환불 시 원복 되지 않습니다.</li>
+                    </ol></span>
+        </div>
+       </div>
+      </div>
+        
+        
+    </div>
+  </div>
+</section>
+
+
+
+</body></html>
