@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+<div class="preloader" style="display: none;">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>My Page</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
+              dashboard</a></li>
+            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Area -->
+<section id="dashboard_main_arae" class="section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+            <div class="dashboard_sidebar_user">
+                           
+                            <h2>My Page</h2>
+                           
+                        </div>
+
+          <div class="dashboard_menu_area">
+             <ul>
+                                
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">내 정보 수정</a></li>
+                                            <li><a href="flight-booking.html">회원 탈퇴</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">예약내역</a></li>
+                                            <li><a href="flight-booking.html">취소내역</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">여행 1:1 문의</a></li>
+                                            <li><a href="flight-booking.html">개선/건의하기</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                
+                                <li><a href="dashboard.html"><b>마일리지</b></a></li>
+                                <li><a href="dashboard.html"><b>할인쿠폰</b></a></li>
+                                
+                               
+                            </ul>
+                  </div>
+                </div>
+              </div>
+      <div class="col-lg-8-sally">
+          <div class="col-lg-12" >
+              <br/><br/>
+              <div><h2>안녕하세요, ㅇㅇ투어 ㅇㅇ 님!</h2></div>
+              <br/><br/>
+                    <div class="counter_area_wrapper" >
+                       
+                        <div class="row" >
+                            
+                            <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
+                               <div class="counter_item">
+                                    <img src="assets/img/icon/user.png" alt="icon">
+                                    <h3 class="counter"></h3>
+                                    <br/>
+                                   <a href="mypage_profileUpdate.html"> <h4>My profile</h4></a>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
+                                <div class="counter_item">
+                                    <img src="assets/img/icon/bank.png" alt="icon">
+                                    <h3 class="counter"></h3>
+                                    <br/>
+                                    <a href="mypage_coupon.html"> <h4><b>내 쿠폰</b></h4></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
+                                <div class="counter_item">
+                                    <img src="assets/img/icon/world-map.png" alt="icon">
+                                    <h3 class="counter"></h3>
+                                    <br/>
+                                    <a href="mypage_point.html"><h4><b>내 포인트</b></h4></a> 
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
+                                <div class="counter_item">
+                                    <img src="assets/img/icon/calander.png" alt="icon">
+                                    <h3 class="counter"></h3>
+                                    <br/>
+                                    <a href="mypage_q&a_list.html"><h4><b>문의내역</b></h4></a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          <br/><br/><br/>
+          <div>
+        <div class="dashboard_common_table">
+          <section id="contact_main_arae" class="section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="section_heading_center">
+                        <h2>My Page</h2>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+               
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div class="contact_boxed">
+                        <h6></h6>
+                         <h3><a href="!#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">예약내역</a></h3>
+                        <br/>
+                       <div align="center">
+                        <li>
+                            <span>예약 내역</span>
+                            &nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                        <li>
+                            <span>취소 내역</span>
+                             &nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                           </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div class="contact_boxed">
+                        <h6></h6>
+                        <h3><a href="!#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">문의내역</a></h3>
+                        <br/>
+                       <div align="center">
+                        <li>
+                            <span>여행 문의(Q&A)</span>
+                             &nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                        <li>
+                            <span>고객의 소리</span>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                            <li>
+                            <span>견적 문의</span>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                           </div>
+                        
+                      
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div class="contact_boxed">
+                        <h6></h6>
+                        <h3><a href="!#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">참여내역</a></h3>
+                        <br/>
+                       <div align="center">
+                        <li>
+                            <span>나의 여행후기</span>
+                             &nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                        <li>
+                            <span>나의&nbsp;&nbsp;&nbsp;&nbsp;리뷰</span>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>0건</span>
+                        
+                        </li>
+                           </div>
+                        
+                       
+                    </div>
+                </div>
+               
+            </div>
+            
+        </div>
+    </section>
+            
+            
+        </div>
+              </div>
+          <br/><br/><br/>
+          <hr/>
+          <br/><br/>
+          <div>
+                <div class="container">
+            <!-- Section Heading -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="section_heading_center">
+                        <h2>Wish List</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="left_side_search_area">
+                        
+                        
+                        
+                       
+                    </div>
+                </div>
+<!-- 위시리스트 반복 -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="theme_common_box_two img_hover">
+                                <div class="theme_two_box_img">
+                                    <div class="heart_destinations">
+                        <i class="fas fa-heart"></i>
+                      </div>
+                                    <a href="tour-details.html"><img src="assets/img/tab-img/hotel1.png" alt="img"></a>
+                                   
+                                </div>
+                                <div class="theme_two_box_content">
+                                    <h4><a href="tour-details.html">제주도 우도 어쩌구</a></h4>
+                                    <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                            class="review_count">(1214
+                                            reviewes)</span></p>
+                                    <h3>$99.00 <span>Price starts from</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                
+<!--위시리스트 반복 끝 -->
+                
+            </div>
+                    <br/><br/><br/><br/>
+                <hr/>
+        </div>
+          </div>
+          
+          <br/><br/><br/>
+          <div>
+          
+              
+        </div>
+              </div>
+          
+          
+       
+      </div>
+        
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+    <div class="preloader">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Banner Area -->
+    <section id="common_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="common_bannner_text">
+                        <h2>Contact</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><span><i class="fas fa-circle"></i></span>Contact</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Area -->
+<section id="dashboard_main_arae" class="section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+            <div class="dashboard_sidebar_user">
+                           
+                            <h2>My Page</h2>
+                           
+                        </div>
+
+          <div class="dashboard_menu_area">
+             <ul>
+                                
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">내 정보 수정</a></li>
+                                            <li><a href="flight-booking.html">회원 탈퇴</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">예약내역</a></li>
+                                            <li><a href="flight-booking.html">취소내역</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">여행 1:1 문의</a></li>
+                                            <li><a href="flight-booking.html">개선/건의하기</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                
+                                <li><a href="dashboard.html"><b>마일리지</b></a></li>
+                                <li><a href="dashboard.html"><b>할인쿠폰</b></a></li>
+                                
+                               
+                            </ul>
+          </div>
+        </div>
+      </div>
+                     <div class="col-lg-8-sally">
+                        <div class="section_heading_center">
+                            <h2>회원탈퇴</h2>
+                        </div>
+                        <div class="contact_form">
+                            <form action="!#" id="contact_form_content">
+                                <div class="row">
+                                   
+                                    <div class="col-lg-12">
+                                        <div class="form-group" align="center" >
+                                            <h3><b>회원님 ㅇㅇ투어 서비스를 이용하시는데 불편함이 있으셨나요?</b></h3><br/>
+                                            <div align="center">
+                                            <h5>ㅇㅇ투어에서 발송하는 SMS & 메일 수신거부는 ‘마이페이지 > 개인정보 수정’ 에서 확인하세요.<br/>
+                                            이용 불편 및 각종 문의 사항은 고객센터로 문의 주시면 성심 성의껏 답변 드리겠습니다.</h5> </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </form>
+                        </div>
+                        <br/><br/>
+                        <section id="common_author_area" class="">
+        
+            
+               
+                    <div class="common_author_boxed">
+                        <div class="common_author_heading">
+                            <h3><b>안내사항</b></h3>
+                           
+                        </div>
+                        <div class="common_author_form">
+                            <form action="#" id="main_author_form">
+                                <div class="form-group">
+                                     <div align="left">  <h4>
+                                        1. ‘전자상거래 등에서의 소비자 보호에 관한 법률’ 에 따라 계약 또는 청약철회에 관한 기록, 대금결제 및 재화 등의 공급에 관한
+                                        기록은 5년, 소비자의 불만 또는 분챙처리에 관한 기록은 3년 동안 보존됩니다.<br/><br/>
+                                        2. 회원탈퇴 후 ㅇㅇ투어 서비스에 입력하신 상품문의 및 후기 등은 삭제되지 않으며, 회원정보 삭제로 인해 작성자 본인을 확인할 수 없어 편집 및 삭제 처리가 원천적으로 불가능 합니다.<br/>
+                                        3. 상품문의 및 후기 삭제를 원하시는 경우에는 먼저 해당 게시물을 삭제하신 후 탈퇴를 신청하시기 바랍니다.<br/><br/>
+                                        4. 회원탈퇴 후 모든 개인정보는 개인정보 처리방침에 의거하여 삭제됩니다.<br/><br/>
+                                        5. 회원탈퇴 후 포인트는 전액 소멸되며 이후 재가입하셔도 복구하실 수 없습니다.<br/><br/>
+                                        6. 이미 결제가 완료된 건은 탈퇴로 취소되지 않습니다.
+                                         </h4></div>
+                                    
+                                    
+                                </div>
+                                
+                            </form>
+                        </div>
+                        
+                        
+                    </div>
+                            <div class="form-check write_spical_check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
+                                <label class="form-check-label" for="flexCheckDefaultf1">
+                                    <span class="main_spical_check">
+                                        <span><h4>위 내용을 모두 확인하였으며, 동의합니다.</h4></span>
+                                    </span>
+                                </label>
+                            </div>
+               
+       
+   <br/><br/>
+                            <div>
+                               
+                            </div>
+                            
+                            <div align="center">
+                                <h3><b>'탈퇴하기'를 누르면 즉시 탈퇴</b>가 처리되며<br/>
+                                같은 아이디로 재가입 하더라도 기존 정보 복구는 불가능합니다.<br/>
+                                포인트도 전액 소멸되므로 다시 한번 확인해주세요</h3>
+                               <br/>
+                            </div>
+                         <div class="col-lg-12" align="center">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn_theme btn_md">탈퇴하기</button>&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn btn_theme btn_md">취소하기</button>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+</body>
+
+</html>
