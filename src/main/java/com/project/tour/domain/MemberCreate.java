@@ -10,11 +10,13 @@ import javax.validation.constraints.Size;
 @Getter @Setter
 public class MemberCreate {
 
-    @Email
+    @Email(message = "올바른 이메일 형식이 아닙니다.")
     @NotEmpty(message = "필수 입력 항목 입니다.")
     private String email;
 
     @NotEmpty(message = "필수 입력 항목 입니다.")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$",
+            message = "비밀번호는 영문 대소문자,숫자,특수문자를 1개 이상 포함한 8~16자리수로 입력해주세요. ")
     private String password1;
 
     @NotEmpty(message = "필수 입력 항목 입니다.")

@@ -73,7 +73,7 @@
                     
                 <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">비밀번호</span>
+                      <label style="text-align:center;" th:for="password1">비밀번호</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{password1}" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
@@ -82,7 +82,7 @@
                    
                    <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">비밀번호<br/>재확인</span>
+                      <label style="text-align:center;" th:for="password2">비밀번호<br/>재확인</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
@@ -91,7 +91,7 @@
                     
                 <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">이름</span>
+                      <label th:for="name" style="text-align:center;">이름</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
@@ -100,7 +100,7 @@
                    
                     <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">연락처</span>
+                      <label th:for="phone_num" style="text-align:center;">연락처</label>
                     </div>
                     <div class="form-group col-lg-5">
                       <input type="text" class="shform-control" th:field="*{phone_num}" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
@@ -122,7 +122,7 @@
                     
                     <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">생년월일</span>
+                      <label th:for="birth" style="text-align:center;">생년월일</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
