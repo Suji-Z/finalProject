@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<!-- Common Banner Area -->
+<section id="common_banner" style="background-image: url('/assets/img/banner/abroad.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="common_bannner_text">
+                    <h2>Explore the evergreen forest</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><span><i class="fas fa-circle"></i></span><a href="tour-search.html">Tours</a></li>
+                        <li><span><i class="fas fa-circle"></i></span> Tours Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tour Search Areas -->
+<section id="tour_details_main" class="section_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="tour_details_leftside_wrapper">
+                    <div class="tour_details_heading_wrapper">
+                        <div class="tour_details_top_heading">
+                            <h2>제주여행 너무 좋고요 네네네 좋습니다</h2>
+
+                        </div>
+                        <div class="tour_details_top_heading_right">
+                            <h4>★ 4.8/5</h4>
+
+                            <p>(리뷰 1244)</p>
+                        </div>
+                    </div>
+
+
+                    <div class="tour_details_boxed">
+                        <h3 class="heading_theme">상세정보</h3>
+                        <div class="tour_details_boxed_inner">
+                            <img src="assets/img/tour/detail.png" alt="img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tour_details_right_sidebar_wrapper">
+                    <div class="tour_detail_right_sidebar">
+                        <div class="tour_details_right_boxed">
+                            <div class="tour_details_right_box_heading">
+                                <h3>여행 날짜</h3>
+                            </div>
+                            <div class="edit_date_form">
+                                <div class="form-group">
+                                    <label for="dates">출발일 선택</label>
+                                    <input type="date" value="2022-05-05" class="form-control" id="dates">
+                                </div>
+                            </div>
+                            <div class="select_person_side">
+                                <h3>인원 선택</h3>
+                                <div class="select_person_item">
+                                    <div class="select_person_left">
+                                        <h6>어른</h6>
+                                        <p>만12세 이상</p>
+                                    </div>
+                                    <div class="select_person_right">
+                                        <div class="button-set">
+                                            <button type="button">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span>01</span>
+                                            <button type="button">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="select_person_item">
+                                    <div class="select_person_left">
+                                        <h6>아이</h6>
+                                        <p>만2살 이상 만 12살 미만</p>
+                                    </div>
+                                    <div class="select_person_right">
+                                        <div class="button-set">
+                                            <button type="button">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span>01</span>
+                                            <button type="button">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="select_person_item">
+                                    <div class="select_person_left">
+                                        <h6>유아</h6>
+                                        <p> 24개월 이하</p>
+                                    </div>
+                                    <div class="select_person_right">
+                                        <div class="button-set">
+                                            <button type="button">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span>01</span>
+                                            <button type="button">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-check write_spical_check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
+                                    <label class="form-check-label" for="flexCheckDefaultf1">
+                            <span class="main_spical_check">
+                                <span>좋은말로할때<a href="terms-service.html">약관</a>에 동의하세요 </span>
+                            </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tour_select_offer_bar_bottom">
+                            <button class="btn btn_theme btn_md w-100" onclick="/">예약하기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour_detail_right_sidebar">
+                    <div class="tour_details_right_boxed">
+                        <div class="tour_details_right_box_heading">
+                            <h3>총 선택인원</h3>
+                        </div>
+
+                        <div class="tour_booking_amount_area">
+                            <ul>
+                                <li>어른 x 1 <span><del>1,000,000원</del></span></li>
+                                <li><span>할인</span><span>800,000원</span></li>
+                                <li>아이 x 1 <span><del>800,000원</del></span></li>
+                                <li><span>할인</span><span>600,000원</span></li>
+                                <li>유아 x 1 <span><del> 600,000원</del></span></li>
+                                <li><span>할인</span> <span>400,000원</span></li>
+                            </ul>
+
+
+                            <div class="total_subtotal_booking">
+                                <h6>Total Amount <span>1,800,000원</span></h6>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 리뷰 섹션-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="write_your_review_wrapper">
+                    <h3 class="heading_theme">리뷰 작성</h3>
+                    <div class="write_review_inner_boxed">
+                        <form action="!#" id="news_comment_form">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-froup">
+                                        <input type="text" class="form-control bg_input"
+                                               placeholder="작성자 아이디">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <form class="mb-3" name="myform" id="myform" method="post">
+                                        <fieldset>
+                                            <span class="text-bold">별점을 선택</span>
+                                            <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                                                for="rate1">★</label>
+                                            <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                                                for="rate2">★</label>
+                                            <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                                                for="rate3">★</label>
+                                            <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                                                for="rate4">★</label>
+                                            <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                                                for="rate5">★</label>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-froup">
+                                            <textarea rows="6" placeholder="리뷰를 입력해주세요"
+                                                      class="form-control bg_input"></textarea>
+                                    </div>
+                                    <div class="comment_form_submit">
+                                        <button class="btn btn_theme btn_md">등록하기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="all_review_wrapper">
+                    <h3 class="heading_theme">All review</h3>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="all_review_box">
+                    <div class="all_review_date_area">
+                        <div class="all_review_star">
+                            <h5>Excellent</h5>
+                            <div class="review_star_all">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="all_review_date">
+                        <h5>김태리 - 08 Dec, 2021</h5>
+                    </div>
+
+                    <div class="all_review_text">
+                        <p>" 제주도 처음 갔는데 너무 좋았어요 가이드님도 너무 친절해요 굿굿^^ "</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="all_review_box">
+                    <div class="all_review_date_area">
+                        <div class="all_review_star">
+                            <h5>Excellent</h5>
+                            <div class="review_star_all">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="all_review_date">
+                        <h5>이영지 - 08 Dec, 2021</h5>
+                    </div>
+
+                    <div class="all_review_text">
+                        <p>"가족들이랑 같이 갔는데 너무 좋았어요ㅎㅎ 호텔이 약간 아쉽네요..ㅎ "</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="all_review_box">
+                    <div class="all_review_date_area">
+                        <div class="all_review_star">
+                            <h5>Excellent</h5>
+                            <div class="review_star_all">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="all_review_date">
+                        <h5>박춘자 - 08 Dec, 2021</h5>
+                    </div>
+
+                    <div class="all_review_text">
+                        <p>"너무 재밌어요 제주 여행 짱짱"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="all_review_box">
+                    <div class="all_review_date_area">
+                        <div class="all_review_star">
+                            <h5>Excellent</h5>
+                            <div class="review_star_all">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="all_review_date">
+                        <h5>김복순 - 08 Dec, 2021</h5>
+                    </div>
+
+                    <div class="all_review_text">
+                        <p>" 너무 일정이 빡빡해요ㅠㅠㅠ 자유시간 좀 더주세요ㅠ"</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+
+</body>
+</html>
