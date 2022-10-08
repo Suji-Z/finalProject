@@ -9,12 +9,6 @@
       <div class="col-lg-12">
         <div class="common_bannner_text">
           <h2>견적문의</h2>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
-              dashboard</a></li>
-            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -35,7 +29,7 @@
               <li><a href="dashboard.html">FAQ</a></li>
               <li><a href="dashboard.html">여행후기</a></li>
               <li><a href="dashboard.html">1:1 문의</a></li>
-              <li><a href="dashboard.html">견적문의</a></li>
+              <li><a th:href="@{/estimate/list}">견적문의</a></li>
             </ul>
           </div>
         </div>
@@ -47,78 +41,62 @@
             <table class="table">
               <thead>
               <tr>
-                <th width="130">글번호</th>
-                <th width="500">제목</th>
-                <th width="130">글쓴이</th>
-                <th width="180">작성일</th>
+                <th width="160">글번호</th>
+                <th width="450">제목</th>
+                <th width="200">글쓴이</th>
+                <th width="200">작성일</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>03.</td>
-                <td align="left">5인가족 제주도 여행 문의드립니다.</td>
-                <td>단비</td>
-                <td>2022-09-25</td>
-              </tr>
-              <tr>
-                <td></td>
+              <tr  th:each="estimateInquiry,loop : ${paging}">
+                <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                 <td align="left">
-                  ㄴ 5인가족 제주도 여행 문의드립니다.</td>
-                <td>관리자</td>
-                <td>2022-09-26</td>
-             </tr>
-              <tr>
-                <td>02.</td>
-                <td align="left">3인가족 제주도 여행 문의드립니다.</td>
-                <td>단비</td>
-                <td>2022-09-25</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td align="left">
-                  ㄴ 3인가족 제주도 여행 문의드립니다.</td>
-                <td>관리자</td>
-                <td>2022-09-26</td>
-              </tr>
-              <tr>
-                <td>01.</td>
-                <td align="left">강아지 동반 가족여행 문의드립니다..</td>
-                <td>단비</td>
-                <td>2022-09-25</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td align="left">
-                  ㄴ 강아지 동반 가족여행 문의드립니다.</td>
-                <td>관리자</td>
-                <td>2022-09-26</td>
+                  <a th:href="@{|/estimate/inquiry/article/${estimateInquiry.id}|}" th:text="${estimateInquiry.title}"></a>
+                </td>
+                <td th:text="${estimateInquiry.email}"></td>
+                <td th:text="${#temporals.format(estimateInquiry.created,'yyyy-MM-dd')}"></td>
               </tr>
               </tbody>
             </table>
           </div>
           <div class="option-item">
-            <a href="become-vendor.html" class="btn  btn_navber">글올리기</a>
+            <a th:href="@{/estimate/upload}" class="btn  btn_navber">글올리기</a>
           </div>
         </div>
-        <div class="pagination_area">
-          <ul class="pagination">
+
+
+
+
+
+        <div class="pagination_area" th:if="${!paging.isEmpty()}">
+          <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
             <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
+              <a class="page-link" th:href="@{/estimate/list?page=1}" aria-label="Previous">
                 <span aria-hidden="true">«</span>
                 <span class="sr-only">Previous</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                th:classappend="(${page}==${paging.number+1})?'active'">
+              <a class="page-link" th:href=@{/estimate/list(page=${page})} th:text="${page}"></a></li>
             <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
+              <a class="page-link" th:href="@{/estimate/list(page=${paging.totalPages})}" aria-label="Next">
                 <span aria-hidden="true">»</span>
                 <span class="sr-only">Next</span>
               </a>
             </li>
           </ul>
         </div>
+
+        <!--
+            paging.isEmpty		페이지 존재 여부 (게시물이 있으면 false, 없으면 true)
+            paging.totalElements	전체 게시물 개수
+            paging.totalPages	전체 페이지 개수
+            paging.size		페이지당 보여줄 게시물 개수
+            paging.number		현재 페이지 번호
+            paging.hasPrevious	이전 페이지 존재 여부
+            paging.hasNext		다음 페이지 존재 여부
+ -->
       </div>
     </div>
   </div>
