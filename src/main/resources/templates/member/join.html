@@ -64,6 +64,10 @@
                     <li style="margin-top: -30px">
                         <div class="col-lg-2">
                         </div>
+
+                        <div th:if="${#fields.hasErrors('email')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{email}" th:text="${err}">이메일 형식을 확인해주세요</p>
+                        </div>
                         <div>
                         <span id="emailAvailable" class="valid-feedback" style="display: none"></span><span id="emailNotAvailable" class="invalid-feedback" style="display: none"></span>
                         </div>
@@ -71,25 +75,44 @@
 
 
                     
-                <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                <li style="border-bottom-color: white;">
+                    <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
                       <label style="text-align:center;" th:for="password1">비밀번호</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{password1}" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
                     </div>
                   </li>
+
+                    <li style="margin-top: -30px;padding-bottom: -20px">
+                        <div class="col-lg-2">
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('password1')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{password1}" th:text="${err}"></p>
+                        </div>
+
+                    </li>
+
                    
-                   <li>
+                   <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <label style="text-align:center;" th:for="password2">비밀번호<br/>재확인</label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
+                      <input type="text" class="shform-control"    th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
                     </div>
                   </li>
+
+                    <li style="margin-top: -40px;padding-bottom: -10px">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('password2')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{password2}" th:text="${err}"></p>
+                        </div>
+                    </li>
                     
-                <li>
+                <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <label th:for="name" style="text-align:center;">이름</label>
                     </div>
@@ -97,8 +120,16 @@
                       <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
                     </div>
                   </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('name')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{name}" th:text="${err}"></p>
+                        </div>
+                    </li>
                    
-                    <li>
+                    <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <label th:for="phone_num" style="text-align:center;">연락처</label>
                     </div>
@@ -108,7 +139,15 @@
                     <div class="">
                     <button class="btn btn_theme" style="height: 35px;font-size: 11pt">인증번호 받기</button>
                     </div>
-                  </li>    
+                  </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('phone_num')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{phone_num}" th:text="${err}"></p>
+                        </div>
+                    </li>
                     
                     <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
@@ -120,7 +159,7 @@
                   </li>    
                     
                     
-                    <li>
+                    <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <label th:for="birth" style="text-align:center;">생년월일</label>
                     </div>
@@ -128,36 +167,48 @@
                       <input type="text" class="shform-control" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
                     </div>
                   </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('birth')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{birth}" th:text="${err}"></p>
+                        </div>
+                    </li>
                  
-                     <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 70px">
+                    <li style="border-bottom-color: white">
+                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <span style="text-align:center;">약관 동의</span>
                     </div>
-                    <div class="form-group col-lg-7">
-                     
-                     <div style="margin-bottom: 10px">
-                         <span style="font-size: 11pt;margin-left: 130px;">
+
+                     <div class="col-lg-7" style="margin-bottom: 10px;text-align: center">
+                         <span style="font-size: 11pt;">
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 약관 모두 동의
                          </span>
-                         </div>
-                         
-                      <div class="col-lg-20" style="height: 150px; border: 1px solid silver">
+                     </div>
+
+                     </li>
+
+                     <li style="margin-top: -40px;">
+                         <div class="col-lg-2"></div>
+
+                      <div class="col-lg-7" style="height: 150px; border: 1px solid silver">
                        <div style="margin-bottom: 10px; margin-top: 10px">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
+                        <label style="font-size: 11pt;margin-left: 10px;">
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 약관 모두 동의
-                         </span><br/>
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
+                        <label style="font-size: 11pt;margin-left: 10px; " >
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 만14세 이상 확인
-                         </span><br/>
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
+                        <label style="font-size: 11pt;margin-left: 10px; " >
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 개인정보 수집 및 이용동의
-                         </span><br/>
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
@@ -165,33 +216,54 @@
                              <input type="checkbox"/>&nbsp;&nbsp;(선택) 개인정보 수집 및 이용동의
                          </span><br/>
                         </div>
-
                       </div>
-                    </div>
-                  </li>
+                     </li>
+
+
+
                   
-                  <li>
+                  <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <span style="text-align:center;">선호테마</span>
                     </div>
 
-                      <div class="col-lg-10">
-                      <input type="checkbox">&nbsp;힐링
-                      <input type="checkbox">&nbsp;액티비티
-                      <input type="checkbox">&nbsp;골프
-                      <input type="checkbox">&nbsp;호캉스
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword1}" value="healing">&nbsp;힐링
+                      </div>
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword2}" value="activity">&nbsp;액티비티
+                      </div>
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword3}" value="golf">&nbsp;골프
+                      </div>
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword4}" value="hocance">&nbsp;호캉스
                      </div>
+
                   </li>
-                    <li>
+                    <li style="border-bottom-color: white; margin-top: -45px">
                         <div class="col-lg-2"></div>
 
-                      <input type="checkbox">&nbsp;가족여행
-                      <input type="checkbox">&nbsp;식도락여행
-                      <input type="checkbox">&nbsp;문화/예술
-                      <input type="checkbox">&nbsp;애견동반
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword5}" value="family">&nbsp;가족여행
+                        </div>
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword6}" value="food">&nbsp;식도락여행
+                        </div>
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword7}" value="culture">&nbsp;문화/예술
+                        </div>
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword8}" value="animal">&nbsp;애견동반
+                        </div>
 
                     </li>
-                        <span style="margin: auto"><br/>최대 3개까지 선택 가능합니다.</span>
+                    <li style="margin-top: -30px">
+                        <div class="col-lg-2"> </div>
+                        <span style="font-size: 11pt; color: grey">최대 3개까지 선택 가능합니다.</span>
+                    </li>
+
+
 
 
                 </ul>

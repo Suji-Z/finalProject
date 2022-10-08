@@ -29,19 +29,13 @@ public class Member {
     private String phone_num;
 
     @Column
-    private String gender;
-
-    @Column
     private int point;
     @Column
     private double coupon;
 
     @Column
-    private String keyword1;
-    @Column
-    private String keyword2;
-    @Column
-    private String keyword3;
+    private String keyword;
+
 
 
 }
