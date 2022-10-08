@@ -54,8 +54,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-lg-3">
-                                                <select id="location" style="width:90%;" class="form-select" aria-label="Default select example">
-                                                    <option>상세 지역을 선택하세요</option>
+                                                <select th:field="*{location}" style="width:90%;" class="form-select" aria-label="Default select example">
+                                                    <option value="" selected="selected">상세 지역을 선택하세요</option>
                                                 </select>
                                             </div>
                                             <script>
@@ -76,7 +76,7 @@
 
                                                         for (x in e) {
                                                             var opt = document.createElement("option");
-                                                            opt.value = e[x];
+                                                            opt.setAttribute("th:value",e[x]);
                                                             opt.innerHTML = e[x];
                                                             target.appendChild(opt);
                                                         }
