@@ -1,5 +1,6 @@
 package com.project.tour.service;
 
+import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.EstimateInquiry;
 import com.project.tour.domain.EstimateInquiryForm;
 import com.project.tour.repository.EstimateRepository;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -43,9 +45,9 @@ public class EstimateInquiryService {
 
         inquiry.setTitle(estimateInquiryForm.getTitle());
         inquiry.setLocation(estimateInquiryForm.getLocation());
-        inquiry.setA_count(estimateInquiryForm.getACount());
-        inquiry.setB_count(estimateInquiryForm.getBCount());
-        inquiry.setC_count(estimateInquiryForm.getCCount());
+        inquiry.setACount(estimateInquiryForm.getACount());
+        inquiry.setBCount(estimateInquiryForm.getBCount());
+        inquiry.setCCount(estimateInquiryForm.getCCount());
         inquiry.setStartDay(estimateInquiryForm.getStartDay());
         inquiry.setEndDay(estimateInquiryForm.getEndDay());
         inquiry.setPrice(Integer.parseInt(estimateInquiryForm.getPrice()));
@@ -59,4 +61,15 @@ public class EstimateInquiryService {
     //문의 수정하기
     
     //문의 삭제하기
+
+    //id를 통한 문의 검색
+    public EstimateInquiry getArticle(Long id) {
+
+        Optional<EstimateInquiry> inquiry = estimateRepository.findById(id);
+
+        if(inquiry.isPresent())
+            return inquiry.get();
+        else
+            throw new DataNotFoundException("확인할수 없는 게시물 입니다.");
+    }
 }

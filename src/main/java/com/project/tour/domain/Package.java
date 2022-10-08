@@ -15,7 +15,7 @@ public class Package {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "packageNum")
-    private Integer id;
+    private Long id;
 
     private String location;
 

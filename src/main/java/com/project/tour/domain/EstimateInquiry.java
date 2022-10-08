@@ -2,6 +2,7 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class EstimateInquiry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EstimateNum")
-    private Integer id;
+    private Long id;
 
     private String email;
 
@@ -24,11 +25,11 @@ public class EstimateInquiry {
 
     private String location;
 
-    private Integer a_count;
+    private Integer aCount;
 
-    private Integer b_count;
+    private Integer bCount;
 
-    private Integer c_count;
+    private Integer cCount;
 
     private String startDay;
 

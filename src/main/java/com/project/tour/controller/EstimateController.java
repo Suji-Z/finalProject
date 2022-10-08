@@ -47,10 +47,11 @@ public class EstimateController {
     }
 
     @GetMapping("/inquiry/article/{id}")
-    public String estimateInquiryArticleget(@PathVariable("id") Integer id,EstimateInquiryForm estimateInquiryForm) {
+    public String estimateInquiryArticleget(@PathVariable("id") Long id,EstimateInquiryForm estimateInquiryForm,Model model) {
 
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
-
+        model.addAttribute("inquiry",inquiry);
 
         return "estimate/estimateInquiryArticle";
     }
