@@ -100,7 +100,7 @@
                       <label style="text-align:center;" th:for="password2">비밀번호<br/>재확인</label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
+                      <input type="text" class="shform-control"    th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
                     </div>
                   </li>
 
@@ -189,26 +189,26 @@
 
                      </li>
 
-                     <li style="margin-top: -40px">
+                     <li style="margin-top: -40px;">
                          <div class="col-lg-2"></div>
 
                       <div class="col-lg-7" style="height: 150px; border: 1px solid silver">
                        <div style="margin-bottom: 10px; margin-top: 10px">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
+                        <label style="font-size: 11pt;margin-left: 10px;">
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 약관 모두 동의
-                         </span><br/>
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
+                        <label style="font-size: 11pt;margin-left: 10px; " >
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 만14세 이상 확인
-                         </span><br/>
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
+                        <label style="font-size: 11pt;margin-left: 10px; " >
                              <input type="checkbox"/>&nbsp;&nbsp;(필수) 개인정보 수집 및 이용동의
-                         </span><br/>
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
@@ -219,6 +219,8 @@
                       </div>
                      </li>
 
+
+
                   
                   <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
@@ -226,16 +228,16 @@
                     </div>
 
                       <div class="col-lg-2">
-                      <input type="checkbox" name="healing">&nbsp;힐링
+                      <input type="checkbox" th:field="*{keyword1}" value="healing">&nbsp;힐링
                       </div>
                       <div class="col-lg-2">
-                      <input type="checkbox" name="activity">&nbsp;액티비티
+                      <input type="checkbox" th:field="*{keyword2}" value="activity">&nbsp;액티비티
                       </div>
                       <div class="col-lg-2">
-                      <input type="checkbox">&nbsp;골프
+                      <input type="checkbox" th:field="*{keyword3}" value="golf">&nbsp;골프
                       </div>
                       <div class="col-lg-2">
-                      <input type="checkbox">&nbsp;호캉스
+                      <input type="checkbox" th:field="*{keyword4}" value="hocance">&nbsp;호캉스
                      </div>
 
                   </li>
@@ -243,16 +245,16 @@
                         <div class="col-lg-2"></div>
 
                         <div class="col-lg-2">
-                      <input type="checkbox">&nbsp;가족여행
+                      <input type="checkbox" th:field="*{keyword5}" value="family">&nbsp;가족여행
                         </div>
                         <div class="col-lg-2">
-                      <input type="checkbox">&nbsp;식도락여행
+                      <input type="checkbox" th:field="*{keyword6}" value="food">&nbsp;식도락여행
                         </div>
                         <div class="col-lg-2">
-                      <input type="checkbox">&nbsp;문화/예술
+                      <input type="checkbox" th:field="*{keyword7}" value="culture">&nbsp;문화/예술
                         </div>
                         <div class="col-lg-2">
-                      <input type="checkbox">&nbsp;애견동반
+                      <input type="checkbox" th:field="*{keyword8}" value="animal">&nbsp;애견동반
                         </div>
 
                     </li>

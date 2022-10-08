@@ -1,9 +1,11 @@
 package com.project.tour.service;
 
 import com.project.tour.domain.Member;
+import com.project.tour.domain.MemberRole;
 import com.project.tour.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,6 +35,12 @@ public class MemberSecurityService implements UserDetailsService {
         Member member = searchMember.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
+
+        if("admin@naver.com".equals(email)){
+            authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
+        }else{
+            authorities.add(new SimpleGrantedAuthority(MemberRole.USER.getValue()));
+        }
 
         return new User(member.getEmail(), member.getPassword(),authorities);
     }
