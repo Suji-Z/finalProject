@@ -2265,7 +2265,14 @@ section {
 =========================*/
 /* --Common Banner-- */
 #common_banner {
-    background-image: url('../img/banner/common-banner.png');
+    background-image: url('../img/banner/banner01.jpg');
+    padding: 200px 0 130px 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#jeju_banner {
+    background-image: url('../img/banner/jeju.png');
     padding: 200px 0 130px 0;
     background-repeat: no-repeat;
     background-size: cover;

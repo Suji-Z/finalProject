@@ -62,8 +62,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <ul class="topbar-others-options">
-                        <li><a href="login.html">로그인</a></li>
-                        <li><a href="join">회원가입</a></li>
+                        <li><a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a></li>
+                        <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a></li>
+                        <li><a th:href="@{/join}">회원가입</a></li>
                     </ul>
                 </div>
             </div>
@@ -97,13 +98,13 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="tour-search.html" class="nav-link">유럽</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">유럽</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="tour-details.html" class="nav-link">미국</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">미국</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="tour-booking-submission.html" class="nav-link">아시아</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">아시아</a>
                                     </li>
                                 </ul>
                             </li>
@@ -114,16 +115,16 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="flight-search-result.html" class="nav-link">서귀포</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">서귀포</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="flight-booking-submission.html" class="nav-link">중문</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">중문</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="flight-booking-submission.html" class="nav-link">애월</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">애월</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="flight-booking-submission.html" class="nav-link">제주시</a>
+                                        <a th:href="@{/jeju/list}" class="nav-link">제주시</a>
                                     </li>
                                 </ul>
                             </li>
@@ -148,7 +149,7 @@
                                         <a href="visa-info.html" class="nav-link">FAQ</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="visa-info.html" class="nav-link">견적문의</a>
+                                        <a th:href="@{/estimate/list}" class="nav-link">견적문의</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="visa-info.html" class="nav-link">고객의소리</a>

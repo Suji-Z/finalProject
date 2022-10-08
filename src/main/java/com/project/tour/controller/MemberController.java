@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,7 +44,7 @@ public class MemberController {
 
         //비밀번호 확인
         if(!memberCreate.getPassword1().equals(memberCreate.getPassword2())){
-            bindingResult.rejectValue("password2","passwordInCorrect","패스워드가 일치하지 않습니다.");
+            bindingResult.addError(new FieldError("memberCreate","password2","비밀번호가 일치하지 않습니다."));
             return "member/join";
         }
         try {
@@ -64,6 +65,22 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+
+        return "member/login";
+    }
+
+    @GetMapping("/login/searchEmail")
+    public String searchEmail(){
+        return "member/forgot-email";
+    }
+
+    @GetMapping("/login/searchPassword")
+    public String searchPassword(){
+        return "member/forgot-password";
     }
 
 }
