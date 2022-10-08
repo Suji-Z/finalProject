@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+
+    <!-- Common Banner Area -->
+    <section id="common_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="common_bannner_text">
+                        <h2>아이디/비밀번호 찾기</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><span><i class="fas fa-circle"></i></span> Forgot email</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!--  Common Author Area -->
+    <section id="common_author_area" class="section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="common_author_boxed">
+                        <div class="common_author_heading">
+                            <h2>아이디 찾기</h2>
+                            <p>회원가입 시 등록한 휴대폰 번호를 입력해주세요.</p>
+                        </div>
+                        <div class="common_author_form">
+                            <form action="#" id="main_author_form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="이름(실명)" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="휴대폰번호(숫자만 입력)" /><br/>
+                                </div>
+                                 <div class="form-group">
+                                    <input type="text" class="form-control"placeholder="인증번호" /><br/>
+                                    <button class="btn btn_theme" style="height: 53px; margin-top: -130px">인증번호 발송</button>
+                                </div>
+                                
+                                <div class="common_form_submit" style="margin-top: -30px">
+                                    <button class="btn btn_theme btn_md">확인</button>
+                                </div>
+                              
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cta Area -->
+
+</body>
+
+</html>
