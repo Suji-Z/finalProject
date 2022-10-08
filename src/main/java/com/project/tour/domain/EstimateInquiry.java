@@ -2,13 +2,10 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,8 +13,9 @@ import java.time.LocalDateTime;
 public class EstimateInquiry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long EstimateNum;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EstimateNum")
+    private Integer id;
 
     private String email;
 
@@ -27,11 +25,14 @@ public class EstimateInquiry {
     private String location;
 
     private Integer a_count;
+
     private Integer b_count;
+
     private Integer c_count;
 
-    private LocalDateTime startDay;
-    private LocalDateTime endDay;
+    private String startDay;
+
+    private String endDay;
 
     private Integer price;
 
@@ -40,5 +41,12 @@ public class EstimateInquiry {
     @Column(columnDefinition = "TEXT",length = 3000)
     private String content;
 
+    private LocalDateTime created;
+
+    /**하나의 문의글에 여러개의 답변
+     * 문의글 삭제시 해당글의 답변도 함께 삭제되게 구현
+     * */
+    @OneToMany(mappedBy = "estimateInquiry",cascade = CascadeType.REMOVE)
+    private List<EstimateReply> EstimateReplyList;
 
 }
