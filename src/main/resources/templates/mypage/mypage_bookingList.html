@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+<div class="preloader" style="display: none;">
+  <div class="d-table">
+    <div class="d-table-cell">
+      <div class="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>개선/건의하기 문의내역</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
+              dashboard</a></li>
+            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Area -->
+<section id="dashboard_main_arae" class="section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+            <div class="dashboard_sidebar_user">
+                           
+                            <h2>My Page</h2>
+                           
+                        </div>
+
+          <div class="dashboard_menu_area">
+             <ul>
+                                
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">내 정보 수정</a></li>
+                                            <li><a href="flight-booking.html">회원 탈퇴</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html" class="active" >예약내역</a></li>
+                                            <li><a href="flight-booking.html">취소내역</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                        style="">
+                                        <ul>
+                                            <li><a href="hotel-booking.html">여행 1:1 문의</a></li>
+                                            <li><a href="flight-booking.html">개선/건의하기</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                
+                                <li><a href="dashboard.html"><b>마일리지</b></a></li>
+                                <li><a href="dashboard.html"><b>할인쿠폰</b></a></li>
+                                
+                               
+                            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8-sally">
+          <div class="dashboard_common_table">
+          <h3>예약 내역</h3>
+          <div class="table-responsive-lg table_common_area">
+            <table class="table">
+              <thead>
+              <tr>
+                <th width="130">예약번호</th>
+                <th width="130">예약일</th>
+                <th width="200">상품명</th>
+                <th width="200">출발일</th>
+                <th width="100">인원</th>
+                <th width="200">총금액</th>
+                <th width="200">진행사항</th>
+
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>01</td>
+                <td>2022-06-24</td>
+                <td>제주어쩌구</td>
+                <td>2022-09-25</td>
+                  <td>2</td>
+                <td>658,000</td>
+                  <td>결제완료</td>
+
+            
+              </tbody>
+            </table>
+          </div>
+         
+        </div>
+        <div class="pagination_area">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">«</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">»</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+</body></html>

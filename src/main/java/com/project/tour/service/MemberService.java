@@ -5,6 +5,7 @@ import com.project.tour.domain.Member;
 import com.project.tour.domain.MemberCreate;
 import com.project.tour.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class MemberService {
 
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     public boolean existByEmail(String email){
@@ -24,15 +26,14 @@ public class MemberService {
         Member member = new Member();
 
         member.setEmail(memberCreate.getEmail());
-        member.setPassword(memberCreate.getPassword1());
+        member.setPassword(passwordEncoder.encode(memberCreate.getPassword1()));
         member.setName(memberCreate.getName());
         member.setBirth(memberCreate.getBirth());
         member.setPhone_num(memberCreate.getPhone_num());
-        member.setGender(memberCreate.getGender());
         member.setCoupon(0.1);
-        member.setKeyword1(memberCreate.getKeyword1());
-        member.setKeyword2(memberCreate.getKeyword2());
-        member.setKeyword3(memberCreate.getKeyword3());
+        member.setKeyword(memberCreate.getKeyword1()+memberCreate.getKeyword2()+memberCreate.getKeyword3());
+
+
 
         memberRepository.save(member);
 
