@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="form-group col-lg-3">
                                                 <select th:field="*{location}" style="width:90%;" class="form-select" aria-label="Default select example">
-                                                    <option value="" selected="selected">상세 지역을 선택하세요</option>
+                                                    <option value="">상세 지역을 선택하세요</option>
                                                 </select>
                                             </div>
                                             <script>
@@ -115,7 +115,7 @@
                                                      <select class="form-select" style="border-radius: 3px"
                                                              aria-label="Default select example"
                                                              th:field="*{price}">
-                                                     <option value="" selected="">가격 범위를 선택하세요</option>
+                                                     <option value="" >가격 범위를 선택하세요</option>
                                                      <option th:value="50만원이하">50만원 이하</option>
                                                      <option th:value="51만원-100만원">51만원-100만원</option>
                                                       <option th:value="101만원-200만원">101만원-200만원</option>
@@ -131,7 +131,8 @@
                                                 <span style="text-align:center;">출발일 변경</span>
                                             </div>
                                             <div class="form-group col-lg-7">
-                                                <input type="checkbox" th:field="*{flexibleDay}"/>&nbsp;출발일 7일이내 상품 모두 추천받기
+                                                <input type="checkbox" id="flexibleDay" th:field="*{flexibleDay}"/>
+                                                <label for="flexibleDay">출발일 7일이내 상품 모두 추천받기</label>
                                             </div>
                                         </li>
                                         <li>

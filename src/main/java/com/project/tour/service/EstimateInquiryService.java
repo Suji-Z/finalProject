@@ -59,7 +59,23 @@ public class EstimateInquiryService {
         estimateRepository.save(inquiry);
     }
     //문의 수정하기
-    
+    public void modify(EstimateInquiry inquiry,EstimateInquiryForm estimateInquiryForm){
+
+        inquiry.setTitle(estimateInquiryForm.getTitle());
+        inquiry.setLocation(estimateInquiryForm.getLocation());
+        inquiry.setACount(estimateInquiryForm.getACount());
+        inquiry.setBCount(estimateInquiryForm.getBCount());
+        inquiry.setCCount(estimateInquiryForm.getCCount());
+        inquiry.setStartDay(estimateInquiryForm.getStartDay());
+        inquiry.setEndDay(estimateInquiryForm.getEndDay());
+        inquiry.setPrice(estimateInquiryForm.getPrice());
+        inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
+        inquiry.setContent(estimateInquiryForm.getContent());
+        inquiry.setCreated(LocalDateTime.now());
+        //inquiry.setEmail( );
+
+        estimateRepository.save(inquiry);
+    }
     //문의 삭제하기
     public void delete(EstimateInquiry inquiry){
         estimateRepository.delete(inquiry);

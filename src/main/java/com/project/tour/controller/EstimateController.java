@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,15 +36,14 @@ public class EstimateController {
         return "estimate/estimateList";
     }
 
-    @GetMapping("/upload")
-    public String estimateInquiryget(Model model) {
+    @GetMapping("/inquiry/upload")
+    public String estimateInquiryUpload(Model model) {
         model.addAttribute("estimateInquiryForm", new EstimateInquiryForm());
         return "estimate/estimateInquiry";
     }
 
-
-    @PostMapping("/upload")
-    public String estimateInquirypost(EstimateInquiryForm estimateInquiryForm) {
+    @PostMapping("/inquiry/upload")
+    public String estimateInquiryUpload(EstimateInquiryForm estimateInquiryForm) {
 
         estimateInquiryService.create(estimateInquiryForm);
 
@@ -51,7 +51,7 @@ public class EstimateController {
     }
 
     @GetMapping("/inquiry/article/{id}")
-    public String estimateInquiryArticleget(@PathVariable("id") Long id,EstimateInquiryForm estimateInquiryForm,Model model) {
+    public String estimateInquiryArticle(@PathVariable("id") Long id,EstimateInquiryForm estimateInquiryForm,Model model) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -61,7 +61,7 @@ public class EstimateController {
     }
 
     @GetMapping("/inquiry/delete/{id}")
-    public String estimateInquiryDelete(@PathVariable("id") Long id,Principal principal) {
+    public String estimateInquiryDelete(@PathVariable("id") Long id,Principal principal,EstimateInquiryForm inquiryForm) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -73,6 +73,34 @@ public class EstimateController {
 
         return "redirect:/estimate/list";
     }
+
+    @GetMapping("/inquiry/modify/{id}")
+    public String estimateInquiryModify(@PathVariable("id") Long id,Principal principal,EstimateInquiryForm inquiryForm) {
+
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+
+        inquiryForm.setTitle(inquiry.getTitle());
+        inquiryForm.setLocation(inquiry.getLocation());
+        inquiryForm.setACount(inquiry.getACount());
+        inquiryForm.setBCount(inquiry.getBCount());
+        inquiryForm.setCCount(inquiry.getCCount());
+        inquiryForm.setPrice(inquiry.getPrice());
+        inquiryForm.setContent(inquiry.getContent());
+        inquiryForm.setFlexibleDay(inquiry.getFlexibleDay());
+
+        return "estimate/estimateInquiry";
+    }
+
+    @PostMapping("/inquiry/modify/{id}")
+    public String estimateInquiryModify(EstimateInquiryForm inquiryForm, BindingResult bindResult,@PathVariable("id") Long id, Principal principal) {
+
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+
+        estimateInquiryService.modify(inquiry,inquiryForm);
+
+        return String.format("redirect:/estimate/inquiry/article/%s", id);
+    }
+
 
     @GetMapping("/reply")
     public String estimateReply() {

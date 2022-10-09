@@ -67,7 +67,9 @@
     </div>
   </div>
   <div class="common_form_submit">
-    <button class="btn btn_theme btn_md">수정</button>
+    <a th:href="@{|/estimate/inquiry/modify/${inquiry.id}|}">
+    <button type="button" class="btn btn_theme btn_md">수정</button>
+    </a>
     <button class="delete btn btn_theme btn_md" href="javascript:void(0);" th:data-uri="@{|/estimate/inquiry/delete/${inquiry.id}|}">삭제</button>
 
 <script type="text/javascript">
