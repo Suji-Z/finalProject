@@ -23,7 +23,10 @@ public class PackageDate {
     private Integer c_price;
 
     private Integer discount;
+<<<<<<< HEAD
     private Integer remainCount;
+=======
+>>>>>>> e6f92d10a8efc9dfa25645a78b48706b22efec2d
     
     /** Foreign key 생성
      * 하나의 패키지상품에 여러개의 출발일 

@@ -9,10 +9,6 @@
             <div class="col-lg-12">
                 <div class="common_bannner_text">
                     <h2>견적 문의</h2>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><span><i class="fas fa-circle"></i></span> Package</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -21,6 +17,7 @@
 
 <!-- Tour Booking Submission Areas -->
 <section id="tour_booking_submission" class="section_padding" style="margin: auto">
+    <form th:action th:object="${estimateInquiryForm}" method="post">
     <div class="col-lg-8">
     </div>
     <div class="container" style="margin: auto; width: 70%">
@@ -30,25 +27,38 @@
                     <div class="booking_tour_form">
                         <h3 class="heading_theme">견적문의</h3>
                         <div class="tour_booking_form_box">
-                            <div class="your_info_arae">
-                                <ul>
-                                    <li><span style="text-align:center;width: 14%">제목</span>
-                                        <span><input type="text" name="" style="width:500px;border-radius: 3px"></span>
-                                    </li>
-                                    <li><span style="text-align:center;width: 14%">여행 지역</span>
-                                        <span>
-                                                <select onchange="categoryChange(this)">
-	                                            <option>선택하세요</option>
+                                <div class="your_info_arae">
+                                    <ul>
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">제목</span>
+                                            </div>
+                                            <div class="form-group col-lg-7">
+                                                <input type="text" class="shform-control"
+                                                       style="border-radius: 3px; font-size: 10pt" th:field="*{title}">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">여행지역</span>
+                                            </div>
+                                            <div class="form-group col-lg-2">
+                                                <select class="form-select" style="width:90%;"
+                                                        aria-label="Default select example"
+                                                        onchange="categoryChange(this)">
+                                                    <option>선택하세요</option>
                                                     <option value="a">아시아</option>
                                                     <option value="b">유럽</option>
-	                                                <option value="c">미국</option>
+                                                    <option value="c">미국</option>
                                                     <option value="d">제주</option>
                                                 </select>
-                                                <select id="location">
-                                                    <option>상세 지역을 선택하세요</option>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <select th:field="*{location}" style="width:90%;" class="form-select" aria-label="Default select example">
+                                                    <option value="" selected="selected">상세 지역을 선택하세요</option>
                                                 </select>
-
-                                                <script>
+                                            </div>
+                                            <script>
                                                     function categoryChange(f) {
                                                         var location_a = ["일본", "중국", "홍콩", "발리","방콕/파타야","싱가폴","보홀/마닐라","코타키나발루",
                                                         "보라카이","베트남"];
@@ -66,44 +76,74 @@
 
                                                         for (x in e) {
                                                             var opt = document.createElement("option");
-                                                            opt.value = e[x];
+                                                            opt.setAttribute("th:value",e[x]);
                                                             opt.innerHTML = e[x];
                                                             target.appendChild(opt);
                                                         }
                                                     }
-                                                </script>
-                                            </span>
-                                    </li>
-                                    <li><span style="text-align:center;width: 14%">인원</span>
-                                        <span>성인 &nbsp; <input type="text"> 명 <br><br>
-                                              아동 &nbsp; <input type="text"> 명 <br><br>
-                                              유아 &nbsp; <input type="text"> 명
-                                        </span>
-                                    </li>
-                                    <li><span style="text-align:center;width: 14%">여행기간</span>
-                                        <span>출발일  <input style="width: 200px" type="date" name="dates" value="2022-05-05"><br><br>
-                                              도착일  <input style="width: 200px" type="date" name="dates" value="2022-05-05">
-                                            </span>
-                                    </li>
 
-                                    <li><span style="text-align:center;width: 14%">가격</span>
-                                        <span>
-                                            <select style="width: 250px" name="transport">
-                                                 <option value="" selected="">가격 범위를 선택하세요</option>
-                                                 <option value="50">~50만원</option>
-                                                 <option value="51100">51만원~100만원</option>
-                                                  <option value="101200">101만원~200만원</option>
-                                                  <option value="201300">201만원~300만원</option>
-                                                  <option value="301500">301만원~500만원</option>
-                                                  <option value="501">501만원 이상</option>
-                                           </select>
-                                        </span>
-                                    </li>
-                                    <li><span style="text-align:center;width: 14%">기타문의사항</span>
-                                        <span> <textarea type="text" style="width: 650px" rows="8"></textarea> </span>
-                                    </li>
-                                </ul>
-                            </div>
+                                            </script>
+                                        </li>
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">인원</span>
+                                            </div>
+                                            <div class="form-group col-lg-7">
+                                                성인 &nbsp; <input type="text" th:field="*{aCount}" style="border: 1px solid #ced4da;"> 명
+                                                <br><br>
+                                                아동 &nbsp; <input type="text" th:field="*{cCount}" style="border: 1px solid #ced4da;"> 명
+                                                <br><br>
+                                                유아 &nbsp; <input type="text" th:field="*{bCount}" style="border: 1px solid #ced4da;"> 명
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">여행기간</span>
+                                            </div>
+                                            <div class="form-group col-lg-7">
+                                                출발일 <input style="width: 200px" type="date" th:field="*{startDay}"><br><br>
+                                                도착일 <input style="width: 200px" type="date" th:field="*{endDay}">
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">가격</span>
+                                            </div>
+                                            <div class="form-group col-lg-7">
+                                                <span>
+                                                     <select class="form-select" style="border-radius: 3px"
+                                                             aria-label="Default select example"
+                                                             th:field="*{price}">
+                                                     <option value="" selected="">가격 범위를 선택하세요</option>
+                                                     <option th:value="50">~50만원</option>
+                                                     <option th:value="51100">51만원~100만원</option>
+                                                      <option th:value="101200">101만원~200만원</option>
+                                                      <option th:value="201300">201만원~300만원</option>
+                                                      <option th:value="301500">301만원~500만원</option>
+                                                      <option th:value="501">501만원 이상</option>
+                                                     </select>
+                                               </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">출발일 변경</span>
+                                            </div>
+                                            <div class="form-group col-lg-7">
+                                                <input type="checkbox" th:field="*{flexibleDay}"/>&nbsp;출발일 7일이내 상품 모두 추천받기
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                                                <span style="text-align:center;">기타문의사항</span>
+                                            </div>
+                                            <div class="form-group col-lg-7">
+                                                <span><textarea type="text" th:field="*{content}" class="shform-control" name=""style="border-radius: 3px" rows="7"></textarea></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -114,6 +154,7 @@
     <div class="common_form_submit">
         <button class="btn btn_theme btn_md">문의하기</button>
     </div>
+    </form>
 </section>
 
 </body></html>
