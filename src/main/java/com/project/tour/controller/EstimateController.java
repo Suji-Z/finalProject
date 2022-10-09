@@ -7,12 +7,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -54,6 +58,20 @@ public class EstimateController {
         model.addAttribute("inquiry",inquiry);
 
         return "estimate/estimateInquiryArticle";
+    }
+
+    @GetMapping("/inquiry/delete/{id}")
+    public String estimateInquiryDelete(@PathVariable("id") Long id,Principal principal) {
+
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+
+//        if(!inquiry.getEmail().equals(principal.getName())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다.");
+//        }
+
+        estimateInquiryService.delete(inquiry);
+
+        return "redirect:/estimate/list";
     }
 
     @GetMapping("/reply")

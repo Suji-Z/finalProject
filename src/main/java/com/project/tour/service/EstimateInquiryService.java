@@ -50,7 +50,7 @@ public class EstimateInquiryService {
         inquiry.setCCount(estimateInquiryForm.getCCount());
         inquiry.setStartDay(estimateInquiryForm.getStartDay());
         inquiry.setEndDay(estimateInquiryForm.getEndDay());
-        inquiry.setPrice(Integer.parseInt(estimateInquiryForm.getPrice()));
+        inquiry.setPrice(estimateInquiryForm.getPrice());
         inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
         inquiry.setContent(estimateInquiryForm.getContent());
         inquiry.setCreated(LocalDateTime.now());
@@ -61,6 +61,9 @@ public class EstimateInquiryService {
     //문의 수정하기
     
     //문의 삭제하기
+    public void delete(EstimateInquiry inquiry){
+        estimateRepository.delete(inquiry);
+    }
 
     //id를 통한 문의 검색
     public EstimateInquiry getArticle(Long id) {

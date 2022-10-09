@@ -3,6 +3,7 @@ package com.project.tour.domain;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 public class EstimateInquiry {
 
     @Id
@@ -27,15 +29,17 @@ public class EstimateInquiry {
 
     private Integer aCount;
 
+    @ColumnDefault("0")
     private Integer bCount;
 
+    @ColumnDefault("0")
     private Integer cCount;
 
     private String startDay;
 
     private String endDay;
 
-    private Integer price;
+    private String price;
 
     private Boolean flexibleDay;
 

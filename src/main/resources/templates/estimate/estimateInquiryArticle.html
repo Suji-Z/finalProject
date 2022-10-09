@@ -37,9 +37,9 @@
                   </li>
                   <li><span style="text-align:center;width: 14%">인원</span>
                     <span>
-                      성인 | <i th:text="${inquiry.aCount}"></i>명<br><br>
-                      아동 |&nbsp;<i th:text="${inquiry.cCount}"></i>명<br><br>
-                      유아 |&nbsp;<i th:text="${inquiry.bCount}"></i>명
+                      성인 |&nbsp; <i th:text="${inquiry.aCount}"></i>&nbsp;명<br><br>
+                      아동 |&nbsp;&nbsp;<i th:text="${inquiry.cCount}"></i>&nbsp;명<br><br>
+                      유아 |&nbsp;&nbsp;<i th:text="${inquiry.bCount}"></i>&nbsp;명
                     </span>
                   </li>
                   <li><span style="text-align:center;width: 14%">여행기간</span>
@@ -49,12 +49,11 @@
                     </span>
                   </li>
                   <li><span style="text-align:center;width: 14%">가격</span>
-                    <span>501만원 이상</span></li>
+                    <span th:text="${inquiry.price}"></span></li>
 
                   <li><span style="text-align:center;width: 14%">기타문의사항</span>
                     <span>
-                      <textarea type="text" style="width: 650px;border: none; resize: none;background-color:white;" rows="8" disabled="disabled">강아지는 무료죠? 귀여우니까 오히려 할인 해주셔야하는거 아닌가요?
-                      </textarea>
+                      <textarea type="text" th:text="${inquiry.content}" style="width: 650px;border: none; resize: none;background-color:white;" rows="8" disabled="disabled"></textarea>
                     </span>
                   </li>
 
@@ -69,7 +68,23 @@
   </div>
   <div class="common_form_submit">
     <button class="btn btn_theme btn_md">수정</button>
-    <button class="btn btn_theme btn_md">삭제</button>
+    <button class="delete btn btn_theme btn_md" href="javascript:void(0);" th:data-uri="@{|/estimate/inquiry/delete/${inquiry.id}|}">삭제</button>
+
+<script type="text/javascript">
+	const deleteBtn = document.getElementsByClassName("delete");
+
+	Array.from(deleteBtn).forEach(function(element){
+
+		element.addEventListener('click',function(){
+
+			if(confirm("정말 삭제하시겠습니까?")){
+				//true가 오면
+				location.href=this.dataset.uri;
+			};
+		});
+	});
+
+</script>
   </div>
 
 </section>

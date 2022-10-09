@@ -2,9 +2,7 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.lang.Nullable;
-
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
