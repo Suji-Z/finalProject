@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,18 +58,18 @@ public class EstimateInquiryService {
         estimateRepository.save(inquiry);
     }
     //문의 수정하기
-    public void modify(EstimateInquiry inquiry,EstimateInquiryForm estimateInquiryForm){
+    public void modify(EstimateInquiry inquiry,EstimateInquiryForm inquiryForm){
 
-        inquiry.setTitle(estimateInquiryForm.getTitle());
-        inquiry.setLocation(estimateInquiryForm.getLocation());
-        inquiry.setACount(estimateInquiryForm.getACount());
-        inquiry.setBCount(estimateInquiryForm.getBCount());
-        inquiry.setCCount(estimateInquiryForm.getCCount());
-        inquiry.setStartDay(estimateInquiryForm.getStartDay());
-        inquiry.setEndDay(estimateInquiryForm.getEndDay());
-        inquiry.setPrice(estimateInquiryForm.getPrice());
-        inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
-        inquiry.setContent(estimateInquiryForm.getContent());
+        inquiry.setTitle(inquiryForm.getTitle());
+        inquiry.setLocation(inquiryForm.getLocation());
+        inquiry.setACount(inquiryForm.getACount());
+        inquiry.setBCount(inquiryForm.getBCount());
+        inquiry.setCCount(inquiryForm.getCCount());
+        inquiry.setStartDay(inquiryForm.getStartDay());
+        inquiry.setEndDay(inquiryForm.getEndDay());
+        inquiry.setPrice(inquiryForm.getPrice());
+        inquiry.setFlexibleDay(inquiryForm.getFlexibleDay());
+        inquiry.setContent(inquiryForm.getContent());
         inquiry.setCreated(LocalDateTime.now());
         //inquiry.setEmail( );
 

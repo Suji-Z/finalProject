@@ -16,9 +16,6 @@ public class EstimateReply {
     @Column(name = "EstimateReplyNum")
     private Long id;
 
-
-    private Integer EstimateNum;
-
     @Column(length = 300)
     private String subject;
 
@@ -30,6 +27,10 @@ public class EstimateReply {
     private Integer layer;
 
     private Integer parent;
+
+    private String RecomPackage1;
+    private String RecomPackage2;
+    private String RecomPackage3;
 
     /** Foreign key 생성
      * 하나의 문의글에 여러개의 답변

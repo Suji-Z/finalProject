@@ -2,7 +2,10 @@ package com.project.tour.controller;
 
 import com.project.tour.domain.EstimateInquiry;
 import com.project.tour.domain.EstimateInquiryForm;
+import com.project.tour.domain.EstimateReply;
+import com.project.tour.domain.EstimateReplyForm;
 import com.project.tour.service.EstimateInquiryService;
+import com.project.tour.service.EstimateReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +29,9 @@ import java.security.Principal;
 public class EstimateController {
 
     private final EstimateInquiryService estimateInquiryService;
+    private final EstimateReplyService estimateReplyService;
 
+    /** 견적문의 리스트 출력 */
     @GetMapping("/list")
     public String estimateList(Model model, @PageableDefault Pageable pageable) {
 
@@ -36,6 +42,7 @@ public class EstimateController {
         return "estimate/estimateList";
     }
 
+    /** 견적문의 업로드 */
     @GetMapping("/inquiry/upload")
     public String estimateInquiryUpload(Model model) {
         model.addAttribute("estimateInquiryForm", new EstimateInquiryForm());
@@ -50,6 +57,7 @@ public class EstimateController {
         return "redirect:/estimate/list";
     }
 
+    /** 견적문의 게시글이동 */
     @GetMapping("/inquiry/article/{id}")
     public String estimateInquiryArticle(@PathVariable("id") Long id,EstimateInquiryForm estimateInquiryForm,Model model) {
 
@@ -60,8 +68,9 @@ public class EstimateController {
         return "estimate/estimateInquiryArticle";
     }
 
+    /** 견적문의 삭제 */
     @GetMapping("/inquiry/delete/{id}")
-    public String estimateInquiryDelete(@PathVariable("id") Long id,Principal principal,EstimateInquiryForm inquiryForm) {
+    public String estimateInquiryDelete(@PathVariable("id") Long id,Principal principal) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -74,6 +83,7 @@ public class EstimateController {
         return "redirect:/estimate/list";
     }
 
+    /** 견적문의 수정 */
     @GetMapping("/inquiry/modify/{id}")
     public String estimateInquiryModify(@PathVariable("id") Long id,Principal principal,EstimateInquiryForm inquiryForm) {
 
@@ -84,6 +94,8 @@ public class EstimateController {
         inquiryForm.setACount(inquiry.getACount());
         inquiryForm.setBCount(inquiry.getBCount());
         inquiryForm.setCCount(inquiry.getCCount());
+        inquiryForm.setStartDay(inquiry.getStartDay());
+        inquiryForm.setEndDay(inquiry.getEndDay());
         inquiryForm.setPrice(inquiry.getPrice());
         inquiryForm.setContent(inquiry.getContent());
         inquiryForm.setFlexibleDay(inquiry.getFlexibleDay());
@@ -101,15 +113,80 @@ public class EstimateController {
         return String.format("redirect:/estimate/inquiry/article/%s", id);
     }
 
+    /** 답변달기 */
+    @GetMapping("/reply/{id}")
+    public String estimateReply(@PathVariable("id") Long id,Principal principal,Model model) {
 
-    @GetMapping("/reply")
-    public String estimateReply() {
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+
+        //패키지 추천 리스트 넘겨야함
+        
+        model.addAttribute("estimateReplyForm", new EstimateReplyForm());
+        model.addAttribute("inquiry",inquiry);
+        model.addAttribute("id",id);
+
+        return "estimate/estimateReply";
+    }
+    @PostMapping("/reply/{id}")
+    public String estimateReply(@PathVariable("id") Long id,Principal principal,EstimateReplyForm replyForm) {
+
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+        estimateReplyService.create(inquiry,replyForm);
+
+        return "redirect:/estimate/list";
+    }
+
+    /** 답변게시글 이동 */
+    @GetMapping("/reply/article/{id}")
+    public String estimateReplyArticle(@PathVariable("id") Long id,Principal principal,Model model) {
+
+        EstimateReply reply = estimateReplyService.getArticle(id);
+
+        model.addAttribute("reply",reply);
+
+        return "estimate/estimateReplyArticle";
+    }
+    /** 답변 수정 */
+    @GetMapping("/reply/modify/{id}")
+    public String estimateReplyModify(@PathVariable("id") Long id,Principal principal,Model model,EstimateReplyForm replyForm) {
+
+        EstimateReply reply = estimateReplyService.getArticle(id);
+
+        replyForm.setSubject(reply.getSubject());
+        replyForm.setContent(reply.getContent());
+        replyForm.setRecomPackage1(reply.getRecomPackage1());
+        replyForm.setRecomPackage2(reply.getRecomPackage2());
+        replyForm.setRecomPackage3(reply.getRecomPackage3());
+        replyForm.setCreated(LocalDateTime.now());
+
+        EstimateInquiry inquiry = reply.getEstimateInquiry();
+
+        model.addAttribute("inquiry",inquiry);
+
         return "estimate/estimateReply";
     }
 
-    @GetMapping("/reply/article")
-    public String estimateReplyArticle() {
-        return "estimate/estimateReplyArticle";
+    @PostMapping("/reply/modify/{id}")
+    public String estimateReplyModify(@PathVariable("id") Long id,Principal principal,EstimateReplyForm replyForm) {
+
+        EstimateReply reply = estimateReplyService.getArticle(id);
+
+        estimateReplyService.modify(reply,replyForm);
+
+
+        return String.format("redirect:/estimate/reply/article/%s", id);
     }
+
+    /** 답변 삭제 */
+    @GetMapping("/reply/delete/{id}")
+    public String estimateReplyDelete(@PathVariable("id") Long id,Principal principal) {
+
+        EstimateReply reply = estimateReplyService.getArticle(id);
+
+        estimateReplyService.delete(reply);
+
+        return "redirect:/estimate/list";
+    }
+
 
 }

@@ -71,6 +71,9 @@
     <button type="button" class="btn btn_theme btn_md">수정</button>
     </a>
     <button class="delete btn btn_theme btn_md" href="javascript:void(0);" th:data-uri="@{|/estimate/inquiry/delete/${inquiry.id}|}">삭제</button>
+    <a th:href="@{|/estimate/reply/${inquiry.id}|}">
+      <button type="button" class="btn btn_theme btn_md">답변달기</button>
+    </a>
 
 <script type="text/javascript">
 	const deleteBtn = document.getElementsByClassName("delete");
