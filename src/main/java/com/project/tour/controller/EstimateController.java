@@ -7,6 +7,7 @@ import com.project.tour.domain.EstimateReplyForm;
 import com.project.tour.service.EstimateInquiryService;
 import com.project.tour.service.EstimateReplyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/estimate")
@@ -50,7 +53,13 @@ public class EstimateController {
     }
 
     @PostMapping("/inquiry/upload")
-    public String estimateInquiryUpload(EstimateInquiryForm estimateInquiryForm) {
+    public String estimateInquiryUpload(@Validated EstimateInquiryForm estimateInquiryForm,BindingResult bindingResult) {
+
+        /* 검증에 실패하면 다시 입력폼으로 */
+        if(bindingResult.hasErrors()){
+            log.info("errors = {}",bindingResult);
+            return "estimate/estimateInquiry";
+        }
 
         estimateInquiryService.create(estimateInquiryForm);
 
@@ -59,7 +68,7 @@ public class EstimateController {
 
     /** 견적문의 게시글이동 */
     @GetMapping("/inquiry/article/{id}")
-    public String estimateInquiryArticle(@PathVariable("id") Long id,EstimateInquiryForm estimateInquiryForm,Model model) {
+    public String estimateInquiryArticle(EstimateInquiryForm estimateInquiryForm,@PathVariable("id") Long id,Model model) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -104,7 +113,7 @@ public class EstimateController {
     }
 
     @PostMapping("/inquiry/modify/{id}")
-    public String estimateInquiryModify(EstimateInquiryForm inquiryForm, BindingResult bindResult,@PathVariable("id") Long id, Principal principal) {
+    public String estimateInquiryModify(@Validated EstimateInquiryForm inquiryForm, BindingResult bindResult,@PathVariable("id") Long id, Principal principal) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -128,7 +137,8 @@ public class EstimateController {
         return "estimate/estimateReply";
     }
     @PostMapping("/reply/{id}")
-    public String estimateReply(@PathVariable("id") Long id,Principal principal,EstimateReplyForm replyForm) {
+    public String estimateReply(@Validated EstimateReplyForm replyForm, BindingResult bindingResult,
+                                @PathVariable("id") Long id,Principal principal) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
         estimateReplyService.create(inquiry,replyForm);
@@ -148,7 +158,7 @@ public class EstimateController {
     }
     /** 답변 수정 */
     @GetMapping("/reply/modify/{id}")
-    public String estimateReplyModify(@PathVariable("id") Long id,Principal principal,Model model,EstimateReplyForm replyForm) {
+    public String estimateReplyModify(@Validated EstimateReplyForm replyForm,BindingResult bindingResult, @PathVariable("id") Long id,Principal principal,Model model) {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 
@@ -167,7 +177,7 @@ public class EstimateController {
     }
 
     @PostMapping("/reply/modify/{id}")
-    public String estimateReplyModify(@PathVariable("id") Long id,Principal principal,EstimateReplyForm replyForm) {
+    public String estimateReplyModify(EstimateReplyForm replyForm,BindingResult bindingResult,@PathVariable("id") Long id,Principal principal) {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 

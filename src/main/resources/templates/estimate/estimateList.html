@@ -48,6 +48,7 @@
               </tr>
               </thead>
               <tbody>
+              <tr th:if="${paging.isEmpty()}"><td colspan="4"> 문의글이 없습니다. </td></tr>
               <tr  th:each="estimateInquiry,loop : ${paging}">
                 <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                 <td align="left">
@@ -68,16 +69,23 @@
           <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
             <li class="page-item">
               <a class="page-link" th:href="@{/estimate/list?page=1}" aria-label="Previous">
-                <span aria-hidden="true">«</span>
+                <span aria-hidden="true">≪</span>
                 <span class="sr-only">Previous</span>
               </a>
             </li>
+            <li class="page-item" th:style="${paging.first}?'display:none'">
+              <a class="page-link" th:href="@{/estimate/list(page=${paging.number})}">＜</a>
+            </li>
             <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                 th:classappend="(${page}==${paging.number+1})?'active'">
-              <a class="page-link" th:href=@{/estimate/list(page=${page})} th:text="${page}"></a></li>
+              <a class="page-link" th:href=@{/estimate/list(page=${page})} th:text="${page}"></a>
+            </li>
+            <li class="page-item" th:style="${paging.first}?'display:none'">
+              <a class="page-link" th:href="@{/estimate/list(page=${paging.number+2})}">＞</a>
+            </li>
             <li class="page-item">
               <a class="page-link" th:href="@{/estimate/list(page=${paging.totalPages})}" aria-label="Next">
-                <span aria-hidden="true">»</span>
+                <span aria-hidden="true">≫</span>
                 <span class="sr-only">Next</span>
               </a>
             </li>
@@ -98,4 +106,5 @@
   </div>
 </section>
 
-</body></html>
+</body>
+</html>
