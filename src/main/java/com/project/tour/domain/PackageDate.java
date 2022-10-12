@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
@@ -17,6 +18,7 @@ public class PackageDate {
     private LocalDateTime departureDate;
 
     private Long packageNum;
+
 
     private Integer a_price;
     private Integer b_price;
