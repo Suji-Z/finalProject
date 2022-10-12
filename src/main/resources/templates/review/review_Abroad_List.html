@@ -70,16 +70,16 @@
           </div>
         </div>
       </div>
-                 <sec class="col-lg-8-sally">
+                 <div class="col-lg-8-sally">
          <div class="section_heading_center">
                             <h2>여행 후기</h2>
                         </div>
                
            
             <hr/>
-            
+           <div th:each="review,loop : ${paging}" >
            <div class="row">
-               
+
                 <div class="col-lg-6">
                     <br/><br/>
                     <div class="section_heading_center">
@@ -93,7 +93,7 @@
                        <div class="valid_date_area">
                                     <div class="valid_date_area_one">
                                         <h5>지   역</h5>
-                                        <h5>이용상품<h5>
+                                        <h5>이용상품</h5>
                                     </div>
                                     <div class="valid_date_area_one">
                                         <h5>베트남 다낭</h5>
@@ -104,221 +104,85 @@
                                         <hr/>
                                         
 
-                        <h2>
-                            <a href="news-details.html">이렇게 재밌던 여행은 처음이에요!</a>
+                        <h2 th:text="${review.subject}"></h2>
                               <div>
                                 <div class="tour_details_heading_wrapper">
-                           
-                             
-                                 <div class="review_star_all" align="right">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+
+
+                                    <div th:if="${review.score.toString().equals('5.0')}" class="review_star_all" align="right">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div th:if="${review.score.toString().equals('4.0')}" class="review_star_all" align="right">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div th:if="${review.score.toString().equals('3.0')}" class="review_star_all" align="right">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div th:if="${review.score.toString().equals('2.0')}" class="review_star_all" align="right">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div th:if="${review.score.toString().equals('1.0')}" class="review_star_all" align="right">
+                                        <i class="fas fa-star"></i>
+                                    </div>
                             
                         </div>
                             </div>
-                            <p>너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                <a href="news-details.html">자세히 보기 <i class="fas fa-arrow-right"></i></a>
-                            </p>
+                            <p th:text="${review.content}"></p>
+                                <a th:href="@{|/review/article/${review.id}|}">자세히 보기 <i class="fas fa-arrow-right"></i></a>
+
                              
                         </h2>
-                       
+
 
                     </div>
+
                 </div>
             </div>
+
             <hr/>
-            
-                    
-       <div class="row">
-                <div class="col-lg-6">
-                    <br/><br/>
-                    <div class="section_heading_center">
-                            <a href="news-details.html"><img src="/assets/img/news/news-1.PNG" alt="img"></a>
-                        </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="news_area_top_right">
-
-                       <div class="valid_date_area">
-                                    <div class="valid_date_area_one">
-                                        <h5>지   역</h5>
-                                        <h5>이용상품<h5>
-                                    </div>
-                                    <div class="valid_date_area_one">
-                                        <h5>프랑스 파리</h5>
-                                        <h5>어쩌구 패키지</h5>
-                                    </div>
-                                
-                        </div>
-                                        <hr/>
-                                        
-
-                        <h2>
-                            <a href="news-details.html">이렇게 재밌던 여행은 처음이에요!</a>
-                              <div>
-                                <div class="tour_details_heading_wrapper">
-                           
-                             
-                                 <div class="review_star_all" align="right">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                            
-                        </div>
-                            </div>
-                            <p>너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                <a href="news-details.html">자세히 보기 <i class="fas fa-arrow-right"></i></a>
-                            </p>
-                             
-                        </h2>
-                       
-
-                    </div>
-                </div>
-            </div>
-            <hr/>
-                     <div class="row">
-                <div class="col-lg-6">
-                    <br/><br/>
-                    <div class="section_heading_center">
-                            <a href="news-details.html"><img src="/assets/img/news/news-1.PNG" alt="img"></a>
-                        </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="news_area_top_right">
-
-                       <div class="valid_date_area">
-                                    <div class="valid_date_area_one">
-                                        <h5>지   역</h5>
-                                        <h5>이용상품<h5>
-                                    </div>
-                                    <div class="valid_date_area_one">
-                                        <h5>미국 뉴욕</h5>
-                                        <h5>어쩌구 패키지</h5>
-                                    </div>
-                                
-                        </div>
-                                        <hr/>
-                                        
-
-                        <h2>
-                            <a href="news-details.html">이렇게 재밌던 여행은 처음이에요!</a>
-                              <div>
-                                <div class="tour_details_heading_wrapper">
-                           
-                             
-                                 <div class="review_star_all" align="right">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                            
-                        </div>
-                            </div>
-                            <p>너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                <a href="news-details.html">자세히 보기 <i class="fas fa-arrow-right"></i></a>
-                            </p>
-                             
-                        </h2>
-                       
-
-                    </div>
-                </div>
-            </div>
-            <hr/>
-                     <div class="row">
-                <div class="col-lg-6">
-                    <br/><br/>
-                    <div class="section_heading_center">
-                            <a href="news-details.html"><img src="/assets/img/news/news-1.PNG" alt="img"></a>
-                        </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="news_area_top_right">
-
-                       <div class="valid_date_area">
-                                    <div class="valid_date_area_one">
-                                        <h5>지   역</h5>
-                                        <h5>이용상품<h5>
-                                    </div>
-                                    <div class="valid_date_area_one">
-                                        <h5>미국 괌</h5>
-                                        <h5>어쩌구 패키지</h5>
-                                    </div>
-                                
-                        </div>
-                                        <hr/>
-                                        
-
-                        <h2>
-                            <a href="news-details.html">이렇게 재밌던 여행은 처음이에요!</a>
-                              <div>
-                                <div class="tour_details_heading_wrapper">
-                           
-                             
-                                 <div class="review_star_all" align="right">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                            
-                        </div>
-                            </div>
-                            <p>너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!너무 좋아요!
-                                <a href="news-details.html">자세히 보기 <i class="fas fa-arrow-right"></i></a>
-                            </p>
-                             
-                        </h2>
-                       
-
-                    </div>
-                </div>
-            </div>
-            <hr/>
+                 </div>
                      <div class="col-lg-12" align="center">
                                        
-                                           <div class="option-item">
-            <a href="review_write.html" class="btn btn_theme btn_md">작성하기</a>
+             <div class="option-item">
+            <a th:href="@{/review/write}" class="btn btn_theme btn_md">작성하기</a>
           </div>
                                     
                                     </div>
             
-            <div class="col-lg-12">
+            <div class="col-lg-12" th:if="${!paging.isEmpty()}">
                 <div class="pagination_area">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
+                    <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,
+                    endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+
+                        <li><a class="page-link" th:href="@{/review/abroadList?page=1}">&laquo;</a></li>
+
+                        <li class="page-item" th:style="${paging.first}?'display:none'">
+                            <a class="page-link" th:href="@{/review/abroadList(page=${paging.number})}">&lsaquo;</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                                <span class="sr-only">Next</span>
-                            </a>
+
+                        <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                            th:classappend="(${page}==${paging.number+1})?'active'">
+                            <a class="page-link" th:href="@{/review/abroadList(page=${page})}" th:text="${page}"></a>
                         </li>
+
+                        <li class="page-item" th:style="${paging.last}?'display:none'">
+                            <a class="page-link" th:href="@{/review/abroadList(page=${paging.number+2})}">&rsaquo;</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/review/abroadList(page=${paging.totalPages})}" >&rsaquo;</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
