@@ -3,8 +3,11 @@ package com.project.tour.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,9 +21,7 @@ public class EstimateReplyForm {
     @Column(length = 3000)
     private String content;
 
-    private String RecomPackage1;
-    private String RecomPackage2;
-    private String RecomPackage3;
+    private List<Long> RecomPackage;
 
     private LocalDateTime created;
 

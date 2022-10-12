@@ -50,5 +50,8 @@ public class Package {
     @OneToMany(mappedBy = "packages",cascade = CascadeType.REMOVE)
     private List<PackageDate> PackageDateList;
 
+    @ManyToOne
+    private Package packageList;
+
 
 }

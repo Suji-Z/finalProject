@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,10 +25,6 @@ public class EstimateReply {
 
     private LocalDateTime created;
 
-    private Integer layer;
-
-    private Integer parent;
-
     private String RecomPackage1;
     private String RecomPackage2;
     private String RecomPackage3;
@@ -38,5 +35,6 @@ public class EstimateReply {
     @ManyToOne
     private EstimateInquiry estimateInquiry;
 
-
+    @OneToMany(mappedBy = "packageList")
+    private List<Package> packageList;
 }
