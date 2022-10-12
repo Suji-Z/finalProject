@@ -99,7 +99,8 @@ public class EstimateController {
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
         inquiryForm.setTitle(inquiry.getTitle());
-        inquiryForm.setLocation(inquiry.getLocation());
+        inquiryForm.setLocation1(inquiry.getLocation1());
+        inquiryForm.setLocation2(inquiry.getLocation2());
         inquiryForm.setACount(inquiry.getACount());
         inquiryForm.setBCount(inquiry.getBCount());
         inquiryForm.setCCount(inquiry.getCCount());
@@ -164,9 +165,12 @@ public class EstimateController {
 
         replyForm.setSubject(reply.getSubject());
         replyForm.setContent(reply.getContent());
+        /*
+        (체크박스 값이 트루일때만 데이터를 넘겨주는 조건,반복문(리스트에서 뽑아서) 필요
         replyForm.setRecomPackage1(reply.getRecomPackage1());
         replyForm.setRecomPackage2(reply.getRecomPackage2());
         replyForm.setRecomPackage3(reply.getRecomPackage3());
+        */
         replyForm.setCreated(LocalDateTime.now());
 
         EstimateInquiry inquiry = reply.getEstimateInquiry();

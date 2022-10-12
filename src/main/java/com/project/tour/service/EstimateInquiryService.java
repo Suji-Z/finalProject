@@ -43,7 +43,8 @@ public class EstimateInquiryService {
         EstimateInquiry inquiry = new EstimateInquiry();
 
         inquiry.setTitle(estimateInquiryForm.getTitle());
-        inquiry.setLocation(estimateInquiryForm.getLocation());
+        inquiry.setLocation1(estimateInquiryForm.getLocation1());
+        inquiry.setLocation2(estimateInquiryForm.getLocation2());
         inquiry.setACount(estimateInquiryForm.getACount());
         inquiry.setBCount(estimateInquiryForm.getBCount());
         inquiry.setCCount(estimateInquiryForm.getCCount());
@@ -61,7 +62,8 @@ public class EstimateInquiryService {
     public void modify(EstimateInquiry inquiry,EstimateInquiryForm inquiryForm){
 
         inquiry.setTitle(inquiryForm.getTitle());
-        inquiry.setLocation(inquiryForm.getLocation());
+        inquiry.setLocation1(inquiryForm.getLocation1());
+        inquiry.setLocation2(inquiryForm.getLocation2());
         inquiry.setACount(inquiryForm.getACount());
         inquiry.setBCount(inquiryForm.getBCount());
         inquiry.setCCount(inquiryForm.getCCount());

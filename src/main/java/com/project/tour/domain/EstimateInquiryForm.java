@@ -15,7 +15,8 @@ public class EstimateInquiryForm {
     @NotBlank(message = "제목을 입력해주세요")
     private String title;
 
-    private String location;
+    private String location1;
+    private String location2;
 
     @NotNull(message = "성인은 반드시 1인 이상이어야합니다.")
     private Integer aCount;

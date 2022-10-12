@@ -41,7 +41,7 @@
             <table class="table">
               <thead>
               <tr>
-                <th width="160">글번호</th>
+                <th width="140">글번호</th>
                 <th width="450">제목</th>
                 <th width="200">글쓴이</th>
                 <th width="200">작성일</th>
@@ -49,19 +49,32 @@
               </thead>
               <tbody>
               <tr th:if="${paging.isEmpty()}"><td colspan="4"> 문의글이 없습니다. </td></tr>
-              <tr  th:each="estimateInquiry,loop : ${paging}">
+              <th:block th:each="inquiry,loop : ${paging}">
+              <tr>
                 <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                 <td align="left">
-                  <a th:href="@{|/estimate/inquiry/article/${estimateInquiry.id}|}" th:text="${estimateInquiry.title}"></a>
+                  <a style="color: black;" th:href="@{|/estimate/inquiry/article/${inquiry.id}|}" th:text="${inquiry.title}"></a>
                 </td>
-                <td th:text="${estimateInquiry.email}"></td>
-                <td th:text="${#temporals.format(estimateInquiry.created,'yyyy-MM-dd')}"></td>
+                <td th:text="${inquiry.email}"></td>
+                <td th:text="${#temporals.format(inquiry.created,'yyyy-MM-dd')}"></td>
               </tr>
+                <!-- 답변 -->
+              <tr th:if="${!inquiry.estimateReplyList.isEmpty()}" th:each="reply : ${inquiry.estimateReplyList}">
+                <td></td>
+                <td align="left">
+                  <a style="color: black;" th:href="@{|/estimate/reply/article/${reply.id}|}" th:text="|&nbsp;&nbsp;└【답변】&nbsp;${reply.subject}|"></a>
+                </td>
+                <td th:text="관리자"></td>
+                <td th:text="${#temporals.format(inquiry.created,'yyyy-MM-dd')}"></td>
+              </tr>
+              </th:block>
+
+
               </tbody>
             </table>
           </div>
           <div class="option-item">
-            <a th:href="@{/estimate/inquiry/upload}" class="btn  btn_navber">글올리기</a>
+            <a th:href="@{/estimate/inquiry/upload}" class="btn btn_navber">글올리기</a>
           </div>
         </div>
 
@@ -80,7 +93,7 @@
                 th:classappend="(${page}==${paging.number+1})?'active'">
               <a class="page-link" th:href=@{/estimate/list(page=${page})} th:text="${page}"></a>
             </li>
-            <li class="page-item" th:style="${paging.first}?'display:none'">
+            <li class="page-item" th:style="${paging.last}?'display:none'">
               <a class="page-link" th:href="@{/estimate/list(page=${paging.number+2})}">＞</a>
             </li>
             <li class="page-item">

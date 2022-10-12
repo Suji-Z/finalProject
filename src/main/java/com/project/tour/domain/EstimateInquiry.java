@@ -25,7 +25,8 @@ public class EstimateInquiry {
     @Column(length = 500)
     private String title;
 
-    private String location;
+    private String location1;
+    private String location2;
 
     private Integer aCount;
 
