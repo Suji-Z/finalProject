@@ -406,7 +406,7 @@
                   <div class="flight_search_right">
                     <div class="flight_search_right_content" th:each="packageDates : ${packages.packageDateList}">
                     <h5><del th:text="${#numbers.formatInteger(packageDates.a_price,1,'COMMA')}"></del></h5>
-                      <h2 th:text="${#numbers.formatInteger(packageDates.a_price - (packageDates.a_price *(packageDates.discount * 0.01)),1,'COMMA')}"><h2>원</h2><span th:text="packageDates.discount"><span>% OFF</span></span></h2>
+                      <h2 th:text="${#numbers.formatInteger(packageDates.a_price - (packageDates.a_price *(packageDates.discount * 0.01)),1,'COMMA')}"></h2><h5 th:text="${packageDates.discount}">% OFF</h5>
                     <div class="all_review_star">
                       <div class="review_star_all">
                         <i class="fas fa-star"></i>
