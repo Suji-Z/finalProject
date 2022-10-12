@@ -20,6 +20,7 @@
 
 <!-- Form Area -->
 <section id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
+  <form th:action th:object="${Package}" method="post">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -392,7 +393,7 @@
                       </div>
                     <img src="/assets/img/news/news-big.png" alt="img">
                       <div class="multi_city_flight_lists_content">
-                        <br><h2>제주도 우도여행 팩희즤</h2><br>
+                        <p th:text="${package_name}"></p>
                         제주도 우도 가면 땅콩아스크림이 그리맛있어 .. . .. . 꼭드세요<br>
                       </div>
                     </div>
@@ -596,6 +597,7 @@
       </div>
   </div>
   </div>
+  </form>
 </section>
 </div>
 

@@ -15,11 +15,7 @@ public class Package {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "packageNum")
-<<<<<<< HEAD
-    private Integer id;
-=======
     private Long id;
->>>>>>> e6f92d10a8efc9dfa25645a78b48706b22efec2d
 
     private String location;
 
