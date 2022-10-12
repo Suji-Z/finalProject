@@ -25,7 +25,7 @@ public class Member {
     @Column
     private String birth;
 
-    @Column(unique = true)
+    @Column
     private String phone_num;
 
     @Column
@@ -35,6 +35,8 @@ public class Member {
 
     @Column
     private String keyword;
+
+
 
 
 
