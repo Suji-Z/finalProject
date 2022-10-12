@@ -35,26 +35,28 @@ public class BookingController {
 
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @GetMapping("/detail/{packageNum}/{departureDate}")
-    public String bookingDetail(Model model, @PathVariable("packageNum") long packageNum,
-                                @PathVariable("departureDate") LocalDateTime departureDate, Principal principal) {
+    public String bookingDetail(Model model, Principal principal
+                                , @PathVariable("packageNum") long packageNum, @PathVariable("departureDate") LocalDateTime departureDate
+                                ) {
 
         //예약하기 버튼 누르면 package table의 packageNum이랑 depatureDate를 들고 옴.
         //패키지 디테일에서 예약하기로 넘어오면 띄울 창에 list 쓰기
         //user table, package table 끌고 오기
 
         //1. packageNum에 맞는 packageData 넘기기
-        Package packageData = packageService.getPackage(packageNum);
-        model.addAttribute("packagesData",packageData);
+        Package apackage = packageService.getPackage(packageNum);
+        model.addAttribute("apackage",apackage);
 
         //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
         PackageDate packageDate = packageDateService.getPackageDate(packageNum,departureDate);
-        model.addAttribute("packagesData",packageData);
-
+        model.addAttribute("packageDate",packageDate);
 
         //3. user에 맞는 memberData 넘기기
         String email = principal.getName();  //login 아이디(email) 정보 가져오기
-        Member memberData = memberService.getMember(email);  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
-        model.addAttribute("memberData", memberData);
+        Member member = memberService.getMember(email);  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
+        model.addAttribute("member", member);
+
+        System.out.println("여기" );
 
         return "booking-pay/booking";
     }
