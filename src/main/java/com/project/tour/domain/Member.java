@@ -25,11 +25,8 @@ public class Member {
     @Column
     private String birth;
 
-    @Column(unique = true)
-    private String phone_num;
-
     @Column
-    private String gender;
+    private String phone_num;
 
     @Column
     private int point;
@@ -37,11 +34,10 @@ public class Member {
     private double coupon;
 
     @Column
-    private String keyword1;
-    @Column
-    private String keyword2;
-    @Column
-    private String keyword3;
+    private String keyword;
+
+
+
 
 
 }

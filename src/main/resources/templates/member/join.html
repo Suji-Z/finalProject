@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,6 +34,7 @@
     <section id="tour_booking_submission" class="section_padding" style="margin: auto">
         <div class="col-lg-12">
         </div>
+        <form th:action="@{/join}" th:object="${memberCreate}" method="post" >
         <div class="container" style="padding-left: 120px; width: 70%">
             <div class="row">
 
@@ -44,7 +45,7 @@
                             <h3 class="heading_theme">회원가입</h3>
                             <div class="tour_booking_form_box">
 
-         <form th:action="@{/join}" th:object="${memberCreate}" method="post">
+
               <div class="your_info_arae">
                 <ul>
                   <li  style="border-bottom-color: white">
@@ -57,106 +58,171 @@
                     </div>&nbsp;&nbsp;
 
                       <div class="">
-                        <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" th:onclick="emailCheck()">중복확인</button>
+                        <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" name="dupleEmail" th:onclick="emailCheck()">중복확인</button>
+                          <input type="hidden" name="checked_id" value="">
                       </div>
-
+                  </li>
                     <li style="margin-top: -30px">
                         <div class="col-lg-2">
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('email')}" role="alert" id="emailAlert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{email}" th:text="${err}">이메일 형식을 확인해주세요</p>
                         </div>
                         <div>
                         <span id="emailAvailable" class="valid-feedback" style="display: none"></span><span id="emailNotAvailable" class="invalid-feedback" style="display: none"></span>
                         </div>
                     </li>
 
-                  </li>
+
                     
-                <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">비밀번호</span>
+                <li style="border-bottom-color: white;">
+                    <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
+                      <label style="text-align:center;" th:for="password1">비밀번호</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{password1}" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
                     </div>
                   </li>
+
+                    <li style="margin-top: -30px;padding-bottom: -20px">
+                        <div class="col-lg-2">
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('password1')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{password1}" th:text="${err}"></p>
+                        </div>
+
+                    </li>
+
                    
-                   <li>
+                   <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">비밀번호<br/>재확인</span>
+                      <label style="text-align:center;" th:for="password2">비밀번호<br/>재확인</label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
+                      <input type="text" class="shform-control"    th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
                     </div>
                   </li>
+
+                    <li style="margin-top: -40px;padding-bottom: -10px">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('password2')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{password2}" th:text="${err}"></p>
+                        </div>
+                    </li>
                     
-                <li>
+                <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">이름</span>
+                      <label th:for="name" style="text-align:center;">이름</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
                     </div>
                   </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('name')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{name}" th:text="${err}"></p>
+                        </div>
+                    </li>
                    
-                    <li>
+                    <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">연락처</span>
+                      <label th:for="phone_num" style="text-align:center;">연락처</label>
                     </div>
                     <div class="form-group col-lg-5">
-                      <input type="text" class="shform-control" th:field="*{phone_num}" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
+                      <input type="text" class="shform-control" th:field="*{phone_num}" id="phone_num" name="phone_num" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
                     </div>&nbsp;&nbsp;
                     <div class="">
-                    <button class="btn btn_theme" style="height: 35px;font-size: 11pt">인증번호 받기</button>
+                    <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" onclick="phoneCheck()" style="height: 35px;font-size: 11pt">인증번호 전송</button>
                     </div>
-                  </li>    
+                  </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('phone_num')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{phone_num}" th:text="${err}"></p>
+                        </div>
+                    </li>
                     
-                    <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                    <li style=" border-bottom-color: white;">
+                    <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
                       <span style="text-align:center;">인증번호</span>
                     </div>
                     <div class="form-group col-lg-5">
-                      <input type="text" class="shform-control" name="" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">
-                    </div>
-                  </li>    
+                      <input type="text" class="shform-control" id="sms_num" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">
+                    </div>&nbsp;&nbsp;
+                        <div class="">
+                            <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" id="checkBtn" >본인확인</button>
+                            <input type="hidden" name="checked_phone" value="">
+                        </div>
+                  </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div>
+                            <span class="successPhoneChk" id="successPhoneChk"></span>
+                        </div>
+                    </li>
+
                     
-                    
-                    <li>
+                    <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">생년월일</span>
+                      <label th:for="birth" style="text-align:center;">생년월일</label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
                     </div>
                   </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('birth')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{birth}" th:text="${err}"></p>
+                        </div>
+                    </li>
                  
-                     <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 70px">
+                    <li style="border-bottom-color: white">
+                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <span style="text-align:center;">약관 동의</span>
                     </div>
-                    <div class="form-group col-lg-7">
-                     
-                     <div style="margin-bottom: 10px">
-                         <span style="font-size: 11pt;margin-left: 130px;">
-                             <input type="checkbox"/>&nbsp;&nbsp;(필수) 약관 모두 동의
+
+
+                     <div class="col-lg-7" style="margin-bottom: 10px;text-align: center">
+                         <span style="font-size: 11pt;">
+                            <input type="checkbox" id="checkAll" onclick="allselect(this.checked);"/>&nbsp;&nbsp;(필수) 약관 모두 동의
                          </span>
-                         </div>
-                         
-                      <div class="col-lg-20" style="height: 150px; border: 1px solid silver">
+                     </div>
+                     </li>
+
+                     <li style="margin-top: -40px;">
+                         <div class="col-lg-2"></div>
+
+                      <div class="col-lg-7" style="height: 150px; border: 1px solid silver">
+
                        <div style="margin-bottom: 10px; margin-top: 10px">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
-                             <input type="checkbox"/>&nbsp;&nbsp;(필수) 약관 모두 동의
-                         </span><br/>
+                        <label style="font-size: 11pt;margin-left: 10px;">
+                             <input type="checkbox" name="checkRow"/>&nbsp;&nbsp;(필수) 약관 모두 동의
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
-                             <input type="checkbox"/>&nbsp;&nbsp;(필수) 만14세 이상 확인
-                         </span><br/>
+                        <label style="font-size: 11pt;margin-left: 10px; " >
+                             <input type="checkbox" name="checkRow"/>&nbsp;&nbsp;(필수) 만14세 이상 확인
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
-                        <span style="font-size: 11pt;margin-left: 10px; ">
-                             <input type="checkbox"/>&nbsp;&nbsp;(필수) 개인정보 수집 및 이용동의
-                         </span><br/>
+                        <label style="font-size: 11pt;margin-left: 10px; " >
+                             <input type="checkbox" name="checkRow"/>&nbsp;&nbsp;(필수) 개인정보 수집 및 이용동의
+                         </label><br/>
                         </div>
                         
                         <div style="margin-bottom: 10px;">
@@ -164,33 +230,53 @@
                              <input type="checkbox"/>&nbsp;&nbsp;(선택) 개인정보 수집 및 이용동의
                          </span><br/>
                         </div>
-
                       </div>
-                    </div>
-                  </li>
-                  
-                  <li>
+                     </li>
+
+
+
+                                <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                       <span style="text-align:center;">선호테마</span>
                     </div>
 
-                      <div class="col-lg-10">
-                      <input type="checkbox">&nbsp;힐링
-                      <input type="checkbox">&nbsp;액티비티
-                      <input type="checkbox">&nbsp;골프
-                      <input type="checkbox">&nbsp;호캉스
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="healing">&nbsp;힐링
+                      </div>
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="activity">&nbsp;액티비티
+                      </div>
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="golf">&nbsp;골프
+                      </div>
+                      <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="hocance">&nbsp;호캉스
                      </div>
+
                   </li>
-                    <li>
+                    <li style="border-bottom-color: white; margin-top: -45px">
                         <div class="col-lg-2"></div>
 
-                      <input type="checkbox">&nbsp;가족여행
-                      <input type="checkbox">&nbsp;식도락여행
-                      <input type="checkbox">&nbsp;문화/예술
-                      <input type="checkbox">&nbsp;애견동반
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="family">&nbsp;가족여행
+                        </div>
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="food">&nbsp;식도락여행
+                        </div>
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="culture">&nbsp;문화/예술
+                        </div>
+                        <div class="col-lg-2">
+                      <input type="checkbox" th:field="*{keyword}" name="keyword" value="animal">&nbsp;애견동반
+                        </div>
 
                     </li>
-                        <span style="margin: auto"><br/>최대 3개까지 선택 가능합니다.</span>
+                    <li style="margin-top: -30px">
+                        <div class="col-lg-2"> </div>
+                        <span style="font-size: 11pt; color: grey">최대 3개까지 선택 가능합니다.</span>
+                    </li>
+
+
 
 
                 </ul>
@@ -203,7 +289,7 @@
             </div>
         </div>
         <div class="common_form_submit">
-            <button class="btn btn_theme btn_md" type="submit">가입하기</button>
+            <button class="btn btn_theme btn_md" type="submit" id="signup" onclick="return checkConfirm();">가입하기</button>
         </div>
         </form>
     </section>

@@ -20,6 +20,7 @@
 
 <!-- Form Area -->
 <section id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
+  <form th:action th:object="${Package}" method="post">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -182,14 +183,14 @@
               <div class="theme_nav_tab">
                 <nav class="theme_nav_tab_item">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link" id="nav-healing-tab" data-bs-toggle="tab" data-bs-target="#nav-nepal" type="button" role="tab" aria-controls="nav-nepal" aria-selected="false">힐링</button>
-                    <button class="nav-link" id="nav-activity-tab" data-bs-toggle="tab" data-bs-target="#nav-malaysia" type="button" role="tab" aria-controls="nav-malaysia" aria-selected="false">액티비티</button>
-                    <button class="nav-link" id="nav-golf-tab" data-bs-toggle="tab" data-bs-target="#nav-indonesia" type="button" role="tab" aria-controls="nav-indonesia" aria-selected="false">골프</button>
-                    <button class="nav-link" id="nav-hotel-tab" data-bs-toggle="tab" data-bs-target="#nav-turkey" type="button" role="tab" aria-controls="nav-turkey" aria-selected="false">호캉스</button>
-                    <button class="nav-link" id="nav-family-tab" data-bs-toggle="tab" data-bs-target="#nav-china" type="button" role="tab" aria-controls="nav-china" aria-selected="false">가족여행</button>
-                    <button class="nav-link" id="nav-food-tab" data-bs-toggle="tab" data-bs-target="#nav-darjeeling" type="button" role="tab" aria-controls="nav-darjeeling" aria-selected="false">식도락여행</button>
-                    <button class="nav-link" id="nav-cultural-tab" data-bs-toggle="tab" data-bs-target="#nav-darjeeling" type="button" role="tab" aria-controls="nav-darjeeling" aria-selected="false">문화/예술</button>
-                    <button class="nav-link" id="nav-dog-tab" data-bs-toggle="tab" data-bs-target="#nav-darjeeling" type="button" role="tab" aria-controls="nav-darjeeling" aria-selected="false">애견동반</button>
+                    <button class="nav-link" id="nav-healing-tab" data-bs-toggle="tab" data-bs-target="#nav-healing" type="button" role="tab" aria-controls="nav-healing" aria-selected="false">힐링</button>
+                    <button class="nav-link" id="nav-activity-tab" data-bs-toggle="tab" data-bs-target="#nav-activity" type="button" role="tab" aria-controls="nav-activity" aria-selected="false">액티비티</button>
+                    <button class="nav-link" id="nav-golf-tab" data-bs-toggle="tab" data-bs-target="#nav-golf" type="button" role="tab" aria-controls="nav-golf" aria-selected="false">골프</button>
+                    <button class="nav-link" id="nav-hotel-tab" data-bs-toggle="tab" data-bs-target="#nav-hotel" type="button" role="tab" aria-controls="nav-hotel" aria-selected="false">호캉스</button>
+                    <button class="nav-link" id="nav-family-tab" data-bs-toggle="tab" data-bs-target="#nav-family" type="button" role="tab" aria-controls="nav-family" aria-selected="false">가족여행</button>
+                    <button class="nav-link" id="nav-food-tab" data-bs-toggle="tab" data-bs-target="#nav-food" type="button" role="tab" aria-controls="nav-food" aria-selected="false">식도락여행</button>
+                    <button class="nav-link" id="nav-cultural-tab" data-bs-toggle="tab" data-bs-target="#nav-cultural" type="button" role="tab" aria-controls="nav-cultural" aria-selected="false">문화/예술</button>
+                    <button class="nav-link" id="nav-dog-tab" data-bs-toggle="tab" data-bs-target="#nav-dog" type="button" role="tab" aria-controls="nav-dog" aria-selected="false">애견동반</button>
                   </div>
                 </nav>
               </div>
@@ -379,10 +380,12 @@
       </div>
       </div>
       </div>
+
       <div class="col-lg-9">
         <div class="row">
           <div class="col-lg-12">
             <div class="flight_search_result_wrapper">
+              <div th:each="packages,loop : ${paging}">
               <div class="flight_search_item_wrappper">
                 <div class="flight_search_items">
                   <div class="multi_city_flight_lists">
@@ -390,17 +393,20 @@
                       <div class="heart_destinations">
                         <i class="fas fa-heart"></i>
                       </div>
-                    <img src="/assets/img/news/news-big.png" alt="img">
+
+
+                    <img th:src ="@{/assets/img/tour/} + ${packages.previewImage}" alt="img"/>
                       <div class="multi_city_flight_lists_content">
-                        <br><h2>제주도 우도여행 팩희즤</h2><br>
-                        제주도 우도 가면 땅콩아스크림이 그리맛있어 .. . .. . 꼭드세요<br>
+                        <h3><a th:href="@{|/abroad/detail/${packages.id}|}" th:text="${packages.packageName}"></a></h3>
+                        <br/>
+                        <h5 th:text="${packages.packageInfo}"></h5>
+                      </div>
                       </div>
                     </div>
-                </div>
                   <div class="flight_search_right">
-                    <div class="flight_search_right_content">
-                    <h5><del>$9,560</del></h5>
-                    <h2>$7,560<sup>*20% OFF</sup></h2>
+                    <div class="flight_search_right_content" th:each="packageDates : ${packages.packageDateList}">
+                    <h5><del th:text="${#numbers.formatInteger(packageDates.a_price,1,'COMMA')}"></del></h5>
+                      <h2 th:text="${#numbers.formatInteger(packageDates.a_price - (packageDates.a_price *(packageDates.discount * 0.01)),1,'COMMA')}"></h2><h5 th:text="${packageDates.discount}">% OFF</h5>
                     <div class="all_review_star">
                       <div class="review_star_all">
                         <i class="fas fa-star"></i>
@@ -409,180 +415,21 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                       </div>
-                      <span class="review_rating">4.8/5 Excellent</span> <span
-                              class="review_count">(10+ reviewes)</span>
+                      <span class="review_rating">4.8/5 Excellent</span>
+                      <span class="review_count">(10+ reviewes)</span>
+
+                      <br/><br/><br/>
+                      <h6>조회수: <span th:text="${packages.hitCount}"></span></h6>
                     </div>
                     </div>
-                    <a href="/abroad/detail" class="btn btn_theme btn_sm">예약하기</a>
+                    <a th:href="@{|/abroad/detail/${packages.id}|}" class="btn btn_theme btn_sm">예약하기</a>
                   </div>
                 </div>
               </div>
-              <!-- Flight Search Item -->
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="flight_search_result_wrapper">
-                    <div class="flight_search_item_wrappper">
-                      <div class="flight_search_items">
-                        <div class="multi_city_flight_lists">
-                          <div class="top_destinations_box img_hover">
-                            <div class="heart_destinations">
-                              <i class="fas fa-heart"></i>
-                            </div>
-                            <img src="/assets/img/news/news-big.png" alt="img">
-                            <div class="multi_city_flight_lists_content">
-                              <br><h2>일본 여행 패키지</h2><br>
-                              오하요 곤니찌와 아리가또 스미마셍 마타아시타<br>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="flight_search_right">
-                          <div class="flight_search_right_content">
-                            <h5><del>$9,560</del></h5>
-                            <h2>$7,560<sup>*20% OFF</sup></h2>
-                            <div class="all_review_star">
-                              <div class="review_star_all">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                              </div>
-                              <span class="review_rating">4.8/5 Excellent</span> <span
-                                    class="review_count">(10+ reviewes)</span>
-                            </div>
-                          </div>
-                          <a href="/abroad/detail" class="btn btn_theme btn_sm">예약하기</a>
-                        </div>
-                      </div>
-                    </div>
-
               </div>
-              <!-- Flight Search Item -->
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="flight_search_result_wrapper">
-                          <div class="flight_search_item_wrappper">
-                            <div class="flight_search_items">
-                              <div class="multi_city_flight_lists">
-                                <div class="top_destinations_box img_hover">
-                                  <div class="heart_destinations">
-                                    <i class="fas fa-heart"></i>
-                                  </div>
-                                  <img src="/assets/img/news/news-big.png" alt="img">
-                                  <div class="multi_city_flight_lists_content">
-                                    <br><h2>제주도 애월</h2><br>
-                                    제주도 애월<br>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="flight_search_right">
-                                <div class="flight_search_right_content">
-                                  <h5><del>$9,560</del></h5>
-                                  <h2>$7,560<sup>*20% OFF</sup></h2>
-                                  <div class="all_review_star">
-                                    <div class="review_star_all">
-                                      <i class="fas fa-star"></i>
-                                      <i class="fas fa-star"></i>
-                                      <i class="fas fa-star"></i>
-                                      <i class="fas fa-star"></i>
-                                      <i class="fas fa-star"></i>
-                                    </div>
-                                    <span class="review_rating">4.8/5 Excellent</span> <span
-                                          class="review_count">(10+ reviewes)</span>
-                                  </div>
-                                </div>
-                                <a href="/abroad/detail" class="btn btn_theme btn_sm">예약하기</a>
-                              </div>
-                            </div>
-                          </div>
-              </div>
-              <!-- Flight Search Item -->
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <div class="flight_search_result_wrapper">
-                                <div class="flight_search_item_wrappper">
-                                  <div class="flight_search_items">
-                                    <div class="multi_city_flight_lists">
-                                      <div class="top_destinations_box img_hover">
-                                        <div class="heart_destinations">
-                                          <i class="fas fa-heart"></i>
-                                        </div>
-                                        <img src="/assets/img/news/news-big.png" alt="img">
-                                        <div class="multi_city_flight_lists_content">
-                                          <br><h2>유럽여행 패키지</h2><br>
-                                          가고싶다,,,,<br>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="flight_search_right">
-                                      <div class="flight_search_right_content">
-                                        <h5><del>$9,560</del></h5>
-                                        <h2>$7,560<sup>*20% OFF</sup></h2>
-                                        <div class="all_review_star">
-                                          <div class="review_star_all">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                          </div>
-                                          <span class="review_rating">4.8/5 Excellent</span> <span
-                                                class="review_count">(10+ reviewes)</span>
-                                        </div>
-                                      </div>
-                                      <a href="/abroad/detail" class="btn btn_theme btn_sm">예약하기</a>
-                                    </div>
-                                  </div>
-                                </div>
-
-              </div>
-              <!-- Flight Search Item -->
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="flight_search_result_wrapper">
-                      <div class="flight_search_item_wrappper">
-                        <div class="flight_search_items">
-                          <div class="multi_city_flight_lists">
-                            <div class="top_destinations_box img_hover">
-                              <div class="heart_destinations">
-                                <i class="fas fa-heart"></i>
-                              </div>
-                              <img src="/assets/img/news/news-big.png" alt="img">
-                              <div class="multi_city_flight_lists_content">
-                                <br><h2>미국여행 패키지</h2><br>
-                                하와이,,,<br>
-                              </div>
-                            </div>
-                          </div>
-
-                            <div class="flight_search_right">
-                              <div class="flight_search_right_content">
-                                <h5><del>$9,560</del></h5>
-                                <h2>$7,560<sup>*20% OFF</sup></h2>
-                                <div class="all_review_star">
-                                  <div class="review_star_all">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                  </div>
-                                  <span class="review_rating">4.8/5 Excellent</span> <span
-                                        class="review_count">(10+ reviewes)</span>
-                                              </div>
-                                            </div>
-                                            <a href="/abroad/detail" class="btn btn_theme btn_sm">예약하기</a>
-                                          </div>
-                                        </div>
-                                      </div>
-                              </div>
-                              </div>
-                            </div>
+            </div>
                             <div class="load_more_flight">
-                              <button class="btn btn_md"><i class="fas fa-spinner"></i> 새로고침?</button>
+                              <button class="btn btn_md" th:href="@{|/abroad/list|}"><i class="fas fa-spinner"></i> 초기화</button>
                           </div>
                         </div>
                       </div>
@@ -596,6 +443,7 @@
       </div>
   </div>
   </div>
+  </form>
 </section>
 </div>
 

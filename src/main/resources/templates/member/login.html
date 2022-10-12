@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+
+    <!-- preloader Area -->
+
+
+    <!-- Header Area -->
+
+
+    <!-- Common Banner Area -->
+    <section id="common_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="common_bannner_text">
+                        <h2>로그인</h2>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><span><i class="fas fa-circle"></i></span> Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--  Common Author Area -->
+    <section id="common_author_area" class="section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="common_author_boxed">
+                        <div class="common_author_heading">
+                            <h2>여행어때</h2>
+                        </div>
+                        <div class="common_author_form">
+                            <form th:action="@{/login}" id="main_author_form" method="post">
+                                <div for="email" class="form-group">
+                                    <input type="text" name="email" class="form-control" placeholder="이메일 주소 혹은 ID" />
+                                </div>
+                                <div for="password" class="form-group">
+                                    <input type="password" name="password" class="form-control" placeholder="비밀번호" />
+                                </div>
+                                <div style="text-align: right; margin-top: -10px">
+
+                                    <a th:href="@{/login/searchEmail}" style="font-size: 11pt">아이디 찾기</a>
+                                    &nbsp;
+                                    <a th:href="@{/login/searchPassword}" style="font-size: 11pt">비밀번호 찾기</a>
+                                    
+                                </div>
+
+                                <div th:if="${param.error}">
+                                    <div class="alert alert-danger">
+                                        아이디 또는 패스워드가 일치하지 않습니다.
+                                    </div>
+                                </div>
+
+                                <div class="common_form_submit">
+                                    <button class="btn btn_theme btn_md">로그인</button>
+                                </div>
+                                
+                                
+                                <div class="have_acount_area">
+                                <p style="color: black;font-size: 13pt;padding-top: 20px"><b>간편 로그인</b><br/></p>
+                                <p style="padding-top: 15px; padding-bottom: 15px">
+                                <img src="/assets/img/icon/naver.png"/>&nbsp;&nbsp;
+                               
+                                <img src="/assets/img/icon/kakao.png"/>
+                                </p>
+                                </div>
+                                <div class="have_acount_area">
+                                    <p>아직 회원이 아니신가요? <a th:href="@{/join}">회원가입</a></p>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cta Area -->
+</body>
+</html>
