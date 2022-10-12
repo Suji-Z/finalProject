@@ -31,6 +31,9 @@ public class MemberCreate {
     @NotEmpty(message = "필수 입력 항목 입니다.")
     @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
     private String phone_num;
+
+    private String sms_num;
+
     /*
         private String total_agree;
 
@@ -43,20 +46,7 @@ public class MemberCreate {
         @NotEmpty(message = "필수 항목 동의가 필요합니다.")
         private String agree3;
     */
-    private String keyword1;
+    private String keyword;
 
-    private String keyword2;
-
-    private String keyword3;
-
-    private String keyword4;
-
-    private String keyword5;
-
-    private String keyword6;
-
-    private String keyword7;
-
-    private String keyword8;
 
 }
