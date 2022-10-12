@@ -33,9 +33,10 @@
                                             <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                                                 <span style="text-align:center;">제목</span>
                                             </div>
+
                                             <div class="form-group col-lg-7">
-                                                <input type="text" class="shform-control"
-                                                       style="border-radius: 3px; font-size: 10pt" th:field="*{title}">
+                                                <input type="text" class="shform-control" style="border-radius: 3px; font-size: 10pt" th:field="*{title}">
+                                                <div th:errors="*{title}" style="color: #dc3545;"></div>
                                             </div>
                                         </li>
                                         <li>
@@ -91,7 +92,7 @@
                                             </div>
                                             <div class="form-group col-lg-7">
                                                 성인 &nbsp; <input type="text" th:field="*{aCount}" style="border: 1px solid #ced4da;"> 명
-                                                <br><br>
+                                                <div th:errors="*{aCount}" style="color: #dc3545;"></div> <br><br>
                                                 아동 &nbsp; <input type="text" th:field="*{cCount}" style="border: 1px solid #ced4da;"> 명
                                                 <br><br>
                                                 유아 &nbsp; <input type="text" th:field="*{bCount}" style="border: 1px solid #ced4da;"> 명

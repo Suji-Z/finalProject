@@ -114,7 +114,13 @@ public class EstimateController {
     }
 
     @PostMapping("/inquiry/modify/{id}")
-    public String estimateInquiryModify(@Validated EstimateInquiryForm inquiryForm, BindingResult bindResult,@PathVariable("id") Long id, Principal principal) {
+    public String estimateInquiryModify(@Validated EstimateInquiryForm inquiryForm, BindingResult bindingResult,@PathVariable("id") Long id, Principal principal) {
+
+        /* 검증에 실패하면 다시 입력폼으로 */
+        if(bindingResult.hasErrors()){
+            log.info("errors = {}",bindingResult);
+            return "estimate/estimateInquiry";
+        }
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -141,6 +147,12 @@ public class EstimateController {
     public String estimateReply(@Validated EstimateReplyForm replyForm, BindingResult bindingResult,
                                 @PathVariable("id") Long id,Principal principal) {
 
+        /* 검증에 실패하면 다시 입력폼으로 */
+        if(bindingResult.hasErrors()){
+            log.info("errors = {}",bindingResult);
+            return "estimate/estimateReply";
+        }
+
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
         estimateReplyService.create(inquiry,replyForm);
 
@@ -159,11 +171,11 @@ public class EstimateController {
     }
     /** 답변 수정 */
     @GetMapping("/reply/modify/{id}")
-    public String estimateReplyModify(@Validated EstimateReplyForm replyForm,BindingResult bindingResult, @PathVariable("id") Long id,Principal principal,Model model) {
+    public String estimateReplyModifyg(EstimateReplyForm replyForm, @PathVariable("id") Long id,Principal principal,Model model) {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 
-        replyForm.setSubject(reply.getSubject());
+        replyForm.setTitle(reply.getTitle());
         replyForm.setContent(reply.getContent());
         /*
         (체크박스 값이 트루일때만 데이터를 넘겨주는 조건,반복문(리스트에서 뽑아서) 필요
@@ -181,9 +193,20 @@ public class EstimateController {
     }
 
     @PostMapping("/reply/modify/{id}")
-    public String estimateReplyModify(EstimateReplyForm replyForm,BindingResult bindingResult,@PathVariable("id") Long id,Principal principal) {
+    public String estimateReplyModifyp(@Validated EstimateReplyForm replyForm,BindingResult bindingResult,@PathVariable("id") Long id,Principal principal,Model model) {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
+
+        /* 검증에 실패하면 다시 입력폼으로 */
+        if(bindingResult.hasErrors()){
+
+            EstimateInquiry inquiry = reply.getEstimateInquiry();
+
+            model.addAttribute("inquiry",inquiry);
+
+            log.info("errors = {}",bindingResult);
+            return "estimate/estimateReply";
+        }
 
         estimateReplyService.modify(reply,replyForm);
 

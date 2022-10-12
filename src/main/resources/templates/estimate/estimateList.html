@@ -62,7 +62,7 @@
               <tr th:if="${!inquiry.estimateReplyList.isEmpty()}" th:each="reply : ${inquiry.estimateReplyList}">
                 <td></td>
                 <td align="left">
-                  <a style="color: black;" th:href="@{|/estimate/reply/article/${reply.id}|}" th:text="|&nbsp;&nbsp;└【답변】&nbsp;${reply.subject}|"></a>
+                  <a style="color: black;" th:href="@{|/estimate/reply/article/${reply.id}|}" th:text="|&nbsp;&nbsp;└【답변】&nbsp;${reply.title}|"></a>
                 </td>
                 <td th:text="관리자"></td>
                 <td th:text="${#temporals.format(inquiry.created,'yyyy-MM-dd')}"></td>

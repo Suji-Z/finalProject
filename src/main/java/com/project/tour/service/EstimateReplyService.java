@@ -2,7 +2,6 @@ package com.project.tour.service;
 
 import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.EstimateInquiry;
-import com.project.tour.domain.EstimateInquiryForm;
 import com.project.tour.domain.EstimateReply;
 import com.project.tour.domain.EstimateReplyForm;
 import com.project.tour.repository.EstimateReplyRepository;
@@ -25,11 +24,11 @@ public class EstimateReplyService {
 
         EstimateReply reply = new EstimateReply();
 
-        reply.setSubject(replyForm.getSubject());
+        reply.setTitle(replyForm.getTitle());
         reply.setContent(replyForm.getContent());
-        reply.setRecomPackage1(replyForm.getRecomPackage1());
-        reply.setRecomPackage2(replyForm.getRecomPackage2());
-        reply.setRecomPackage3(replyForm.getRecomPackage3());
+//        reply.setRecomPackage1(replyForm.getRecomPackage1());
+//        reply.setRecomPackage2(replyForm.getRecomPackage2());
+//        reply.setRecomPackage3(replyForm.getRecomPackage3());
         reply.setCreated(LocalDateTime.now());
         reply.setEstimateInquiry(inquiry);
 
@@ -39,10 +38,10 @@ public class EstimateReplyService {
     //답변수정하기
     public void modify(EstimateReply reply,EstimateReplyForm replyForm){
 
-        reply.setSubject(replyForm.getSubject());
-        reply.setRecomPackage1(replyForm.getRecomPackage1());
-        reply.setRecomPackage2(replyForm.getRecomPackage2());
-        reply.setRecomPackage3(replyForm.getRecomPackage3());
+        reply.setTitle(replyForm.getTitle());
+//        reply.setRecomPackage1(replyForm.getRecomPackage1());
+//        reply.setRecomPackage2(replyForm.getRecomPackage2());
+//        reply.setRecomPackage3(replyForm.getRecomPackage3());
         reply.setContent(replyForm.getContent());
         reply.setCreated(LocalDateTime.now());
 

@@ -18,7 +18,7 @@ public class EstimateReply {
     private Long id;
 
     @Column(length = 300)
-    private String subject;
+    private String title;
 
     @Column(length = 3000)
     private String content;
@@ -35,6 +35,4 @@ public class EstimateReply {
     @ManyToOne
     private EstimateInquiry estimateInquiry;
 
-    @OneToMany(mappedBy = "packageList")
-    private List<Package> packageList;
 }

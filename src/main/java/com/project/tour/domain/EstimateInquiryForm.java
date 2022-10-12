@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -12,13 +13,14 @@ import java.time.LocalDateTime;
 @Setter
 public class EstimateInquiryForm {
 
-    @NotBlank(message = "제목을 입력해주세요")
+    @NotBlank
     private String title;
 
     private String location1;
     private String location2;
 
-    @NotNull(message = "성인은 반드시 1인 이상이어야합니다.")
+    @NotNull
+    @Min(1)
     private Integer aCount;
 
     @Nullable

@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,9 +16,11 @@ public class EstimateReplyForm {
 
     private Long EstimateReplyNum;
 
+    @NotBlank
     @Column(length = 300)
-    private String subject;
+    private String title;
 
+    @NotBlank
     @Column(length = 3000)
     private String content;
 
