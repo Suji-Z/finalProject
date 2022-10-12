@@ -33,9 +33,10 @@
                                             <div class="col-lg-2" style="text-align: center; margin-top: 10px">
                                                 <span style="text-align:center;">제목</span>
                                             </div>
+
                                             <div class="form-group col-lg-7">
-                                                <input type="text" class="shform-control"
-                                                       style="border-radius: 3px; font-size: 10pt" th:field="*{title}">
+                                                <input type="text" class="shform-control" style="border-radius: 3px; font-size: 10pt" th:field="*{title}">
+                                                <div th:errors="*{title}" style="color: #dc3545;"></div>
                                             </div>
                                         </li>
                                         <li>
@@ -43,19 +44,20 @@
                                                 <span style="text-align:center;">여행지역</span>
                                             </div>
                                             <div class="form-group col-lg-2">
-                                                <select class="form-select" style="width:90%;"
+                                                <select th:field="*{location1}"
+                                                        class="form-select" style="width:90%;"
                                                         aria-label="Default select example"
-                                                        onchange="categoryChange(this)">
-                                                    <option>선택하세요</option>
-                                                    <option value="a">아시아</option>
-                                                    <option value="b">유럽</option>
-                                                    <option value="c">미국</option>
-                                                    <option value="d">제주</option>
+                                                        th:onchange="categoryChange(this)">
+                                                    <option value="">선택하세요</option>
+                                                    <option th:value="아시아">아시아</option>
+                                                    <option th:value="유럽">유럽</option>
+                                                    <option th:value="미국">미국</option>
+                                                    <option th:value="제주">제주</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-lg-3">
-                                                <select th:field="*{location}" style="width:90%;" class="form-select" aria-label="Default select example">
-                                                    <option value="" selected="selected">상세 지역을 선택하세요</option>
+                                                <select th:field="*{location2}" style="width:90%;" class="form-select" aria-label="Default select example">
+                                                    <option value="">상세 지역을 선택하세요</option>
                                                 </select>
                                             </div>
                                             <script>
@@ -65,12 +67,12 @@
                                                         var location_b = ["서유럽", "동유럽","북유럽","발칸", "스페인","터키/그리스","이집트"];
                                                         var location_c = ["미서부", "미동부", "하와이", "캐나다", "중남미"];
                                                         var location_d = ["제주시", "중문", "서귀포", "애월"];
-                                                        var target = document.getElementById("location");
+                                                        var target = document.getElementById("location2");
 
-                                                        if(f.value == "a") var e = location_a;
-                                                        else if(f.value == "b") var e = location_b;
-                                                        else if(f.value == "c") var e = location_c;
-                                                        else if(f.value == "d") var e = location_d;
+                                                        if(f.value == "아시아") var e = location_a;
+                                                        else if(f.value == "유럽") var e = location_b;
+                                                        else if(f.value == "미국") var e = location_c;
+                                                        else if(f.value == "제주") var e = location_d;
 
                                                         target.options.length = 0;
 
@@ -90,7 +92,7 @@
                                             </div>
                                             <div class="form-group col-lg-7">
                                                 성인 &nbsp; <input type="text" th:field="*{aCount}" style="border: 1px solid #ced4da;"> 명
-                                                <br><br>
+                                                <div th:errors="*{aCount}" style="color: #dc3545;"></div> <br><br>
                                                 아동 &nbsp; <input type="text" th:field="*{cCount}" style="border: 1px solid #ced4da;"> 명
                                                 <br><br>
                                                 유아 &nbsp; <input type="text" th:field="*{bCount}" style="border: 1px solid #ced4da;"> 명
@@ -115,13 +117,13 @@
                                                      <select class="form-select" style="border-radius: 3px"
                                                              aria-label="Default select example"
                                                              th:field="*{price}">
-                                                     <option value="" selected="">가격 범위를 선택하세요</option>
-                                                     <option th:value="50">~50만원</option>
-                                                     <option th:value="51100">51만원~100만원</option>
-                                                      <option th:value="101200">101만원~200만원</option>
-                                                      <option th:value="201300">201만원~300만원</option>
-                                                      <option th:value="301500">301만원~500만원</option>
-                                                      <option th:value="501">501만원 이상</option>
+                                                     <option value="" >가격 범위를 선택하세요</option>
+                                                     <option th:value="50만원이하">50만원 이하</option>
+                                                     <option th:value="51만원-100만원">51만원-100만원</option>
+                                                      <option th:value="101만원-200만원">101만원-200만원</option>
+                                                      <option th:value="201만원-300만원">201만원-300만원</option>
+                                                      <option th:value="301만원-500만원">301만원-500만원</option>
+                                                      <option th:value="501만원이상">501만원 이상</option>
                                                      </select>
                                                </span>
                                             </div>
@@ -131,7 +133,8 @@
                                                 <span style="text-align:center;">출발일 변경</span>
                                             </div>
                                             <div class="form-group col-lg-7">
-                                                <input type="checkbox" th:field="*{flexibleDay}"/>&nbsp;출발일 7일이내 상품 모두 추천받기
+                                                <input type="checkbox" id="flexibleDay" th:field="*{flexibleDay}"/>
+                                                <label for="flexibleDay">출발일 7일이내 상품 모두 추천받기</label>
                                             </div>
                                         </li>
                                         <li>

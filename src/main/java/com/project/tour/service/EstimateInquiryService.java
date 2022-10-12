@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,13 +43,14 @@ public class EstimateInquiryService {
         EstimateInquiry inquiry = new EstimateInquiry();
 
         inquiry.setTitle(estimateInquiryForm.getTitle());
-        inquiry.setLocation(estimateInquiryForm.getLocation());
+        inquiry.setLocation1(estimateInquiryForm.getLocation1());
+        inquiry.setLocation2(estimateInquiryForm.getLocation2());
         inquiry.setACount(estimateInquiryForm.getACount());
         inquiry.setBCount(estimateInquiryForm.getBCount());
         inquiry.setCCount(estimateInquiryForm.getCCount());
         inquiry.setStartDay(estimateInquiryForm.getStartDay());
         inquiry.setEndDay(estimateInquiryForm.getEndDay());
-        inquiry.setPrice(Integer.parseInt(estimateInquiryForm.getPrice()));
+        inquiry.setPrice(estimateInquiryForm.getPrice());
         inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
         inquiry.setContent(estimateInquiryForm.getContent());
         inquiry.setCreated(LocalDateTime.now());
@@ -59,8 +59,28 @@ public class EstimateInquiryService {
         estimateRepository.save(inquiry);
     }
     //문의 수정하기
-    
+    public void modify(EstimateInquiry inquiry,EstimateInquiryForm inquiryForm){
+
+        inquiry.setTitle(inquiryForm.getTitle());
+        inquiry.setLocation1(inquiryForm.getLocation1());
+        inquiry.setLocation2(inquiryForm.getLocation2());
+        inquiry.setACount(inquiryForm.getACount());
+        inquiry.setBCount(inquiryForm.getBCount());
+        inquiry.setCCount(inquiryForm.getCCount());
+        inquiry.setStartDay(inquiryForm.getStartDay());
+        inquiry.setEndDay(inquiryForm.getEndDay());
+        inquiry.setPrice(inquiryForm.getPrice());
+        inquiry.setFlexibleDay(inquiryForm.getFlexibleDay());
+        inquiry.setContent(inquiryForm.getContent());
+        inquiry.setCreated(LocalDateTime.now());
+        //inquiry.setEmail( );
+
+        estimateRepository.save(inquiry);
+    }
     //문의 삭제하기
+    public void delete(EstimateInquiry inquiry){
+        estimateRepository.delete(inquiry);
+    }
 
     //id를 통한 문의 검색
     public EstimateInquiry getArticle(Long id) {
