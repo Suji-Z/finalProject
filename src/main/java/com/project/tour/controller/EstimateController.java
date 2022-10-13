@@ -1,17 +1,17 @@
 package com.project.tour.controller;
 
-import com.project.tour.domain.EstimateInquiry;
-import com.project.tour.domain.EstimateInquiryForm;
-import com.project.tour.domain.EstimateReply;
-import com.project.tour.domain.EstimateReplyForm;
+import com.project.tour.domain.*;
 import com.project.tour.service.EstimateInquiryService;
 import com.project.tour.service.EstimateReplyService;
+import com.project.tour.service.MemberSecurityService;
+import com.project.tour.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +33,7 @@ public class EstimateController {
 
     private final EstimateInquiryService estimateInquiryService;
     private final EstimateReplyService estimateReplyService;
+    private final MemberService memberService;
 
     /** 견적문의 리스트 출력 */
     @GetMapping("/list")
@@ -46,14 +47,16 @@ public class EstimateController {
     }
 
     /** 견적문의 업로드 */
+    @PreAuthorize("isAuthenticated()") //로그인해야지 접근가능
     @GetMapping("/inquiry/upload")
-    public String estimateInquiryUpload(Model model) {
+    public String estimateInquiryUpload(Model model,Principal principal) {
         model.addAttribute("estimateInquiryForm", new EstimateInquiryForm());
         return "estimate/estimateInquiry";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/inquiry/upload")
-    public String estimateInquiryUpload(@Validated EstimateInquiryForm estimateInquiryForm,BindingResult bindingResult) {
+    public String estimateInquiryUpload(@Validated EstimateInquiryForm estimateInquiryForm,BindingResult bindingResult,Principal principal) {
 
         /* 검증에 실패하면 다시 입력폼으로 */
         if(bindingResult.hasErrors()){
@@ -61,14 +64,17 @@ public class EstimateController {
             return "estimate/estimateInquiry";
         }
 
-        estimateInquiryService.create(estimateInquiryForm);
+        Member member= memberService.getMember(principal.getName());
+
+        estimateInquiryService.create(estimateInquiryForm,member.getEmail());
 
         return "redirect:/estimate/list";
     }
 
     /** 견적문의 게시글이동 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/inquiry/article/{id}")
-    public String estimateInquiryArticle(EstimateInquiryForm estimateInquiryForm,@PathVariable("id") Long id,Model model) {
+    public String estimateInquiryArticle(EstimateInquiryForm estimateInquiryForm,@PathVariable("id") Long id,Model model,Principal principal) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -78,6 +84,7 @@ public class EstimateController {
     }
 
     /** 견적문의 삭제 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/inquiry/delete/{id}")
     public String estimateInquiryDelete(@PathVariable("id") Long id,Principal principal) {
 
@@ -93,6 +100,7 @@ public class EstimateController {
     }
 
     /** 견적문의 수정 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/inquiry/modify/{id}")
     public String estimateInquiryModify(@PathVariable("id") Long id,Principal principal,EstimateInquiryForm inquiryForm) {
 
@@ -130,10 +138,13 @@ public class EstimateController {
     }
 
     /** 답변달기 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/{id}")
     public String estimateReply(@PathVariable("id") Long id,Principal principal,Model model) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+
+        Member member= memberService.getMember(principal.getName());
 
         //패키지 추천 리스트 넘겨야함
         
@@ -143,6 +154,7 @@ public class EstimateController {
 
         return "estimate/estimateReply";
     }
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/reply/{id}")
     public String estimateReply(@Validated EstimateReplyForm replyForm, BindingResult bindingResult,
                                 @PathVariable("id") Long id,Principal principal) {
@@ -160,6 +172,7 @@ public class EstimateController {
     }
 
     /** 답변게시글 이동 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/article/{id}")
     public String estimateReplyArticle(@PathVariable("id") Long id,Principal principal,Model model) {
 
@@ -170,6 +183,7 @@ public class EstimateController {
         return "estimate/estimateReplyArticle";
     }
     /** 답변 수정 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/modify/{id}")
     public String estimateReplyModifyg(EstimateReplyForm replyForm, @PathVariable("id") Long id,Principal principal,Model model) {
 
@@ -215,6 +229,7 @@ public class EstimateController {
     }
 
     /** 답변 삭제 */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/delete/{id}")
     public String estimateReplyDelete(@PathVariable("id") Long id,Principal principal) {
 
