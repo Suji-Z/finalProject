@@ -25,11 +25,12 @@ public class Member {
     @Column
     private String birth;
 
-    @Column
-    private String phone_num;
+    @Column(name = "phone_num")
+    private String phone;
 
     @Column
     private int point;
+
     @Column
     private double coupon;
 
@@ -37,6 +38,9 @@ public class Member {
     private String keyword;
 
 
+    public void updatePassword(String password){
+        this.password = password;
+    }
 
 
 

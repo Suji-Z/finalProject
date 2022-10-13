@@ -44,7 +44,8 @@ public class PackageService {
         PackageDate packageDates = new PackageDate();
 
         packages.setId(apackage.getId());
-        packages.setLocation(apackage.getLocation());
+        packages.setLocation1(apackage.getLocation1());
+        packages.setLocation2(apackage.getLocation2());
         packages.setPackageName(apackage.getPackageName());
         packages.setHotelName(apackage.getHotelName());
         packages.setPostStart(apackage.getPostStart());
@@ -57,7 +58,7 @@ public class PackageService {
         packages.setHitCount(apackage.getHitCount());
         packages.setKeyword(apackage.getKeyword());
         packages.setTransport(apackage.getTransport());
-        packageDates.setDepartureDate(packageDate.getDepartureDate());
+        packageDates.setDeparture(packageDate.getDeparture());
         packageDates.setDiscount(packageDate.getDiscount());
         packageDates.setA_price(packageDate.getA_price());
         packageDates.setB_price(packageDate.getB_price());

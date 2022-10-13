@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}"
-      xmlns:th="http://thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
     <!-- Common Banner Area -->
     <section id="common_banner">
         <div class="container">
@@ -100,43 +100,77 @@
                                     <tr>
                                         <th>패키지 번호</th>
                                         <th>패키지 이름</th>
-                                        <th>국가</th>
-                                        <th>패키지 게시 기간</th>
+                                        <th>여행지 </th>
+                                        <th>시작일 / 마감일 </th>
                                         <th>비고</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <tr th:if="${paging.isEmpty()}"><td colspan="4"> 등록된 패키지 상품이 없습니다. </td></tr>
+                                <th:block th:each="package,loop : ${paging}">
                                     <tr>
-                                        <td>01</td>
-                                        <td>터키 아이스크림 먹는 패키지 상품입니당!!!</td>
-                                        <td>터키</td>
-                                        <td>2022-01-22~2022.12.31</td>
-                                        <td>
-                                            <input type="button" style="color: #565e64" value="수정">
-                                            <input type="button" style="color: #565e64" value="삭제">
-                                        </td>
+                                        <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}">01</td>
+                                        <td th:text="${package.packageName}"></td>
+<!--                                이미지 테스트        <img th:src="@{${package.getPhotosImagePath1}}"/>-->
+                                        <td th:text="|${package.location1} ${package.location2}|"></td>
+                                        <td th:text="|${#strings.substring(package.postStart,0,10)} / ${#strings.substring(package.postEnd,0,10)}|"> </td>
+
+                                            <td>
+                                            <a th:href="@{|/admin/package/modify/${package.id}|}" th:text="수정" class="btn btn-sm btn-outline-secondary"  />
+                                            <button class="delete btn btn-sm btn-outline-secondary" href="javascript:void(0);"
+                                                    th:data-uri="@{|/admin/package/delete/${package.id}|}" th:text="삭제"></button>
+                                            <!--게시글 맨 위 1개밖에 삭제가 안됨... 왜,, 어째서......-->
+
+
+                                            <script type="text/javascript">
+                                                const deleteBtn = document.getElementsByClassName("delete");
+
+                                                Array.from(deleteBtn).forEach(function(element){
+
+                                                    element.addEventListener('click',function(){
+
+                                                        if(confirm("패키지 상품을 삭제하시겠습니까?")){
+
+                                                            location.href=this.dataset.uri;
+                                                        };
+                                                    });
+                                                });
+
+                                            </script>
+
+                        </td>
                                     </tr>
+                                </th:block>
                                 </tbody>
                             </table>
                         </div>
                         <div class="option-item">
-                            <a href="become-vendor.html" class="btn  btn_navber">패키지 등록하기</a>
+                            <a th:href="@{/admin/packageForm}" class="btn  btn_navber">패키지 등록하기</a>
                         </div>
                     </div>
-                    <div class="pagination_area">
-                        <ul class="pagination">
+                    <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                        <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,
+                        endNumber=(${paging.totalPages}>${startNumber+9})?
+                        ${startNumber+9}:${paging.totalPages}">
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                                <a class="page-link" th:href="@{/package/list?page=1}" aria-label="Previous">
                                     <span aria-hidden="true">«</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <!-- 페이징 다음 페이지로 안 넘어감 ........... 왜죠? -->
+                            <li class="page-item" th:style="${paging.first}?'display:none'">
+                                <a class="page-link" th:href="@{/package/list(page=${paging.number})}"></a></li>
+                            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                                th:classappend="(${page}==${paging.number+1})?'active'">
+                                <a class="page-link" th:href=@{/package/list(page=${page})} th:text="${page}"></a>
+                            </li>
+                            <li class="page-item" th:style="${paging.last}?'display:none'">
+                                <a class="page-link" th:href="@{/package/list(page=${paging.number+2})}">＞</a>
+                            </li>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
+                                <a class="page-link" th:href="@{/package/list(page=${paging.totalPages})}" aria-label="Next">
+                                    <span aria-hidden="true">≫</span>
                                     <span class="sr-only">Next</span>
                                 </a>
                             </li>
