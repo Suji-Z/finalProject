@@ -15,8 +15,7 @@ public class PackageDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    private LocalDateTime departureDate;
+    private String departure;
 
     private Integer a_price;
     private Integer b_price;
