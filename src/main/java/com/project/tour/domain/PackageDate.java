@@ -3,7 +3,10 @@ package com.project.tour.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,10 +15,10 @@ import java.time.LocalDateTime;
 public class PackageDate {
 
     @Id
-    private long id;
+    private LocalDateTime departureDate;
 
-    @Column
-    private String departure;
+    private Long packageNum;
+
 
     private Integer a_price;
     private Integer b_price;
@@ -25,10 +28,10 @@ public class PackageDate {
 
     private Integer remainCount;
 
+
     /** Foreign key 생성
      * 하나의 패키지상품에 여러개의 출발일 
      * */
     @ManyToOne
-    @JoinColumn(name = "packageNum")
     private Package packages;
 }
