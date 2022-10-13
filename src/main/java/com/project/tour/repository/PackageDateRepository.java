@@ -3,11 +3,13 @@ package com.project.tour.repository;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface PackageDateRepository extends JpaRepository<Package,Long> {
+@Repository
+public interface PackageDateRepository extends JpaRepository<PackageDate,Long> {
 
     //임시 : departureDate랑 PackageNum으로 데이터 가져오는 코드 필요
-    Optional<PackageDate> findById(long id);
+    Optional<PackageDate> findByIdAndDeparture(long packageNum,String departureDate);
 }

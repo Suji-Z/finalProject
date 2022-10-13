@@ -42,25 +42,19 @@
                             <div class="tour_booking_form_box">
                                 <div class="your_info_arae">
                                     <ul>
-                                        <li><span class="name_first">상품명(packageName)</span> <span
-                                                class="last_name">해피부산여행</span></li>
-                                        <li><span class="name_first">이용교통</span> <span
-                                                class="last_name">대한항공</span></li>
-                                        <li><span class="name_first">예약기간</span> <span
-                                                class="last_name">4박5일(EndDate-StartDate)</span></li>
+                                        <li><span class="name_first">상품명</span>
+                                            <span class="last_name" th:text="${apackage.packageName}">packageName</span></li>
+                                        <li><span class="name_first">이용교통</span>
+                                            <span class="last_name" th:text="${apackage.transport}">transport</span></li>
+                                        <li><span class="name_first">예약기간</span>
+                                            <span class="last_name" th:text="|${apackage.travelPeriod}박 ${apackage.travelPeriod+1}일|">travelPeriod</span></li>
                                         <li><span class="name_first">출발일</span> <span
-                                                class="last_name">2022-10-09 AM10:00 (startDate + flighthour)</span></li>
+                                                class="last_name" th:text="${packageDate.departure}">departureDate</span></li>
                                         <li><span class="name_first">도착일</span> <span
-                                                class="last_name">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
+                                                class="last_name" th:text="${packageDate.departure}+${apackage.travelPeriod+1}">departureDate+travelPeriod+1</span></li>
+
                                     </ul>
-                                    <ul>
-                                        <li><span class="name_first">도착일</span> <span
-                                                class="last_name">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
-                                        <li><span class="name_first">도착일</span> <span
-                                                class="last_name">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
-                                        <li><span class="name_first">도착일</span> <span
-                                                class="last_name">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
-                                    </ul>
+
                                 </div>
                             </div>
                         </div>
@@ -72,11 +66,11 @@
                                 <div class="your_info_arae">
                                     <ul>
                                         <li><span class="name_first">성인</span> <span
-                                                class="last_name">1,000,000원</span></li>
+                                                class="last_name" th:text="|${packageDate.a_price}원|">packageDate.a_price</span></li>
                                         <li><span class="name_first">아동</span> <span
-                                                class="last_name">500,000원</span></li>
+                                                class="last_name" th:text="|${packageDate.c_price}원|">packageDate.c_price</span></li>
                                         <li><span class="name_first">유아(24개월이하)</span> <span
-                                                class="last_name">0원</span></li>
+                                                class="last_name" th:text="|${packageDate.b_price}원|">packageDate.b_price</span></li>
                                     </ul>
                                 </div>
                                 
@@ -88,50 +82,46 @@
                         <div class="booking_tour_form">
                             <h3 class="heading_theme">여행자정보</h3>
                             <div class="tour_booking_form_box">
-                                <form action="!#" id="tour_bookking_form_item">
+                                <form action="!#" id="tour_booking_form_item">
+
+                                    <div class="form-check write_spical_check">
+                                        <input class="form-check-input" type="checkbox" name="userInfoCheck" id="userInfoCheck">
+                                        <label class="form-check-label" for="userInfoCheck">
+                                    <span class="main_spical_check">
+                                        <span> 예약자와 여행자가 일치합니다.</span>
+                                    </span>
+                                        </label>
+                                    </div>
+
+                                    <br/>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control bg_input"
-                                                    placeholder="이름*">
+                                                <input type="text" class="form-control bg_input" name="username" id="username"
+                                                       th:field="${member.name}" placeholder="이름*">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control bg_input"
-                                                    placeholder="생년월일(1999-01-01)*">
-                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control bg_input"
-                                                    placeholder="휴대폰번호(010-1234-1234)*">
+                                                <input type="text" class="form-control bg_input" name="userbirth" id="userbirth"
+                                                       th:field="${member.birth}" placeholder="생년월일(1999-01-01)*">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <select class="form-control form-select bg_input">
-                                                    <option value="1">Gender</option>
-                                                    <option value="1">Male</option>
-                                                    <option value="1">Female</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control bg_input"
-                                                    placeholder="Passport number">
-                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control bg_input"
-                                                    placeholder="Passport expiry date">
+                                                <input type="text" class="form-control bg_input" name="usernumber" id="usernumber"
+                                                       th:field="${member.phone_num}" placeholder="휴대폰번호(010-1234-1234)*">
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                        </div>
+
                                 <!--요청사항-->
-                                        <textarea class="form-control bg_input" rows="4" placeholder="요청사항을 적어주세요(200자)"></textarea>
+                                        <textarea class="form-control bg_input" rows="4" name="userrequest" id="userreqeust" placeholder="요청사항을 적어주세요(200자)"></textarea>
                                         
                                         
                                     </div>
@@ -143,7 +133,7 @@
                         <!--세덩어리 : 결제 버튼-->
                         <div class="booking_tour_form_submit">
                             <div class="form-check write_spical_check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
+                                <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf1">
                                 <label class="form-check-label" for="flexCheckDefaultf1">
                                     <span class="main_spical_check">
                                         <span> 해당 예약은 관리자가 확인 후 확정되며, 최종 예약 확정이 완료되면 예약금 결제 부탁드립니다.</span>
@@ -151,22 +141,22 @@
                                 </label>
                             </div>
                             <div class="form-check write_spical_check">
-                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
-                                <label class="form-check-label" for="flexCheckDefaultf1">
+                             <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf2">
+                                <label class="form-check-label" for="flexCheckDefaultf2">
                                     <span class="main_spical_check">
-                                        <span> 적립예상 포인트는 여행 도착일 7일 후 적립되며 프로모션 적용 및 결제 방법에 따라 변동가능합니다.</span>    
+                                        <span> 적립예상 포인트는 여행 도착일 7일 후 적립되며 프로모션 적용 및 결제 방법에 따라 변동가능합니다.</span>
                                     </span>
                                 </label>
                             </div>
                             <div class="form-check write_spical_check">
-                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
-                                <label class="form-check-label" for="flexCheckDefaultf1">
+                             <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf3">
+                                <label class="form-check-label" for="flexCheckDefaultf3">
                                     <span class="main_spical_check">
-                                        <span> 여행정보와 금액을 포함한 모든 내용을 숙지하였습니다.</span>    
+                                        <span> 여행정보와 금액을 포함한 모든 내용을 숙지하였습니다.</span>
                                     </span>
                                 </label>
                             </div>
-                            <a th:href="@{/booking/confirmation}" class="btn btn_theme btn_md">Submit</a>
+                            <a th:href="@{/booking/confirmation}" class="btn btn_theme btn_md" onclick="return bookingConfirm();">예약하기</a>
                         </div>
                     </div>
                 </div>
@@ -206,12 +196,12 @@
 
                                 <div class="tour_booking_amount_area">
                                     <ul>
-                                        <li>성인 x 1 <span>1,000,000원</span></li>
-                                        <li>아동 x 1 <span>500,000원</span></li>
-                                        <li>유아 x 1 <span>0원</span></li>
+                                        <li>성인 x 1 <span th:text="|${packageDate.a_price}원|">packageDate.a_price</span></li>
+                                        <li>아동 x 1 <span th:text="|${packageDate.c_price}원|">packageDate.c_price</span></li>
+                                        <li>유아 x 1 <span th:text="|${packageDate.b_price}원|">packageDate.b_price</span></li>
                                     </ul>
                                     <ul>
-                                        <li> 패키지금액 <span><del>2,500,000원</del></span></li>
+                                        <li> 패키지금액 <span th:text="|${packageDate.b_price+packageDate.a_price+packageDate.c_price}원|"><del></del></span></li>
                                         <li> 할인금액<span>1,500,000원</span></li>
                                     </ul>
                                 </div>
