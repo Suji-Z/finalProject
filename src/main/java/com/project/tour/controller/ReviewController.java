@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -31,6 +32,7 @@ import java.security.Principal;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final MemberService memberService;
 
     @GetMapping(value = "/write")
     public String write1(ReviewForm reviewForm){
@@ -65,17 +67,43 @@ public class ReviewController {
 
     }
 
-    @GetMapping(value = "/update")
-    public String update1(){
+    @GetMapping(value = "/update/{id}")
+    public String update1(ReviewForm reviewForm, @PathVariable("id") Long id, Model model){
+
+        Review review = reviewService.getReview(id);
+
+        reviewForm.setSubject(review.getSubject());
+        reviewForm.setContent(review.getContent());
+        reviewForm.setScore(review.getScore());
+
+        model.addAttribute("review",review);
 
         return "review/review_write";
 
     }
 
-    @PostMapping(value = "/update")
-    public String update2(){
+    @PostMapping(value = "/update/{id}")
+    public String update2(@Valid ReviewForm reviewform, BindingResult bindingResult,
+                          @PathVariable("id") Long id,@RequestParam("image") MultipartFile multipartFile)  throws IOException {
 
-        return "redirect:/review/article";
+        if(bindingResult.hasErrors()){
+            return "review/review_write";
+        }
+
+        Review review = reviewService.getReview(id);
+
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
+        reviewform.setReviewImage(fileName);
+
+        reviewService.update(review,reviewform.getSubject(),reviewform.getContent(),
+                reviewform.getReviewImage(),reviewform.getScore());
+
+        String uploadDir =  "review-photo/" + review.getId();
+
+        FileUploadUtil.saveFile(uploadDir,fileName,multipartFile);
+
+        return String.format("redirect:/review/article/%s",id);
 
     }
 
@@ -106,10 +134,25 @@ public class ReviewController {
 
     }
 
-    @GetMapping(value = "/delete")
-    public String delete(){
+    @GetMapping(value = "/delete/{id}")
+    public String delete(Principal principal, @PathVariable("id") Long id){
 
-        return "redirect:/review/review_abroadList";
+        Review review = reviewService.getReview(id);
+
+        reviewService.delete(review);
+
+        return "redirect:/review/abroadList";
+
+    }
+
+
+    @GetMapping("/vote/{id}")
+    public String reviewVote(Principal principal, @PathVariable("id") Long id){
+
+        Review review = reviewService.getReview(id);
+        Member member = memberService.getMember(principal.getName());
+        reviewService.vote(review,member);
+        return String.format("redirect:/review/article/%s",id);
 
     }
 

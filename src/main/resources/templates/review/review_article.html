@@ -2,9 +2,11 @@
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
+
 <body>
 
     <div class="preloader">
@@ -98,14 +100,20 @@
                              <h2>&nbsp;</h2>
                              <h5>작성자</h5>
                              <h5>작성일</h5>
-                             <h5>조회수</h5>
                                     </div>
                                 <div class="valid_date_area_one">
-                               <h2 align="right"><a href="#!"> <i class="fa-regular fa-heart"></i></a></h2>
+                                    <h2 align="right"><a th:if="${#lists.size(review.voter)}==0" class="recommend"
+                                                         href="javascript:void(0);" th:href="@{|/review/vote/${review.id}|}">
+
+                                        <i class="fa-regular fa-heart"></i></a></h2>
+
+                                    <h2 align="right"><a th:if="${#lists.size(review.voter)}!=0" class="cancel"
+                                                         href="javascript:void(0);" th:href="@{|/review/vote/${review.id}|}">
+                                        <i class="fas fa-heart"></i></a>
+                                    </h2>
                              <h5>이정민</h5>
                              
                              <h5 th:text="${#temporals.format(review.created,'yy-MM-dd HH:MM')}">2022.09.27</h5>
-                             <h5>6</h5>
                                     </div>
                                         </div>
 
@@ -131,7 +139,7 @@
                         <div th:if="${review.score.toString().equals('3.0')}" class="review_star_all" align="right">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>insert into REVIEW_VOTER values (9,1);
                         </div>
                         <div th:if="${review.score.toString().equals('2.0')}" class="review_star_all" align="right">
                             <i class="fas fa-star"></i>
@@ -180,6 +188,12 @@
                            <br/>
                        </div>
                    </div>
+
+               <div class="comment_form_submit" align="center">
+                   <a th:href="@{|/review/update/${id}|}" class="btn btn_theme btn_md">수정하기</a>
+                   <a th:href="@{|/review/delete/${id}|}" class="btn btn_theme btn_md">삭제하기</a>
+                   <br/><br/>
+               </div>
                         
                         <hr/>
                         <div class="comment_area">
@@ -235,13 +249,12 @@
           
             </div>
     
-  
-    
-    
-    
+
        
     </section>
 
+
 </body>
+
 
 </html>

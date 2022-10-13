@@ -2,6 +2,7 @@ package com.project.tour.service;
 
 
 import com.project.tour.controller.DataNotFoundException;
+import com.project.tour.domain.Member;
 import com.project.tour.domain.Review;
 import com.project.tour.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,33 @@ public class ReviewService {
                         pageable.getPageSize(),Sort.by(sorts));
 
         return reviewRepository.findAll(pageable);
+
+
+    }
+
+    public void vote(Review review, Member member){
+
+        if(review.getVoter().isEmpty()){
+            review.getVoter().add(member);
+            reviewRepository.save(review);
+        }
+
+    }
+
+    public void delete(Review review){
+
+        reviewRepository.delete(review);
+    }
+
+    public void update(Review review, String subject, String content,
+                       String reviewImage, Double score){
+
+        review.setSubject(subject);
+        review.setContent(content);
+        review.setReviewImage(reviewImage);
+        review.setScore(score);
+
+        reviewRepository.save(review);
 
 
     }
