@@ -17,7 +17,8 @@ public class Package {
     @Column(name = "packageNum")
     private Long id;
 
-    private String location;
+    private String location1;
+    private String location2;
 
     @Column(length = 300)
     private String packageName;
