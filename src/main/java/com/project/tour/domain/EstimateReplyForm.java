@@ -24,7 +24,7 @@ public class EstimateReplyForm {
     @Column(length = 3000)
     private String content;
 
-    private List<Long> RecomPackage;
+    private List<Package> RecomPackage;
 
     private LocalDateTime created;
 

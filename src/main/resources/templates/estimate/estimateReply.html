@@ -46,7 +46,12 @@
                   </span>
                 </li>
                 <li><span style="text-align:center;width: 14%">가격</span>
-                  <span th:text="${inquiry.price}"></span></li>
+                  <span th:if="${inquiry.price=='-500000'}" th:text="|50만원 이하|"></span>
+                  <span th:if="${inquiry.price=='500000-1000000'}"  th:text="|51만원 ~ 100만원|"></span>
+                  <span th:if="${inquiry.price=='1000000-2000000'}" th:text="|100만원 ~ 200만원|"></span>
+                  <span th:if="${inquiry.price=='2000000-3000000'}"  th:text="|200만원 ~ 300만원|"></span>
+                  <span th:if="${inquiry.price=='3000000-5000000'}" th:text="|300만원 ~ 500만원|"></span>
+                  <span th:if="${inquiry.price=='5000000-'}" th:text="|501만원 이상|"></span>
                 </li>
 
                 <li><span style="text-align:center;width: 14%">기타문의사항</span>

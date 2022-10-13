@@ -1,6 +1,7 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.*;
+import com.project.tour.domain.Package;
 import com.project.tour.service.EstimateInquiryService;
 import com.project.tour.service.EstimateReplyService;
 import com.project.tour.service.MemberSecurityService;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -138,23 +141,23 @@ public class EstimateController {
     }
 
     /** 답변달기 */
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reply/{id}")
     public String estimateReply(@PathVariable("id") Long id,Principal principal,Model model) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
-        Member member= memberService.getMember(principal.getName());
+       List<Package> recomPackages = estimateReplyService.getPackages(inquiry);
 
         //패키지 추천 리스트 넘겨야함
-        
+
         model.addAttribute("estimateReplyForm", new EstimateReplyForm());
         model.addAttribute("inquiry",inquiry);
         model.addAttribute("id",id);
 
         return "estimate/estimateReply";
     }
-    @PreAuthorize("isAuthenticated()")
+
     @PostMapping("/reply/{id}")
     public String estimateReply(@Validated EstimateReplyForm replyForm, BindingResult bindingResult,
                                 @PathVariable("id") Long id,Principal principal) {
@@ -183,7 +186,7 @@ public class EstimateController {
         return "estimate/estimateReplyArticle";
     }
     /** 답변 수정 */
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reply/modify/{id}")
     public String estimateReplyModifyg(EstimateReplyForm replyForm, @PathVariable("id") Long id,Principal principal,Model model) {
 
