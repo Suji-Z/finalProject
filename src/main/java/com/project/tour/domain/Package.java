@@ -35,7 +35,7 @@ public class Package {
     private String detailImage;
 
     @Column(length = 3000)
-    private String packgeInfo;
+    private String packageInfo;
 
     private Integer hitCount;
 
