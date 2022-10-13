@@ -4,16 +4,22 @@ import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageCreate;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.service.AdminPackageService;
+import com.project.tour.util.FileUploadUtil;
+import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,6 +44,7 @@ public class AdminController {
         return "admin/admin_bookingUser";
     }
 
+    //패키지 상품 등록
     @GetMapping("/packageForm")
     public String createPackage(Model model) {
         model.addAttribute("packageCreate",new PackageCreate());
@@ -45,11 +52,28 @@ public class AdminController {
     }
 
     @PostMapping("/packageForm")
-    public String createPackagePost(PackageCreate packageCreate, PackageDate packageDate) {
-        adminPackageService.create(packageCreate,packageDate);
+    public String createPackagePost(PackageCreate packageCreate, PackageDate packageDate, @RequestParam("image1") MultipartFile multipartFile1,
+                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException {
+
+        String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
+        String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
+
+        packageCreate.setPreviewImage(fileName1);
+        packageCreate.setDetailImage(fileName2);
+
+        Package aPackage = adminPackageService.create(packageCreate,packageDate);
+
+        String uploadDir1 =  "package-preview/" + aPackage.getId();
+        String uploadDir2 =  "package-detail/" + aPackage.getId();
+
+
+        PackageFileUpload.saveFile1(uploadDir1,fileName1,multipartFile1);
+        PackageFileUpload.saveFile2(uploadDir2,fileName2,multipartFile2);
+
         return "redirect:/admin/packageList";
     }
 
+    //패키지 리스트
     @GetMapping("/packageList")
     public String packageList(Model model, @PageableDefault Pageable pageable) {
 
@@ -58,6 +82,54 @@ public class AdminController {
 
         return "admin/admin_PackageList";
     }
+
+   //패키지 상품 삭제
+    @GetMapping("/package/delete/{id}")
+    public String packageDelete(@PathVariable("id") Long id) {
+
+        Package aPackage = adminPackageService.getPackage(id);
+
+        adminPackageService.delete(aPackage);
+
+        return "redirect:/admin/packageList";
+    }
+
+    //패키지 상품 수정
+
+   @GetMapping("/package/modify/{id}")
+   public String packageModify(PackageCreate packageModify, BindingResult bindingResult,@PathVariable("id") Long id){
+
+        Package aPackage = adminPackageService.getPackage(id);
+
+        packageModify.setPackageName(aPackage.getPackageName());
+        packageModify.setLocation1(aPackage.getLocation1());
+       packageModify.setLocation2(aPackage.getLocation2());
+       packageModify.setHotelName(aPackage.getHotelName());
+        packageModify.setTransport(aPackage.getTransport());
+        //가격 수정 어떻게 하지...
+        packageModify.setPackageInfo((aPackage.getPackageInfo()));
+        packageModify.setCount(aPackage.getCount());
+        packageModify.setPostStart(aPackage.getPostStart());
+        packageModify.setPostEnd(aPackage.getPostEnd());
+        packageModify.setTravelPeriod(aPackage.getTravelPeriod());
+        packageModify.setKeyword(aPackage.getKeyword());
+        packageModify.setPreviewImage(aPackage.getPreviewImage());
+        packageModify.setDetailImage(aPackage.getDetailImage());
+
+       return "admin/admin_Package";
+    }
+
+    @PostMapping("package/modify/{id}")
+    public String packageModify(@Validated PackageCreate packageCreate, @PathVariable("id") Long id) {
+
+        Package aPackage = adminPackageService.getPackage(id);
+
+        adminPackageService.modify(aPackage,packageCreate);
+        return "redirect:/admin/packageList";
+
+    }
+
+
 
 
 
