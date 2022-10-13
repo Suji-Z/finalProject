@@ -4498,11 +4498,12 @@ textarea {
     margin-top: 50px;
 }
 
-.flight_search_right h5 {
+.flight_search_right h5 i{
     font-size: 18px;
     font-weight: 500;
     color: var(--paragraph-color);
 }
+
 
 .flight_search_right h2 {
     padding-top: 10px;
@@ -4517,9 +4518,10 @@ textarea {
 }
 
 .flight_search_right a {
-    margin-top: 160px;
+    margin-top: 50px;
     width: 250px;
     height: 60px;
+    ;
 }
 
 .flight_search_right p {
