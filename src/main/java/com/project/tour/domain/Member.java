@@ -30,6 +30,7 @@ public class Member {
 
     @Column
     private int point;
+
     @Column
     private double coupon;
 

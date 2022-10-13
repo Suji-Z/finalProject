@@ -13,11 +13,18 @@ import java.util.Optional;
 @Service
 public class PackageDateService {
 
-    private PackageDateRepository packageDateRepository;
+    private final PackageDateRepository packageDateRepository;
 
     //특정 packageNum과 departureDate로 가격 출력(임시)
-    public PackageDate getPackageDate(long packageNum, LocalDateTime departureDate){
-        Optional<PackageDate> packageDateData = packageDateRepository.findById(packageNum);
-        return packageDateData.get();
+    // packageNum비교 타입 몰라서 멈춤 일단 id랑 비교함
+    public PackageDate getPackageDate(long packageNum, String departureDate) {
+
+        Optional<PackageDate> packageDate =
+                packageDateRepository.findByIdAndDeparture(packageNum, departureDate);
+
+            return packageDate.get();
+
     }
 }
+
+

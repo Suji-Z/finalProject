@@ -58,7 +58,7 @@ public class PackageService {
         packages.setHitCount(apackage.getHitCount());
         packages.setKeyword(apackage.getKeyword());
         packages.setTransport(apackage.getTransport());
-        packageDates.setDepartureDate(packageDate.getDepartureDate());
+        packageDates.setDeparture(packageDate.getDeparture());
         packageDates.setDiscount(packageDate.getDiscount());
         packageDates.setA_price(packageDate.getA_price());
         packageDates.setB_price(packageDate.getB_price());

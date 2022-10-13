@@ -2,6 +2,11 @@
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
     <!-- Common Banner Area -->
     <section id="common_banner">
         <div class="container">
@@ -21,7 +26,7 @@
 
     <!-- Tour Booking Submission Areas -->
     <section id="tour_booking_submission" class="section_padding" style="margin: auto">
-        <form th:action th:object="${packageCreate}" method="post">
+        <form th:action th:object="${packageCreate}" method="post" enctype="multipart/form-data">
         <div class="col-lg-8">
         </div>
         <div class="container" style="margin: auto; width: 70%">
@@ -39,31 +44,30 @@
                                             <span><input type="text" th:field="*{packageName}" style="width:500px;border-radius: 3px"></span></li>
                                         <li><span style="text-align:center;width: 14%">여행 지역</span>
                                             <span>
-                                                <select onchange="categoryChange(this)">
-	                                            <option>선택하세요</option>
-                                                    <option value="a">아시아</option>
-                                                    <option value="b">유럽</option>
-	                                                <option value="c">미국</option>
-                                                    <option value="d">제주</option>
+                                                <select th:field="*{location1}" onchange="categoryChange(this)">
+	                                            <option value="" selected="selected">선택하세요</option>
+                                                    <option th:value="아시아">아시아</option>
+                                                    <option th:value="유럽">유럽</option>
+	                                                <option th:value="미국">미국</option>
+                                                    <option th:value="제주">제주</option>
                                                 </select>
 
-                                                <select th:field="*{location}">
+                                                <select th:field="*{location2}">
                                                     <option value="" selected="selected">상세 지역을 선택하세요</option>
                                                 </select>
 
                                                 <script>
                                                     function categoryChange(f) {
-                                                        var location_a = ["일본", "중국", "홍콩", "발리","방콕/파타야","싱가폴","보홀/마닐라","코타키나발루",
-                                                        "보라카이","베트남"];
-                                                        var location_b = ["서유럽", "동유럽","북유럽","발칸", "스페인","터키/그리스","이집트"];
-                                                        var location_c = ["미서부", "미동부", "하와이", "캐나다", "중남미"];
-                                                        var location_d = ["제주시", "중문", "서귀포", "애월"];
-                                                        var target = document.getElementById("location");
+                                                        var location2_a = ["일본", "중국", "홍콩", "발리","태국","싱가폴","베트남","필리핀"];
+                                                        var location2_b = ["스페인","영국","프랑스","이탈리아","독일","그리스","터키"];
+                                                        var location2_c = ["하와이","뉴욕","LA","라스베이거스","워싱턴","시카고","캐나다"];
+                                                        var location2_d = ["제주시", "중문", "서귀포", "애월"];
+                                                        var target = document.getElementById("location2");
 
-                                                        if(f.value == "a") var e = location_a;
-                                                        else if(f.value == "b") var e = location_b;
-                                                        else if(f.value == "c") var e = location_c;
-                                                        else if(f.value == "d") var e = location_d;
+                                                        if(f.value == "아시아") var e = location2_a;
+                                                        else if(f.value == "유럽") var e = location2_b;
+                                                        else if(f.value == "미국") var e = location2_c;
+                                                        else if(f.value == "제주") var e = location2_d;
 
                                                         target.options.length = 0;
 
@@ -122,11 +126,11 @@
                                             </span></li>
                                         <li><span style="text-align:center;width: 14%">썸네일 이미지</span>
                                             <span>
-                                                Preview <input type="file" style="width: 300px" th:field="*{previewImage}"> &nbsp;&nbsp;&nbsp;
+                                                Preview  <input type="file" name="image1" accept="image/png, image/jpeg" style="border-radius: 3px">
                                             </span></li>
                                         <li><span style="text-align:center;width: 14%">패키지 상세 이미지</span>
                                             <span>
-                                                 <input type="file" style="width: 300px"  th:field="*{detailImage}">
+                                                <input type="file" name="image2" accept="image/png, image/jpeg" style="border-radius: 3px">
                                             </span></li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 키워드 </span>

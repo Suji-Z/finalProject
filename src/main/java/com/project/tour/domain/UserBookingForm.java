@@ -2,17 +2,13 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Getter @Setter
-public class UserBooking {
-
-    @Id
-    @Column(name = "bookingNum")
-    private Long id;
+@Getter
+@Setter
+public class UserBookingForm {
 
     private LocalDateTime departureDate;
 
@@ -24,24 +20,16 @@ public class UserBooking {
 
     private int c_travelerCount;
 
-    @Column(columnDefinition = "TEXT",length = 500)
     private String request;
 
     private LocalDateTime bookingDate;
 
     private int bookingTotalPrice;
 
+    @ColumnDefault(value = "0") // 0: 예약확인중 1:결제대기중 2:결제완료
     private int bookingStatus;
 
     private int bookingTotalCount;
-
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "packageNum")
-    private Package aPackage;
 
 
 }
