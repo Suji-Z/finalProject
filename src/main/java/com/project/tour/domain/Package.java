@@ -24,8 +24,8 @@ public class Package {
 
     private String hotelName;
 
-    private LocalDateTime postStart;
-    private LocalDateTime postEnd;
+    private String postStart;
+    private String postEnd;
 
     private Integer count;
 
@@ -35,7 +35,7 @@ public class Package {
     private String detailImage;
 
     @Column(length = 3000)
-    private String packgeInfo;
+    private String packageInfo;
 
     private Integer hitCount;
 
