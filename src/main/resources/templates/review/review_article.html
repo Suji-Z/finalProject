@@ -196,6 +196,7 @@
                </div>
                         
                         <hr/>
+
                         <div class="comment_area">
                             <h3>2 Comments</h3>
                             <div class="comment_area_boxed">
@@ -224,23 +225,29 @@
                             </div>
                         </div>
 
+                        <!-- 댓글달기 시작 -->
+
                         <div class="comment_area_form">
                             <h3>댓글달기</h3>
-                            <form action="!#" id="news_comment_form">
+                            <form th:action="@{|/review/reply/${review.id}|}"
+                                  th:object="${reviewReplyForm}" method="post">
                                 <div class="row">
                                    
                                     <div class="col-lg-12">
                                         <div class="form-froup">
                                             <textarea rows="6" placeholder="댓글을 입력해 주세요"
-                                                class="form-control bg_input"></textarea>
+                                                class="form-control bg_input" th:field="*{content}"></textarea>
                                         </div>
                                         <div class="comment_form_submit">
-                                            <button class="btn btn_theme btn_md">등록하기</button>
+                                            <button class="btn btn_theme btn_md" type="submit">등록하기</button>
+                                            <a th:href="@{/review/abroadlist}" class="btn btn-primary">취소하기</a>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            <!-- 댓글달기 끝 -->
                         </div>
+
                     </div>
                 </div>
             </div>

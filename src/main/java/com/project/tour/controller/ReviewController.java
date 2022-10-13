@@ -1,10 +1,9 @@
 package com.project.tour.controller;
 
 
-import com.project.tour.domain.Member;
-import com.project.tour.domain.Review;
-import com.project.tour.domain.ReviewForm;
+import com.project.tour.domain.*;
 import com.project.tour.service.MemberService;
+import com.project.tour.service.ReviewReplyService;
 import com.project.tour.service.ReviewService;
 import com.project.tour.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +32,8 @@ public class ReviewController {
 
     private final ReviewService reviewService;
     private final MemberService memberService;
+
+    private final ReviewReplyService reviewReplyService;
 
     @GetMapping(value = "/write")
     public String write1(ReviewForm reviewForm){
@@ -153,6 +154,26 @@ public class ReviewController {
         Member member = memberService.getMember(principal.getName());
         reviewService.vote(review,member);
         return String.format("redirect:/review/article/%s",id);
+
+    }
+
+    @PostMapping("/reply/{id}")
+    public  String writeReply(Model model, @PathVariable("id") Long id,
+                             @ModelAttribute("reviewReplyForm") @Valid ReviewReplyForm reviewReplyForm, BindingResult bindingResult){
+
+        Review review = reviewService.getReview(id);
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("review",review);
+            return "/review/review_article";
+
+        }
+
+        Review_reply review_reply = reviewReplyService.create(review,reviewReplyForm.getContent());
+
+        return String.format("redirect:/review/article/%s",id);
+
+
 
     }
 
