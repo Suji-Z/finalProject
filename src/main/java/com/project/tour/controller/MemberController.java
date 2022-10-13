@@ -1,9 +1,13 @@
 package com.project.tour.controller;
 
+import com.project.tour.domain.MailDTO;
 import com.project.tour.domain.MemberCreate;
+import com.project.tour.service.MailService;
 import com.project.tour.service.MemberService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @RequiredArgsConstructor
@@ -19,6 +27,8 @@ import java.util.Random;
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final MailService mailService;
 
     @GetMapping("/join/emailCheck")
     public ResponseEntity<?> checkEmail(@RequestParam(value = "email") String email) throws Exception{
@@ -103,23 +113,33 @@ public class MemberController {
     public @ResponseBody String sendSMS(@RequestParam(value="phone_num") String phone_num) throws CoolsmsException {
         return memberService.PhoneNumberCheck(phone_num);
     }
-    /*@ResponseBody
-    @GetMapping("/join/phoneCheck")
-    public String SMSController(@RequestParam("phone_num") String phone_num) {
 
-        Random rand  = new Random();
-        String numStr = "";
-        for(int i=0; i<4; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr+=ran;
-        }
+    @ResponseBody
+    @GetMapping(value = "/login/findId")
+   public String findId(@RequestParam(value = "inputName",required = false) String name,@RequestParam(value = "inputPhone",required = false) String phone) throws UnsupportedEncodingException {
 
-        System.out.println("수신자 번호 : " + phone_num);
-        System.out.println("인증번호 : " + numStr);
+        return memberService.findEmail(name,phone);
+   }
 
-        memberService.certifiedPhoneNumber(phone_num, numStr);
+   @GetMapping("/login/findPwd")
+   @ResponseBody
+    public boolean findPwd(@RequestParam("pwdEmail") String email){
 
-        return numStr;
-    }*/
+        //이메일 DB에서 조회하여 반환. 있으면 true?
+        return memberService.checkEmail(email);
+   }
 
+   @PostMapping("/login/findPwd/sendEmail")
+   @ResponseBody
+    public String sendEmail(@RequestParam("pwdEmail") String email){
+
+        String tmpPassword = memberService.getTempPassword();
+
+        memberService.updatePassword(tmpPassword,email);
+
+        MailDTO mail = mailService.createMail(tmpPassword,email);
+        mailService.sendMail(mail);
+
+        return "member/login";
+   }
 }

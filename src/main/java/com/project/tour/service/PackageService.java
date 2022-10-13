@@ -44,7 +44,8 @@ public class PackageService {
         PackageDate packageDates = new PackageDate();
 
         packages.setId(apackage.getId());
-        packages.setLocation(apackage.getLocation());
+        packages.setLocation1(apackage.getLocation1());
+        packages.setLocation2(apackage.getLocation2());
         packages.setPackageName(apackage.getPackageName());
         packages.setHotelName(apackage.getHotelName());
         packages.setPostStart(apackage.getPostStart());
