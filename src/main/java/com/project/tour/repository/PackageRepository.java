@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface PackageRepository extends JpaRepository<Package,Long> {
@@ -19,7 +18,8 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
 
     Page<Package> findAll(Pageable pageable);
 
-    List<Package> findByLocation2AndIdIn(String location2, Set<Long> Packagenum);
+    List<Package> findByLocation2AndIdIn(String location2, List<Long> Packagenum);
 
+    List<Package> findByIdIn(List<Long> packageNums);
 
 }
