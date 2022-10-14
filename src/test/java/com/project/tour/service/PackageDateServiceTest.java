@@ -17,10 +17,10 @@ class PackageDateServiceTest {
 
     @Test
     void getPackageDate() {
-
+/*
         long packageNum = 2;
         String departureDate = "20220101";
-        PackageDate result = packageDateService.getPackageDate(packageNum, departureDate);
-        System.out.println("result.getC_price() = " + result.getC_price());
+        PackageDate result = packageDateService.getPackageDate(packageNum, departureDate);*/
+/*        System.out.println("result.getC_price() = " + result.getC_price());*/
     }
 }

@@ -1,6 +1,9 @@
 package com.project.tour.domain;
 
+import com.project.tour.oauth.model.BaseAuthRole;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -42,6 +46,13 @@ public class Member {
         this.password = password;
     }
 
+    @Builder            //소셜에서 넘어오는 데이터 받아주는 곳
+    public Member(String name, String email) {
+
+        this.name=name;
+        this.email=email;
+
+    }
 
 
 }
