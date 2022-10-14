@@ -60,10 +60,10 @@ public class PackageService {
         packages.setTransport(apackage.getTransport());
         packageDates.setDeparture(packageDate.getDeparture());
         packageDates.setDiscount(packageDate.getDiscount());
-        packageDates.setA_price(packageDate.getA_price());
-        packageDates.setB_price(packageDate.getB_price());
-        packageDates.setC_price(packageDate.getC_price());
-        packageDates.setRemainCount(packageDate.getRemainCount());
+        packageDates.setAprice(packageDate.getAprice());
+        packageDates.setBprice(packageDate.getBprice());
+        packageDates.setCprice(packageDate.getCprice());
+        packageDates.setRemaincount(packageDate.getRemaincount());
 
         packageRepository.save(packages);
     }
