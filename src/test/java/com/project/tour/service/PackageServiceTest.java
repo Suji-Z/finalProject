@@ -21,6 +21,6 @@ class PackageServiceTest {
         long packageNum=2;
         
         Package result = packageService.getPackage(packageNum);
-        System.out.println(result.getLocation());
+        /*System.out.println(result.getLocation());*/
     }
 }
