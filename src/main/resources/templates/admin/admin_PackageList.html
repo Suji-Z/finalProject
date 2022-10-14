@@ -111,7 +111,6 @@
                                     <tr>
                                         <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}">01</td>
                                         <td th:text="${package.packageName}"></td>
-<!--                                이미지 테스트        <img th:src="@{${package.getPhotosImagePath1}}"/>-->
                                         <td th:text="|${package.location1} ${package.location2}|"></td>
                                         <td th:text="|${#strings.substring(package.postStart,0,10)} / ${#strings.substring(package.postEnd,0,10)}|"> </td>
 
