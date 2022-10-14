@@ -34,39 +34,25 @@
                   <li><span style="text-align:center;width: 14%">추천 패키지</span>
                     <span><div class="col-lg-9">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+
+
+
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12"  th:each="recom : ${recomPackages}">
                             <div class="theme_common_box_two">
                                 <div class="theme_two_box_img">
-                                    <a href="hotel-details.html"><img src="/assets/img/tab-img/hotel1.png" alt="img"></a>
+                                    <a href="hotel-details.html">
+                                        <!-- <img  th:src="@{${recom.getPhotosImagePath1}" width="330px" height="220px"> -->
+                                        <img src="/assets/img/tab-img/hotel1.png" width="330px" height="220px">
+                                    </a>
                                 </div>
                                 <div class="theme_two_box_content">
-                                    <h4><a href="hotel-details.html">제주 우도여행</a></h4>
-                                    <h3>340,000원</h3>
+                                    <h4><a href="hotel-details.html" th:text="${recom.packageName}"></a></h4>
+                                    <h3></h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="theme_common_box_two">
-                                <div class="theme_two_box_img">
-                                    <a href="hotel-details.html"><img src="/assets/img/tab-img/hotel1.png" alt="img"></a>
-                                </div>
-                                <div class="theme_two_box_content">
-                                    <h4><a href="hotel-details.html">제주 우도여행</a></h4>
-                                    <h3>340,000원</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="theme_common_box_two">
-                                <div class="theme_two_box_img">
-                                    <a href="hotel-details.html"><img src="/assets/img/tab-img/hotel1.png" alt="img"></a>
-                                </div>
-                                <div class="theme_two_box_content">
-                                    <h4><a href="hotel-details.html">제주 우도여행</a></h4>
-                                    <h3>340,000원</h3>
-                                </div>
-                            </div>
-                        </div>
+
+
                     </div>
                 </div>
                     </span>

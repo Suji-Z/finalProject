@@ -88,12 +88,12 @@
                       <span style="text-align:center;margin-top: 15px">추천 패키지</span>
                     </div>
                     <!-- 추천패키지 반복문 돌릴구간 -->
-                    <div th:each="package : ${packages}">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaults1">
-                        <label class="form-check-label" for="flexCheckDefaults1">
+                    <div>
+                      <div class="form-check" th:each="package : ${packages}">
+                        <input class="form-check-input" type="checkbox" th:field="*{recomPackage}" th:value="${package.id}"/>
+                        <label class="form-check-label" th:for="*{recomPackage}">
                                         <span class="area_flex_one">
-                                            <span th:text="${package.packagename}"></span>
+                                            <span th:text="${package.packageName}"></span>
                                         </span>
                         </label>
                       </div>
