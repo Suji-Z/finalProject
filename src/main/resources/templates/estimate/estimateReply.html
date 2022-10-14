@@ -88,13 +88,12 @@
                       <span style="text-align:center;margin-top: 15px">추천 패키지</span>
                     </div>
                     <!-- 추천패키지 반복문 돌릴구간 -->
-                    <div>
+                    <div th:each="package : ${packages}">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaults1">
                         <label class="form-check-label" for="flexCheckDefaults1">
                                         <span class="area_flex_one">
-                                            <span>무슨무슨 제주도 패키지</span>
-                                            <span>3,500,000원</span>
+                                            <span th:text="${package.packagename}"></span>
                                         </span>
                         </label>
                       </div>

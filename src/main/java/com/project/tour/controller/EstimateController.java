@@ -26,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
@@ -151,10 +152,18 @@ public class EstimateController {
        List<Package> recomPackages = estimateReplyService.getPackages(inquiry);
 
         //패키지 추천 리스트 넘겨야함
+        List<Package> packages = estimateReplyService.getPackages(inquiry);
 
         model.addAttribute("estimateReplyForm", new EstimateReplyForm());
         model.addAttribute("inquiry",inquiry);
+        model.addAttribute("packages",packages);
         model.addAttribute("id",id);
+
+        Iterator<Package> it = packages.iterator();
+
+        while(it.hasNext()){
+            System.out.println(it.next().getPackageName());
+        }
 
         return "estimate/estimateReply";
     }

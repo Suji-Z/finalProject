@@ -1,21 +1,18 @@
 package com.project.tour.service;
 
 import com.project.tour.controller.DataNotFoundException;
-import com.project.tour.domain.EstimateInquiry;
-import com.project.tour.domain.EstimateReply;
-import com.project.tour.domain.EstimateReplyForm;
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.repository.EstimateReplyRepository;
-import com.project.tour.repository.EstimateRepository;
+import com.project.tour.repository.PackageDateRepository;
 import com.project.tour.repository.PackageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.callback.PasswordCallback;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +22,8 @@ public class EstimateReplyService {
     private final EstimateReplyRepository estimateReplyRepository;
     @Autowired
     private final PackageRepository packageRepository;
+    @Autowired
+    private final PackageDateRepository packageDateRepository;
 
     //답변하기
     public void create(EstimateInquiry inquiry,EstimateReplyForm replyForm){
@@ -74,27 +73,52 @@ public class EstimateReplyService {
 
     public List<Package> getPackages(EstimateInquiry inquiry){
 
-        //1. 지역이 같을때
+        List<PackageDate> packageDate;
+        List<Package> packages;
+
+        /** 1. 출발일이 같을때 */
+        int startDay = Integer.parseInt(inquiry.getStartDay().replace("-",""));
+        String startDay1,startDay2;
+        if (inquiry.getFlexibleDay()) {
+            startDay1 = String.valueOf(startDay - 7);
+            startDay2 = String.valueOf(startDay + 7);
+        } else {
+            startDay1 = String.valueOf(startDay);
+            startDay2 = String.valueOf(startDay);
+        }
+
+        /** 2.인원수만큼 잔여수량이 있을때 */
+        int total = inquiry.getACount()+ inquiry.getBCount()+ inquiry.getCCount();
+
+        /** 3. 가격이 범위안에 있을때 */
+        String price = inquiry.getPrice();
+        int minPrice, maxPrice;
+        if (price.contains("-")) {
+            String[] splitPrice = price.split("-", 2);
+            minPrice = Integer.parseInt(splitPrice[0]);
+            maxPrice = Integer.parseInt(splitPrice[1]);
+            packageDate = packageDateRepository.findByDepartureBetweenAndApriceBetweenAndRemaincountGreaterThanEqual(startDay1, startDay2, minPrice, maxPrice,total);
+
+        }else{
+            minPrice = Integer.parseInt(price);
+            packageDate = packageDateRepository.findByDepartureBetweenAndApriceGreaterThanEqualAndRemaincountGreaterThanEqual(startDay1, startDay2, minPrice,total);
+        }
+
+        System.out.println(packageDate.size());
+
+        /** 중복제거 */
+        Iterator<PackageDate> it = packageDate.iterator();
+        Set<Long> packageNum = new HashSet<>();
+        while(it.hasNext()){
+            System.out.println(it.next().getPackages().getId());
+            packageNum = Collections.singleton(it.next().getPackages().getId()); /** 싱글톤 */
+        }
+
+        /** 4. 지역이 같을때 */
         String location2 = inquiry.getLocation2();
 
-        //2. 출발일이 같을때
-        String startDay = inquiry.getStartDay().replace("-","");
-        System.out.println(startDay);
-        String startDay1,startDay2;
-//        if (inquiry.getFlexibleDay()) {
-//            startDay1 = startDay - 7;
-//            startDay2 = startDay + 7;
-//        } else {
-//            startDay1 = Integer.parseInt(startDay);
-//            startDay2 = Integer.parseInt(startDay);
-//        }
-        //3. 가격이 같거나 작을때
-        String price = inquiry.getPrice();
+        packages = packageRepository.findByLocation2AndIdIn(location2,packageNum);
 
-        //packageRepository.findByLocation2AndDepartureDateBetween(location2,startDay1,startDay2);
-
-        List<Package> aPackage = packageRepository.findByLocation2(location2);
-
-        return aPackage;
+        return packages;
     }
 }
