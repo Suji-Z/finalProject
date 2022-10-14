@@ -33,9 +33,9 @@ public class AdminPackageService {
         aPackage.setLocation2(packageCreate.getLocation2());
         aPackage.setHotelName(packageCreate.getHotelName());
         aPackage.setTransport(packageCreate.getTransport());
-        packageDates.setA_price(packageCreate.getA_price());
-        packageDates.setB_price(packageCreate.getB_price());
-        packageDates.setC_price(packageCreate.getC_price());
+        packageDates.setAprice(packageCreate.getA_price());
+        packageDates.setBprice(packageCreate.getB_price());
+        packageDates.setCprice(packageCreate.getC_price());
         aPackage.setPackageInfo(packageCreate.getPackageInfo());
         aPackage.setCount(packageCreate.getCount());
         aPackage.setPostStart(packageCreate.getPostStart());
