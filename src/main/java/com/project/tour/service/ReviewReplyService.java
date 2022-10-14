@@ -1,5 +1,7 @@
 package com.project.tour.service;
 
+import com.project.tour.controller.DataNotFoundException;
+import com.project.tour.domain.Member;
 import com.project.tour.domain.Review;
 import com.project.tour.domain.Review_reply;
 import com.project.tour.repository.ReviewReplyRepository;
@@ -7,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +29,36 @@ public class ReviewReplyService {
 
         return review_reply;
 
+
+    }
+
+    public Review_reply getReply(Long id){
+
+        Optional<Review_reply> reviewReply = reviewReplyRepository.findById(id);
+
+        if(reviewReply.isPresent()){
+            return reviewReply.get();
+        }else {
+            throw new DataNotFoundException("댓글이 없습니다");
+        }
+    }
+
+    public void update(Review_reply review_reply, String content){
+
+        review_reply.setContent(content);
+
+        reviewReplyRepository.save(review_reply);
+
+    }
+
+    public void delete(Review_reply review_reply){
+        reviewReplyRepository.delete(review_reply);
+    }
+
+    public void vote(Review_reply review_reply, Member member){
+
+        review_reply.getVoter().add(member);
+        reviewReplyRepository.save(review_reply);
 
     }
 
