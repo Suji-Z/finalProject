@@ -29,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JavaMailSender mailSender;
 
+
     @Value("${spring.mail.username}")
     private String sender;
 
@@ -45,7 +46,7 @@ public class MemberService {
         member.setName(memberCreate.getName());
         member.setBirth(memberCreate.getBirth());
         member.setPhone(memberCreate.getPhone_num());
-        member.setCoupon(0.1);
+        member.setCoupons("1");
         member.setKeyword(memberCreate.getKeyword());
 
 
@@ -142,6 +143,7 @@ public class MemberService {
         //임시 비밀번호로 비번 업데이트..
         member.updatePassword(encPwd);
     }
+
 
 
 
