@@ -175,14 +175,13 @@
                                     <form action="#!">
                                         <div class="form-group">
 
-                                            <select class="form-control form-select bg_input" >
-                                                    <option value="1">사용가능한 쿠폰 보기</option>
-                                                    <option value="1">welcome10%쿠폰</option>
-                                                    <option value="1">5000원할인쿠폰</option>
+                                            <select class="form-control form-select bg_input" id="couponNum">
+                                                    <option value="0">사용가능한 쿠폰 보기</option>
+                                                    <option th:each="c: ${coupons}" th:value="${c.id}" th:text="${c.couponName}"></option>
                                                 </select>
                                         </div>
                                         <div class="coupon_code_submit">
-                                            <button class="btn btn_theme btn_md">사용하기</button>
+                                            <button class="btn btn_theme btn_md" onclick="couponApply();">사용하기</button>
                                         </div>
                                     </form>
                                 </div>
@@ -197,23 +196,24 @@
 
                                 <div class="tour_booking_amount_area">
                                     <ul>
-                                        <li>성인 x 1 <span th:text="|${packageDate.aprice}원|">packageDate.a_price</span></li>
-                                        <li>아동 x 1 <span th:text="|${packageDate.cprice}원|">packageDate.c_price</span></li>
-                                        <li>유아 x 1 <span th:text="|${packageDate.bprice}원|">packageDate.b_price</span></li>
+                                        <!--인원 수 넘어오는 거 보고 바꾸기 js완성하기-->
+                                        <li>성인 x 2 <span th:text="|${packageDate.aprice}원|">packageDate.aprice</span></li>
+                                        <li>아동 x 1 <span th:text="|${packageDate.cprice}원|">packageDate.cprice</span></li>
+                                        <li>유아 x 1 <span th:text="|${packageDate.bprice}원|">packageDate.bprice</span></li>
                                     </ul>
                                     <ul>
-                                        <li> 패키지금액 <span th:text="|${packageDate.bprice+packageDate.aprice+packageDate.cprice}원|"><del></del></span></li>
-                                        <li> 할인금액<span>1,500,000원</span></li>
+                                        <li> 패키지금액 <del><span th:text="|${packageDate.bprice+packageDate.aprice+packageDate.cprice}원|"></span></del></li>
+                                        <li> 할인금액<span th:text="|${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}원|">1,500,000원</span></li>
                                     </ul>
                                 </div>
                                 <div class="coupon_add_area">
 
-                                        <h6><span class="remove_coupon_tour">Remove</span> wehlcome10%쿠폰
-                                            <span>150,000원</span>
+                                        <h6><span id="chkCouponName" name="chkCouponName">couponName</span>
+                                            <span id="chkCouponRate" name="chkCouponRate">couponRate</span>
                                         </h6>
                                 </div>
                                 <div class="total_subtotal_booking">
-                                        <h6>총 금액 <span>1,350,000원</span> </h6>
+                                        <h6>총 금액 <span th:text="|${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}원|">1,350,000원</span> </h6>
                                 </div>
                                 </div>
                             </div>

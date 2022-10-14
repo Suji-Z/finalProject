@@ -2,10 +2,7 @@ package com.project.tour.controller;
 
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.service.MemberService;
-import com.project.tour.service.PackageDateService;
-import com.project.tour.service.PackageService;
-import com.project.tour.service.UserBookingService;
+import com.project.tour.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,13 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +31,13 @@ public class BookingController {
     @Autowired private final PackageService packageService;
     @Autowired private final PackageDateService packageDateService;
     @Autowired private final UserBookingService userBookingService;
+    @Autowired private final CouponService couponService;
 
-    /* 예약하기 디테일 띄우기 */
+    //할인 적용 전 금액
+    int totalPrice;
+
+
+/* 예약하기 디테일 띄우기 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     //@GetMapping("/detail/{packageNum}/{departureDate}")
     @GetMapping("/detail")
@@ -65,8 +66,36 @@ public class BookingController {
         Member member = memberService.getMember(email);  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
         model.addAttribute("member", member);
 
+        //4. user가 가지고 있는 coupon 번호와 동일한 coupon의 정보 넘기기
+        String couponNum = member.getCoupons(); //1,2,3
+        List<Coupon> coupons = couponService.getCoupon(couponNum);
+        model.addAttribute("coupons",coupons);
+
+        //5. 총금액구하기
+
+
+
         return "booking-pay/booking";
     }
+
+/*쿠폰 적용했을 때 */
+    @GetMapping("/detail/applyCoupon")
+    public @ResponseBody HashMap<String,Object> applyCoupon(@RequestParam("chkCoupon") String chkCoupon) throws Exception{
+
+        //쿠폰선택시 비동기 ajax
+        Coupon coupon = couponService.getApplyCoupon(chkCoupon);
+
+        //할인금액 계산
+
+
+        //json형태 데이터로 넘기기
+        HashMap<String,Object> couponInfo = new HashMap<String,Object>();
+        couponInfo.put("couponName",coupon.getCouponName());
+        couponInfo.put("couponRate",coupon.getCouponRate());
+
+        return couponInfo;
+    }
+
 
     /* 예약확인 저장 */
 //    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
