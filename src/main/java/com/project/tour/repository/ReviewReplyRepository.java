@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReviewReplyRepository extends JpaRepository<Review_reply, Long> {
 
+
 }
