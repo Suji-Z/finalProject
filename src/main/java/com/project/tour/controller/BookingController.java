@@ -49,6 +49,7 @@ public class BookingController {
         //user table, package table 끌고 오기
 
         long packageNum=2;
+        int packageId=2;
         String departureDate="20220101";
 
         //1. packageNum에 맞는 packageData 넘기기
@@ -56,7 +57,7 @@ public class BookingController {
         model.addAttribute("apackage",apackage);
 
         //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
-        PackageDate packageDate = packageDateService.getPackageDate(packageNum, departureDate);
+        PackageDate packageDate = packageDateService.getPackageDate(packageId, departureDate);
         model.addAttribute("packageDate",packageDate);
 
         //3. user에 맞는 memberData 넘기기

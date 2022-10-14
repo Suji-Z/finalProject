@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface PackageDateRepository extends JpaRepository<PackageDate,Long> {
 
     //임시 : departureDate랑 PackageNum으로 데이터 가져오는 코드 필요
-    Optional<PackageDate> findByIdAndDeparture(long packageNum,String departureDate);
+    Optional<PackageDate> findByIdAndDeparture(int packageNum,String departureDate);
 }
