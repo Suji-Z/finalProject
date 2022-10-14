@@ -159,7 +159,7 @@ public class ReviewController {
 
     @PostMapping("/reply/{id}")
     public  String writeReply(Model model, @PathVariable("id") Long id,
-                             @ModelAttribute("reviewReplyForm") @Valid ReviewReplyForm reviewReplyForm, BindingResult bindingResult){
+                             @Valid ReviewReplyForm reviewReplyForm, BindingResult bindingResult){
 
         Review review = reviewService.getReview(id);
 
@@ -167,13 +167,12 @@ public class ReviewController {
             model.addAttribute("review",review);
             return "/review/review_article";
 
+
         }
 
         Review_reply review_reply = reviewReplyService.create(review,reviewReplyForm.getContent());
 
-        return String.format("redirect:/review/article/%s",id);
-
-
+        return String.format("redirect:/review/article/%s",review_reply.getId());
 
     }
 
