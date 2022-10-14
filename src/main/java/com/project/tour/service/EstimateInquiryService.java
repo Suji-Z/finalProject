@@ -38,7 +38,7 @@ public class EstimateInquiryService {
     }
 
     //문의 올리기
-    public void create(EstimateInquiryForm estimateInquiryForm){
+    public void create(EstimateInquiryForm estimateInquiryForm,String loginUser){
 
         EstimateInquiry inquiry = new EstimateInquiry();
 
@@ -54,7 +54,7 @@ public class EstimateInquiryService {
         inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
         inquiry.setContent(estimateInquiryForm.getContent());
         inquiry.setCreated(LocalDateTime.now());
-        //inquiry.setEmail( );
+        inquiry.setEmail(loginUser);
 
         estimateRepository.save(inquiry);
     }
