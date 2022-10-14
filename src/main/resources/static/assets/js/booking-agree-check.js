@@ -9,7 +9,7 @@ function bookingConfirm() {
     });
 
     if(cnt !=3 ) {
-       alert('동의 항목을 모두 동의해주세요.')
-       isValid=false;
+       alert('항목을 모두 동의해야만 예약가능합니다.')
+       return false;
     }
 };
