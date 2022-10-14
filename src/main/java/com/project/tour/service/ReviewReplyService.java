@@ -17,13 +17,14 @@ public class ReviewReplyService {
 
     private final ReviewReplyRepository reviewReplyRepository;
 
-    public Review_reply create(Review review, String content){
+    public Review_reply create(Review review, String content,Member member){
 
         Review_reply review_reply = new Review_reply();
 
         review_reply.setContent(content);
         review_reply.setCreated(LocalDateTime.now());
         review_reply.setReviewNum(review);
+        review_reply.setAuthor(member);
 
         reviewReplyRepository.save(review_reply);
 
@@ -57,8 +58,13 @@ public class ReviewReplyService {
 
     public void vote(Review_reply review_reply, Member member){
 
-        review_reply.getVoter().add(member);
-        reviewReplyRepository.save(review_reply);
+        if(review_reply.getVoter().isEmpty()) {
+            review_reply.getVoter().add(member);
+            reviewReplyRepository.save(review_reply);
+        }else{
+            review_reply.setVoter(null);
+            reviewReplyRepository.save(review_reply);
+        }
 
     }
 
