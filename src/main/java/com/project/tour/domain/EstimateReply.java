@@ -25,9 +25,7 @@ public class EstimateReply {
 
     private LocalDateTime created;
 
-    private String RecomPackage1;
-    private String RecomPackage2;
-    private String RecomPackage3;
+    private String RecomPackage;
 
     /** Foreign key 생성
      * 하나의 문의글에 여러개의 답변

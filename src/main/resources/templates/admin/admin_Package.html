@@ -84,14 +84,17 @@
                                             </span></li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 예약 인원</span>
-                                            <span> <input type="text" style="width: 300px" th:field="*{count}"> </span></li>
+                                            <span> <input type="text" style="width: 100px" th:field="*{count}"> </span></li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 가격 <br/></span>
                                             <span>
-                                                성인 &nbsp; <input type="text" th:field="*{a_price}">  원 </br></br>
-                                                아동 &nbsp; <input type="text" th:field="*{c_price}"> 원 </br></br>
-                                                유아 &nbsp; <input type="text" th:field="*{b_price}"> 원
+                                                성인 &nbsp; <input type="text" th:field="*{aprice}">  원 </br></br>
+                                                아동 &nbsp; <input type="text" th:field="*{cprice}"> 원 </br></br>
+                                                유아 &nbsp; <input type="text" th:field="*{bprice}"> 원
                                             </span>
+
+                                        <li><span style="text-align:center;width: 14%">패키지 할인율</span>
+                                            <span> <input type="text" style="width: 100px" th:field="*{discount}"> %</span></li>
 
 
 

@@ -4,6 +4,7 @@ import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageCreate;
 import com.project.tour.domain.PackageDate;
+import com.project.tour.repository.AdminPackageDateRepository;
 import com.project.tour.repository.AdminPackageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,20 +23,18 @@ public class AdminPackageService {
 
     private final AdminPackageRepository adminPackageRepository;
 
+
+
     //패키지 상품 업로드
-    public Package create(PackageCreate packageCreate, PackageDate packageDate) {
+    public Package create(PackageCreate packageCreate) {
 
         Package aPackage = new Package();
-        PackageDate packageDates = new PackageDate();
 
         aPackage.setPackageName(packageCreate.getPackageName());
         aPackage.setLocation1(packageCreate.getLocation1());
         aPackage.setLocation2(packageCreate.getLocation2());
         aPackage.setHotelName(packageCreate.getHotelName());
         aPackage.setTransport(packageCreate.getTransport());
-        packageDates.setAprice(packageCreate.getA_price());
-        packageDates.setBprice(packageCreate.getB_price());
-        packageDates.setCprice(packageCreate.getC_price());
         aPackage.setPackageInfo(packageCreate.getPackageInfo());
         aPackage.setCount(packageCreate.getCount());
         aPackage.setPostStart(packageCreate.getPostStart());
@@ -44,20 +43,14 @@ public class AdminPackageService {
         aPackage.setKeyword(packageCreate.getKeyword());
         aPackage.setPreviewImage(packageCreate.getPreviewImage());
         aPackage.setDetailImage(packageCreate.getDetailImage());
-       return adminPackageRepository.save(aPackage);
 
 
+        return adminPackageRepository.save(aPackage);
     }
 
-//    public void createprice(PackageCreate packageCreate){
-//        PackageDate packageDate = new PackageDate();
-//
-//        packageDate.setA_price(packageCreate.getA_Price());
-//        packageDate.setB_price(packageCreate.getB_Price());
-//        packageDate.setC_price(packageCreate.getC_Price());
-//
-//        packageRepository.save(packageDate);
-//    }
+
+
+
 
     //페이징
     public Page<Package> getList(Pageable pageable) {
@@ -109,8 +102,6 @@ public class AdminPackageService {
     }
 
 
-    //패키지 상품 조회수
-
-    }
+}
 
 

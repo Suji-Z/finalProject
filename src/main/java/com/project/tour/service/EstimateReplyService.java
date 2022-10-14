@@ -32,9 +32,7 @@ public class EstimateReplyService {
 
         reply.setTitle(replyForm.getTitle());
         reply.setContent(replyForm.getContent());
-//        reply.setRecomPackage1(replyForm.getRecomPackage1());
-//        reply.setRecomPackage2(replyForm.getRecomPackage2());
-//        reply.setRecomPackage3(replyForm.getRecomPackage3());
+        reply.setRecomPackage(replyForm.getRecomPackage());
         reply.setCreated(LocalDateTime.now());
         reply.setEstimateInquiry(inquiry);
 
@@ -45,9 +43,7 @@ public class EstimateReplyService {
     public void modify(EstimateReply reply,EstimateReplyForm replyForm){
 
         reply.setTitle(replyForm.getTitle());
-//        reply.setRecomPackage1(replyForm.getRecomPackage1());
-//        reply.setRecomPackage2(replyForm.getRecomPackage2());
-//        reply.setRecomPackage3(replyForm.getRecomPackage3());
+        reply.setRecomPackage(replyForm.getRecomPackage());
         reply.setContent(replyForm.getContent());
         reply.setCreated(LocalDateTime.now());
 
@@ -71,6 +67,20 @@ public class EstimateReplyService {
             throw new DataNotFoundException("확인할수 없는 게시물 입니다.");
     }
 
+    //답변에 출력할 패키지 정보 가져오기
+    public List<Package> recom(String[] packages){
+
+        List<Long> packageid = new ArrayList<>();
+        for(int i = 0; i<packages.length; i++){
+            System.out.println(packages[i]);
+            System.out.println(Long.parseLong(packages[i]));
+            packageid.add(Long.parseLong(packages[i]));
+        }
+
+        return packageRepository.findByIdIn(packageid);
+    }
+
+    /** 너무 비효율적이라 다시 생각해보기 */
     public List<Package> getPackages(EstimateInquiry inquiry){
 
         List<PackageDate> packageDate;
@@ -104,14 +114,12 @@ public class EstimateReplyService {
             packageDate = packageDateRepository.findByDepartureBetweenAndApriceGreaterThanEqualAndRemaincountGreaterThanEqual(startDay1, startDay2, minPrice,total);
         }
 
-        System.out.println(packageDate.size());
-
         /** 중복제거 */
         Iterator<PackageDate> it = packageDate.iterator();
-        Set<Long> packageNum = new HashSet<>();
+        List<Long> packageNum = new ArrayList<>();
         while(it.hasNext()){
             System.out.println(it.next().getPackages().getId());
-            packageNum = Collections.singleton(it.next().getPackages().getId()); /** 싱글톤 */
+            packageNum.add(it.next().getPackages().getId());
         }
 
         /** 4. 지역이 같을때 */
@@ -121,4 +129,6 @@ public class EstimateReplyService {
 
         return packages;
     }
+
+
 }

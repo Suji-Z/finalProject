@@ -3,8 +3,8 @@ package com.project.tour.controller;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageCreate;
 import com.project.tour.domain.PackageDate;
+import com.project.tour.service.AdminPackageDateService;
 import com.project.tour.service.AdminPackageService;
-import com.project.tour.util.FileUploadUtil;
 import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,6 +26,8 @@ import java.security.Principal;
 public class AdminController {
 
    private final AdminPackageService adminPackageService;
+
+   private final AdminPackageDateService adminPackageDateService;
 
 
     @GetMapping("/main")
@@ -52,26 +53,29 @@ public class AdminController {
     }
 
     @PostMapping("/packageForm")
-    public String createPackagePost(PackageCreate packageCreate, PackageDate packageDate, @RequestParam("image1") MultipartFile multipartFile1,
+    public String createPackagePost(PackageCreate packageCreate, @RequestParam("image1") MultipartFile multipartFile1,
                                      @RequestParam("image2") MultipartFile multipartFile2) throws IOException {
 
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
 
+
+
         packageCreate.setPreviewImage(fileName1);
         packageCreate.setDetailImage(fileName2);
 
-        Package aPackage = adminPackageService.create(packageCreate,packageDate);
+        Package aPackage = adminPackageService.create(packageCreate);
 
+        PackageDate packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
         String uploadDir1 =  "package-preview/" + aPackage.getId();
         String uploadDir2 =  "package-detail/" + aPackage.getId();
-
 
         PackageFileUpload.saveFile1(uploadDir1,fileName1,multipartFile1);
         PackageFileUpload.saveFile2(uploadDir2,fileName2,multipartFile2);
 
         return "redirect:/admin/packageList";
     }
+
 
     //패키지 리스트
     @GetMapping("/packageList")
@@ -103,8 +107,8 @@ public class AdminController {
 
         packageModify.setPackageName(aPackage.getPackageName());
         packageModify.setLocation1(aPackage.getLocation1());
-       packageModify.setLocation2(aPackage.getLocation2());
-       packageModify.setHotelName(aPackage.getHotelName());
+        packageModify.setLocation2(aPackage.getLocation2());
+        packageModify.setHotelName(aPackage.getHotelName());
         packageModify.setTransport(aPackage.getTransport());
         //가격 수정 어떻게 하지...
         packageModify.setPackageInfo((aPackage.getPackageInfo()));

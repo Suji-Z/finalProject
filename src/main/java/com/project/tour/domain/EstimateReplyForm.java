@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 @Getter
@@ -24,7 +25,7 @@ public class EstimateReplyForm {
     @Column(length = 3000)
     private String content;
 
-    private List<Package> RecomPackage;
+    private String recomPackage;
 
     private LocalDateTime created;
 
