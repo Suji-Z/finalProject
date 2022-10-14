@@ -10,15 +10,15 @@ import java.time.LocalDateTime;
 @Setter
 public class UserBookingForm {
 
-    private LocalDateTime departureDate;
+    private String departure;
 
     private int travelPeriod;
 
-    private int a_travelerCount;
+    private int aCount;
 
-    private int b_travelerCount;
+    private int bCount;
 
-    private int c_travelerCount;
+    private int cCount;
 
     private String request;
 
