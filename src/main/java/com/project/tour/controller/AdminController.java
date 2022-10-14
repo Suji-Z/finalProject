@@ -66,7 +66,7 @@ public class AdminController {
 
         Package aPackage = adminPackageService.create(packageCreate);
 
-        PackageDate packageDate = adminPackageDateService.createDate(packageCreate);
+        PackageDate packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
         String uploadDir1 =  "package-preview/" + aPackage.getId();
         String uploadDir2 =  "package-detail/" + aPackage.getId();
 
