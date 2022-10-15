@@ -16,6 +16,7 @@ public class UserBooking {
     private Long id;
 
     private String departure;
+    private String arrival;
 
     private int travelPeriod;
 

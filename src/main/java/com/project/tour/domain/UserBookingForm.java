@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class UserBookingForm {
 
     private String departure;
+    private String arrival;
 
     private int travelPeriod;
 
@@ -26,8 +27,7 @@ public class UserBookingForm {
 
     private int bookingTotalPrice;
 
-    @ColumnDefault(value = "0") // 0: 예약확인중 1:결제대기중 2:결제완료
-    private int bookingStatus;
+    private int bookingStatus;  // 0: 예약확인중 1:결제대기중 2:결제완료
 
     private int bookingTotalCount;
 

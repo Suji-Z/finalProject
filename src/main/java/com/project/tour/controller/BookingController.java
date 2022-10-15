@@ -37,7 +37,7 @@ public class BookingController {
     int totalPrice;
 
 
-/* 예약하기 디테일 띄우기 */
+    /* 예약하기 디테일 띄우기 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     //@GetMapping("/detail/{packageNum}/{departureDate}")
     @GetMapping("/detail")
@@ -49,8 +49,8 @@ public class BookingController {
         //패키지 디테일에서 예약하기로 넘어오면 띄울 창에 list 쓰기
         //user table, package table 끌고 오기
 
-        long packageNum=2;
-        int packageId=2;
+        long packageNum=1;
+        int packageId=1;
         String departureDate="20220101";
 
         //1. packageNum에 맞는 packageData 넘기기
@@ -71,14 +71,13 @@ public class BookingController {
         List<Coupon> coupons = couponService.getCoupon(couponNum);
         model.addAttribute("coupons",coupons);
 
-        //5. 총금액구하기
-
-
+        //5. form 보내기
+        model.addAttribute("userBookingForm", new UserBookingForm());
 
         return "booking-pay/booking";
     }
 
-/*쿠폰 적용했을 때 */
+    /*쿠폰 적용했을 때 */
     @GetMapping("/detail/applyCoupon")
     public @ResponseBody HashMap<String,Object> applyCoupon(@RequestParam("chkCoupon") String chkCoupon) throws Exception{
 
@@ -96,35 +95,22 @@ public class BookingController {
         return couponInfo;
     }
 
-
     /* 예약확인 저장 */
-//    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
-//    @GetMapping("/confirmation")
-//    public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
-//                               Model model, Principal principal, @PathVariable("packageNum") long packageNum,
-//                               @PathVariable("departureDate") LocalDateTime departureDate) {
-//
-//        //1. packageNum에 맞는 packageData 넘기기
-//        Package apackage = packageService.getPackage(packageNum);
-//        model.addAttribute("apackage",apackage);
-//
-//        //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
-//        PackageDate packageDate = packageDateService.getPackageDate(packageNum,departureDate);
-//        model.addAttribute("packageDate",packageDate);
-//
-//        //3. user에 맞는 memberData 넘기기
-//        String email = principal.getName();  //login 아이디(email) 정보 가져오기
-//        Member member = memberService.getMember(email);  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
-//        model.addAttribute("member", member);
-//
-//        if(bindingResult.hasErrors()){
-//            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
-//        }
-//
-//        userBookingService.create(userBookingForm); //데이터 저장
-//
-//        return "booking-pay/booking_confirmation";
-//
-//    }
+    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
+    @PostMapping("/confirmation")
+    public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
+                               Principal principal, @PathVariable("packageNum") long packageNum) {
+
+
+        System.out.println(userBookingForm.getDeparture());
+
+        if(bindingResult.hasErrors()){
+            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
+        }
+
+
+        return "booking-pay/booking_confirmation";
+
+    }
 
 }
