@@ -1,95 +1,116 @@
 
-$('.btn-add,.btn-subtract').on('click touchstart', function () {
+$(function () {
+    $('.btn-add,.btn-subtract').on('click touchstart', function () {
 
-    const qadult = $('#f-qadult').val();
-    const qchild = $('#f-qchild').val();
-    const qinfant = $('#f-qinfant').val();
+        const qadult = $('#f-qadult').val();
+        const qchild = $('#f-qchild').val();
+        const qbaby = $('#f-qbaby').val();
 
-    $('.qstring').text(` ${qadult} Adults - ${qchild} Childs - ${qinfant} Infants`);
-    event.stopPropagation();
-    event.preventDefault();
+        $('.qstringa').text(` ${qadult} 성인`);
+        $('.qstringc').text(` ${qchild} 어린이`);
+        $('.qstringb').text(` ${qbaby} 유아`);
+        event.stopPropagation();
+        event.preventDefault();
+    });
 });
 
 
 
-function addValue(a) {
-    const sum = a++;
-    $('.final-count').text(`${sum}`);
+function addValuea(a) {
+    const asum =+ a ;
+    alert('a');
+    $('.pcount').text(`${asum}`);
 }
 
-var i = 0;
+function addValuec(c) {
+    const csum = c++;
+    alert('c');
+    $('.ccount').text(`${csum}`);
 
-$('.btn-add').on('click touchstart', function () {
-    const value = ++i;
-    $('.pcount').text(`${value}`);
-    addValue(value);
-    event.stopPropagation();
-    event.preventDefault();
+}
+
+function addValueb(b) {
+    const bsum = b++;
+    alert('b');
+    $('.incount').text(`${bsum}`);
+}
+
+
+
+$(function () {
+
+    var i = 0;
+
+    $('.btn-add').on('click touchstart', function () {
+        const avalue = ++i;
+        $('.pcount').text(`${avalue}`);
+        addValuea(avalue);
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
+
+    $('.btn-subtract').on('click touchstart', function () {
+        if (i == 1) {
+            $('.pcount').text(1);
+            addValuea(1);
+
+        } else {
+            const avalue = --i;
+            $('.pcount').text(`${avalue}`);
+            addValuea(avalue);
+        }
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
+
+    $('.btn-add-c').on('click touchstart', function () {
+        const cvalue = ++i;
+        $('.ccount').text(`${cvalue}`);
+        addValuec(cvalue);
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
+
+    $('.btn-subtract-c').on('click touchstart', function () {
+        if (i == 1) {
+            $('.ccount').text(1);
+            addValuec(1);
+        } else {
+            const cvalue = --i;
+            $('.ccount').text(`${cvalue}`);
+            addValuec(cvalue);
+        }
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
+
+    $('.btn-add-in').on('click touchstart', function () {
+        const bvalue = ++i;
+        $('.incount').text(`${bvalue}`);
+        addValueb(bvalue);
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
+
+    $('.btn-subtract-in').on('click touchstart', function () {
+        if (i == 1) {
+            $('.incount').text(1);
+            addValueb(1);
+        } else {
+            const bvalue = --i;
+            $('.incount').text(`${bvalue}`);
+            addValueb(bvalue);
+        }
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
 });
-
-
-$('.btn-subtract').on('click touchstart', function () {
-    if (i == 1) {
-        $('.pcount').text(1);
-        addValue(1);
-
-    } else {
-        const value = --i;
-        $('.pcount').text(`${value}`);
-        addValue(value);
-    }
-    event.stopPropagation();
-    event.preventDefault();
-});
-
-
-$('.btn-add-c').on('click touchstart', function () {
-    const value = ++i;
-    $('.ccount').text(`${value}`);
-    addValue(value);
-    event.stopPropagation();
-    event.preventDefault();
-});
-
-
-$('.btn-subtract-c').on('click touchstart', function () {
-    if (i == 1) {
-        $('.ccount').text(1);
-        addValue(1);
-    } else {
-        const value = --i;
-        $('.ccount').text(`${value}`);
-        addValue(value);
-    }
-    event.stopPropagation();
-    event.preventDefault();
-});
-
-
-
-$('.btn-add-in').on('click touchstart', function () {
-    const value = ++i;
-    $('.incount').text(`${value}`);
-    addValue(value);
-    event.stopPropagation();
-    event.preventDefault();
-});
-
-
-$('.btn-subtract-in').on('click touchstart', function () {
-    if (i == 1) {
-        $('.incount').text(1);
-        addValue(1);
-    } else {
-        const value = --i;
-        $('.incount').text(`${value}`);
-        addValue(value);
-    }
-    event.stopPropagation();
-    event.preventDefault();
-});
-
-
 
 $(document).ready(function () {
     $('.cabin-list button').click(function () {
