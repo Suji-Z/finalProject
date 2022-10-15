@@ -1,8 +1,8 @@
 
 function couponApply() {
 
-var couponNum = $("#couponNum option:selected").val();
-
+let couponNum = $("#couponNum option:selected").val();
+let bookingPrice = $("#bookingPrice").val();
 
     $.ajax({
         url: '/booking/detail/applyCoupon',
@@ -15,7 +15,8 @@ var couponNum = $("#couponNum option:selected").val();
         success: function(result) {
             if (result) {
                $('#chkCouponName').html(result.couponName);
-               $('#chkCouponRate').html(result.couponRate);
+               $('#couponDiscountPrice').html(bookingPrice*result.couponRate*(-1));
+               $('#bookingTotalPrice').html(bookingPrice*(1-result.couponRate));
 
                    } else {
                        alert("전송된 값 없음");

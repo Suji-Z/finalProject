@@ -41,7 +41,7 @@ public class BookingController {
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     //@GetMapping("/detail/{packageNum}/{departureDate}")
     @GetMapping("/detail")
-    public String bookingDetail(Model model, Principal principal
+    public String bookingDetail(Model model, Principal principal, UserBookingForm userBookingForm
                                 //, @PathVariable("packageNum") long packageNum, @PathVariable("departureDate") LocalDateTime departureDate
                                 ) {
 
@@ -71,9 +71,6 @@ public class BookingController {
         List<Coupon> coupons = couponService.getCoupon(couponNum);
         model.addAttribute("coupons",coupons);
 
-        //5. form 보내기
-        model.addAttribute("userBookingForm", new UserBookingForm());
-
         return "booking-pay/booking";
     }
 
@@ -99,10 +96,11 @@ public class BookingController {
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @PostMapping("/confirmation")
     public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
-                               Principal principal, @PathVariable("packageNum") long packageNum) {
+                               Principal principal) {
 
-
-        System.out.println(userBookingForm.getDeparture());
+        System.out.println("여기");
+        System.out.println(userBookingForm.getDeparture()+"이거");
+        System.out.println(userBookingForm.getBookingTotalPrice()+"이거");
 
         if(bindingResult.hasErrors()){
             return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
