@@ -4,61 +4,41 @@ $(function () {
 
         const qadult = $('#f-qadult').val();
         const qchild = $('#f-qchild').val();
-        const qbaby = $('#f-qbaby').val();
+        const qinfant = $('#f-qinfant').val();
 
-        $('.qstringa').text(` ${qadult} 성인`);
-        $('.qstringc').text(` ${qchild} 어린이`);
-        $('.qstringb').text(` ${qbaby} 유아`);
+        $('.qstring').text(` ${qadult} Adults - ${qchild} Childs - ${qinfant} Infants`);
         event.stopPropagation();
         event.preventDefault();
     });
 });
 
-
-
-function addValuea(a) {
-    const asum =+ a ;
-    alert('a');
-    $('.pcount').text(`${asum}`);
-}
-
-function addValuec(c) {
-    const csum = c++;
-    alert('c');
-    $('.ccount').text(`${csum}`);
-
-}
-
-function addValueb(b) {
-    const bsum = b++;
-    alert('b');
-    $('.incount').text(`${bsum}`);
-}
-
-
-
 $(function () {
+    function addValue() {
+        const sum = i + j + k;
+        $('.final-count').text(`${sum}`);
+    }
 
     var i = 0;
+    var j = 0;
+    var k = 0;
 
     $('.btn-add').on('click touchstart', function () {
-        const avalue = ++i;
-        $('.pcount').text(`${avalue}`);
-        addValuea(avalue);
+        const value = ++i;
+        $('.pcount').text(`${value}`);
+        addValue();
         event.stopPropagation();
         event.preventDefault();
     });
 
 
     $('.btn-subtract').on('click touchstart', function () {
-        if (i == 1) {
-            $('.pcount').text(1);
-            addValuea(1);
-
+        if (i == 0) {
+            $('.pcount').text(0);
+            addValue();
         } else {
-            const avalue = --i;
-            $('.pcount').text(`${avalue}`);
-            addValuea(avalue);
+            const value = --i;
+            $('.pcount').text(`${value}`);
+            addValue();
         }
         event.stopPropagation();
         event.preventDefault();
@@ -66,22 +46,22 @@ $(function () {
 
 
     $('.btn-add-c').on('click touchstart', function () {
-        const cvalue = ++i;
-        $('.ccount').text(`${cvalue}`);
-        addValuec(cvalue);
+        const value = ++j;
+        $('.ccount').text(`${value}`);
+        addValue();
         event.stopPropagation();
         event.preventDefault();
     });
 
 
     $('.btn-subtract-c').on('click touchstart', function () {
-        if (i == 1) {
-            $('.ccount').text(1);
-            addValuec(1);
+        if (j == 0) {
+            $('.ccount').text(0);
+             addValue();
         } else {
-            const cvalue = --i;
-            $('.ccount').text(`${cvalue}`);
-            addValuec(cvalue);
+            const value = --j;
+            $('.ccount').text(`${value}`);
+            addValue();
         }
         event.stopPropagation();
         event.preventDefault();
@@ -89,22 +69,22 @@ $(function () {
 
 
     $('.btn-add-in').on('click touchstart', function () {
-        const bvalue = ++i;
-        $('.incount').text(`${bvalue}`);
-        addValueb(bvalue);
+        const value = ++k;
+        $('.incount').text(`${value}`);
+        addValue();
         event.stopPropagation();
         event.preventDefault();
     });
 
 
     $('.btn-subtract-in').on('click touchstart', function () {
-        if (i == 1) {
-            $('.incount').text(1);
-            addValueb(1);
+        if (k == 0) {
+            $('.incount').text(0);
+             addValue();
         } else {
-            const bvalue = --i;
-            $('.incount').text(`${bvalue}`);
-            addValueb(bvalue);
+            const value = --k;
+            $('.incount').text(`${value}`);
+            addValue();
         }
         event.stopPropagation();
         event.preventDefault();

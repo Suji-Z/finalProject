@@ -76,7 +76,7 @@
                 <ul>
                   <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
-                      <span style="text-align:center;margin-top: 15px">제목</span>
+                      <span style="text-align:center;margin-top: 6px">제목</span>
                     </div>
                     <div class="form-group col-lg-7">
                       <span><input type="text" th:field="*{title}" class="shform-control" name="" style="border-radius: 3px"></span>
@@ -84,11 +84,12 @@
                     </div>
                   </li>
                   <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 15px">
+                    <div class="col-lg-2" style="text-align: center;">
                       <span style="text-align:center;margin-top: 15px">추천 패키지</span>
                     </div>
                     <!-- 추천패키지 반복문 돌릴구간 -->
                     <div>
+                    <div th:if="${packages.isEmpty()}"> 해당 조건의 패키지상품이 없습니다. </div>
                       <div class="form-check" th:each="package : ${packages}">
                         <input class="form-check-input" type="checkbox" th:field="*{recomPackage}" th:value="${package.id}"/>
                         <label class="form-check-label" th:for="*{recomPackage}">
@@ -103,7 +104,7 @@
 
                   <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
-                      <span style="text-align:center;margin-top: 15px">답변 내용</span>
+                      <span style="text-align:center;margin-top: 6px">답변 내용</span>
                     </div>
                     <div class="form-group col-lg-7">
                       <span><textarea type="text" th:field="*{content}" class="shform-control" name="" style="border-radius: 3px" rows="7"></textarea></span>

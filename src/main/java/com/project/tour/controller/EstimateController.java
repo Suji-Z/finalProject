@@ -196,13 +196,13 @@ public class EstimateController {
 
         replyForm.setTitle(reply.getTitle());
         replyForm.setContent(reply.getContent());
-
-        /** 추천패키지 어떻게할지 ... . */
-
         replyForm.setCreated(LocalDateTime.now());
 
         EstimateInquiry inquiry = reply.getEstimateInquiry();
 
+        List<Package> recomPackages = estimateReplyService.getPackages(inquiry);
+
+        model.addAttribute("packages",recomPackages);
         model.addAttribute("inquiry",inquiry);
 
         return "estimate/estimateReply";
