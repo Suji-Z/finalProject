@@ -23,7 +23,7 @@ public class ReviewService {
 
     private  final ReviewRepository reviewRepository;
 
-    public Review create(String subject, String content,String reviewImage, Double score ){
+    public Review create(String subject, String content,String reviewImage, Double score, Member author ){
         Review review = new Review();
 
         review.setSubject(subject);
@@ -31,6 +31,7 @@ public class ReviewService {
         review.setScore(score);
         review.setCreated(LocalDateTime.now());
         review.setReviewImage(reviewImage);
+        review.setAuthor(author);
 
         return reviewRepository.save(review);
     }
@@ -43,6 +44,17 @@ public class ReviewService {
             return op.get();
         else
             throw new DataNotFoundException("Review Not Found");
+    }
+
+    public Review getReplyReview(Long id){
+
+        Optional<Review> op2 = reviewRepository.findById(id);
+
+        if(op2.isPresent())
+            return op2.get();
+        else
+            throw new DataNotFoundException("Review Not Found");
+
     }
 
     public Page<Review> getList(Pageable pageable){
@@ -65,6 +77,10 @@ public class ReviewService {
         if(review.getVoter().isEmpty()){
             review.getVoter().add(member);
             reviewRepository.save(review);
+        }else{
+            review.setVoter(null);
+            reviewRepository.save(review);
+
         }
 
     }
