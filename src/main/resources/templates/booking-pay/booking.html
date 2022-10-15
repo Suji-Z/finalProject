@@ -50,7 +50,7 @@
                                     <li><span class="name_first">예약기간</span>
                                         <span class="last_name" th:text="|${apackage.travelPeriod}박 ${apackage.travelPeriod+1}일|">travelPeriod</span></li>
                                     <li><span class="name_first">출발일</span> <span
-                                            class="last_name" th:text="${packageDate.departure}" th:field="*{departure}">departureDate</span></li>
+                                            class="last_name" th:text="${packageDate.departure}" >departureDate</span></li>
                                     <li><span class="name_first">도착일</span> <span
                                             class="last_name" th:text="${packageDate.departure}+${apackage.travelPeriod+1}">departureDate+travelPeriod+1</span></li>
 
@@ -154,6 +154,12 @@
                                     </span>
                             </label>
                         </div>
+                        <!--넘길 데이터-->
+                        <input type="text" th:value="${packageDate.departure}" name="departure" hidden>
+                        <input type="text" id="bookingPrice" th:value="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}" hidden>
+                        <!--인원수-->
+
+
                         <button class="btn btn_theme btn_md" type="submit"
                                 onclick="return bookingConfirm();">예약하기</button>
                     </div>
@@ -192,34 +198,33 @@
 
                             <div class="tour_booking_amount_area">
                                 <ul>
-                                    <!--인원 수 넘어오는 거 보고 바꾸기 js완성하기-->
+                                    <!--인원수 넘어오는 거 보고 바꾸기 js완성하기-->
                                     <li>성인 x 2 <span th:text="|${packageDate.aprice}원|">packageDate.aprice</span></li>
                                     <li>아동 x 1 <span th:text="|${packageDate.cprice}원|">packageDate.cprice</span></li>
                                     <li>유아 x 1 <span th:text="|${packageDate.bprice}원|">packageDate.bprice</span></li>
                                 </ul>
                                 <ul>
                                     <li> 패키지금액 <del><span th:text="|${packageDate.bprice+packageDate.aprice+packageDate.cprice}원|"></span></del></li>
-                                    <li> 할인금액<span th:text="|${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}원|">1,500,000원</span></li>
+                                    <li> 할인금액<span th:text="|${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}원|">할인적용금액</span></li>
+
                                 </ul>
                             </div>
                             <div class="coupon_add_area">
 
-                                <h6><span id="chkCouponName" name="chkCouponName">couponName</span>
-                                    <span id="chkCouponRate" name="chkCouponRate">couponRate</span>
+                                <h6><span id="chkCouponName" name="chkCouponName">적용한 쿠폰</span>
+                                    <span id="couponDiscountPrice" name="couponDiscountPrice">0</span>
                                 </h6>
                             </div>
                             <div class="total_subtotal_booking">
-                                <h6>총 금액 <span th:text="|${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}원|">1,350,000원</span> </h6>
+                                <h6>총 금액 <span id="bookingTotalPrice" th:field="bookingTotalPrice">총 금액</span> </h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
         </form>
     </div>
-
 </section>
 
 <!-- Cta Area -->
