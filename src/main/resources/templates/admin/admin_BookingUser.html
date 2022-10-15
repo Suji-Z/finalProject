@@ -107,54 +107,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>tourn1213</td>
-                                        <td>2022-09-25</td>
-                                        <td>제주여행 패키지</td>
-                                        <th>2022-01-22~2022-01-25</th>
-                                        <td>900,000원</td>
-                                        <td class="complete">예약 완료</td>
+                                    <tr th:if="${paging.isEmpty()}"><td colspan="8"> 예약된 상품이 없습니다. </td></tr>
+                                    <th:block th:each="bookingUser,loop : ${paging}">
+                                        <td th:text="${bookingUser.member}"></td>
+                                        <td th:text="${#strings.substring(bookingUser.departure,0,10)}"></td>
+                                        <td th:text="${bookingUser.APackage}"></td>
+                                        <td th:text="|${bookingUser.departure} - ${bookingUser.arrival}|"></td>
+                                        <td th:text="${bookingUser.bookingTotalPrice}"></td>
+                                        <td th:text="${bookingUser.bookingStatus}"></td>
                                             </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>tourn1213</td>
-                                        <td>2022-09-25</td>
-                                        <td>제주여행 패키지</td>
-                                        <th>2022-01-22~2022-01-25</th>
-                                        <td>900,000원</td>
-                                        <td class="cancele">예약 취소</td>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>tourn1213</td>
-                                        <td>2022-09-25</td>
-                                        <td>제주여행 패키지</td>
-                                        <th>2022-01-22~2022-01-25</th>
-                                        <td>900,000원</td>
-                                        <td>대기 중 <input type="button" style="color: #565e64" value="승인"></td>
-                                        </td>
-                                    </tr>
+                                    </th:block>
 
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="pagination_area">
-                        <ul class="pagination">
+                    <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                        <ul class="pagination"
+                            th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
+                                <a class="page-link" th:href="@{/admin/bookingUser?page=1}" aria-label="Previous">
+                                    <span aria-hidden="true">≪</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item" th:style="${paging.first}?'display:none'">
+                                <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.number})}">＜</a>
+                            </li>
+                            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                                th:classappend="(${page}==${paging.number+1})?'active'">
+                                <a class="page-link" th:href=@{/admin/bookingUser(page=${page})} th:text="${page}"></a>
+                            </li>
+                            <li class="page-item" th:style="${paging.last}?'display:none'">
+                                <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.number+2})}">＞</a>
+                            </li>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
+                                <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.totalPages})}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">≫</span>
                                     <span class="sr-only">Next</span>
                                 </a>
                             </li>
@@ -163,6 +154,7 @@
                 </div>
             </div>
         </div>
+
     </section>
 
 </body>

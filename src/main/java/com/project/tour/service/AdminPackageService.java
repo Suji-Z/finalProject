@@ -22,6 +22,7 @@ import java.util.Optional;
 public class AdminPackageService {
 
     private final AdminPackageRepository adminPackageRepository;
+    private final AdminPackageRepository adminPackageDateRepository;
 
 
 
@@ -53,17 +54,19 @@ public class AdminPackageService {
 
 
     //페이징
-    public Page<Package> getList(Pageable pageable) {
+    public Page<Package> getList(Pageable pageable){
+
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
         sorts.add(Sort.Order.desc("id"));
 
-        pageable = PageRequest.of(
-                pageable.getPageNumber() <= 0 ? 0 :
-                        pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(sorts)); //역순으로 정렬
-        return adminPackageRepository.findAll(pageable);
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
 
+        return adminPackageRepository.findAll(pageable);
     }
+
 
     //패키지 상품 삭제
     public void delete(Package aPackage) {
@@ -91,12 +94,14 @@ public class AdminPackageService {
         aPackage.setTransport(packageCreate.getTransport());
         aPackage.setPackageInfo(packageCreate.getPackageInfo());
         aPackage.setCount(packageCreate.getCount());
-        aPackage.setPostStart(aPackage.getPostStart());
-        aPackage.setPostEnd(aPackage.getPostEnd());
-        aPackage.setTravelPeriod(aPackage.getTravelPeriod());
-        aPackage.setKeyword(aPackage.getKeyword());
-        aPackage.setPreviewImage(aPackage.getPreviewImage());
-        aPackage.setDetailImage(aPackage.getDetailImage());
+        aPackage.setPostStart(packageCreate.getPostStart());
+        aPackage.setPostEnd(packageCreate.getPostEnd());
+        aPackage.setTravelPeriod(packageCreate.getTravelPeriod());
+        aPackage.setKeyword(packageCreate.getKeyword());
+        aPackage.setPreviewImage(packageCreate.getPreviewImage());
+        aPackage.setDetailImage(packageCreate.getDetailImage());
+
+
 
         adminPackageRepository.save(aPackage);
     }
