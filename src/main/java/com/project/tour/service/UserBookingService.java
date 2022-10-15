@@ -1,20 +1,26 @@
 package com.project.tour.service;
 
-import com.project.tour.domain.EstimateInquiry;
-import com.project.tour.domain.EstimateInquiryForm;
 import com.project.tour.domain.UserBooking;
 import com.project.tour.domain.UserBookingForm;
 import com.project.tour.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
 public class UserBookingService {
 
     private final BookingRepository bookingRepository;
+
 
     //예약하기
     public void create(UserBookingForm userBookingForm){
@@ -34,4 +40,19 @@ public class UserBookingService {
 
         bookingRepository.save(userBooking);
     }
-}
+
+    public Page<UserBooking> getBookingList(Pageable pageable) {
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return bookingRepository.findAll(pageable);
+    }
+    }
+
+
