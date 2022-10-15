@@ -146,31 +146,30 @@
                         <div class="option-item">
                             <a th:href="@{/admin/packageForm}" class="btn  btn_navber">패키지 등록하기</a>
                         </div>
-                    </div>
-                    <div class="pagination_area" th:if="${!paging.isEmpty()}">
-                        <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,
-                        endNumber=(${paging.totalPages}>${startNumber+9})?
-                        ${startNumber+9}:${paging.totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/package/list?page=1}" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <!-- 페이징 다음 페이지로 안 넘어감 ........... 왜죠? -->
-                            <li class="page-item" th:style="${paging.first}?'display:none'">
-                                <a class="page-link" th:href="@{/package/list(page=${paging.number})}"></a></li>
-                            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
-                                th:classappend="(${page}==${paging.number+1})?'active'">
-                                <a class="page-link" th:href=@{/package/list(page=${page})} th:text="${page}"></a>
-                            </li>
-                            <li class="page-item" th:style="${paging.last}?'display:none'">
-                                <a class="page-link" th:href="@{/package/list(page=${paging.number+2})}">＞</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/package/list(page=${paging.totalPages})}" aria-label="Next">
-                                    <span aria-hidden="true">≫</span>
-                                    <span class="sr-only">Next</span>
+                    </div> <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                    <ul class="pagination"
+                        th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/admin/packageList?page=1}" aria-label="Previous">
+                                <span aria-hidden="true">≪</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:style="${paging.first}?'display:none'">
+                            <a class="page-link" th:href="@{/admin/packageList(page=${paging.number})}">＜</a>
+                        </li>
+                        <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                            th:classappend="(${page}==${paging.number+1})?'active'">
+                            <a class="page-link" th:href=@{/admin/packageList(page=${page})} th:text="${page}"></a>
+                        </li>
+                        <li class="page-item" th:style="${paging.last}?'display:none'">
+                            <a class="page-link" th:href="@{/admin/packageList(page=${paging.number+2})}">＞</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/admin/packageList(page=${paging.totalPages})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">≫</span>
+                                <span class="sr-only">Next</span>
                                 </a>
                             </li>
                         </ul>
