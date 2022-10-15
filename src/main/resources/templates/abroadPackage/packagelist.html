@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org"> <!-- 템플릿 엔진 선언 -->
-
 <body>
 <!-- Common Banner Area -->
 <section id="common_banner" style="background-image: url('/assets/img/banner/abroad.jpg');">
@@ -221,7 +220,11 @@
             <h5>가격필터</h5>
           </div>
           <div class="filter-price">
-            <div id="price-slider" class="noUi-target noUi-ltr noUi-horizontal"><div class="noUi-base"><div class="noUi-connects"><div class="noUi-connect" style="transform: translate(0%, 0px) scale(0.75, 1);"></div></div><div class="noUi-origin" style="transform: translate(-100%, 0px); z-index: 5;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="550.0" aria-valuenow="0.0" aria-valuetext="$0"><div class="noUi-touch-area"></div><div class="noUi-tooltip">$0</div></div></div><div class="noUi-origin" style="transform: translate(-25%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="200.0" aria-valuemax="1000.0" aria-valuenow="750.0" aria-valuetext="$750"><div class="noUi-touch-area"></div><div class="noUi-tooltip">$750</div></div></div></div></div>
+            <p>
+              <label for="amount">가격범위：</label>
+              <input type="text" id="amount" style="border:0; color:black; font-weight:bold;" disabled="disabled">
+            </p>
+            <div id="slider-range"></div>
           </div>
           <button class="apply" type="button">Apply</button>
         </div>
@@ -441,9 +444,9 @@
             </div>
           </div>
         </div>
-                            <div class="load_more_flight">
-                              <button class="btn btn_md" th:href="@{|/abroad/list|}"><i class="fas fa-spinner"></i> 초기화</button>
-                            </div>
+      <div class="load_more_flight">
+        <button class="btn btn_md" th:href="@{|/abroad/list|}"><i class="fas fa-spinner"></i> 초기화</button>
+      </div>
       </div>
   </div>
   </div>
