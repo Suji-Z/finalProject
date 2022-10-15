@@ -10,15 +10,16 @@ import java.time.LocalDateTime;
 @Setter
 public class UserBookingForm {
 
-    private LocalDateTime departureDate;
+    private String departure;
+    private String arrival;
 
     private int travelPeriod;
 
-    private int a_travelerCount;
+    private int aCount;
 
-    private int b_travelerCount;
+    private int bCount;
 
-    private int c_travelerCount;
+    private int cCount;
 
     private String request;
 
@@ -26,8 +27,7 @@ public class UserBookingForm {
 
     private int bookingTotalPrice;
 
-    @ColumnDefault(value = "0") // 0: 예약확인중 1:결제대기중 2:결제완료
-    private int bookingStatus;
+    private int bookingStatus;  // 0: 예약확인중 1:결제대기중 2:결제완료
 
     private int bookingTotalCount;
 

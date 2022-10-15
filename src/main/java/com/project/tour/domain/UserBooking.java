@@ -11,18 +11,20 @@ import java.time.LocalDateTime;
 public class UserBooking {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookingNum")
     private Long id;
 
-    private LocalDateTime departureDate;
+    private String departure;
+    private String arrival;
 
     private int travelPeriod;
 
-    private int a_travelerCount;
+    private int aCount;
 
-    private int b_travelerCount;
+    private int bCount;
 
-    private int c_travelerCount;
+    private int cCount;
 
     @Column(columnDefinition = "TEXT",length = 500)
     private String request;
@@ -31,7 +33,7 @@ public class UserBooking {
 
     private int bookingTotalPrice;
 
-    private int bookingStatus;
+    private int bookingStatus; //1:예약확인중 2:결제대기 3:결제완료
 
     private int bookingTotalCount;
 

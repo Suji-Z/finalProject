@@ -21,11 +21,11 @@ public class UserBookingService {
 
         UserBooking userBooking = new UserBooking();
 
-        userBooking.setDepartureDate(userBookingForm.getDepartureDate());
+        userBooking.setDeparture(userBookingForm.getDeparture());
         userBooking.setTravelPeriod(userBookingForm.getTravelPeriod());
-        userBooking.setA_travelerCount(userBookingForm.getA_travelerCount());
-        userBooking.setB_travelerCount(userBookingForm.getB_travelerCount());
-        userBooking.setC_travelerCount(userBookingForm.getC_travelerCount());
+        userBooking.setACount(userBookingForm.getACount());
+        userBooking.setBCount(userBookingForm.getBCount());
+        userBooking.setCCount(userBookingForm.getCCount());
         userBooking.setRequest(userBookingForm.getRequest());
         userBooking.setBookingDate(LocalDateTime.now());
         userBooking.setBookingTotalPrice(userBookingForm.getBookingTotalPrice());
