@@ -41,7 +41,7 @@
                             <h2>여행어때</h2>
                         </div>
                         <div class="common_author_form">
-                            <form th:action="@{/login}" id="main_author_form" method="post">
+                            <form th:action="@{/member/login}" id="main_author_form" method="post">
                                 <div for="email" class="form-group">
                                     <input type="text" name="email" class="form-control" placeholder="이메일 주소 혹은 ID" />
                                 </div>
@@ -50,9 +50,9 @@
                                 </div>
                                 <div style="text-align: right; margin-top: -10px">
 
-                                    <a th:href="@{/login/searchEmail}" style="font-size: 11pt">아이디 찾기</a>
+                                    <a th:href="@{/member/login/searchEmail}" style="font-size: 11pt">아이디 찾기</a>
                                     &nbsp;
-                                    <a th:href="@{/login/searchPassword}" style="font-size: 11pt">비밀번호 찾기</a>
+                                    <a th:href="@{/member/login/searchPassword}" style="font-size: 11pt">비밀번호 찾기</a>
                                     
                                 </div>
 

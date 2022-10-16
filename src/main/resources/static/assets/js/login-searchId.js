@@ -3,7 +3,7 @@ function searchIdBtn(){
         alert("아작스전");
 
     $.ajax({
-        url: '/login/findId',
+        url: '/member/login/findId',
         type: 'GET',
         data: {
             inputName: $('#inputName').val(),

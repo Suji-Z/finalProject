@@ -1,5 +1,6 @@
 package com.project.tour.oauth.service;
 
+/*
 import com.project.tour.domain.Member;
 import com.project.tour.domain.MemberRole;
 import com.project.tour.oauth.dto.BaseAuthUserRepository;
@@ -62,8 +63,11 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
     }
 
     private BaseAuthUser save(OAuthAttributes attributes){
-        BaseAuthUser authUser = baseAuthUserRepository.findByEmail(attributes.getEmail()).get();
+        BaseAuthUser authUser = baseAuthUserRepository.findByEmail(attributes.getEmail())
+                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
+                .orElse(attributes.toEntity());
 
         return baseAuthUserRepository.save(authUser);
     }
 }
+*/

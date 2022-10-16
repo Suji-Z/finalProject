@@ -1,6 +1,5 @@
 package com.project.tour.config;
 
-import com.project.tour.oauth.service.BaseCustomOauth2UserService;
 import com.project.tour.service.MemberSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
 
-
-    private final BaseCustomOauth2UserService baseCustomOauth2UserService;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
@@ -37,14 +33,11 @@ public class SecurityConfig{
                 .and()
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and()
-                .csrf().disable().formLogin().usernameParameter("email").loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/")
+                .csrf().disable().formLogin().usernameParameter("email").loginPage("/member/login").loginProcessingUrl("/member/login").defaultSuccessUrl("/")
                 .and()	//해당 주소와 일치할 때 로그아웃
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID") //true를 주면 세션 자체가 삭제됨
                 .invalidateHttpSession(true)
-                .and()
-                .oauth2Login().defaultSuccessUrl("/").userInfoEndpoint().userService(baseCustomOauth2UserService)
-
         ;
 
         return http.build();

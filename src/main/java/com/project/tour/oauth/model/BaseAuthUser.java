@@ -21,6 +21,8 @@ public class BaseAuthUser {
     @Column(nullable = false)
     private String email;
 
+    @Column
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -32,9 +34,18 @@ public class BaseAuthUser {
 
         this.name=name;
         this.email=email;
+        this.picture=picture;
         this.role=role;
 
     }
+
+    public BaseAuthUser update(String name,String picture) {
+        this.name=name;
+        this.picture=picture;
+
+        return this;
+    }
+
 
     public String getRolevalue() {
 
