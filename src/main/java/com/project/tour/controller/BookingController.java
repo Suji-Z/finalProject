@@ -40,7 +40,7 @@ public class BookingController {
     /* 예약하기 디테일 띄우기 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     //@GetMapping("/detail/{packageNum}/{departureDate}")
-    @GetMapping("/detail")
+    @GetMapping("/detail") //pageDetail에서 packageNum,departureDate 들고와야함
     public String bookingDetail(Model model, Principal principal, UserBookingForm userBookingForm
                                 //, @PathVariable("packageNum") long packageNum, @PathVariable("departureDate") LocalDateTime departureDate
                                 ) {
@@ -97,25 +97,26 @@ public class BookingController {
 
     /* 예약확인 저장 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
-    @PostMapping("/confirmation")
+    @PostMapping("/confirmation/{id}")
     public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
-                               Principal principal) {
+                               Principal principal, @PathVariable("id") Long id) {
 
-        System.out.println("여기");
-        System.out.println(userBookingForm.getDeparture()+"이거");
-        System.out.println(userBookingForm.getRequest());
-        System.out.println(userBookingForm.getTravelPeriod());
-
+        if(bindingResult.hasErrors()){
+            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
+        }
 
         //bookingTotalPrice 검증
         if(bookingTotalPrice == 0){
             bookingTotalPrice = userBookingForm.getBookingTotalPrice();
         }
 
+        //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package
+        Package apackage = packageService.getPackage(id);
+        Member member = memberService.getMember(principal.getName());
 
-        if(bindingResult.hasErrors()){
-            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
-        }
+        userBookingService.create(userBookingForm, bookingTotalPrice, apackage, member);
+
+        //confirmation에 띄울 정보
 
 
         return "booking-pay/booking_confirmation";

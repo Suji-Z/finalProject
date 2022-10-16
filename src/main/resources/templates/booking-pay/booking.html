@@ -33,7 +33,7 @@
 <!-- Visa application  Areas -->
 <section id="tour_booking_submission" class="section_padding">
     <div class="container">
-        <form th:action="@{/booking/confirmation}" th:object="${userBookingForm}" method="post">
+        <form th:action="@{|/booking/confirmation/${apackage.id}|}" th:object="${userBookingForm}" method="post">
         <div class="row">
             <div class="col-lg-8">
                 <div class="tou_booking_form_Wrapper">
@@ -50,7 +50,7 @@
                                     <li><span class="name_first">예약기간</span>
                                         <span class="last_name" th:text="|${apackage.travelPeriod}박 ${apackage.travelPeriod+1}일|">travelPeriod</span></li>
                                     <li><span class="name_first">출발일</span> <span
-                                            class="last_name" th:text="${packageDate.departure}" >departureDate</span></li>
+                                            class="last_name" th:text="${packageDate.departure}">departureDate</span></li>
                                     <li><span class="name_first">도착일</span> <span
                                             class="last_name" th:text="${packageDate.departure}+${apackage.travelPeriod+1}">departureDate+travelPeriod+1</span></li>
 
@@ -154,10 +154,10 @@
                                     </span>
                             </label>
                         </div>
-                        <!--넘길 데이터-->
+                        <!--넘길 데이터 : 출발일, 도착일, 여행기간, 총예약금액-->
                         <input type="text" name="departure" th:value="${packageDate.departure}" hidden>
+                        <input type="text" name="arrival" th:value="${packageDate.departure}+${apackage.travelPeriod+1}" hidden>
                         <input type="text" name="travelPeriod" th:value="${apackage.travelPeriod}" hidden>
-                        <input type="text" name="packageNum" th:value="${apackage.packageNum}" hidden>
                         <input type="text" id="bookingPrice" name="bookingTotalPrice" th:value="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}" hidden>
 
                         <!--인원수-->

@@ -16,9 +16,7 @@ public class UserBookingForm {
     private int travelPeriod;
 
     private int aCount;
-
     private int bCount;
-
     private int cCount;
 
     private String request;
@@ -27,9 +25,10 @@ public class UserBookingForm {
 
     private int bookingTotalPrice;
 
-    private int bookingStatus;  // 0: 예약확인중 1:결제대기중 2:결제완료
+    private int bookingStatus;  // 0:예약확인중 1:결제대기중 2:결제완료
 
     private int bookingTotalCount;
+
 
 
 }

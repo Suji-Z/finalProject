@@ -1,5 +1,7 @@
 package com.project.tour.service;
 
+import com.project.tour.domain.Member;
+import com.project.tour.domain.Package;
 import com.project.tour.domain.UserBooking;
 import com.project.tour.domain.UserBookingForm;
 import com.project.tour.repository.BookingRepository;
@@ -22,21 +24,27 @@ public class UserBookingService {
     private final BookingRepository bookingRepository;
 
 
-    //예약하기
-    public void create(UserBookingForm userBookingForm){
+    //예약 데이터 저장하기
+    public void create(UserBookingForm userBookingForm, int bookingTotalPrice,
+                       Package apackage, Member member){
 
         UserBooking userBooking = new UserBooking();
 
         userBooking.setDeparture(userBookingForm.getDeparture());
+        userBooking.setArrival(userBookingForm.getArrival());
         userBooking.setTravelPeriod(userBookingForm.getTravelPeriod());
-        userBooking.setACount(userBookingForm.getACount());
-        userBooking.setBCount(userBookingForm.getBCount());
-        userBooking.setCCount(userBookingForm.getCCount());
+        userBooking.setACount(userBookingForm.getACount()); //코딩전
+        userBooking.setBCount(userBookingForm.getBCount()); //코딩전
+        userBooking.setCCount(userBookingForm.getCCount()); //코딩전
         userBooking.setRequest(userBookingForm.getRequest());
         userBooking.setBookingDate(LocalDateTime.now());
-        userBooking.setBookingTotalPrice(userBookingForm.getBookingTotalPrice());
-        userBooking.setBookingStatus(userBookingForm.getBookingStatus());
-        userBooking.setBookingTotalCount(userBookingForm.getBookingTotalCount());
+        userBooking.setBookingTotalPrice(bookingTotalPrice);
+        userBooking.setBookingStatus(0);
+
+        //성인, 아동, 유아 인원수 합산
+        userBooking.setBookingTotalCount(userBooking.getACount()+ userBooking.getBCount()+ userBooking.getCCount());
+        userBooking.setAPackage(apackage);
+        userBooking.setMember(member);
 
         bookingRepository.save(userBooking);
     }
