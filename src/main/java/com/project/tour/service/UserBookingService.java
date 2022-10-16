@@ -27,7 +27,7 @@ public class UserBookingService {
 
 
     //예약 데이터 저장하기
-    public void create(UserBookingForm userBookingForm, int bookingTotalPrice,
+    public void create(UserBookingForm userBookingForm, int bookingTotalPrice, String bookingDate,
                        Package apackage, Member member){
 
         UserBooking userBooking = new UserBooking();
@@ -39,8 +39,7 @@ public class UserBookingService {
         userBooking.setBCount(userBookingForm.getBCount()); //코딩전
         userBooking.setCCount(userBookingForm.getCCount()); //코딩전
         userBooking.setRequest(userBookingForm.getRequest());
-        userBooking.setBookingDate(LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS")));
+        userBooking.setBookingDate(bookingDate);
         userBooking.setBookingTotalPrice(bookingTotalPrice);
         userBooking.setBookingStatus(0);
         userBooking.setBookingTotalCount(userBooking.getACount()+
@@ -69,6 +68,17 @@ public class UserBookingService {
         Optional<UserBooking> result = bookingRepository.findById(bookingNum);
 
         return result.get();
+    }
+
+    public long getBookingNum(Member member, String bookingDate){
+
+        System.out.println("member.getId() = " + member.getId());
+        System.out.println("bookingDate = " + bookingDate);
+
+        long bookingNum = bookingRepository.findByMemberAndBookingDate(member, bookingDate)
+                .get().getId();
+
+        return bookingNum;
     }
 }
 

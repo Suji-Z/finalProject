@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -98,12 +99,12 @@ public class BookingController {
 
     /* 예약확인 저장 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
-    @PostMapping("/confirmation/{id}")
+    @PostMapping("/confirmation/{id}") //id=packageNum
     public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
                                Principal principal,Model model, @PathVariable("id") Long id) {
 
         if(bindingResult.hasErrors()){
-            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
+            return "booking-pay/booking";
         }
 
         //bookingTotalPrice 검증
@@ -111,20 +112,24 @@ public class BookingController {
             bookingTotalPrice = userBookingForm.getBookingTotalPrice();
         }
 
-        //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package
+        //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
         Package apackage = packageService.getPackage(id);
         Member member = memberService.getMember(principal.getName());
+        String bookingDate = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
 
         //데이터 저장
-        userBookingService.create(userBookingForm, bookingTotalPrice, apackage, member);
+        userBookingService.create(userBookingForm, bookingTotalPrice, bookingDate, apackage, member);
 
         //confirmation에 띄울 정보 
         //1.member 테이블
         model.addAttribute("member",member);
 
         //2.userbooking 테이블
-        // (임시 bookingNum 어떻게 가져올지 고민)
-        UserBooking userBooking = userBookingService.getUserBooking(1);
+        //임시 : bookingNum 어떻게 가져올지 고민
+        long bookingNum =
+                userBookingService.getBookingNum(member, bookingDate);
+        UserBooking userBooking = userBookingService.getUserBooking(bookingNum);
         model.addAttribute("userBooking",userBooking);
 
         return "booking-pay/booking_confirmation";
