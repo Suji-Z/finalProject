@@ -38,6 +38,9 @@ public class UserBookingService {
         userBooking.setACount(userBookingForm.getACount()); //코딩전
         userBooking.setBCount(userBookingForm.getBCount()); //코딩전
         userBooking.setCCount(userBookingForm.getCCount()); //코딩전
+        userBooking.setTravelerName(userBookingForm.getTravelerName());
+        userBooking.setTravelerTel(userBookingForm.getTravelerTel());
+        userBooking.setTravelerBirth(userBookingForm.getTravelerBirth());
         userBooking.setRequest(userBookingForm.getRequest());
         userBooking.setBookingDate(bookingDate);
         userBooking.setBookingTotalPrice(bookingTotalPrice);

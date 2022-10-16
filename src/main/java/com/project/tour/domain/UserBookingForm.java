@@ -19,6 +19,10 @@ public class UserBookingForm {
     private int bCount;
     private int cCount;
 
+    private String travelerName;
+    private String travelerTel;
+    private String travelerBirth;
+
     private String request;
 
     private String bookingDate;
