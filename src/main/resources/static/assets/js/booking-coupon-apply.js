@@ -8,15 +8,16 @@ let bookingPrice = $("#bookingPrice").val();
         url: '/booking/detail/applyCoupon',
         type: 'GET',
         data: {
-            chkCoupon: $('#couponNum').val()
+            chkCoupon: $('#couponNum').val(),
+            bookingPrice : $("#bookingPrice").val()
         },
         contentType: "application/json",
 
         success: function(result) {
             if (result) {
                $('#chkCouponName').html(result.couponName);
-               $('#couponDiscountPrice').html(bookingPrice*result.couponRate*(-1));
-               $('#bookingTotalPrice').html(bookingPrice*(1-result.couponRate));
+               $('#couponDiscountPrice').html(result.couponDiscountPrice);
+               $('#bookingTotalPrice').html(result.bookingTotalPrice);
 
                    } else {
                        alert("전송된 값 없음");

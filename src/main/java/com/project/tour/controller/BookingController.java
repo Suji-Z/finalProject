@@ -33,8 +33,8 @@ public class BookingController {
     @Autowired private final UserBookingService userBookingService;
     @Autowired private final CouponService couponService;
 
-    //할인 적용 전 금액
-    int totalPrice;
+    //총 예약 금액
+    int bookingTotalPrice = 0;
 
 
     /* 예약하기 디테일 띄우기 */
@@ -76,18 +76,21 @@ public class BookingController {
 
     /*쿠폰 적용했을 때 */
     @GetMapping("/detail/applyCoupon")
-    public @ResponseBody HashMap<String,Object> applyCoupon(@RequestParam("chkCoupon") String chkCoupon) throws Exception{
+    public @ResponseBody HashMap<String,Object> applyCoupon(@RequestParam("chkCoupon") String chkCoupon,
+                                                            @RequestParam("bookingPrice") int bookingPrice) throws Exception{
 
         //쿠폰선택시 비동기 ajax
         Coupon coupon = couponService.getApplyCoupon(chkCoupon);
 
-        //할인금액 계산
-
+        //할인금액,총 금액 계산
+        int couponDiscountPrice = (int)(bookingPrice*coupon.getCouponRate()*(-1)); //할인금액
+        bookingTotalPrice = (int)(bookingPrice*(1-coupon.getCouponRate())); //총금액
 
         //json형태 데이터로 넘기기
         HashMap<String,Object> couponInfo = new HashMap<String,Object>();
         couponInfo.put("couponName",coupon.getCouponName());
-        couponInfo.put("couponRate",coupon.getCouponRate());
+        couponInfo.put("couponDiscountPrice",couponDiscountPrice);
+        couponInfo.put("bookingTotalPrice",bookingTotalPrice);
 
         return couponInfo;
     }
@@ -100,7 +103,15 @@ public class BookingController {
 
         System.out.println("여기");
         System.out.println(userBookingForm.getDeparture()+"이거");
-        System.out.println(userBookingForm.getBookingTotalPrice()+"이거");
+        System.out.println(userBookingForm.getRequest());
+        System.out.println(userBookingForm.getTravelPeriod());
+
+
+        //bookingTotalPrice 검증
+        if(bookingTotalPrice == 0){
+            bookingTotalPrice = userBookingForm.getBookingTotalPrice();
+        }
+
 
         if(bindingResult.hasErrors()){
             return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?

@@ -120,7 +120,7 @@
                                     </div>
 
                                     <!--요청사항-->
-                                    <textarea class="form-control bg_input" rows="4" name="userrequest" id="userreqeust" placeholder="요청사항을 적어주세요(200자)"></textarea>
+                                    <textarea class="form-control bg_input" rows="4" th:field="*{request}" placeholder="요청사항을 적어주세요(200자)"></textarea>
 
 
                                 </div>
@@ -155,8 +155,11 @@
                             </label>
                         </div>
                         <!--넘길 데이터-->
-                        <input type="text" th:value="${packageDate.departure}" name="departure" hidden>
-                        <input type="text" id="bookingPrice" th:value="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}" hidden>
+                        <input type="text" name="departure" th:value="${packageDate.departure}" hidden>
+                        <input type="text" name="travelPeriod" th:value="${apackage.travelPeriod}" hidden>
+                        <input type="text" name="packageNum" th:value="${apackage.packageNum}" hidden>
+                        <input type="text" id="bookingPrice" name="bookingTotalPrice" th:value="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}" hidden>
+
                         <!--인원수-->
 
 
@@ -216,7 +219,7 @@
                                 </h6>
                             </div>
                             <div class="total_subtotal_booking">
-                                <h6>총 금액 <span id="bookingTotalPrice" th:field="bookingTotalPrice">총 금액</span> </h6>
+                                <h6>총 금액 <span id="bookingTotalPrice" th:text="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}"></span> </h6>
                             </div>
                         </div>
                     </div>
