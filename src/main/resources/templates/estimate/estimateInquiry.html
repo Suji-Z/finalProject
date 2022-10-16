@@ -2,6 +2,7 @@
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 
+<body>
 <!-- Common Banner Area -->
 <section id="common_banner">
     <div class="container">
@@ -60,7 +61,8 @@
                                                     <option value="">상세 지역을 선택하세요</option>
                                                 </select>
                                             </div>
-                                            <script>
+                                            <script  th:inline="javascript">
+
                                                     function categoryChange(f) {
                                                         var location_a = ["일본", "중국", "홍콩", "발리","방콕/파타야","싱가폴","보홀/마닐라","코타키나발루",
                                                         "보라카이","베트남"];
@@ -84,6 +86,7 @@
                                                         }
                                                     }
 
+
                                             </script>
                                         </li>
                                         <li>
@@ -91,11 +94,10 @@
                                                 <span style="text-align:center;">인원</span>
                                             </div>
                                             <div class="form-group col-lg-7">
-                                                성인 &nbsp; <input type="text" th:field="*{aCount}" style="border: 1px solid #ced4da;"> 명
-                                                <div th:errors="*{aCount}" style="color: #dc3545;"></div><br><br>
-                                                아동 &nbsp; <input type="text" th:field="*{cCount}" style="border: 1px solid #ced4da;"> 명
-                                                <br><br>
-                                                유아 &nbsp; <input type="text" th:field="*{bCount}" style="border: 1px solid #ced4da;"> 명
+                                                <p>성인 &nbsp; <input type="text" th:field="*{aCount}" style="border: 1px solid #ced4da;"> 명</p>
+                                                <div th:errors="*{aCount}" style="color: #dc3545;"></div>
+                                                <p>아동 &nbsp; <input type="text" th:field="*{cCount}" style="border: 1px solid #ced4da;"> 명</p>
+                                                <p>유아 &nbsp; <input type="text" th:field="*{bCount}" style="border: 1px solid #ced4da;"> 명</p>
                                             </div>
                                         </li>
                                         <li>
@@ -103,8 +105,12 @@
                                                 <span style="text-align:center;">여행기간</span>
                                             </div>
                                             <div class="form-group col-lg-7">
-                                                출발일 <input style="overflow: hidden;" type="text" id="fromDate" th:field="*{startDay}"><br><br>
-                                                도착일 <input style="overflow: hidden;" type="text" id="toDate" th:field="*{endDay}">
+                                                출발일 <input type="text" id="fromDate" th:field="*{startDay}"
+                                                           style="background: url('/assets/img/icon/calendar.png') no-repeat 10px 15px;
+                                                                  background-size: 20px;background-position: 95% 50%; cursor:pointer; border: 1px solid #ced4da;"><br><br>
+                                                도착일 <input type="text" id="toDate" th:field="*{endDay}"
+                                                           style="background: url('/assets/img/icon/calendar.png') no-repeat 10px 15px;
+                                                                  background-size: 20px;background-position: 95% 50%; cursor:pointer; border: 1px solid #ced4da;">
                                             </div>
                                             <script>
                                                  $(function() {
@@ -161,9 +167,7 @@
                                                       <option th:value="|5000000-|" th:text="|501만원 이상|"></option>
                                                      </select>
                                                </span>
-                                            </div>
-                                            <div class="form-group col-lg-7">
-                                            <span style="color:gray; font-size: 8pt;">성인 1인 기준으로 선택해주세요.</span>
+                                                <p style="color:gray; font-size: 10pt;">성인 1인 기준으로 선택해주세요.</p>
                                             </div>
                                         </li>
                                         <li>

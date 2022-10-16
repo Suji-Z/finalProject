@@ -4865,6 +4865,16 @@ textarea {
     border-bottom: none;
 }
 
+.your_info_arae p{
+    margin-bottom: 10px;
+    font-family: 'Pretendard-Regular';
+    color: #212529;
+}
+
+.your_info_arae i{
+    font-style: normal;
+}
+
 .name_first {
     width: 40%;
 }

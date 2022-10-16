@@ -60,12 +60,31 @@
                                                         <div class="col-lg-4  col-md-6 col-sm-12 col-12">
                                                             <div class="form_search_date">
                                                                 <div class="flight_Search_boxed date_flex_area">
-                                                                    <div class="Journey_date">
+                                                                    <div class="Journey_date" >
                                                                         <p>출발예정일</p>
-                                                                        <input type="date">
+                                                                        <input type="text" id="datePicker" placeholder="날짜를 선택해주세요"
+                                                                               style="background: url('/assets/img/icon/calander.png') no-repeat 10px 15px;
+                                                                               background-size: 20px;background-position: right; cursor:pointer;">
                                                                     </div>
                                                                 </div>
                                                             </div>
+<script>
+	$(function() {
+		$('#datePicker').datepicker({
+		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		    startDate: '0d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+		    templates : {
+		        leftArrow: '&laquo;',
+		        rightArrow: '&raquo;'
+		    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징
+		    title: "출발일 선택",	//캘린더 상단에 보여주는 타이틀
+		    todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false
+		    weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일
+		    language : "ko"	//달력의 언어 선택
+		});//datepicker end
+	});//ready end
+</script>
                                                         </div>
                                                         <div class="col-lg-3  col-md-6 col-sm-12 col-12">
                                                             <div class="flight_Search_boxed dropdown_passenger_area">
@@ -75,7 +94,8 @@
                                                                             data-toggle="dropdown" type="button"
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">0
+                                                                            aria-expanded="false"
+                                                                            >0
                                                                     </button>
                                                                     명
                                                                     <div class="dropdown-menu dropdown_passenger_info"
@@ -234,13 +254,6 @@
     <div class="container">
         <!-- Section Heading -->
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="section_heading_center">
-                    <h2>제주여행 패키지</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="left_side_search_area">
                     <div class="left_side_search_boxed">
@@ -248,30 +261,11 @@
                             <h5>가격필터</h5>
                         </div>
                         <div class="filter-price">
-                            <div id="price-slider" class="noUi-target noUi-ltr noUi-horizontal">
-                                <div class="noUi-base">
-                                    <div class="noUi-connects">
-                                        <div class="noUi-connect"
-                                             style="transform: translate(0%, 0px) scale(0.75, 1);"></div>
-                                    </div>
-                                    <div class="noUi-origin" style="transform: translate(-100%, 0px); z-index: 5;">
-                                        <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0"
-                                             role="slider" aria-orientation="horizontal" aria-valuemin="0.0"
-                                             aria-valuemax="550.0" aria-valuenow="0.0" aria-valuetext="$0">
-                                            <div class="noUi-touch-area"></div>
-                                            <div class="noUi-tooltip">$0</div>
-                                        </div>
-                                    </div>
-                                    <div class="noUi-origin" style="transform: translate(-25%, 0px); z-index: 4;">
-                                        <div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0"
-                                             role="slider" aria-orientation="horizontal" aria-valuemin="200.0"
-                                             aria-valuemax="1000.0" aria-valuenow="750.0" aria-valuetext="$750">
-                                            <div class="noUi-touch-area"></div>
-                                            <div class="noUi-tooltip">$750</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <p>
+                                <label for="amount">가격범위：</label>
+                                <input type="text" id="amount" style="border:0; color:black; font-weight:bold; background:white;" disabled="disabled">
+                            </p>
+                            <div id="slider-range"></div>
                         </div>
                         <button class="apply" type="button">Apply</button>
                     </div>
@@ -435,8 +429,8 @@
                 </div>
             </div>
             <div class="col-lg-9">
-                <div th:if="${paging.isEmpty()}"> 조건에 맞는 패키지가 없습니다. 다시 검색 해주세요.</div>
-
+                <div th:if="${paging.isEmpty()}" align="center"><img src="/assets/img/notfoundpackage.png"></div>
+<!-- 패키지 반복문 시작-->
                 <div class="row" th:each="package,loop : ${paging}">
                     <div class="col-lg-12">
                         <div class="flight_search_result_wrapper">
@@ -447,7 +441,14 @@
                                             <div class="heart_destinations">
                                                 <i class="fas fa-heart"></i>
                                             </div>
-                                            <img th:src="@{${package.getPhotosImagePath1()}}"/>
+
+                                            <span th:switch="${package.location2}">
+                                                <a th:case="'서귀포'" th:href="@{|/jeju/seogwipo/${package.id}|}">
+                                                <a th:case="'중문'" th:href="@{|/jeju/jungmun/${package.id}|}">
+                                                <a th:case="'애월'" th:href="@{|/jeju/aeowl/${package.id}|}">
+                                                <a th:case="'제주시'" th:href="@{|/jeju/jejusi/${package.id}|}">
+                                            </span><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
+
                                           <div class="multi_city_flight_lists_content">
                                             <h3><a th:href="@{|/jeju/${package.location2}/${package.id}|}" th:text="${package.packageName}"></a></h3>
                                             <br/>
@@ -473,11 +474,16 @@
                                                     class="review_count">(10+ reviewes)</span>
                                             </div>
                                         </div>
-                                        <a href="packagedetail" class="btn btn_theme btn_sm">예약하기</a>
+                                        <span th:switch="${package.location2}">
+                                                <a th:case="'서귀포'" th:href="@{|/jeju/seogwipo/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                                                <a th:case="'중문'" th:href="@{|/jeju/jungmun/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                                                <a th:case="'애월'" th:href="@{|/jeju/aeowl/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                                                <a th:case="'제주시'" th:href="@{|/jeju/jejusi/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-
+<!-- 패키지 반복문 끝-->
                             <div class="pagination_area" th:if="${!paging.isEmpty()}">
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
