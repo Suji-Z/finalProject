@@ -29,11 +29,11 @@ public class UserBooking {
     @Column(columnDefinition = "TEXT",length = 500)
     private String request;
 
-    private LocalDateTime bookingDate;
+    private String bookingDate;
 
     private int bookingTotalPrice;
 
-    private int bookingStatus; //1:예약확인중 2:결제대기 3:결제완료
+    private int bookingStatus; // 0:예약확인중 1:결제대기중 2:결제완료
 
     private int bookingTotalCount;
 

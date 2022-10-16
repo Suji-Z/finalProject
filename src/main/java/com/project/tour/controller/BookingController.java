@@ -35,12 +35,13 @@ public class BookingController {
 
     //총 예약 금액
     int bookingTotalPrice = 0;
+    int couponDiscountPrice= 0;
 
 
     /* 예약하기 디테일 띄우기 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     //@GetMapping("/detail/{packageNum}/{departureDate}")
-    @GetMapping("/detail")
+    @GetMapping("/detail") //pageDetail에서 packageNum,departureDate 들고와야함
     public String bookingDetail(Model model, Principal principal, UserBookingForm userBookingForm
                                 //, @PathVariable("packageNum") long packageNum, @PathVariable("departureDate") LocalDateTime departureDate
                                 ) {
@@ -50,15 +51,15 @@ public class BookingController {
         //user table, package table 끌고 오기
 
         long packageNum=1;
-        int packageId=1;
         String departureDate="20220101";
 
         //1. packageNum에 맞는 packageData 넘기기
         Package apackage = packageService.getPackage(packageNum);
         model.addAttribute("apackage",apackage);
 
+
         //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
-        PackageDate packageDate = packageDateService.getPackageDate(packageId, departureDate);
+        PackageDate packageDate = packageDateService.getPackageDate(apackage, departureDate);
         model.addAttribute("packageDate",packageDate);
 
         //3. user에 맞는 memberData 넘기기
@@ -83,7 +84,7 @@ public class BookingController {
         Coupon coupon = couponService.getApplyCoupon(chkCoupon);
 
         //할인금액,총 금액 계산
-        int couponDiscountPrice = (int)(bookingPrice*coupon.getCouponRate()*(-1)); //할인금액
+        couponDiscountPrice = (int)(bookingPrice*coupon.getCouponRate()*(-1)); //할인금액
         bookingTotalPrice = (int)(bookingPrice*(1-coupon.getCouponRate())); //총금액
 
         //json형태 데이터로 넘기기
@@ -97,26 +98,34 @@ public class BookingController {
 
     /* 예약확인 저장 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
-    @PostMapping("/confirmation")
+    @PostMapping("/confirmation/{id}")
     public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
-                               Principal principal) {
+                               Principal principal,Model model, @PathVariable("id") Long id) {
 
-        System.out.println("여기");
-        System.out.println(userBookingForm.getDeparture()+"이거");
-        System.out.println(userBookingForm.getRequest());
-        System.out.println(userBookingForm.getTravelPeriod());
-
+        if(bindingResult.hasErrors()){
+            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
+        }
 
         //bookingTotalPrice 검증
         if(bookingTotalPrice == 0){
             bookingTotalPrice = userBookingForm.getBookingTotalPrice();
         }
 
+        //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package
+        Package apackage = packageService.getPackage(id);
+        Member member = memberService.getMember(principal.getName());
 
-        if(bindingResult.hasErrors()){
-            return "booking-pay/booking"; // 이걸 더 간단하게는 못할까?
-        }
+        //데이터 저장
+        userBookingService.create(userBookingForm, bookingTotalPrice, apackage, member);
 
+        //confirmation에 띄울 정보 
+        //1.member 테이블
+        model.addAttribute("member",member);
+
+        //2.userbooking 테이블
+        // (임시 bookingNum 어떻게 가져올지 고민)
+        UserBooking userBooking = userBookingService.getUserBooking(1);
+        model.addAttribute("userBooking",userBooking);
 
         return "booking-pay/booking_confirmation";
 

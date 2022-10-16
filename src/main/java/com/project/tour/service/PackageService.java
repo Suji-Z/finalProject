@@ -73,7 +73,9 @@ public class PackageService {
 
     //특정 packageNum으로 package data 출력(임시)
     public Package getPackage(long packageNum){
+
         Optional<Package> packageData = packageRepository.findById(packageNum);
+
         return packageData.get();
 
 
