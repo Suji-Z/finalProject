@@ -21,7 +21,7 @@ public class UserBookingForm {
 
     private String request;
 
-    private LocalDateTime bookingDate;
+    private String bookingDate;
 
     private int bookingTotalPrice;
 

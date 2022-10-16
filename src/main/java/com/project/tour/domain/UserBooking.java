@@ -29,7 +29,7 @@ public class UserBooking {
     @Column(columnDefinition = "TEXT",length = 500)
     private String request;
 
-    private LocalDateTime bookingDate;
+    private String bookingDate;
 
     private int bookingTotalPrice;
 

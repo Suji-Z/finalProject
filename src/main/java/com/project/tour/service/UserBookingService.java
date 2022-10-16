@@ -13,8 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -37,12 +39,12 @@ public class UserBookingService {
         userBooking.setBCount(userBookingForm.getBCount()); //코딩전
         userBooking.setCCount(userBookingForm.getCCount()); //코딩전
         userBooking.setRequest(userBookingForm.getRequest());
-        userBooking.setBookingDate(LocalDateTime.now());
+        userBooking.setBookingDate(LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS")));
         userBooking.setBookingTotalPrice(bookingTotalPrice);
         userBooking.setBookingStatus(0);
-
-        //성인, 아동, 유아 인원수 합산
-        userBooking.setBookingTotalCount(userBooking.getACount()+ userBooking.getBCount()+ userBooking.getCCount());
+        userBooking.setBookingTotalCount(userBooking.getACount()+
+                userBooking.getBCount()+ userBooking.getCCount()); //성인, 아동, 유아 인원수 합산
         userBooking.setAPackage(apackage);
         userBooking.setMember(member);
 
@@ -61,6 +63,13 @@ public class UserBookingService {
 
         return bookingRepository.findAll(pageable);
     }
+
+    public UserBooking getUserBooking(long bookingNum){
+
+        Optional<UserBooking> result = bookingRepository.findById(bookingNum);
+
+        return result.get();
     }
+}
 
 
