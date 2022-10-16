@@ -8,224 +8,230 @@
 </head>
 
 <body>
-    <!-- preloader Area -->
-    <!-- Header Area -->
-    <!-- search -->
+<!-- preloader Area -->
+<!-- Header Area -->
+<!-- search -->
 
-    <!-- Common Banner Area -->
-    <section id="common_banner" style="background-image: url('/assets/img/banner/banner01.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="common_bannner_text">
-                        <h2>Tour reservation111</h2>
-                        <ul>
-                            <li><a href="main.html">Home</a></li>
-                            <li><span><i class="fas fa-circle"></i></span>tour</li>
-                            <li><span><i class="fas fa-circle"></i></span> reservation</li>
-                        </ul>
+<!-- Common Banner Area -->
+<section id="common_banner" style="background-image: url('/assets/img/banner/banner01.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="common_bannner_text">
+                    <h2>Tour reservation111</h2>
+                    <ul>
+                        <li><a href="main.html">Home</a></li>
+                        <li><span><i class="fas fa-circle"></i></span>tour</li>
+                        <li><span><i class="fas fa-circle"></i></span> reservation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Visa application  Areas -->
+<section id="tour_booking_submission" class="section_padding">
+    <div class="container">
+        <form th:action="@{|/booking/confirmation/${apackage.id}|}" th:object="${userBookingForm}" method="post">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="tou_booking_form_Wrapper">
+                    <!--추가덩어리 : 예약정보-->
+                    <div class="booking_tour_form">
+                        <h3 class="heading_theme">상품정보</h3>
+                        <div class="tour_booking_form_box">
+                            <div class="your_info_arae">
+                                <ul>
+                                    <li><span class="name_first">상품명</span>
+                                        <span class="last_name" th:text="${apackage.packageName}">packageName</span></li>
+                                    <li><span class="name_first">이용교통</span>
+                                        <span class="last_name" th:text="${apackage.transport}">transport</span></li>
+                                    <li><span class="name_first">예약기간</span>
+                                        <span class="last_name" th:text="|${apackage.travelPeriod}박 ${apackage.travelPeriod+1}일|">travelPeriod</span></li>
+                                    <li><span class="name_first">출발일</span> <span
+                                            class="last_name" th:text="${packageDate.departure}">departureDate</span></li>
+                                    <li><span class="name_first">도착일</span> <span
+                                            class="last_name" th:text="${packageDate.departure}+${apackage.travelPeriod+1}">departureDate+travelPeriod+1</span></li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--추가덩어리 : 여행경비-->
+                    <div class="booking_tour_form">
+                        <h3 class="heading_theme">여행경비</h3>
+                        <div class="tour_booking_form_box">
+                            <div class="your_info_arae">
+                                <ul>
+                                    <li><span class="name_first">성인</span> <span
+                                            class="last_name" th:text="|${packageDate.aprice}원|">packageDate.a_price</span></li>
+                                    <li><span class="name_first">아동</span> <span
+                                            class="last_name" th:text="|${packageDate.cprice}원|">packageDate.c_price</span></li>
+                                    <li><span class="name_first">유아(24개월이하)</span> <span
+                                            class="last_name" th:text="|${packageDate.bprice}원|">packageDate.b_price</span></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <br/>유류할증료의 변화로 금액은 변동될 수 있음을 알려드립니다. 최종 결제 페이지에서 금액을 확인해주세요.
+                    </div>
+
+                    <!--한덩어리 : 입력받을 내용-->
+                    <div class="booking_tour_form">
+                        <h3 class="heading_theme">여행자정보</h3>
+                        <div class="tour_booking_form_box">
+                                <div class="form-check write_spical_check">
+                                    <input class="form-check-input" type="checkbox" name="userInfoCheck" id="userInfoCheck">
+                                    <label class="form-check-label" for="userInfoCheck">
+                                    <span class="main_spical_check">
+                                        <span> 예약자와 여행자가 일치합니다.</span>
+                                    </span>
+                                    </label>
+                                </div>
+
+                                <br/>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control bg_input" name="username" id="username"
+                                                   th:field="${member.name}" placeholder="이름*">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control bg_input" name="userbirth" id="userbirth"
+                                                   th:field="${member.birth}" placeholder="생년월일(1999-01-01)*">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control bg_input" name="usernumber" id="usernumber"
+                                                   th:field="${member.phone}" placeholder="휴대폰번호(010-1234-1234)*">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    </div>
+
+                                    <!--요청사항-->
+                                    <textarea class="form-control bg_input" rows="4" th:field="*{request}" placeholder="요청사항을 적어주세요(200자)"></textarea>
+
+
+                                </div>
+                        </div>
+                    </div>
+
+
+                    <!--세덩어리 : 결제 버튼-->
+                    <div class="booking_tour_form_submit">
+                        <div class="form-check write_spical_check">
+                            <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf1">
+                            <label class="form-check-label" for="flexCheckDefaultf1">
+                                    <span class="main_spical_check">
+                                        <span> 해당 예약은 관리자가 확인 후 확정되며, 최종 예약 확정이 완료되면 예약금 결제 부탁드립니다.</span>
+                                    </span>
+                            </label>
+                        </div>
+                        <div class="form-check write_spical_check">
+                            <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf2">
+                            <label class="form-check-label" for="flexCheckDefaultf2">
+                                    <span class="main_spical_check">
+                                        <span> 적립예상 포인트는 여행 도착일 7일 후 적립되며 프로모션 적용 및 결제 방법에 따라 변동가능합니다.</span>
+                                    </span>
+                            </label>
+                        </div>
+                        <div class="form-check write_spical_check">
+                            <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf3">
+                            <label class="form-check-label" for="flexCheckDefaultf3">
+                                    <span class="main_spical_check">
+                                        <span> 여행정보와 금액을 포함한 모든 내용을 숙지하였습니다.</span>
+                                    </span>
+                            </label>
+                        </div>
+                        <!--넘길 데이터 : 출발일, 도착일, 여행기간, 총예약금액-->
+                        <input type="text" name="departure" th:value="${packageDate.departure}" hidden>
+                        <input type="text" name="arrival" th:value="${packageDate.departure}+${apackage.travelPeriod+1}" hidden>
+                        <input type="text" name="travelPeriod" th:value="${apackage.travelPeriod}" hidden>
+                        <input type="text" id="bookingPrice" name="bookingTotalPrice" th:value="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}" hidden>
+
+                        <!--인원수-->
+
+
+                        <button class="btn btn_theme btn_md" type="submit"
+                                onclick="return bookingConfirm();">예약하기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tour_details_right_sidebar_wrapper">
+
+                    <!--덩어리: 쿠폰-->
+                    <br/><br/><br/>
+                    <div class="tour_detail_right_sidebar">
+                        <div class="tour_details_right_boxed">
+                            <div class="tour_details_right_box_heading">
+                                <h3>쿠폰</h3>
+                            </div>
+                            <div class="coupon_code_area_booking">
+                                    <div class="form-group">
+
+                                        <select class="form-control form-select bg_input" id="couponNum">
+                                            <option value="0">사용가능한 쿠폰 보기</option>
+                                            <option th:each="c: ${coupons}" th:value="${c.id}" th:text="${c.couponName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="coupon_code_submit">
+                                        <button type="button" class="btn btn_theme btn_md" onclick="couponApply();">사용하기</button>
+                                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tour_detail_right_sidebar">
+                        <div class="tour_details_right_boxed">
+                            <div class="tour_details_right_box_heading">
+                                <h3>결제 예정 금액</h3>
+                            </div>
+
+                            <div class="tour_booking_amount_area">
+                                <ul>
+                                    <!--인원수 넘어오는 거 보고 바꾸기 js완성하기-->
+                                    <li>성인 x 2 <span th:text="|${packageDate.aprice}원|">packageDate.aprice</span></li>
+                                    <li>아동 x 1 <span th:text="|${packageDate.cprice}원|">packageDate.cprice</span></li>
+                                    <li>유아 x 1 <span th:text="|${packageDate.bprice}원|">packageDate.bprice</span></li>
+                                </ul>
+                                <ul>
+                                    <li> 패키지금액 <del><span th:text="|${packageDate.bprice+packageDate.aprice+packageDate.cprice}원|"></span></del></li>
+                                    <li> 할인금액<span th:text="|${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}원|">할인적용금액</span></li>
+
+                                </ul>
+                            </div>
+                            <div class="coupon_add_area">
+
+                                <h6><span id="chkCouponName" name="chkCouponName">적용한 쿠폰</span>
+                                    <span id="couponDiscountPrice" name="couponDiscountPrice">0</span>
+                                </h6>
+                            </div>
+                            <div class="total_subtotal_booking">
+                                <h6>총 금액 <span id="bookingTotalPrice" th:text="${(packageDate.bprice+packageDate.aprice+packageDate.cprice)*(100-packageDate.discount)/100}"></span> </h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        </form>
+    </div>
+</section>
 
-    <!-- Visa application  Areas -->
-    <section id="tour_booking_submission" class="section_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="tou_booking_form_Wrapper">
-                        <!--추가덩어리 : 예약정보-->
-                         <div class="booking_tour_form">
-                            <h3 class="heading_theme">상품정보</h3>
-                            <div class="tour_booking_form_box">
-                                <div class="your_info_arae">
-                                    <ul>
-                                        <li><span class="name_first">상품명</span>
-                                            <span class="last_name" th:text="${apackage.packageName}">packageName</span></li>
-                                        <li><span class="name_first">이용교통</span>
-                                            <span class="last_name" th:text="${apackage.transport}">transport</span></li>
-                                        <li><span class="name_first">예약기간</span>
-                                            <span class="last_name" th:text="|${apackage.travelPeriod}박 ${apackage.travelPeriod+1}일|">travelPeriod</span></li>
-                                        <li><span class="name_first">출발일</span> <span
-                                                class="last_name" th:text="${packageDate.departure}">departureDate</span></li>
-                                        <li><span class="name_first">도착일</span> <span
-                                                class="last_name" th:text="${packageDate.departure}+${apackage.travelPeriod+1}">departureDate+travelPeriod+1</span></li>
-
-                                    </ul>
-
-                                </div>
-                            </div>
-                        </div>
-
-                          <!--추가덩어리 : 여행경비-->
-                            <div class="booking_tour_form">
-                            <h3 class="heading_theme">여행경비</h3>
-                            <div class="tour_booking_form_box">
-                                <div class="your_info_arae">
-                                    <ul>
-                                        <li><span class="name_first">성인</span> <span
-                                                class="last_name" th:text="|${packageDate.aprice}원|">packageDate.a_price</span></li>
-                                        <li><span class="name_first">아동</span> <span
-                                                class="last_name" th:text="|${packageDate.cprice}원|">packageDate.c_price</span></li>
-                                        <li><span class="name_first">유아(24개월이하)</span> <span
-                                                class="last_name" th:text="|${packageDate.bprice}원|">packageDate.b_price</span></li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                            <br/>유류할증료의 변화로 금액은 변동될 수 있음을 알려드립니다. 최종 결제 페이지에서 금액을 확인해주세요.
-                        </div>
-
-                        <!--한덩어리 : 입력받을 내용-->
-                        <div class="booking_tour_form">
-                            <h3 class="heading_theme">여행자정보</h3>
-                            <div class="tour_booking_form_box">
-                                <form action="!#" id="tour_booking_form_item">
-
-                                    <div class="form-check write_spical_check">
-                                        <input class="form-check-input" type="checkbox" name="userInfoCheck" id="userInfoCheck">
-                                        <label class="form-check-label" for="userInfoCheck">
-                                    <span class="main_spical_check">
-                                        <span> 예약자와 여행자가 일치합니다.</span>
-                                    </span>
-                                        </label>
-                                    </div>
-
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control bg_input" name="username" id="username"
-                                                       th:field="${member.name}" placeholder="이름*">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control bg_input" name="userbirth" id="userbirth"
-                                                       th:field="${member.birth}" placeholder="생년월일(1999-01-01)*">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control bg_input" name="usernumber" id="usernumber"
-                                                       th:field="${member.phone}" placeholder="휴대폰번호(010-1234-1234)*">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                        </div>
-
-                                <!--요청사항-->
-                                        <textarea class="form-control bg_input" rows="4" name="userrequest" id="userreqeust" placeholder="요청사항을 적어주세요(200자)"></textarea>
-
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-
-                        <!--세덩어리 : 결제 버튼-->
-                        <div class="booking_tour_form_submit">
-                            <div class="form-check write_spical_check">
-                                <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf1">
-                                <label class="form-check-label" for="flexCheckDefaultf1">
-                                    <span class="main_spical_check">
-                                        <span> 해당 예약은 관리자가 확인 후 확정되며, 최종 예약 확정이 완료되면 예약금 결제 부탁드립니다.</span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="form-check write_spical_check">
-                             <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf2">
-                                <label class="form-check-label" for="flexCheckDefaultf2">
-                                    <span class="main_spical_check">
-                                        <span> 적립예상 포인트는 여행 도착일 7일 후 적립되며 프로모션 적용 및 결제 방법에 따라 변동가능합니다.</span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="form-check write_spical_check">
-                             <input class="form-check-input" type="checkbox" name="agreeCheck" id="flexCheckDefaultf3">
-                                <label class="form-check-label" for="flexCheckDefaultf3">
-                                    <span class="main_spical_check">
-                                        <span> 여행정보와 금액을 포함한 모든 내용을 숙지하였습니다.</span>
-                                    </span>
-                                </label>
-                            </div>
-                            <a th:href="@{/booking/confirmation}" id="booking"
-                               onclick="return bookingConfirm();" class="btn btn_theme btn_md" >예약하기</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="tour_details_right_sidebar_wrapper">
-
-                       <!--덩어리: 쿠폰-->
-                        <br/><br/><br/>
-                        <div class="tour_detail_right_sidebar">
-                            <div class="tour_details_right_boxed">
-                                <div class="tour_details_right_box_heading">
-                                    <h3>쿠폰</h3>
-                                </div>
-                                <div class="coupon_code_area_booking">
-                                    <form action="#!">
-                                        <div class="form-group">
-
-                                            <select class="form-control form-select bg_input" >
-                                                    <option value="1">사용가능한 쿠폰 보기</option>
-                                                    <option value="1">welcome10%쿠폰</option>
-                                                    <option value="1">5000원할인쿠폰</option>
-                                                </select>
-                                        </div>
-                                        <div class="coupon_code_submit">
-                                            <button class="btn btn_theme btn_md">사용하기</button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="tour_detail_right_sidebar">
-                            <div class="tour_details_right_boxed">
-                                <div class="tour_details_right_box_heading">
-                                    <h3>결제 예정 금액</h3>
-                                </div>
-
-                                <div class="tour_booking_amount_area">
-                                    <ul>
-                                        <li>성인 x 1 <span th:text="|${packageDate.aprice}원|">packageDate.a_price</span></li>
-                                        <li>아동 x 1 <span th:text="|${packageDate.cprice}원|">packageDate.c_price</span></li>
-                                        <li>유아 x 1 <span th:text="|${packageDate.bprice}원|">packageDate.b_price</span></li>
-                                    </ul>
-                                    <ul>
-                                        <li> 패키지금액 <span th:text="|${packageDate.bprice+packageDate.aprice+packageDate.cprice}원|"><del></del></span></li>
-                                        <li> 할인금액<span>1,500,000원</span></li>
-                                    </ul>
-                                </div>
-                                <div class="coupon_add_area">
-
-                                        <h6><span class="remove_coupon_tour">Remove</span> wehlcome10%쿠폰
-                                            <span>150,000원</span>
-                                        </h6>
-                                </div>
-                                <div class="total_subtotal_booking">
-                                        <h6>총 금액 <span>1,350,000원</span> </h6>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-    </section>
-
-    <!-- Cta Area -->
-    <!-- Footer  -->
+<!-- Cta Area -->
+<!-- Footer  -->
 
 
 </body>

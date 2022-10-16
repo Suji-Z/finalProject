@@ -26,6 +26,9 @@ public class Review_reply {
     @ManyToOne
     private Review reviewNum;
 
+    @ManyToOne
+    private Member author;
+
     @ManyToMany
     Set<Member> voter;
 }

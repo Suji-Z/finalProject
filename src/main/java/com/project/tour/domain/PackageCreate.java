@@ -51,6 +51,8 @@ public class PackageCreate {
 
     private String keyword;
 
+    private Long packageNum;
+
 
 
                                                                                                                                                                                                        private String transport;

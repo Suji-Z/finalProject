@@ -20,157 +20,159 @@
 
 <!-- Form Area -->
 <section id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
-  <form th:action th:object="${Package}" method="post">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="theme_search_form_area">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="flight_categories_search">
-                    <ul class="nav nav-tabs" role="tablist">
-                    </ul>
+  <form th:object="${Package}" method="post">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="theme_search_form_area">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="flight_categories_search">
+                      <ul class="nav nav-tabs" role="tablist">
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="tab-content" id="myTabContent1">
-                <div class="tab-pane fade show active" id="oneway_flight" role="tabpanel" aria-labelledby="oneway-tab">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="oneway_search_form">
-                        <form action="#!">
-                          <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-12">
-                              <div class="flight_Search_boxed">
+                <div class="tab-content" id="myTabContent1">
+                  <div class="tab-pane fade show active" id="oneway_flight" role="tabpanel"
+                       aria-labelledby="oneway-tab">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="oneway_search_form">
+                          <form action="#!">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="flight_Search_boxed">
 
-                                <p>지역</p>
-                               <select name="destination">
-                                 <option value="japan">일본</option>
-                                 <option value="thailand">태국</option>
-                                 <option value="usa">미국</option>
-                                 <option value="europe">유럽</option>
-                                 <option value="jeju">제주</option>
-                               </select>
+                                  <p>지역</p>
+                                  <select name="destination">
+                                    <option value="spain">스페인</option>
+                                    <option value="england">영국</option>
+                                    <option value="france">프랑스</option>
+                                    <option value="italy">이탈리아</option>
+                                    <option value="germany">독일</option>
+                                    <option value="greece">그리스</option>
+                                    <option value="turkiye">튀르키예(터키)</option>
 
-                                <div class="plan_icon_posation">
-                                  <i class="fas fa-plane-departure"></i>
+
+                                  </select>
+
+                                  <div class="plan_icon_posation">
+                                    <i class="fas fa-plane-departure"></i>
+                                  </div>
+
                                 </div>
-
                               </div>
-                            </div>
 
-                            <div class="col-lg-4  col-md-6 col-sm-12 col-12">
-                              <div class="form_search_date">
-                                <div class="flight_Search_boxed date_flex_area">
-                                  <div class="Journey_date">
-                                    <p>출발예정일</p>
-                                    <input type="date" value="2022-05-05">
-                                    <span>Thursday</span>
+                              <div class="col-lg-4  col-md-6 col-sm-12 col-12">
+                                <div class="form_search_date">
+                                  <div class="flight_Search_boxed date_flex_area">
+                                    <div class="Journey_date">
+                                      <p>출발예정일</p>
+                                      <input type="date">
+                                      <span>Thursday</span>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-lg-3  col-md-6 col-sm-12 col-12">
-                              <div class="flight_Search_boxed dropdown_passenger_area">
-                                <p>여행객, 클래스</p>
-                                <div class="dropdown">
-                                  <button class="dropdown-toggle final-count" data-toggle="dropdown" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    0 Passenger
-                                  </button>
-                                  <div class="dropdown-menu dropdown_passenger_info" aria-labelledby="dropdownMenuButton1">
-                                    <div class="traveller-calulate-persons">
-                                      <div class="passengers">
-                                        <h6>Passengers</h6>
-                                        <div class="passengers-types">
-                                          <div class="passengers-type">
-                                            <div class="text"><span class="count pcount">2</span>
-                                              <div class="type-label">
-                                                <p>어른</p>
-                                                <span>12+세</span>
+                              <div class="col-lg-3  col-md-6 col-sm-12 col-12">
+                                <div class="flight_Search_boxed dropdown_passenger_area">
+                                  <p>여행객</p>
+                                  <div class="dropdown">
+                                    <button class="dropdown-toggle final-count" data-toggle="dropdown" type="button"
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                      총
+                                    </button>
+                                    <div class="dropdown-menu dropdown_passenger_info"
+                                         aria-labelledby="dropdownMenuButton1">
+                                      <div class="traveller-calulate-persons">
+                                        <div class="passengers">
+                                          <h6>여행객</h6>
+                                          <div class="passengers-types">
+                                            <div class="passengers-type">
+                                              <div class="text">
+                                                <span class="count pcount">0</span>
+                                                <div class="type-label">
+                                                  <p>성인</p>
+                                                  <span>12+세</span>
+                                                </div>
+                                              </div>
+                                              <div class="button-set">
+                                                <button type="button" class="btn-add">
+                                                  <i class="fas fa-plus"></i>
+                                                </button>
+                                                <button type="button" class="btn-subtract">
+                                                  <i class="fas fa-minus"></i>
+                                                </button>
                                               </div>
                                             </div>
-                                            <div class="button-set">
-                                              <button type="button" class="btn-add">
-                                                <i class="fas fa-minus"></i>
-                                              </button>
-                                              <button type="button" class="btn-subtract">
-                                                <i class="fas fa-plus"></i>
-                                              </button>
-                                            </div>
-                                          </div>
-                                          <div class="passengers-type">
-                                            <div class="text"><span class="count ccount">0</span>
-                                              <div class="type-label">
-                                                <p class="fz14 mb-xs-0">
-                                                  어린이
-                                                </p><span>2- 12세 미만</span>
+                                            <div class="passengers-type">
+                                              <div class="text"><span class="count ccount">0</span>
+                                                <div class="type-label">
+                                                  <p class="fz14 mb-xs-0">
+                                                    어린이
+                                                  </p><span>2- 12세 미만</span>
+                                                </div>
+                                              </div>
+                                              <div class="button-set">
+                                                <button type="button" class="btn-add-c">
+                                                  <i class="fas fa-plus"></i>
+                                                </button>
+                                                <button type="button" class="btn-subtract-c">
+                                                  <i class="fas fa-minus"></i>
+                                                </button>
                                               </div>
                                             </div>
-                                            <div class="button-set">
-                                              <button type="button" class="btn-add-c">
-                                                <i class="fas fa-plus"></i>
-                                              </button>
-                                              <button type="button" class="btn-subtract-c">
-                                                <i class="fas fa-minus"></i>
-                                              </button>
-                                            </div>
-                                          </div>
-                                          <div class="passengers-type">
-                                            <div class="text"><span class="count incount">0</span>
-                                              <div class="type-label">
-                                                <p class="fz14 mb-xs-0">
-                                                  유아
-                                                </p><span>2세 미만</span>
+                                            <div class="passengers-type">
+                                              <div class="text"><span class="count incount">0</span>
+                                                <div class="type-label">
+                                                  <p class="fz14 mb-xs-0">
+                                                    유아
+                                                  </p><span>2세 미만</span>
+                                                </div>
                                               </div>
-                                            </div>
-                                            <div class="button-set">
-                                              <button type="button" class="btn-add-in">
-                                                <i class="fas fa-plus"></i>
-                                              </button>
-                                              <button type="button" class="btn-subtract-in">
-                                                <i class="fas fa-minus"></i>
-                                              </button>
+                                              <div class="button-set">
+                                                <button type="button" class="btn-add-in">
+                                                  <i class="fas fa-plus"></i>
+                                                </button>
+                                                <button type="button" class="btn-subtract-in">
+                                                  <i class="fas fa-minus"></i>
+                                                </button>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
-                                      </div>
-                                      <div class="cabin-selection">
-                                        <div class="cabin-list">
-                                          <button type="button" class="label-select-btn active">
-                                              <span class="muiButton-label">
-                                                  선택
-                                              </span>
-                                          </button>
 
-                                        </div>
+
+
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                                <span>Business</span>
                               </div>
-                            </div>
-                            <div class="top_form_search_button">
-                              <button class="btn btn_theme btn_md">Search</button>
-                            </div>
+                              <div class="top_form_search_button">
+                                <button class="btn btn_theme btn_md">Search</button>
+                              </div>
 
                             </div>
-                        </form>
+                          </form>
 
                         </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div></section>
+  </form>
+</section>
 
 <!-- Flight Search Areas -->
 <section id="explore_area" class="section_padding">
@@ -218,7 +220,11 @@
             <h5>가격필터</h5>
           </div>
           <div class="filter-price">
-            <div id="price-slider" class="noUi-target noUi-ltr noUi-horizontal"><div class="noUi-base"><div class="noUi-connects"><div class="noUi-connect" style="transform: translate(0%, 0px) scale(0.75, 1);"></div></div><div class="noUi-origin" style="transform: translate(-100%, 0px); z-index: 5;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="550.0" aria-valuenow="0.0" aria-valuetext="$0"><div class="noUi-touch-area"></div><div class="noUi-tooltip">$0</div></div></div><div class="noUi-origin" style="transform: translate(-25%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="200.0" aria-valuemax="1000.0" aria-valuenow="750.0" aria-valuetext="$750"><div class="noUi-touch-area"></div><div class="noUi-tooltip">$750</div></div></div></div></div>
+            <p>
+              <label for="amount">가격범위：</label>
+              <input type="text" id="amount" style="border:0; color:black; font-weight:bold;" disabled="disabled">
+            </p>
+            <div id="slider-range"></div>
           </div>
           <button class="apply" type="button">Apply</button>
         </div>
@@ -385,7 +391,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="flight_search_result_wrapper">
-              <div th:each="packages,loop : ${paging}">
+              <div th:each="apcakage,loop : ${paging}">
               <div class="flight_search_item_wrappper">
                 <div class="flight_search_items">
                   <div class="multi_city_flight_lists">
@@ -395,19 +401,24 @@
                       </div>
 
 
-                    <img th:src ="@{/assets/img/tour/} + ${packages.previewImage}" alt="img"/>
+                      <img th:src="@{${apcakage.getPhotosImagePath1()}}"/>
                       <div class="multi_city_flight_lists_content">
-                        <h3><a th:href="@{|/abroad/detail/${packages.id}|}" th:text="${packages.packageName}"></a></h3>
+                        <h3><a th:href="@{|/abroad/detail/${apcakage.id}|}" th:text="${apcakage.packageName}"></a></h3>
                         <br/>
-                        <h5 th:text="${packages.packageInfo}"></h5>
+                        <h5 th:text="${apcakage.packageInfo}"></h5>
                       </div>
                       </div>
                     </div>
                   <div class="flight_search_right">
-                    <div class="flight_search_right_content" th:each="packageDates : ${packages.packageDateList}">
-                    <h5><del th:text="${#numbers.formatInteger(packageDates.a_price,1,'COMMA')}"></del></h5>
-                      <h2 th:text="${#numbers.formatInteger(packageDates.a_price - (packageDates.a_price *(packageDates.discount * 0.01)),1,'COMMA')}"></h2><h5 th:text="${packageDates.discount}">% OFF</h5>
-                    <div class="all_review_star">
+                    <div class="flight_search_right_content" th:each="packageDate : ${apcakage.packageDateList}">
+                    <h5><i><del th:text="${#numbers.formatInteger(packageDate.aprice,1,'COMMA')}"></del></i></h5>
+                      <h2><span th:text="|${#numbers.formatInteger(packageDate.aprice - (packageDate.aprice *(packageDate.discount * 0.01)),1,'COMMA')}원|"></span><sup th:text="|${packageDate.discount}% OFF|"></sup></h2>
+                     <br/><br/>
+                      <h5 th:text="|여행기간:   ${apcakage.travelPeriod}박 ${(apcakage.travelPeriod + 1)}일|"></span></h5><br/>
+                      <h5 th:text="|항공:   ${apcakage.transport}|"></h5><br/>
+                      <h5 th:text="|출발기간: ${apcakage.postStart} - ${apcakage.postEnd} |"></h5>
+
+                      <div class="all_review_star">
                       <div class="review_star_all">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -419,28 +430,26 @@
                       <span class="review_count">(10+ reviewes)</span>
 
                       <br/><br/><br/>
-                      <h6>조회수: <span th:text="${packages.hitCount}"></span></h6>
+                      <h6>조회수: <span th:text="${apcakage.hitCount}"></span></h6>
                     </div>
+                      <br/>
+                      <h6>#<span th:text="${apcakage.keyword}"></span></h6>
+
                     </div>
-                    <a th:href="@{|/abroad/detail/${packages.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                    <a th:href="@{|/abroad/detail/${apcakage.id}|}" class="btn btn_theme btn_sm">예약하기</a>
                   </div>
                 </div>
               </div>
-              </div>
-            </div>
-                            <div class="load_more_flight">
-                              <button class="btn btn_md" th:href="@{|/abroad/list|}"><i class="fas fa-spinner"></i> 초기화</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
+      <div class="load_more_flight">
+        <button class="btn btn_md" th:href="@{|/abroad/list|}"><i class="fas fa-spinner"></i> 초기화</button>
       </div>
+      </div>
+  </div>
+  </div>
   </div>
   </div>
   </form>

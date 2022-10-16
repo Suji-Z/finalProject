@@ -3,8 +3,10 @@ package com.project.tour.controller;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageCreate;
 import com.project.tour.domain.PackageDate;
+import com.project.tour.domain.UserBooking;
 import com.project.tour.service.AdminPackageDateService;
 import com.project.tour.service.AdminPackageService;
+import com.project.tour.service.UserBookingService;
 import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +32,7 @@ public class AdminController {
 
    private final AdminPackageDateService adminPackageDateService;
 
+   private final UserBookingService userBookingService;
 
     @GetMapping("/main")
     public String admin_main() {
@@ -40,9 +44,15 @@ public class AdminController {
         return "admin/admin_Booking";
     }
 
-    @PostMapping("/bookinguser")
-    public String admin_bookinguser() {
-        return "admin/admin_bookingUser";
+
+ //예약 회원 조회
+    @GetMapping("/bookingUser")
+    public String admin_bookingUser(Model model, @PageableDefault Pageable pageable) {
+
+        Page<UserBooking> paging = userBookingService.getBookingList(pageable);
+        model.addAttribute("paging",paging);
+
+        return "admin/admin_BookingUser";
     }
 
     //패키지 상품 등록
@@ -66,7 +76,7 @@ public class AdminController {
 
         Package aPackage = adminPackageService.create(packageCreate);
 
-        PackageDate packageDate = adminPackageDateService.createDate(packageCreate);
+        PackageDate packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
         String uploadDir1 =  "package-preview/" + aPackage.getId();
         String uploadDir2 =  "package-detail/" + aPackage.getId();
 
@@ -101,16 +111,17 @@ public class AdminController {
     //패키지 상품 수정
 
    @GetMapping("/package/modify/{id}")
-   public String packageModify(PackageCreate packageModify, BindingResult bindingResult,@PathVariable("id") Long id){
+   public String packageModify(PackageCreate packageModify,
+                               BindingResult bindingResult,@PathVariable("id") Long id ){
 
         Package aPackage = adminPackageService.getPackage(id);
 
-        packageModify.setPackageName(aPackage.getPackageName());
+
+       packageModify.setPackageName(aPackage.getPackageName());
         packageModify.setLocation1(aPackage.getLocation1());
         packageModify.setLocation2(aPackage.getLocation2());
         packageModify.setHotelName(aPackage.getHotelName());
         packageModify.setTransport(aPackage.getTransport());
-        //가격 수정 어떻게 하지...
         packageModify.setPackageInfo((aPackage.getPackageInfo()));
         packageModify.setCount(aPackage.getCount());
         packageModify.setPostStart(aPackage.getPostStart());
@@ -119,6 +130,8 @@ public class AdminController {
         packageModify.setKeyword(aPackage.getKeyword());
         packageModify.setPreviewImage(aPackage.getPreviewImage());
         packageModify.setDetailImage(aPackage.getDetailImage());
+
+
 
        return "admin/admin_Package";
     }
@@ -132,6 +145,7 @@ public class AdminController {
         return "redirect:/admin/packageList";
 
     }
+
 
 
 

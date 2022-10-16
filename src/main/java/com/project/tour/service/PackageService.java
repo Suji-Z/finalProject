@@ -7,6 +7,7 @@ import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.PackageRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PackageService {
@@ -35,6 +36,30 @@ public class PackageService {
                 pageable.getPageSize(),Sort.by(sorts));
 
         return packageRepository.findAll(pageable);
+    }
+
+    //지역별 페이징처리
+    public Page<Package> getLocationList(String location,Pageable pageable){
+
+        if(location.equals("seogwipo")){
+            location="서귀포";
+        }else if(location.equals("jungmun")){
+            location="중문";
+        }else if(location.equals("aewol")){
+            location="애월";
+        }else if(location.equals("jejusi")) {
+            location = "제주시";
+        }
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return packageRepository.findByLocation2(location, pageable);
     }
 
 
@@ -73,7 +98,9 @@ public class PackageService {
 
     //특정 packageNum으로 package data 출력(임시)
     public Package getPackage(long packageNum){
+
         Optional<Package> packageData = packageRepository.findById(packageNum);
+
         return packageData.get();
 
 

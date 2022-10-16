@@ -17,10 +17,10 @@ public class PackageDateService {
 
     //특정 packageNum과 departureDate로 가격 출력(임시)
     // packageNum비교 타입 몰라서 멈춤 일단 id랑 비교함
-    public PackageDate getPackageDate(int packageNum, String departureDate) {
+    public PackageDate getPackageDate(Package packages, String departureDate) {
 
         Optional<PackageDate> packageDate =
-                packageDateRepository.findByIdAndDeparture(packageNum, departureDate);
+                packageDateRepository.findByPackagesAndDeparture(packages, departureDate);
 
             return packageDate.get();
 

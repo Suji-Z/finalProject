@@ -33,6 +33,9 @@ public class Review {
     @Column
     private Double score;
 
+    @ManyToOne
+    private Member author;
+
     //하나의 리뷰에 많은 댓글
     @OneToMany(mappedBy = "reviewNum", cascade = CascadeType.REMOVE)
     private List<Review_reply> replyList;
