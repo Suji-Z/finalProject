@@ -51,8 +51,8 @@ public class BookingController {
         //패키지 디테일에서 예약하기로 넘어오면 띄울 창에 list 쓰기
         //user table, package table 끌고 오기
 
-        long packageNum=1;
-        String departureDate="20220101";
+        long packageNum=2; //packageDetail에서 packageNum 들고오기
+        String departureDate="2022-01-01"; //packageDetail에서 출발일,도착일,인원수 끌고와야함!
 
         //1. packageNum에 맞는 packageData 넘기기
         Package apackage = packageService.getPackage(packageNum);

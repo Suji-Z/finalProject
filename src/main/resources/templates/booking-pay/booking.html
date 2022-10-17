@@ -35,6 +35,7 @@
     <div class="container">
         <form th:action="@{|/booking/confirmation/${apackage.id}|}" th:object="${userBookingForm}" method="post">
         <div class="row">
+
             <div class="col-lg-8">
                 <div class="tou_booking_form_Wrapper">
                     <!--추가덩어리 : 예약정보-->
@@ -96,24 +97,24 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control bg_input" name="username" id="username"
-                                                   th:field="${member.name}" placeholder="이름*">
+                                            <input type="text" class="form-control bg_input" name="travelerName" id="username"
+                                                   th:value="${member.name}" placeholder="이름*">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control bg_input" name="userbirth" id="userbirth"
-                                                   th:field="${member.birth}" placeholder="생년월일(1999-01-01)*">
+                                            <input type="text" class="form-control bg_input" name="travelerBirth" id="userbirth"
+                                                   th:value="${member.birth}" placeholder="생년월일(19990101)*">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control bg_input" name="usernumber" id="usernumber"
-                                                   th:field="${member.phone}" placeholder="휴대폰번호(010-1234-1234)*">
+                                            <input type="text" class="form-control bg_input" name="travelerTel" id="usernumber"
+                                                   th:value="${member.phone}" placeholder="휴대폰번호(01012341234)*">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -225,9 +226,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
         </form>
     </div>
+
 </section>
 
 <!-- Cta Area -->

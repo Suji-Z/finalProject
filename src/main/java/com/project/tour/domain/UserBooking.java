@@ -21,10 +21,12 @@ public class UserBooking {
     private int travelPeriod;
 
     private int aCount;
-
     private int bCount;
-
     private int cCount;
+
+    private String travelerName;
+    private String travelerTel;
+    private String travelerBirth;
 
     @Column(columnDefinition = "TEXT",length = 500)
     private String request;

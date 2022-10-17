@@ -38,6 +38,9 @@ public class UserBookingService {
         userBooking.setACount(userBookingForm.getACount()); //코딩전
         userBooking.setBCount(userBookingForm.getBCount()); //코딩전
         userBooking.setCCount(userBookingForm.getCCount()); //코딩전
+        userBooking.setTravelerName(userBookingForm.getTravelerName());
+        userBooking.setTravelerTel(userBookingForm.getTravelerTel());
+        userBooking.setTravelerBirth(userBookingForm.getTravelerBirth());
         userBooking.setRequest(userBookingForm.getRequest());
         userBooking.setBookingDate(bookingDate);
         userBooking.setBookingTotalPrice(bookingTotalPrice);
@@ -63,6 +66,7 @@ public class UserBookingService {
         return bookingRepository.findAll(pageable);
     }
 
+    //id 값으로 예약정보 조회
     public UserBooking getUserBooking(long bookingNum){
 
         Optional<UserBooking> result = bookingRepository.findById(bookingNum);
@@ -70,15 +74,20 @@ public class UserBookingService {
         return result.get();
     }
 
+    //예약자와 예약날짜로 예약번호 조회
     public long getBookingNum(Member member, String bookingDate){
-
-        System.out.println("member.getId() = " + member.getId());
-        System.out.println("bookingDate = " + bookingDate);
 
         long bookingNum = bookingRepository.findByMemberAndBookingDate(member, bookingDate)
                 .get().getId();
 
         return bookingNum;
+    }
+
+    public void modifyBookingStatus(UserBooking userBooking, UserBookingForm userBookingForm){
+
+        userBooking.setBookingStatus(userBooking.getBookingStatus());
+
+        bookingRepository.save(userBooking);
     }
 }
 
