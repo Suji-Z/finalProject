@@ -34,7 +34,7 @@
     <!-- Visa application  Areas -->
     <section id="tour_booking_submission" class="section_padding">
         <div class="container">
-            <form th:action="@{|/pay/confirmation|}" th:object="${userBookingForm}" method="post">
+            <form th:action="@{|/pay/confirmation/${userBooking.id}|}" th:object="${PayForm}" method="post">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="tou_booking_form_Wrapper">
@@ -90,15 +90,15 @@
                             <div class="tour_details_right_boxed">
                                 <div class="tour_booking_amount_area">
                                     <ul>
-                                        <li>예약 인원<span th:text="|성인 ${userBooking.ACount}명|">1,000,000원</span></li>
-                                        <li>&nbsp;<span th:text="|아동 ${userBooking.CCount}명|" >500,000원</span></li>
-                                        <li>&nbsp;<span th:text="|유아 ${userBooking.BCount}명|" >0원</span></li>
+                                        <li>예약 인원<span th:text="|성인 ${userBooking.ACount}명|"></span></li>
+                                        <li>&nbsp;<span th:text="|아동 ${userBooking.CCount}명|" ></span></li>
+                                        <li>&nbsp;<span th:text="|유아 ${userBooking.BCount}명|" ></span></li>
                                     </ul>
                                     <ul>
                                         <li> 예약 금액 <span th:text="${userBooking.bookingTotalPrice}" id="bookingPrice" name="bookingPrice"
-                                                         th:value="${userBooking.bookingTotalPrice}">2,500,000원</span></li>
+                                                         th:value="${userBooking.bookingTotalPrice}"></span></li>
                                         <li> 포인트<span><input type="text" style="width:80px;" id="pointApply" name="pointApply"></span></li>
-                                        <li>&nbsp;<span th:text="|(보유 포인트 ${userBooking.member.point})|" >1,500,000원</span></li>
+                                        <li>&nbsp;<span th:text="|(보유 포인트 ${userBooking.member.point})|" ></span></li>
                                         <input type="hidden" id="point" th:value="${userBooking.member.point}">
                                     </ul>
                                 </div>
@@ -115,25 +115,27 @@
                                 <div class="booking_payment_boxed">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1" value="red">
+                                                id="flexRadioDefault1" value="red" >
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 신용카드
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault2" value="green">
+                                                id="flexRadioDefault2" value="green" >
                                             <label class="form-check-label" for="flexRadioDefault2">
                                                 계좌이체
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault3" value="white">
-                                            <label class="form-check-label" for="flexRadioDefault3">
+                                                id="flexRadioDefault4" value="white" >
+                                            <label class="form-check-label" for="flexRadioDefault4">
                                                 카카오페이
                                             </label>
+                                            <input type="text" id="payMethod" name="payMethod" th:value="${payMethod}" hidden>
                                         </div>
+
                                         <div class="payment_filed_wrapper">
                                             <div class="payment_card payment_toggle red">
                                                 <div class="row">
@@ -145,7 +147,7 @@
                                                         <input type="text" class="form-control bg_input"
                                                             placeholder="소유자명(영문)">
                                                     </div>
-                                                    
+
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control bg_input"
