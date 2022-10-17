@@ -85,7 +85,7 @@ public class UserBookingService {
 
     public void modifyBookingStatus(UserBooking userBooking, UserBookingForm userBookingForm){
 
-        userBooking.setBookingStatus(userBooking.getBookingStatus());
+        userBooking.setBookingStatus(userBookingForm.getBookingStatus());
 
         bookingRepository.save(userBooking);
     }

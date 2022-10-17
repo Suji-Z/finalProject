@@ -17,5 +17,6 @@ public interface BookingRepository extends JpaRepository<UserBooking, Long> {
 
     //사용자 정보와 예약날짜를 가지고 bookingNum 가져오기
     Optional<UserBooking> findByMemberAndBookingDate(Member member, String bookingDate);
+    //예약번호로 예약정보 가져오기
 
 }
