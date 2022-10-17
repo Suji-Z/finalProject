@@ -9,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -61,6 +64,7 @@ public class ReviewReplyService {
         if(review_reply.getVoter().isEmpty()) {
             review_reply.getVoter().add(member);
             reviewReplyRepository.save(review_reply);
+
         }else{
             review_reply.setVoter(null);
             reviewReplyRepository.save(review_reply);
