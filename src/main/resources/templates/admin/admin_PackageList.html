@@ -116,26 +116,25 @@
 
                                             <td>
                                             <a th:href="@{|/admin/package/modify/${package.id}|}" th:text="수정" class="btn btn-sm btn-outline-secondary"  />
-                                            <button class="delete btn btn-sm btn-outline-secondary" href="javascript:void(0);"
-                                                    th:data-uri="@{|/admin/package/delete/${package.id}|}" th:text="삭제"></button>
+                                            <a th:href="@{|/admin/package/delete/${package.id}|}" th:text="삭제"  class="btn btn-sm btn-outline-secondary"/>
                                             <!--게시글 맨 위 1개밖에 삭제가 안됨... 왜,, 어째서......-->
 
 
-                                            <script type="text/javascript">
-                                                const deleteBtn = document.getElementsByClassName("delete");
+<!--                                            <script type="text/javascript">-->
+<!--                                                const deleteBtn = document.getElementsByClassName("delete");-->
 
-                                                Array.from(deleteBtn).forEach(function(element){
+<!--                                                Array.from(deleteBtn).forEach(function(element){-->
 
-                                                    element.addEventListener('click',function(){
+<!--                                                    element.addEventListener('click',function(){-->
 
-                                                        if(confirm("패키지 상품을 삭제하시겠습니까?")){
+<!--                                                        if(confirm("패키지 상품을 삭제하시겠습니까?")){-->
 
-                                                            location.href=this.dataset.uri;
-                                                        };
-                                                    });
-                                                });
+<!--                                                            location.href=this.dataset.uri;-->
+<!--                                                        };-->
+<!--                                                    });-->
+<!--                                                });-->
 
-                                            </script>
+<!--                                            </script>-->
 
                         </td>
                                     </tr>
