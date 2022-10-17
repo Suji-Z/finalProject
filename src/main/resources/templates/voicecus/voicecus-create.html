@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://thymeleaf.org">
+
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>고객의 소리</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tour Booking Submission Areas -->
+<section id="tour_booking_submission" class="section_padding" style="margin: auto">
+  <div class="col-lg-8">
+  </div>
+  <form th:action="@{/voiceCus/create}" th:object="${voiceCusForm}" method="post">
+  <div class="container" style="margin: auto; width: 70%">
+    <div class="row">
+
+      <div class="col-lg-13">
+        <div class="tou_booking_form_Wrapper">
+
+          <div class="booking_tour_form">
+            <h3 class="heading_theme">고객의 소리</h3>
+            <div class="tour_booking_form_box">
+
+
+              <div class="your_info_arae">
+                <ul>
+                  <li>
+                    <div class="col-lg-2" style="text-align: center; margin-top: 15px">
+                    <label style="text-align:center;margin-top: 15px">제목</label>
+                    </div>
+                    <div class="form-group col-lg-7">
+                    <span><input type="text" class="shform-control" th:field="*{subject}" style="border-radius: 3px"></span>
+                      <div th:errors="*{subject}" style="color: #dc3545;"></div>
+                    </div>
+                  </li>
+
+                    <li>
+                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                      <label style="text-align:center;">분류</label>
+                      </div>
+                       <div class="form-group col-lg-5">
+                           <select class="form-select" th:field="*{types}" aria-label="Default select example">
+                                <option th:value="good">칭찬의 소리</option>
+                                <option th:value="bad">불만의 소리</option>
+                                <option th:value="suggestion">건의사항</option>
+                           </select>
+                      </div>
+                    </li>
+                 
+                     <li>
+                    <div class="col-lg-2" style="text-align: center; margin-top: 15px">
+                      <label style="text-align:center;margin-top: 15px">내용</label>
+                    </div>
+                    <div class="form-group col-lg-7">
+                      <span><textarea type="text" th:field="*{content}" class="shform-control" style="border-radius: 3px" rows="7"></textarea></span>
+                      <div th:errors="*{content}" style="color: #dc3545;"></div>
+                    </div>
+                  </li>
+
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="common_form_submit">
+    <button class="btn btn_theme btn_md" type="submit">등록하기</button>
+  </div>
+  </form>
+</section>
+
+<!-- Cta Area -->
+
+</body></html>

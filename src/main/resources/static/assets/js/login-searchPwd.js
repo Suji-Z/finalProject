@@ -9,7 +9,7 @@ function searchPwdBtn(){
     } else {
         $.ajax({
             type: 'GET',
-            url: '/login/findPwd',
+            url: '/member/login/findPwd',
             data: {
                 'pwdEmail': pwdEmail
             },
@@ -36,7 +36,7 @@ function sendEmail(){
 
     $.ajax({
         type: 'POST',
-        url: '/login/findPwd/sendEmail',
+        url: '/member/login/findPwd/sendEmail',
         data: {
             'pwdEmail' : pwdEmail
         },

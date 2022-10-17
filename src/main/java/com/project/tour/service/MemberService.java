@@ -65,6 +65,16 @@ public class MemberService {
         }
     }
 
+    public Member getName(String name){
+        Optional<Member> member = memberRepository.findByName(name);
+
+        if(member.isPresent()){
+            return member.get();
+        }else {
+            throw new DataNotFoundException("해당하는 사용자가 없습니다.");
+        }
+    }
+
     public String PhoneNumberCheck(String phone_num) throws CoolsmsException {
         String api_key = "NCSFY6SF28I6RD5D";
         String api_secret = "V29MJNRUKPBO1H4HDEJKWUFEQ4DUWM0K";
@@ -86,7 +96,7 @@ public class MemberService {
         params.put("type", "SMS");
         params.put("text", "[TEST] 인증번호는" + "[" + numStr + "]" + "입니다."); // 문자 내용 입력
 
-        coolsms.send(params);
+        //coolsms.send(params);
 
         return numStr;
 

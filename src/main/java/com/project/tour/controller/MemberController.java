@@ -92,18 +92,18 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/member/login")
     public String login(){
 
         return "member/login";
     }
 
-    @GetMapping("/login/searchEmail")
+    @GetMapping("/member/login/searchEmail")
     public String searchEmail(){
         return "member/forgot-email";
     }
 
-    @GetMapping("/login/searchPassword")
+    @GetMapping("/member/login/searchPassword")
     public String searchPassword(){
         return "member/forgot-password";
     }
@@ -115,13 +115,13 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/login/findId")
+    @GetMapping(value = "/member/login/findId")
    public String findId(@RequestParam(value = "inputName",required = false) String name,@RequestParam(value = "inputPhone",required = false) String phone) throws UnsupportedEncodingException {
 
         return memberService.findEmail(name,phone);
    }
 
-   @GetMapping("/login/findPwd")
+   @GetMapping("/member/login/findPwd")
    @ResponseBody
     public boolean findPwd(@RequestParam("pwdEmail") String email){
 
@@ -129,7 +129,7 @@ public class MemberController {
         return memberService.checkEmail(email);
    }
 
-   @PostMapping("/login/findPwd/sendEmail")
+   @PostMapping("/member/login/findPwd/sendEmail")
    @ResponseBody
     public String sendEmail(@RequestParam("pwdEmail") String email){
 
