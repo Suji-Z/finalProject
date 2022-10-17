@@ -120,9 +120,16 @@ public class ReviewController {
     }
 
     @RequestMapping (value = "/article/{id}")
-    public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm){
+    public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,Principal principal){
 
         Review review = reviewService.getReview(id);
+/*
+        좋아요 추가코드 (보안중ㅠㅠ)
+        Member member = memberService.getMember(principal.getName());
+        Long memberId = member.getId();
+*/
+
+
         model.addAttribute("review",review);
 
         return "review/review_article";
@@ -173,6 +180,7 @@ public class ReviewController {
         Review review = reviewService.getReview(id);
         Member member = memberService.getMember(principal.getName());
         reviewService.vote(review,member);
+
         return String.format("redirect:/review/article/%s",id);
 
     }

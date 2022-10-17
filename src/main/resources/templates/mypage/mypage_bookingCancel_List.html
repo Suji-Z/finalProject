@@ -62,47 +62,47 @@
                         </div>
 
           <div class="dashboard_menu_area">
-             <ul>
-                                
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                        style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">내 정보 수정</a></li>
-                                            <li><a href="flight-booking.html">회원 탈퇴</a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                        style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">예약내역</a></li>
-                                            <li><a href="flight-booking.html"  class="active" >취소내역</a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                        style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">여행 1:1 문의</a></li>
-                                            <li><a href="flight-booking.html">개선/건의하기</a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                </li>
-                                
-                                <li><a href="dashboard.html"><b>마일리지</b></a></li>
-                                <li><a href="dashboard.html"><b>할인쿠폰</b></a></li>
-                                
-                               
-                            </ul>
+              <ul>
+
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                      <span> </span>
+                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                           style="">
+                          <ul>
+                              <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
+                              <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
+                          </ul>
+                      </div>
+
+                  </li>
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                      <span> </span>
+                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                           style="">
+                          <ul>
+                              <li><a th:href="@{/mypage/bookingList}">예약내역</a></li>
+                              <li><a th:href="@{/mypage/cancelList}">취소내역</a></li>
+                          </ul>
+                      </div>
+
+                  </li>
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                      <span> </span>
+                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                           style="">
+                          <ul>
+                              <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
+                              <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                          </ul>
+                      </div>
+
+                  </li>
+
+                  <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
+                  <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
+
+
+              </ul>
           </div>
         </div>
       </div>
