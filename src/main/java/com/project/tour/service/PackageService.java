@@ -1,13 +1,12 @@
 package com.project.tour.service;
 
 
-import com.project.tour.controller.DataNotFoundException;
-import com.project.tour.domain.Member;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.PackageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +21,7 @@ import java.util.Optional;
 @Service
 public class PackageService {
 
+    @Autowired
     private final PackageRepository packageRepository;
 
     //페이징처리
@@ -62,6 +62,19 @@ public class PackageService {
         return packageRepository.findByLocation2(location, pageable);
     }
 
+    //검색결과 페이징처리
+    public Page<Package> getsearchList(String location, String date, Integer count, Pageable pageable) {
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return packageRepository.findByLocation2AndPackagedatelist_DepartureAndPackagedatelist_RemaincountGreaterThanEqual(location,date,count,pageable);
+    }
 
     //데이터 불러오기 위한 임시
     private void create(Package apackage,PackageDate packageDate){
