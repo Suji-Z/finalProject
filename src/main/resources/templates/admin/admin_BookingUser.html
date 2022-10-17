@@ -112,7 +112,7 @@
                                         <td th:text="${bookingUser.member}"></td>
                                         <td th:text="${#strings.substring(bookingUser.departure,0,10)}"></td>
                                         <td th:text="${bookingUser.APackage}"></td>
-                                        <td th:text="|${bookingUser.departure} - ${bookingUser.arrival}|"></td>
+                                        <td th:text="|${#strings.substring(bookingUser.departure,0,10)} - ${#strings.substring(bookingUser.arrival,0,10)}|"></td>
                                         <td th:text="${bookingUser.bookingTotalPrice}"></td>
                                         <td th:text="${bookingUser.bookingStatus}"></td>
                                             </td>
