@@ -49,7 +49,7 @@ public class Package {
      * 패키지 삭제시 각 출발일 상세 데이터 함께 삭제
      * */
     @OneToMany(mappedBy = "packages",cascade = CascadeType.REMOVE)
-    private List<PackageDate> PackageDateList;
+    private List<PackageDate> packagedatelist;
 
     //이미지 업로드
     @Transient

@@ -1,8 +1,6 @@
 package com.project.tour.controller;
 
-import com.project.tour.domain.EstimateInquiryForm;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.SearchPackageDTO;
 import com.project.tour.service.PackageService;
 import com.project.tour.service.PackageDateService;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +40,7 @@ public class JejuPackageController {
     /** 지역별 리스트 */
     @GetMapping("/{location}")
     public String packageLocation(Model model,@PathVariable("location") String location, @PageableDefault Pageable pageable) {
-        model.addAttribute("searchform", new SearchPackageDTO());
+
         Page<Package> paging = packageService.getLocationList(location,pageable);
 
         model.addAttribute("paging",paging);
