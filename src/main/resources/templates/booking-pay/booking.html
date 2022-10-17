@@ -33,8 +33,9 @@
 <!-- Visa application  Areas -->
 <section id="tour_booking_submission" class="section_padding">
     <div class="container">
+        <form th:action="@{|/booking/confirmation/${apackage.id}|}" th:object="${userBookingForm}" method="post">
         <div class="row">
-            <form th:action="@{|/booking/confirmation|}" th:object="${userBookingForm}" method="post">
+
             <div class="col-lg-8">
                 <div class="tou_booking_form_Wrapper">
                     <!--추가덩어리 : 예약정보-->
@@ -225,8 +226,9 @@
                     </div>
                 </div>
             </div>
-            </form>
+
         </div>
+        </form>
     </div>
 
 </section>
