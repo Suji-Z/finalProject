@@ -19,7 +19,7 @@ class PackageServiceTest {
     @Test
     void getPackage() {
         long packageNum=1;
-        
+
         Package result = packageService.getPackage(packageNum);
         System.out.println(result);
     }

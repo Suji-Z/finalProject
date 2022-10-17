@@ -35,6 +35,7 @@
     <div class="container">
         <form th:action="@{|/booking/confirmation/${apackage.id}|}" th:object="${userBookingForm}" method="post">
         <div class="row">
+
             <div class="col-lg-8">
                 <div class="tou_booking_form_Wrapper">
                     <!--추가덩어리 : 예약정보-->
@@ -225,9 +226,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
         </form>
     </div>
+
 </section>
 
 <!-- Cta Area -->

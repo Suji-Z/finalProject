@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- Common Banner Area -->
+<section id="common_banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="common_bannner_text">
+          <h2>Q&A</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><span><i class="fas fa-circle"></i></span><a th:href="@{/qna/list}">Q&A</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Area -->
+<section id="dashboard_main_arae" class="section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+
+          <div class="dashboard_menu_area">
+            <ul>
+              <li><a href="dashboard.html">공지사항</a></li>
+
+              <li><a href="dashboard.html">고객의소리</a></li>
+              <li><a href="dashboard.html" class="active">QnA</a></li>
+              <li><a href="dashboard.html">FAQ</a></li>
+              <li><a href="dashboard.html">여행후기</a></li>
+              <li><a href="dashboard.html">1:1 문의</a></li>
+              <li><a href="dashboard.html">견적문의</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8-sally">
+        <div class="dashboard_common_table">
+          <h3>Q&A</h3>
+          <div class="table-responsive-lg table_common_area">
+          <table class="table">
+              <thead>
+              <tr>
+                <th style="width: 70px">글번호</th>
+                <th>카테고리</th>
+                <th width="500">제목</th>
+                <th width="130">글쓴이</th>
+                <th width="180">작성일</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:if="${paging.isEmpty()}"><td colspan="4"> 문의글이 없습니다. </td></tr>
+              <th:block th:each="qna,loop : ${paging}">
+                <tr>
+                  <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                  <td th:text="${qna.qnacategory}"></td>
+                  <td align="left">
+                  <a style="color: black;" th:href="@{|/qna/question/article/${qna.id}|}" th:text="${qna.subject}"></a>
+                  </td>
+                  <td th:text="${qna.name}"></td>
+                  <td th:text="${#temporals.format(qna.created,'yyyy-MM-dd')}"></td>
+                </tr>
+<!--                &lt;!&ndash; 답변 &ndash;&gt;-->
+<!--                <tr th:if="${!qna.estimateReplyList.isEmpty()}" th:each="reply : ${qna.estimateReplyList}">-->
+<!--                  <td></td>-->
+<!--                  <td align="left">-->
+<!--                    <a style="color: black;" th:href="@{|/estimate/reply/article/${reply.id}|}" th:text="|&nbsp;&nbsp;└【답변】&nbsp;${reply.title}|"></a>-->
+<!--                  </td>-->
+<!--                  <td th:text="관리자"></td>-->
+<!--                  <td th:text="${#temporals.format(inquiry.created,'yyyy-MM-dd')}"></td>-->
+<!--                </tr>-->
+<!--              </th:block>-->
+              </th:block>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="option-item">
+            <a th:href="@{/qna/question/write}" class="btn btn_navber">문의하기</a>
+          </div>
+        </div>
+
+          <div class="pagination_area" th:if="${!paging.isEmpty()}">
+            <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+              <li class="page-item">
+                <a class="page-link" th:href="@{/qna/list?page=1}" aria-label="Previous">
+                  <span aria-hidden="true">≪</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item" th:style="${paging.first}?'display:none'">
+                <a class="page-link" th:href="@{/qna/list(page=${paging.number})}">＜</a>
+              </li>
+              <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                  th:classappend="(${page}==${paging.number+1})?'active'">
+                <a class="page-link" th:href=@{/qna/list(page=${page})} th:text="${page}"></a>
+              </li>
+              <li class="page-item" th:style="${paging.last}?'display:none'">
+                <a class="page-link" th:href="@{/qna/list(page=${paging.number+2})}">＞</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" th:href="@{/qna/list(page=${paging.totalPages})}" aria-label="Next">
+                  <span aria-hidden="true">≫</span>
+                  <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+</body></html>

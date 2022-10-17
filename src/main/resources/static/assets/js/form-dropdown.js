@@ -16,6 +16,7 @@ $(function () {
     function addValue() {
         const sum = i + j + k;
         $('.final-count').text(`${sum}`);
+        $('#counthidden').val(sum);
     }
 
     var i = 0;
