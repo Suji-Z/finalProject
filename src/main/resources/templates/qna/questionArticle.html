@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- Common Banner Area -->
+<section id="common_banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="common_bannner_text">
+                    <h2>Q&A</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><span><i class="fas fa-circle"></i></span> Package</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tour Booking Submission Areas -->
+<section id="tour_booking_submission" class="section_padding" style="margin: auto">
+    <div class="col-lg-8">
+    </div>
+    <div class="container" style="margin: auto; width: 70%">
+        <div class="row">
+
+            <div class="col-lg-13">
+                <div class="tou_booking_form_Wrapper">
+
+                    <div class="booking_tour_form">
+                        <h3 class="heading_theme">Q&A</h3>
+                        <div class="tour_booking_form_box">
+                            <div class="your_info_arae">
+                                <ul>
+                                    <li>
+                                        <b style="margin: auto">
+                                        <span th:text="${qna.subject}" style="font-size: 15pt;margin: auto"></span></b></li>
+
+
+                                    <li><span style="text-align:center;width: 14%"><b>작성자</b></span>
+                                        <span th:text="${qna.name}"></span>
+                                        <span style="width: 40%"></span>
+                                        <colspan style="text-align:center;width: 100px"><b>질문유형</b></colspan>
+                                    <span  th:text="${qna.qnacategory}"></span></li>
+
+                                    <li><span style="padding: 20px 80px 20px 0px;" valign="top" height="200"></span>
+                                        <div class="col-lg-8">
+                                         <textarea  th:text="${qna.content}" class="form-control" type="text" rows="8" style="padding-left: 20px;
+                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly"></textarea>
+                                     </div> </li>
+
+                                    <li><span style="text-align:center;width: 14%">작성일</span>
+                                        <span th:text="${#strings.substring(qna.created,0,10)}"></span></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <a th:href="@{|/qna/question/modify/${qna.id}|}" th:text="수정" class="btn btn-sm btn-outline-secondary" />
+        <a th:href="@{|/qna/question/delete/${qna.id}|}" th:text="삭제" class="btn btn-sm btn-outline-secondary" />
+        <button type="button" class="btn btn-outline-secondary">답변</button>
+
+
+
+    </div>
+    <div class="common_form_submit">
+        <a th:href="@{/qna/list}" class="btn btn_theme btn_md">리스트</a>
+    </div>
+
+</section>
+</body></html>
