@@ -24,4 +24,8 @@ public class Pay {
     String payDate;
     int totalCount;
 
+    String payInfo;
+
+
+
 }
