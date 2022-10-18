@@ -1,11 +1,11 @@
 package com.project.tour.service;
 
 import com.project.tour.controller.DataNotFoundException;
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.PackageCreate;
-import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.AdminPackageDateRepository;
 import com.project.tour.repository.AdminPackageRepository;
+import com.project.tour.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class AdminPackageService {
 
     private final AdminPackageRepository adminPackageRepository;
     private final AdminPackageRepository adminPackageDateRepository;
-
+    private final BookingRepository bookingRepository;
 
 
     //패키지 상품 업로드
@@ -106,6 +107,13 @@ public class AdminPackageService {
         adminPackageRepository.save(aPackage);
     }
 
+    public void userBookingCheck(UserBooking userBooking,UserBookingForm userBookingForm) {
+
+        userBooking.setBookingStatus(1);
+
+        bookingRepository.save(userBooking);
+
+    }
 
 }
 

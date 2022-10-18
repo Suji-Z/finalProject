@@ -8,22 +8,20 @@ import com.project.tour.repository.AdminPackageDateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class AdminPackageDateService {
     private final AdminPackageDateRepository adminPackageDateRepository;
 
-    public PackageDate createDate(PackageCreate packageCreate, Package packages){
+    public List<PackageDate> createDate(PackageCreate packageCreate, Package packages){
 
 
-        PackageDate packageDate = new PackageDate();
 
-        String postStart = packages.getPostStart();
-        String postEnd = packages.getPostEnd();
+        String match ="-";
+        String postStart = packages.getPostStart().replaceAll(match,"");
+        String postEnd = packages.getPostEnd().replaceAll(match,"");
 
         int startYear = Integer.parseInt(postStart.substring(0,4));
         int startMonth = Integer.parseInt(postStart.substring(4,6));
@@ -33,23 +31,35 @@ public class AdminPackageDateService {
 
         cal.set(startYear,startMonth-1,startDate);
 
-        while(true) {
 
-           cal.add(Calendar.DATE,1); //하루씩 증가
+        List<PackageDate> packageDates = new ArrayList<>();
 
-            if(Integer.parseInt(postStart)>Integer.parseInt(postEnd));
-            break;
+        for(int i=Integer.parseInt(postStart); i<Integer.parseInt(postEnd);i++){
+
+            PackageDate packageDate = new PackageDate();
+
+            packageDate.setAprice(packageCreate.getAprice());
+            packageDate.setBprice(packageCreate.getBprice());
+            packageDate.setCprice(packageCreate.getCprice());
+            packageDate.setDiscount(packageCreate.getDiscount());
+            packageDate.setPackages(packages);
+            packageDate.setRemaincount(packageCreate.getCount());
+
+
+            packageDate.setDeparture(String.valueOf(i));
+
+            packageDates.add(packageDate);
+
+
+
+//            if(Integer.parseInt(postStart)>Integer.parseInt(postEnd));
+//            break;
         }
 
-        packageDate.setAprice(packageCreate.getAprice());
-        packageDate.setBprice(packageCreate.getBprice());
-        packageDate.setCprice(packageCreate.getCprice());
-        packageDate.setDiscount(packageCreate.getDiscount());
-        packageDate.setPackages(packages);
-        packageDate.setRemaincount(packageCreate.getCount());
 
+        System.out.println(packageDates.size());
 
-        return adminPackageDateRepository.save(packageDate);
+        return adminPackageDateRepository.saveAll(packageDates);
 
 
     }

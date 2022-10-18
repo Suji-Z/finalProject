@@ -4,12 +4,17 @@ import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.MailDTO;
 import com.project.tour.domain.Member;
 import com.project.tour.domain.MemberCreate;
+import com.project.tour.domain.Package;
 import com.project.tour.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -152,6 +155,20 @@ public class MemberService {
 
         //임시 비밀번호로 비번 업데이트..
         member.updatePassword(encPwd);
+    }
+
+    //관리자 회원 리스트 페이징
+    public Page<Member> getList(Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return memberRepository.findAll(pageable);
     }
 
 

@@ -109,12 +109,18 @@
                                 <tbody>
                                     <tr th:if="${paging.isEmpty()}"><td colspan="8"> 예약된 상품이 없습니다. </td></tr>
                                     <th:block th:each="bookingUser,loop : ${paging}">
-                                        <td th:text="${bookingUser.member}"></td>
+                                        <td th:text="${bookingUser.member.email}"></td>
                                         <td th:text="${#strings.substring(bookingUser.departure,0,10)}"></td>
-                                        <td th:text="${bookingUser.APackage}"></td>
+                                        <td th:text="${bookingUser.APackage.packageName}"></td>
                                         <td th:text="|${#strings.substring(bookingUser.departure,0,10)} - ${#strings.substring(bookingUser.arrival,0,10)}|"></td>
                                         <td th:text="${bookingUser.bookingTotalPrice}"></td>
-                                        <td th:text="${bookingUser.bookingStatus}"></td>
+                                        <td th:switch="${bookingUser.bookingStatus}">
+                                            <span th:case="0">예약 확인 중
+                                               <a th:href="@{|/admin/package/bookingCheck/${bookingUser.id}|}" th:text="승인" class="btn btn-sm btn-outline-secondary"></a>
+                                            </span>
+                                            <span th:case="1" style="color:#46a546">결제 대기 중 </span>
+                                            <span th:case="2" style="color: #0044cc">결제 완료 </span>
+                                        </td>
                                             </td>
                                     </tr>
                                     </th:block>
