@@ -11,6 +11,7 @@ import lombok.Setter;
 public class BookingDTO {
 
     private String departure;
+    private String arrival;
 
     private Integer bookingacount;
     private Integer bookingbcount;
