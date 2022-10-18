@@ -35,6 +35,8 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
     private final BaseAuthUserRepository baseAuthUserRepository;
 
     @Autowired
+    private final MemberRepository memberRepository;
+    @Autowired
     private final HttpSession httpSession;
 
     @Override
@@ -81,6 +83,14 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
         BaseAuthUser authUser = baseAuthUserRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
+
+        if(!memberRepository.existsByEmail(authUser.getEmail())){
+
+            Member member = new Member(authUser.getName(),authUser.getEmail());
+
+            memberRepository.save(member);
+
+        }
 
         return baseAuthUserRepository.save(authUser);
     }

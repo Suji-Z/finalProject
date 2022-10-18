@@ -58,6 +58,7 @@ public class MemberService {
         return member;
     }
 
+
     public Member getMember(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
 
