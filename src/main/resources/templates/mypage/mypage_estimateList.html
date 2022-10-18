@@ -68,6 +68,7 @@
                                   <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                        style="">
                                       <ul>
+                                          <li><a th:href="@{/mypage/pwdUpdate}">비밀번호 수정</a></li>
                                           <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
                                           <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
                                       </ul>
@@ -92,6 +93,7 @@
                                       <ul>
                                           <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
                                           <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                                          <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
                                       </ul>
                                   </div>
 
@@ -112,10 +114,11 @@
             <table class="table">
               <thead>
               <tr>
+                  <th width="100">글번호</th>
 
                   <th width="200">제목</th>
 
-                <th width="150">문의지역</th>
+<!--                <th width="150">문의지역</th>-->
 
                 <th width="100">등록일</th>
              
@@ -125,24 +128,52 @@
               </thead>
 
               <tbody>
-              <tr th:if="${mypageEstimate.isEmpty()}"><td th:colspan="4">작성하신 견적문의가 없습니다</td></tr>
-              <tr th:each="mypageEstimate : ${mypageEstimate}">
 
-
-                  <td><a th:text="${mypageEstimate.title}" th:href="@{|/estimate/inquiry/article/${mypageEstimate.id}|}"></a></td>
-                  <td th:text="|${mypageEstimate.location1}&nbsp;&nbsp;${mypageEstimate.location2}|"></td>
-                <td th:text="${#temporals.format(mypageEstimate.created,'yy-MM-dd HH:MM')}"></td>
-              </tr>
-
-
+              <tr th:if="${paging.isEmpty()}"><td colspan="4"> 작성하신 견적문의가 없습니다. </td></tr>
+              <th:block th:each="mypageInquiry,loop : ${paging}">
+                  <tr>
+                      <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                      <td align="left">
+                          <a style="color: black;" th:href="@{|/estimate/inquiry/article/${mypageInquiry.id}|}" th:text="${mypageInquiry.title}"></a>
+                      </td>
+<!--                      <td th:text="|${mypageInquiry.location1}&nbsp;&nbsp;${mypageInquiry.location2}|"></td>-->
+                      <td th:text="${#temporals.format(mypageInquiry.created,'yyyy-MM-dd')}"></td>
+                  </tr>
             
               </tbody>
             </table>
           </div>
+            <div class="option-item">
+                <a th:href="@{/estimate/inquiry/upload}" class="btn  btn_navber">글올리기</a>
+            </div>
          
         </div>
-          <br/><br/><br/>
-
+          <div class="pagination_area" th:if="${!paging.isEmpty()}">
+              <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/estimateList?page=1}" aria-label="Previous">
+                          <span aria-hidden="true">≪</span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                  </li>
+                  <li class="page-item" th:style="${paging.first}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/estimateList(page=${paging.number})}">＜</a>
+                  </li>
+                  <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                      th:classappend="(${page}==${paging.number+1})?'active'">
+                      <a class="page-link" th:href=@{/mypage/estimateList(page=${page})} th:text="${page}"></a>
+                  </li>
+                  <li class="page-item" th:style="${paging.last}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/estimateList(page=${paging.number+2})}">＞</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/estimateList(page=${paging.totalPages})}" aria-label="Next">
+                          <span aria-hidden="true">≫</span>
+                          <span class="sr-only">Next</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
 
 
       </div>

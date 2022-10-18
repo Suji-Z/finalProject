@@ -12,4 +12,7 @@ public interface QnARepository extends JpaRepository<QnA, Long> {
 
     Page<QnA> findAll(Pageable pageable);
 
+    //마이페이지에 출력할 멤버의 QnA 리스트
+    Page<QnA> findByMember_Id(Long id, Pageable pageable);
+
 }
