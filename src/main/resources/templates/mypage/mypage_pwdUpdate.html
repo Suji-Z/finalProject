@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+
+    <div class="preloader">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Banner Area -->
+    <section id="common_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="common_bannner_text">
+                        <h2>회원가입</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><span><i class="fas fa-circle"></i></span> Join</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Booking Submission Areas -->
+   <section id="dashboard_main_arae" class="section_padding">
+       <form th:action th:object="${pwdUpdateForm}" method="post">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4-sally">
+        <div class="dashboard_sidebar">
+            <div class="dashboard_sidebar_user">
+                           
+                            <h2>My Page</h2>
+                           
+                        </div>
+
+          <div class="dashboard_menu_area">
+              <ul>
+
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
+                      <span> </span>
+                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                           style="">
+                          <ul>
+                              <li><a th:href="@{/mypage/pwdUpdate}">비밀번호 수정</a></li>
+                              <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
+                              <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
+                          </ul>
+                      </div>
+
+                  </li>
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                      <span> </span>
+                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                           style="">
+                          <ul>
+                              <li><a th:href="@{/mypage/bookingList}">예약내역</a></li>
+                              <li><a th:href="@{/mypage/cancelList}">취소내역</a></li>
+                          </ul>
+                      </div>
+
+                  </li>
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                      <span> </span>
+                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                           style="">
+                          <ul>
+                              <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
+                              <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                              <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
+                          </ul>
+                      </div>
+
+                  </li>
+
+                  <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
+                  <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
+
+
+              </ul>
+          </div>
+        </div>
+      </div>
+        <div class="col-lg-8-sally">
+
+        <div class="dashboard_common_table">
+            <h3>비밀번호 변경</h3>
+            <br/>
+        <div class="container" >
+            <div class="row">
+
+                <div class="">
+                    <div class="">
+
+                        <div class="booking_tour_form" >
+                            
+                            <div class="tour_booking_form_box">
+              <div class="your_info_arae">
+                <ul>
+
+                    <li style="border-bottom-color: white;">
+                        <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
+                            <label style="text-align:center;" th:for="password1">새로운<br/>비밀번호</label>
+                        </div>
+                       <div class="form-group col-lg-7">
+                            <input type="text" th:field="*{password1}" class="shform-control" style="border-radius: 3px; font-size: 10pt; margin-top: 15px" placeholder="새로운 비밀번호를 입력해주세요">
+                        </div>
+                    </li>
+
+                    <li style="margin-top: -30px;padding-bottom: -20px">
+                        <div class="col-lg-2">
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('password1')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{password1}" th:text="${err}"></p>
+                        </div>
+
+                    </li>
+
+
+                    <li style="border-bottom-color: white;">
+                        <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                            <label style="text-align:center;" th:for="password2">비밀번호<br/>확인</label>
+                        </div>
+                       <div class="form-group col-lg-7">
+                            <input type="text" th:field="*{password2}" class="shform-control"  style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="확인을 위해 한번 더 입력해주세요">
+                        </div>
+                    </li>
+
+                    <li style="margin-top: -40px;padding-bottom: -10px">
+                        <div class="col-lg-2">
+                        </div>
+                        <div th:if="${#fields.hasErrors('password2')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{password2}" th:text="${err}"></p>
+                        </div>
+                    </li>
+
+                </ul>
+              </div>
+            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+            <div th:align="center">
+            <span style="font-size: 13pt; color: black">
+                            비밀번호는 영문 대소문자,숫자,특수문자를 1개 이상 조합하여 8~16자리수로 사용하실 수 있습니다. </span>
+        </div>
+        <div class="common_form_submit">
+            <button class="btn btn_theme btn_md" type="submit">수정하기</button>
+             <button class="btn btn_theme btn_md" th:href="@{/mypage/}">취소</button>
+        </div>
+
+</form>
+    </section>
+
+
+</body>
+
+</html>
