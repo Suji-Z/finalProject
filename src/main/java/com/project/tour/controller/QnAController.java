@@ -118,6 +118,7 @@ public class QnAController {
 
         return String.format("redirect:/qna/question/article/%s", id);
     }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/question/delete/{id}")
     public String questionDelete(@PathVariable("id") Long id,Principal principal) {
