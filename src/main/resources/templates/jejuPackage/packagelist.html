@@ -410,11 +410,11 @@
             </div>
             <div class="col-lg-9">
                 <div th:if="${paging.isEmpty()}" align="center"><img src="/assets/img/notfoundpackage.png"></div>
-<!-- 패키지 반복문 시작-->
-                <div class="row" th:each="package,loop : ${paging}">
+                <div class="row" >
                     <div class="col-lg-12">
                         <div class="flight_search_result_wrapper">
-                            <div class="flight_search_item_wrappper">
+                            <!-- 패키지 반복문 시작-->
+                            <div class="flight_search_item_wrappper" th:each="package,loop : ${paging}">
                                 <div class="flight_search_items">
                                     <div class="multi_city_flight_lists">
                                         <div class="top_destinations_box img_hover">
