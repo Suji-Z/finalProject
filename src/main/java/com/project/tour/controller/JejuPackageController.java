@@ -1,7 +1,9 @@
 package com.project.tour.controller;
 
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.PackageDate;
+import com.project.tour.service.CouponService;
+import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
 import com.project.tour.service.PackageDateService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -24,10 +27,12 @@ public class JejuPackageController {
 
     @Autowired
     private final PackageService packageService;
-
+    @Autowired
+    private final MemberService memberService;
     @Autowired
     private final PackageDateService packagedateService;
-
+    @Autowired
+    private final CouponService couponService;
 
     /**
      * 전체리스트
@@ -102,11 +107,8 @@ public class JejuPackageController {
 
         Package apackage = packageService.getPackage(id);
 
-        //PackageDate packageDate = packagedateService.getPackageDate2(id);
-
         model.addAttribute("package", apackage);
-        //model.addAttribute("packageDate",packageDate);
-
+        model.addAttribute("bookingform",new BookingDTO());
         return "jejuPackage/packagedetail";
     }
 
@@ -132,8 +134,8 @@ public class JejuPackageController {
 
         /** 정가 */
         aprice = getPackagePrice.getAprice() * acount;
-        bprice = getPackagePrice.getCprice() * ccount;
-        cprice = getPackagePrice.getBprice() * bcount;
+        bprice = getPackagePrice.getBprice() * bcount;
+        cprice = getPackagePrice.getCprice() * ccount;
 
         if(getPackagePrice.getDiscount()==null){
 
@@ -159,5 +161,37 @@ public class JejuPackageController {
 
         return priceInfo;
     }
+
+    @PostMapping("/booking/{id}")
+    public String bookingform(BookingDTO bookingform,Model model,@PathVariable("id") Long id){
+
+        log.info(bookingform.getDeparture());
+        log.info(String.valueOf(bookingform.getBookingacount()));
+        log.info(String.valueOf(bookingform.getBookingbcount()));
+        log.info(String.valueOf(bookingform.getBookingccount()));
+
+        String date = bookingform.getDeparture().replaceAll("-", "");
+
+        //1. packageNum에 맞는 packageData 넘기기
+        Package apackage = packageService.getPackage(id);
+        model.addAttribute("apackage",apackage);
+
+        //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
+        PackageDate packageDate = packagedateService.getPrice(id,date);
+        model.addAttribute("packageDate",packageDate);
+
+        //3. user에 맞는 memberData 넘기기
+        //login 아이디(email) 정보 가져오기
+        Member member = memberService.getMember("gmldus0825@naver.com");  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
+        model.addAttribute("member", member);
+
+        //4. user가 가지고 있는 coupon 번호와 동일한 coupon의 정보 넘기기
+        String couponNum = member.getCoupons(); //1,2,3
+        List<Coupon> coupons = couponService.getCoupon("1.0");
+        model.addAttribute("coupons",coupons);
+
+        return "booking-pay/booking";
+    }
+
 
 }
