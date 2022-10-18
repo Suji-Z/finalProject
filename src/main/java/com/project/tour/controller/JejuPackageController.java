@@ -162,36 +162,4 @@ public class JejuPackageController {
         return priceInfo;
     }
 
-    @PostMapping("/booking/{id}")
-    public String bookingform(BookingDTO bookingform,Model model,@PathVariable("id") Long id){
-
-        log.info(bookingform.getDeparture());
-        log.info(String.valueOf(bookingform.getBookingacount()));
-        log.info(String.valueOf(bookingform.getBookingbcount()));
-        log.info(String.valueOf(bookingform.getBookingccount()));
-
-        String date = bookingform.getDeparture().replaceAll("-", "");
-
-        //1. packageNum에 맞는 packageData 넘기기
-        Package apackage = packageService.getPackage(id);
-        model.addAttribute("apackage",apackage);
-
-        //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
-        PackageDate packageDate = packagedateService.getPrice(id,date);
-        model.addAttribute("packageDate",packageDate);
-
-        //3. user에 맞는 memberData 넘기기
-        //login 아이디(email) 정보 가져오기
-        Member member = memberService.getMember("gmldus0825@naver.com");  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
-        model.addAttribute("member", member);
-
-        //4. user가 가지고 있는 coupon 번호와 동일한 coupon의 정보 넘기기
-        String couponNum = member.getCoupons(); //1,2,3
-        List<Coupon> coupons = couponService.getCoupon("1.0");
-        model.addAttribute("coupons",coupons);
-
-        return "booking-pay/booking";
-    }
-
-
 }

@@ -6,27 +6,24 @@ import com.project.tour.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/booking")
 public class BookingController {
 
-    //테이블 2개 : member,package
     // 의존성 자동주입 오류라 수동으로도 넣어줌
     @Autowired private final MemberService memberService;
     @Autowired private final PackageService packageService;
@@ -38,26 +35,30 @@ public class BookingController {
     int bookingTotalPrice = 0;
     int couponDiscountPrice= 0;
 
-
-    /* 예약하기 디테일 띄우기 */
+    /* 예약 디테일 띄우기 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
-    //@GetMapping("/detail/{packageNum}/{departureDate}")
-    @GetMapping("/detail") //pageDetail에서 packageNum,departureDate 들고와야함
-    public String bookingDetail(Model model, Principal principal, UserBookingForm userBookingForm
-                                //, @PathVariable("packageNum") long packageNum, @PathVariable("departureDate") LocalDateTime departureDate
-                                ) {
+    @PostMapping("/detail/{id}") //packageNum 가지고 오기
+    public String bookingDetail(Model model, Principal principal, UserBookingForm userBookingForm,
+                                BookingDTO bookingform,@PathVariable("id") Long packageNum
+                                ) throws Exception{
 
-        //예약하기 버튼 누르면 package table의 packageNum이랑 depatureDate를 들고 옴.
-        //패키지 디테일에서 예약하기로 넘어오면 띄울 창에 list 쓰기
+        //예약하기 버튼 누르면 package table의 packageNum가져오기
         //user table, package table 끌고 오기
+        String departureDate = bookingform.getDeparture().replaceAll("-", ""); //출발날짜 20220101
 
-        long packageNum=2; //packageDetail에서 packageNum 들고오기
-        String departureDate="2022-01-01"; //packageDetail에서 출발일,도착일,인원수 끌고와야함!
+        //출발일로 도착일 계산하기
+        DateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(format.parse(departureDate));  //형변환(String > Date > Calender)
+        cal.add(Calendar.DATE, packageService.getPackage(packageNum).getTravelPeriod());
+        String arrivalDate = format.format(cal.getTime());
+        bookingform.setDeparture(departureDate);
+        bookingform.setArrival(arrivalDate);
 
         //1. packageNum에 맞는 packageData 넘기기
         Package apackage = packageService.getPackage(packageNum);
         model.addAttribute("apackage",apackage);
-
 
         //2. packageNum과 depatureDate에 맞는 여행경비 넘기기
         PackageDate packageDate = packageDateService.getPackageDate(apackage, departureDate);
@@ -72,6 +73,10 @@ public class BookingController {
         String couponNum = member.getCoupons(); //1,2,3
         List<Coupon> coupons = couponService.getCoupon(couponNum);
         model.addAttribute("coupons",coupons);
+
+        // 출발날짜, 도착날짜, 인원수 다 넘기기
+        // 도착날짜 연산해주고 보내기
+        model.addAttribute("bookingForm",bookingform);
 
         return "booking-pay/booking";
     }

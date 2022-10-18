@@ -14,21 +14,22 @@ function requestPay() {
 
         IMP.request_pay({ //요청하는 것들
             pg : 'kakaopay', //카카오페이 API래핑
-            merchant_uid: packageNum,  // 상점에서관리하는 상품번호
+            pay_method : 'kakaopay',
+            merchant_uid: "packageNum",  // 상점에서관리하는 상품번호
             name : packageName, //상품명
-            amount : payTotalPrice, //가격
+            amount : '20', //가격
             buyer_email : email, //구매자 이메일
             buyer_name : name, //구매자 이름
-            buyer_tel : tel, //구매자 번호
-            buyer_addr : '서울특별시 강남구 삼성동', //구매자 주소
-            buyer_postcode : '123-456'
+            buyer_tel : tel //구매자 번호
             /* m_redirect_url : 'https://www.yourdomain.com/payments/complete' */
 
         }, function (rsp) { if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
             // jQuery로 HTTP 요청
             jQuery.ajax({
+
                 url: "http://localhost:8088/pay/payments/complete", // 예: https://www.myservice.com/payments/complete
                 method: "POST",
+                type: "POST",
                 headers: { "Content-Type": "application/json" },
                 data: {
                     imp_uid: rsp.imp_uid,

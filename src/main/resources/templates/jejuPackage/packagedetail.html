@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <form th:action="@{|/jeju/booking/${package.id}|}" th:object="${bookingform}" method="post">
+                <form th:action="@{|/booking/detail/${package.id}|}" th:object="${bookingform}" method="post">
                     <input type="hidden" th:field="*{bookingacount}">
                     <input type="hidden" th:field="*{bookingbcount}">
                     <input type="hidden" th:field="*{bookingccount}">

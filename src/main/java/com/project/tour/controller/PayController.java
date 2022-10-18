@@ -8,12 +8,15 @@ import com.project.tour.service.MemberService;
 import com.project.tour.service.PayService;
 import com.project.tour.service.UserBookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 
@@ -32,7 +35,7 @@ public class PayController {
     @GetMapping
     public String getPay(Model model, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 1; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 4; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //userBooking 정보 넘기기
         UserBooking userBooking = userBookingService.getUserBooking(bookingNum);
@@ -62,6 +65,9 @@ public class PayController {
         //2. userBooking 테이블 bookingStatus 데이터 수정
         userBookingForm.setBookingStatus(2); //form 예약 상태 변경
         userBookingService.modifyBookingStatus(userBooking, userBookingForm);
+
+        //3. packageDate의 remainCount에서 totalCount빼주기
+
 
         return "main";
     }
@@ -128,6 +134,19 @@ public class PayController {
     @GetMapping("kakaopay/fail")
     public String payFail() {
         return "booking-pay/payment_fail";
+    }
+
+    @PostMapping("payments/complete")
+    public void confirmPay(@RequestParam("imp_uid") String imp_uid){
+
+        RestTemplate template = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        System.out.println("ㅇㄱ");
+
+
     }
 
 
