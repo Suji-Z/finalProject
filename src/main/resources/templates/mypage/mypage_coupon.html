@@ -125,9 +125,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>웰컴쿠폰(신규회원 가입)</td>
-                <td align="center">10%</td>
+              <tr th
+              <tr th:if="${mypageCoupons.isEmpty()}"><td th:colspan="4">보유하신 쿠폰이 없습니다</td></tr>
+              <tr th:each="mypageCoupons : ${mypageCoupons}">
+              <td th:text="${mypageCoupons.couponName}">웰컴쿠폰(신규회원 가입)</td>
+                <td th:text="|${#numbers.formatInteger((mypageCoupons.couponRate)*100,2)}%|" align="center">10%</td>
                 <td>2022-12-31</td>
                
 

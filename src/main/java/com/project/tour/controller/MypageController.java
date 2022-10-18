@@ -67,7 +67,13 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/coupon")
-    public String coupon(){
+    public String coupon(Model model, Principal principal){
+
+        Member member = memberService.getMember(principal.getName());
+
+        String couponNum = member.getCoupons();
+        List<Coupon> coupons = mypageService.getMypageCoupon(couponNum);
+        model.addAttribute("mypageCoupons",coupons);
 
         return "mypage/mypage_coupon";
 
@@ -92,21 +98,14 @@ public class MypageController {
         memberCreate.setEmail(member.getEmail());
         memberCreate.setName(member.getName());
         memberCreate.setEmail(member.getEmail());
-        memberCreate.setPhone_num(member.getPhone());
-        memberCreate.setPassword1(member.getPassword());
+        //memberCreate.setPhone_num(member.getPhone());
+        //memberCreate.setKeyword(member.getKeyword());
 
+        //키워드 가져오기
         String keywords = member.getKeyword();
-
         System.out.println(keywords);
 
-        String words[] = keywords.split(",");
-
-        String keyword = "";
-
-        for(int i = 0;i<words.length;i++){
-           keyword = words[i];
-
-        }
+        model.addAttribute("keywords",keywords);
 
 
         return "mypage/mypage_profileUpdate";
@@ -117,9 +116,17 @@ public class MypageController {
     //회원정보 수정하기
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/update")
-    public String update2(@Valid MemberCreate memberCreate,BindingResult bindingResult){
+    public String update2(@Valid MemberCreate memberCreate,BindingResult bindingResult,Principal principal){
 
-        return "";
+        Member member = memberService.getMember(principal.getName());
+
+        //키워드 들어온거 확인해보기
+        String keyword = memberCreate.getKeyword();
+        System.out.println(keyword);
+
+        mypageService.updateProfile(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword());
+
+        return "redirect:/mypage/update";
 
     }
 
