@@ -6,12 +6,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface EstimateRepository extends JpaRepository<EstimateInquiry, Long> {
 
 
     /**Pageable을 입력받아 Page<EstimateInquiry> 타입의 객체로 리턴*/
     Page<EstimateInquiry> findAll(Pageable pageable);
+
+    List<EstimateInquiry> findByEmail(String email);
 
 
 }
