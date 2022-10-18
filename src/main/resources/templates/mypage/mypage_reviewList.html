@@ -62,46 +62,42 @@
 
                       <div class="dashboard_menu_area">
                           <ul>
-
-                              <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>My profile</b>
-                                  <span> </span>
-                                  <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                       style="">
-                                      <ul>
-                                          <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
-                                          <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
-                                      </ul>
-                                  </div>
-
-                              </li>
-                              <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
-                                  <span> </span>
-                                  <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                       style="">
-                                      <ul>
-                                          <li><a th:href="@{/mypage/bookingList}">예약내역</a></li>
-                                          <li><a th:href="@{/mypage/cancelList}">취소내역</a></li>
-                                      </ul>
-                                  </div>
-
-                              </li>
-                              <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
-                                  <span> </span>
-                                  <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                       style="">
-                                      <ul>
-                                          <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
-                                          <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
-                                      </ul>
-                                  </div>
-
-                              </li>
-
-                              <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
-                              <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
-
-
+                              <li><a th:href="@{/mypage/pwdUpdate}">비밀번호 수정</a></li>
+                              <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
+                              <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
                           </ul>
+                      </div>
+
+            </li>
+            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                <span> </span>
+                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                     style="">
+                    <ul>
+                        <li><a th:href="@{/mypage/bookingList}">예약내역</a></li>
+                        <li><a th:href="@{/mypage/cancelList}">취소내역</a></li>
+                    </ul>
+                </div>
+
+            </li>
+            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                <span> </span>
+                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                     style="">
+                    <ul>
+                        <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
+                        <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                        <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
+                    </ul>
+                </div>
+
+            </li>
+
+            <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
+            <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
+
+
+            </ul>
           </div>
         </div>
       </div>
@@ -128,7 +124,7 @@
                 <td>01</td>
                 <td>제주 어쩌구</td>
                   <td><a th:text="${mypageReview.subject}" th:href="@{|/review/article/${mypageReview.id}|}"></a></td>
-                <td th:text="${#temporals.format(mypageReview.created,'yy-MM-dd HH:MM')}"></td>
+                <td th:text="${#temporals.format(mypageReview.created,'yyyy-MM-dd')}"></td>
               </tr>
 
 

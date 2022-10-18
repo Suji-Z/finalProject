@@ -67,6 +67,7 @@
                               <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                    style="">
                                   <ul>
+                                      <li><a th:href="@{/mypage/pwdUpdate}">비밀번호 수정</a></li>
                                       <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
                                       <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
                                   </ul>
@@ -91,6 +92,7 @@
                                   <ul>
                                       <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
                                       <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                                      <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
                                   </ul>
                               </div>
 
@@ -115,53 +117,57 @@
                 <th width="680">제목</th>
                 <th width="200">답변여부</th>
                 <th width="200">작성일</th>
-                
+
 
 
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>02.</td>
-                <td align="left">환불되나요?</td>
-                <td>답변대기중</td>
-                <td>2022-09-25</td>
-
-              </tr>
+              <tr th:if="${paging.isEmpty()}"><td colspan="4"> 작성하신 Q&A가 없습니다. </td></tr>
+              <th:block th:each="mypageQna,loop : ${paging}">
                   <tr>
-                <td>01.</td>
-                <td align="left">결제수단 변경 요청드립니다.</td>
-                <td>완료</td>
-                <td>2019-03-20</td>
+                      <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                      <td align="left">
+                          <a style="color: black;" th:href="@{|/qna/question/article/${mypageQna.id}|}" th:text="${mypageQna.subject}"></a>
+                      </td>
+                      <td>답변대기중</td>
+                      <td th:text="${#temporals.format(mypageQna.created,'yyyy-MM-dd')}"></td>
+                  </tr>
+              </th:block>
 
-              </tr>
-             
               </tbody>
             </table>
           </div>
           <div class="option-item">
-            <a href="become-vendor.html" class="btn  btn_navber">글올리기</a>
+            <a th:href="@{/qna/question/write}" class="btn  btn_navber">글올리기</a>
           </div>
         </div>
-        <div class="pagination_area">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+          <div class="pagination_area" th:if="${!paging.isEmpty()}">
+              <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/qna?page=1}" aria-label="Previous">
+                          <span aria-hidden="true">≪</span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                  </li>
+                  <li class="page-item" th:style="${paging.first}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/qna(page=${paging.number})}">＜</a>
+                  </li>
+                  <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                      th:classappend="(${page}==${paging.number+1})?'active'">
+                      <a class="page-link" th:href=@{/mypage/qna(page=${page})} th:text="${page}"></a>
+                  </li>
+                  <li class="page-item" th:style="${paging.last}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/qna(page=${paging.number+2})}">＞</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/qna(page=${paging.totalPages})}" aria-label="Next">
+                          <span aria-hidden="true">≫</span>
+                          <span class="sr-only">Next</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
       </div>
     </div>
   </div>

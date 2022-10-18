@@ -7,11 +7,27 @@ function selectdatePackage(){
     const ccount = $('#ccount').html();
     const bcount = $('#bcount').html();
 
-    if(!date){
-        alert("날짜를 먼저 선택해주세요")
-        return
+    if(date!=null){
+        $('.select_person_side').show();
     }
 
+    if(acount!=0){
+     $('#adult_count_price').show();
+    }else{
+     $('#adult_count_price').hide();
+    }
+
+    if(bcount!=0){
+    $('#baby_count_price').show();
+    }else{
+     $('#baby_count_price').hide();
+    }
+
+    if(ccount!=0){
+    $('#child_count_price').show();
+    }else{
+    $('#child_count_price').hide();
+    }
     $.ajax({
         type: 'GET',
         url: '/jeju/dateprice',
@@ -32,6 +48,10 @@ function selectdatePackage(){
                 $('#totalacount').html(data.acount);
                 $('#totalbcount').html(data.bcount);
                 $('#totalccount').html(data.ccount);
+
+                $('#bookingacount').val(data.acount);
+                $('#bookingbcount').val(data.bcount);
+                $('#bookingccount').val(data.ccount);
 
                 if(data.discount==null){
 
@@ -56,10 +76,7 @@ function selectdatePackage(){
                    alert("전송된 값 없음");
                }
 
-          },
-            error: function(error){
-            alert(JSON.stringify(error));
-            }
+          }
     })
 
 }

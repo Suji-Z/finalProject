@@ -2565,6 +2565,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     border-top-right-radius: 0px;
 }
 
+.tour_select_offer_bar_bottom_sally button {
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
 .select_offer_modal.offcanvas {
     position: fixed;
     bottom: 0;
