@@ -15,6 +15,7 @@ $(function () {
 $(function () {
     function addValue() {
         const sum = i + j + k;
+        selectdatePackage();
         $('.final-count').text(`${sum}`);
         $('#counthidden').val(sum);
     }

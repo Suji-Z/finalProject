@@ -17,4 +17,5 @@ public interface PackageDateRepository extends JpaRepository<PackageDate,Long> {
     List<PackageDate> findByDepartureBetweenAndApriceBetweenAndRemaincountGreaterThanEqual(String startDeparture, String endDeparture, int startprice, int endprice, int remaincount);
     List<PackageDate> findByDepartureBetweenAndApriceGreaterThanEqualAndRemaincountGreaterThanEqual(String startDeparture, String endDeparture, Integer price,int remaincount);
 
+    Optional<PackageDate> findByPackages_IdAndDeparture(Long Id ,String selectdate);
 }

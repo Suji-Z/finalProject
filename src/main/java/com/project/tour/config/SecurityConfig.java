@@ -27,7 +27,6 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.
-
                 authorizeHttpRequests().antMatchers("/**").permitAll()
                 .and().csrf().ignoringAntMatchers("/h2-console/**") //application.proper-에 있는 path이름이랑 동일해야함.
                 .and()

@@ -69,7 +69,7 @@ public class MemberService {
     }
 
     public Member getName(String name){
-        Optional<Member> member = memberRepository.findByName(name);
+        Optional<Member> member = memberRepository.findByEmail(name);
 
         if(member.isPresent()){
             return member.get();
