@@ -34,7 +34,7 @@
     <!-- Visa application  Areas -->
     <section id="tour_booking_submission" class="section_padding">
         <div class="container">
-            <form th:action="@{|/pay/confirmation/${userBooking.id}|}" th:object="${PayForm}" method="post">
+            <form th:object="${PayForm}">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="tou_booking_form_Wrapper">
@@ -185,7 +185,7 @@
                                     </span>
                                 </label>
                             </div>
-                            <button class="btn btn_theme btn_md" id="paybtn" type="submit">결제하기</button>
+                            <button type="button" class="btn btn_theme btn_md" onclick="kakaoSubmit();">결제하기</button>
 
                             <!--카카오페이 정보 전달-->
                             <input type="hidden" id="kakaoname" th:value="${userBooking.member.name}">
