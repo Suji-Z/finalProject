@@ -27,6 +27,8 @@ $(function() {
         todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false
         weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일
         language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+    }).on("changeDate", function(){
+         $("#toDate").datepicker("setStartDate", new Date($("#fromDate").val()));
     });
 
 
@@ -42,5 +44,8 @@ $(function() {
         todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false
          weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일
         language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+    }).on("changeDate", function(){
+      $("#fromDate").datepicker("setEndDate", new Date($("#toDate").val()));
     });
+
 });
