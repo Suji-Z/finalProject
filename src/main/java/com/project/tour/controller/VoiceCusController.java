@@ -3,6 +3,7 @@ package com.project.tour.controller;
 import com.project.tour.domain.Member;
 import com.project.tour.domain.VoiceCus;
 import com.project.tour.domain.VoiceCusForm;
+import com.project.tour.domain.VoiceCusReplyForm;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.VoiceCusService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +34,7 @@ public class VoiceCusController {
     private final MemberService memberService;
 
     @RequestMapping("/list")
-    public String list(Model model, @PageableDefault Pageable pageable){
+    public String list(Model model, @PageableDefault(size = 5) Pageable pageable){
 
         Page<VoiceCus> paging = voiceCusService.getList(pageable);
 
@@ -51,12 +53,18 @@ public class VoiceCusController {
     }
 
 
+    //고객의소리 글작성
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String voiceCusCreate(VoiceCusForm voiceCusForm){
+    public String voiceCusCreate(Model model,Principal principal){
+
+        model.addAttribute("voiceCusForm",new VoiceCusForm());
+        model.addAttribute("name",principal.getName());
 
         return "voicecus/voicecus-create";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String voiceCusCreate(@Valid VoiceCusForm voiceCusForm, BindingResult bindingResult,
                                  Principal principal){
@@ -65,7 +73,12 @@ public class VoiceCusController {
             return "voicecus/voicecus-create";
         }
 
+        System.out.println("이름:"+principal.getName());
+
         Member member = memberService.getName(principal.getName());
+       String memberName = member.getName();
+
+
         voiceCusService.create(voiceCusForm.getSubject(),voiceCusForm.getContent(),voiceCusForm.getTypes(),member);
 
         return "redirect:/voiceCus/list";
@@ -76,9 +89,6 @@ public class VoiceCusController {
 
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
 
-        if(!voiceCus.getAuthor().getName().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다.");
-        }
 
         voiceCusForm.setSubject(voiceCus.getSubject());
         voiceCusForm.setContent(voiceCus.getContent());
@@ -98,9 +108,6 @@ public class VoiceCusController {
 
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
 
-        if (!voiceCus.getAuthor().getName().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
-        }
 
         voiceCusService.modify(voiceCus, voiceCusForm.getSubject(), voiceCusForm.getContent(), voiceCusForm.getTypes());
 
@@ -110,10 +117,6 @@ public class VoiceCusController {
     @GetMapping("/delete/{id}")
     public String voiceCusDelete(Principal principal,@PathVariable("id") Integer id){
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
-
-        if(!voiceCus.getAuthor().getName().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다.");
-        }
 
         voiceCusService.delete(voiceCus);
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +55,7 @@ public class VoiceCusService {
         voiceCus.setSubject(subject);
         voiceCus.setContent(content);
         voiceCus.setTypes(types);
+        voiceCus.setCreatedDate(LocalDateTime.now());
         voiceCus.setAuthor(author);
 
         voiceCusRepository.save(voiceCus);
