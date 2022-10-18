@@ -1,5 +1,6 @@
 package com.project.tour.service;
 
+import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.PackageDateRepository;
@@ -25,6 +26,21 @@ public class PackageDateService {
             return packageDate.get();
 
     }
+    
+    /**
+     * 상세페이지에서 날짜/인원별 가격출력
+     * */
+    public PackageDate getPrice(Long id,String selectdate){
+
+        Optional<PackageDate> packageDate = packageDateRepository.findByPackages_IdAndDeparture(id, selectdate);
+
+        if(packageDate.isPresent())
+            return packageDate.get();
+        else
+            throw new DataNotFoundException("package Not Found");
+
+    }
+
 }
 
 

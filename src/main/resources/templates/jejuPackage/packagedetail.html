@@ -44,6 +44,8 @@
                 </div>
             </div>
             <div class="col-lg-4">
+                <form th:action method="post">
+                <input type="hidden" id="packagenum" th:value="${package.id}">
                 <div class="tour_details_right_sidebar_wrapper">
                     <div class="tour_detail_right_sidebar">
                         <div class="tour_details_right_boxed">
@@ -66,12 +68,16 @@
                                     </div>
                                     <div class="select_person_right">
                                         <div class="button-set">
-                                            <button type="button">
-                                                <i class="fas fa-minus"></i>
+                                            <button type="button"
+                                                    class="btn-subtract">
+                                                <i class="fas fa-minus"
+                                                   aria-hidden="true"></i>
                                             </button>
-                                            <span>01</span>
-                                            <button type="button">
-                                                <i class="fas fa-plus"></i>
+                                            <span class="count pcount" id="acount">0</span>
+                                            <button type="button"
+                                                    class="btn-add">
+                                                <i class="fas fa-plus"
+                                                   aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -83,12 +89,12 @@
                                     </div>
                                     <div class="select_person_right">
                                         <div class="button-set">
-                                            <button type="button">
-                                                <i class="fas fa-minus"></i>
+                                            <button type="button" class="btn-subtract-c">
+                                                <i class="fas fa-minus" aria-hidden="true"></i>
                                             </button>
-                                            <span>01</span>
-                                            <button type="button">
-                                                <i class="fas fa-plus"></i>
+                                            <span class="count ccount" id="ccount">0</span>
+                                            <button type="button" class="btn-add-c">
+                                                <i class="fas fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -100,12 +106,12 @@
                                     </div>
                                     <div class="select_person_right">
                                         <div class="button-set">
-                                            <button type="button">
-                                                <i class="fas fa-minus"></i>
+                                            <button type="button" class="btn-subtract-in">
+                                                <i class="fas fa-minus" aria-hidden="true"></i>
                                             </button>
-                                            <span>01</span>
-                                            <button type="button">
-                                                <i class="fas fa-plus"></i>
+                                            <span class="count incount" id="bcount">0</span>
+                                            <button type="button" class="btn-add-in">
+                                                <i class="fas fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -121,8 +127,7 @@
                             </div>
                         </div>
                         <div class="tour_select_offer_bar_bottom">
-                            <button class="btn btn_theme btn_md w-100" th:onclick=
-                                    "@{/booking/detail/packageNum이랑departureDate 가지고 넘어와야함}">예약하기</button>
+                            <button class="btn btn_theme btn_md w-100">예약하기</button>
                         </div>
                     </div>
                 </div>
@@ -134,23 +139,24 @@
 
                         <div class="tour_booking_amount_area">
                             <ul>
-                                <li>어른 x 1 <span><del>1,000,000원</del></span></li>
-                                <li><span>할인</span><span>800,000원</span></li>
-                                <li>아이 x 1 <span><del>800,000원</del></span></li>
-                                <li><span>할인</span><span>600,000원</span></li>
-                                <li>유아 x 1 <span><del> 600,000원</del></span></li>
-                                <li><span>할인</span> <span>400,000원</span></li>
+                                <li><span>어른 x <i id="totalacount"></i></span><span id="aprice"><del id="bfaprice"></del></span></li>
+                                <li><span>할인</span><span id="aftaprice"></span></li>
+                                <li><span>아이 x <i id="totalccount"></i></span><span id="cprice"><del id="bfcprice"></del></span></li>
+                                <li><span>할인</span ><span id="aftcprice"></span></li>
+                                <li><span>유아 x <i id="totalbcount"></i></span><span id="bprice"><del id="bfbprice"></del></span></li>
+                                <li><span>할인</span><span id="aftbprice"></span></li>
                             </ul>
 
 
                             <div class="total_subtotal_booking">
-                                <h6>Total Amount <span>1,800,000원</span></h6>
+                                <h6>총 가격 <span id="totalprice"></span></h6>
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
+                </form>
         </div>
     </div>
     <!-- 리뷰 섹션-->

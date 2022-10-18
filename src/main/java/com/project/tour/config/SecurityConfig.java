@@ -1,5 +1,7 @@
 package com.project.tour.config;
 
+import com.project.tour.oauth.model.BaseAuthRole;
+import com.project.tour.oauth.service.BaseCustomOauth2UserService;
 import com.project.tour.service.MemberSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
 
+    @Autowired
+    private final BaseCustomOauth2UserService baseCustomOauth2UserService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http.
 
+        http.
                 authorizeHttpRequests().antMatchers("/**").permitAll()
+                .antMatchers("/api/v1/**").hasRole((BaseAuthRole.USER.name()))
                 .and().csrf().ignoringAntMatchers("/h2-console/**") //application.proper-에 있는 path이름이랑 동일해야함.
                 .and()
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
@@ -38,6 +44,10 @@ public class SecurityConfig{
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID") //true를 주면 세션 자체가 삭제됨
                 .invalidateHttpSession(true)
+                .and()
+                .oauth2Login()
+                .loginPage("/login").defaultSuccessUrl("/").userInfoEndpoint().userService(baseCustomOauth2UserService)
+
         ;
 
         return http.build();

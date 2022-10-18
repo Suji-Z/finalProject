@@ -2,6 +2,9 @@ package com.project.tour.repository;
 
 import com.project.tour.domain.Member;
 
+import com.project.tour.domain.Package;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +23,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findByEmailAndPhone(String email,String phone);
 
+    Page<Member> findAll(Pageable pageable);
 
 }
