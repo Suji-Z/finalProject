@@ -55,6 +55,7 @@ public class MemberController {
         return "member/join";
     }
 
+
     @PostMapping("/join")
     public String signup(@Valid MemberCreate memberCreate, BindingResult bindingResult) {
 

@@ -11,6 +11,8 @@ public class HomeController {
     @GetMapping("/")
     public String main(Model model, @LoginUser SessionUser user) {
 
+        //model.addAttribute("posts",postsService.findAllDesc());
+
         if(user!=null){
             model.addAttribute("email",user.getEmail());
             model.addAttribute("name",user.getName());
