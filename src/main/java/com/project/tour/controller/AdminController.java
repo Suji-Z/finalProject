@@ -1,11 +1,10 @@
 package com.project.tour.controller;
 
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.PackageCreate;
-import com.project.tour.domain.PackageDate;
-import com.project.tour.domain.UserBooking;
 import com.project.tour.service.AdminPackageDateService;
 import com.project.tour.service.AdminPackageService;
+import com.project.tour.service.MemberService;
 import com.project.tour.service.UserBookingService;
 import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +33,8 @@ public class AdminController {
    private final AdminPackageDateService adminPackageDateService;
 
    private final UserBookingService userBookingService;
+
+   private final MemberService memberService;
 
     @GetMapping("/main")
     public String admin_main() {
@@ -47,9 +49,11 @@ public class AdminController {
 
  //예약 회원 조회
     @GetMapping("/bookingUser")
-    public String admin_bookingUser(Model model, @PageableDefault Pageable pageable) {
+    public String admin_bookingUser(Model model, @PageableDefault Pageable pageable,Package aPackage, Member member) {
 
         Page<UserBooking> paging = userBookingService.getBookingList(pageable);
+        model.addAttribute("Member",member);
+        model.addAttribute("Package",aPackage);
         model.addAttribute("paging",paging);
 
         return "admin/admin_BookingUser";
@@ -76,7 +80,7 @@ public class AdminController {
 
         Package aPackage = adminPackageService.create(packageCreate);
 
-        PackageDate packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
+       List<PackageDate > packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
         String uploadDir1 =  "package-preview/" + aPackage.getId();
         String uploadDir2 =  "package-detail/" + aPackage.getId();
 
@@ -146,10 +150,47 @@ public class AdminController {
 
     }
 
+    @GetMapping
+    public String bookingCheck(Model model, Principal principal, UserBookingForm userBookingForm,@PathVariable("id") Long id){
+
+        UserBooking userBooking = userBookingService.getUserBooking(id);
+
+        UserBooking userBooking1 = userBookingService.getUserBooking(id);
+        model.addAttribute("userBooking",userBooking1);
+
+        return "admin/admin_BookingUser";
+    }
+
+    @GetMapping("package/bookingCheck/{id}")
+    public String bookingCheck(@Validated UserBookingForm userBookingForm, @PathVariable("id") Long id){
+
+        UserBooking userBooking = userBookingService.getUserBooking(id);
+
+        userBookingForm.setBookingStatus(1);
+        adminPackageService.userBookingCheck(userBooking,userBookingForm);
+
+        return "redirect:/admin/bookingUser";
+
+    }
+
+//회원 관리
+    @GetMapping("/user")
+    public String userList(Model model, @PageableDefault Pageable pageable, Member member) {
+
+        Page<Member> paging = memberService.getList(pageable);
+        model.addAttribute("Member",member);
+        model.addAttribute("paging",paging);
+
+        return "admin/admin_UserList";
+    }
 
 
 
 
+
+
+
+//판매관련
 
 
     @GetMapping("admin_salespackage")
@@ -171,10 +212,4 @@ public class AdminController {
     public String admin_salesuserlist() {
         return "admin/admin_SalesUserList";
     }
-
-    @GetMapping("admin_userlist")
-    public String admin_userlist() {
-        return "admin/admin_UserList";
-    }
-
 }
