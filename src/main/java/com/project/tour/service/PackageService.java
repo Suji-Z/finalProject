@@ -62,8 +62,10 @@ public class PackageService {
         return packageRepository.findByLocation2(location, pageable);
     }
 
-    //검색결과 페이징처리
-    public Page<Package> getsearchList(String location, String date, Integer count, Pageable pageable) {
+    /**검색결과 페이징처리
+     * 상세지역 / 출발일 /여행객수
+     * */
+    public Page<Package> getfullsearchList(String location, String date, Integer count, Pageable pageable) {
 
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
         sorts.add(Sort.Order.desc("id"));
@@ -73,8 +75,27 @@ public class PackageService {
                         pageable.getPageNumber()-1,
                 pageable.getPageSize(),Sort.by(sorts));
 
-        return packageRepository.findByLocation2AndPackagedatelist_DepartureAndPackagedatelist_RemaincountGreaterThanEqual(location,date,count,pageable);
+        return packageRepository.findByLocation2AndPackagedatelist_DepartureContainingAndPackagedatelist_RemaincountGreaterThanEqual(location,date,count,pageable);
     }
+
+    /**검색결과 페이징처리
+     *  출발일 /여행객수
+     * */
+    public Page<Package> getdatecountsearchList(String location, String date, Integer count, Pageable pageable) {
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return packageRepository.findByLocation1AndPackagedatelist_DepartureContainingAndPackagedatelist_RemaincountGreaterThanEqual(location,date,count,pageable);
+    }
+
+
+
 
     //데이터 불러오기 위한 임시
     private void create(Package apackage,PackageDate packageDate){
