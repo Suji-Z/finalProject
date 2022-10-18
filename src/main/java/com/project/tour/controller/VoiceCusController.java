@@ -3,6 +3,7 @@ package com.project.tour.controller;
 import com.project.tour.domain.Member;
 import com.project.tour.domain.VoiceCus;
 import com.project.tour.domain.VoiceCusForm;
+import com.project.tour.domain.VoiceCusReplyForm;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.VoiceCusService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class VoiceCusController {
     private final MemberService memberService;
 
     @RequestMapping("/list")
-    public String list(Model model, @PageableDefault Pageable pageable){
+    public String list(Model model, @PageableDefault(size = 5) Pageable pageable){
 
         Page<VoiceCus> paging = voiceCusService.getList(pageable);
 
@@ -78,7 +79,6 @@ public class VoiceCusController {
        String memberName = member.getName();
 
 
-
         voiceCusService.create(voiceCusForm.getSubject(),voiceCusForm.getContent(),voiceCusForm.getTypes(),member);
 
         return "redirect:/voiceCus/list";
@@ -89,9 +89,6 @@ public class VoiceCusController {
 
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
 
-        if(!voiceCus.getAuthor().getName().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다.");
-        }
 
         voiceCusForm.setSubject(voiceCus.getSubject());
         voiceCusForm.setContent(voiceCus.getContent());
@@ -111,9 +108,6 @@ public class VoiceCusController {
 
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
 
-        if (!voiceCus.getAuthor().getName().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
-        }
 
         voiceCusService.modify(voiceCus, voiceCusForm.getSubject(), voiceCusForm.getContent(), voiceCusForm.getTypes());
 
@@ -123,10 +117,6 @@ public class VoiceCusController {
     @GetMapping("/delete/{id}")
     public String voiceCusDelete(Principal principal,@PathVariable("id") Integer id){
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
-
-        if(!voiceCus.getAuthor().getName().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다.");
-        }
 
         voiceCusService.delete(voiceCus);
 

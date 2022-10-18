@@ -38,9 +38,9 @@
                                         <span th:text="${voiceCus.author.getName()}"></span>
                                         <span style="width: 40%"></span>
                                         <colspan style="text-align:center;width: 100px">분류</colspan>
-                                        <span th:if="${voiceCus.types=='good'}"></span>
-                                        <span th:if="${voiceCus.types=='bad'}"></span>
-                                        <span th:if="${voiceCus.types=='suggestion'}"></span></li>
+                                        <span th:if="${voiceCus.types=='good'}"><b>칭찬의 소리</b></span>
+                                        <span th:if="${voiceCus.types=='bad'}"><b>불만의 소리</b></span>
+                                        <span th:if="${voiceCus.types=='suggestion'}"><b>건의사항</b></span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성일</span>
                                         <span th:text="${#temporals.format(voiceCus.createdDate,'yyyy-MM-dd HH:mm')}"></span>
@@ -66,12 +66,13 @@
 
         </div>
 
-        <a sec:authorize="isAuthenticated" th:if="${voiceCus.author!=null and #authentication.getPrincipal().getUsername()==voiceCus.author.email}">
-        <button type="button" th:onclick="|location.href='@{/voiceCus/modify/${voiceCus.id}'|" class="btn btn-outline-secondary">수정</button>
-        <button type="button" th:onclick="|location.href='@{/voiceCus/delete/${voiceCus.id}'|" class="btn btn-outline-secondary">삭제</button>
+        <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==voiceCus.author.email
+        or #authentication.getPrincipal().getUsername()=='admin@naver.com' and voiceCus.author!=null}">
+        <button type="button" th:onclick="|location.href='@{|/voiceCus/modify/${voiceCus.id}|}'|" class="btn btn-outline-secondary">수정</button>
+        <button type="button" th:onclick="|location.href='@{|/voiceCus/delete/${voiceCus.id}|}'|" class="btn btn-outline-secondary">삭제</button>
         </a>
         <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()=='admin@naver.com'}">
-        <button type="button"  th:onclick="|location.href='@{/voiceCus/reply/${voiceCus.id}'|" class="btn btn-outline-secondary">답변</button>
+        <button type="button"  th:onclick="|location.href='@{|/reVoiceCus/create/${voiceCus.id}|}'|" class="btn btn-outline-secondary">답변</button>
         </a>
 
 

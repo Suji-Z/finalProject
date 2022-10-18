@@ -24,7 +24,7 @@
           <div class="dashboard_menu_area">
             <ul>
               <li><a href="dashboard.html">공지사항</a></li>
-              <li><a th:href="@{/voiceCus/list}">고객의소리</a></li>
+              <li ><a th:href="@{/voiceCus/list}" class="active">고객의소리</a></li>
               <li><a href="dashboard.html">QnA</a></li>
               <li><a href="dashboard.html">FAQ</a></li>
               <li><a href="dashboard.html">여행후기</a></li>
@@ -39,7 +39,7 @@
         <div class="dashboard_common_table">
           <h3>고객의 소리</h3>
           <div class="table-responsive-lg table_common_area">
-            <table class="table">
+            <table class="table" >
               <thead>
               <tr>
                 <th width="130">글번호</th>
@@ -54,47 +54,61 @@
               </thead>
               <tbody>
               <tr th:if="${paging.isEmpty()}"><td colspan="4"> 게시글이 없습니다. </td></tr>
-              <tr th:each="voiceCus,loop : ${paging}">
+              <th:block th:each="voiceCus,loop : ${paging}">
+              <tr>
                 <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                 <td th:if="${voiceCus.types=='good'}">칭찬의 소리</td>
                 <td th:if="${voiceCus.types=='bad'}">불만의 소리</td>
                 <td th:if="${voiceCus.types=='suggestion'}">건의사항</td>
-                <td>
+                <td th:align="left">
                   <a th:href="@{|/voiceCus/article/${voiceCus.id}|}" th:text="${voiceCus.subject}"></a>
                 </td>
                 <td th:text="${voiceCus.author.getName()}"></td>
                 <td th:text="${#temporals.format(voiceCus.createdDate,'yyyy-MM-dd HH:mm')}">2022-09-25</td>
-
               </tr>
+              <!-- 답변 -->
+                <tr th:if="${!voiceCus.voiceCusReplyList.isEmpty()}" th:each="reply : ${voiceCus.voiceCusReplyList}">
 
+                  <td></td>
+                  <td></td>
+                  <td th:align="left">
+                    <a style="color: black" th:href="@{|/reVoiceCus/article/${reply.id}|}">&nbsp;&nbsp;└[답변]소중한 의견 감사합니다.</a>
+                  </td>
+                  <td th:text="관리자"></td>
+                  <td th:text="${#temporals.format(reply.createdDate,'yyyy-MM-dd')}"></td>
+
+                </tr>
+              </th:block>
               </tbody>
             </table>
           </div>
           <div class="option-item" style="float: right">
-            <button th:onclick="|location.href='@{/voiceCus/create}'|" class="btn btn_theme" style="height: 35px;font-size: 11pt" >글올리기</button>
+            <button th:onclick="|location.href='@{/voiceCus/create}'|" class="btn btn_theme"
+                    style="height: 35px;font-size: 12pt;margin-right: 20px" >글올리기</button>
           </div>
+
         </div>
 
         <div class="pagination_area" th:if="${!paging.isEmpty()}">
           <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
             <li class="page-item">
-              <a class="page-link" th:href="@{/estimate/list?page=1}" aria-label="Previous">
+              <a class="page-link" th:href="@{/voiceCus/list?page=1}" aria-label="Previous">
                 <span aria-hidden="true">≪</span>
                 <span class="sr-only">Previous</span>
               </a>
             </li>
             <li class="page-item" th:style="${paging.first}?'display:none'">
-              <a class="page-link" th:href="@{/estimate/list(page=${paging.number})}">＜</a>
+              <a class="page-link" th:href="@{/voiceCus/list(page=${paging.number})}">＜</a>
             </li>
             <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                 th:classappend="(${page}==${paging.number+1})?'active'">
-              <a class="page-link" th:href=@{/estimate/list(page=${page})} th:text="${page}"></a>
+              <a class="page-link" th:href="@{/voiceCus/list(page=${page})}" th:text="${page}"></a>
             </li>
             <li class="page-item" th:style="${paging.last}?'display:none'">
-              <a class="page-link" th:href="@{/estimate/list(page=${paging.number+2})}">＞</a>
+              <a class="page-link" th:href="@{/voiceCus/list(page=${paging.number+2})}">＞</a>
             </li>
             <li class="page-item">
-              <a class="page-link" th:href="@{/estimate/list(page=${paging.totalPages})}" aria-label="Next">
+              <a class="page-link" th:href="@{/voiceCus/list(page=${paging.totalPages})}" aria-label="Next">
                 <span aria-hidden="true">≫</span>
                 <span class="sr-only">Next</span>
               </a>

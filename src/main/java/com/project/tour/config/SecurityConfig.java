@@ -27,13 +27,12 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.
-//.csrf().disable(). 로그인에 잠시 제외
                 authorizeHttpRequests().antMatchers("/**").permitAll()
                 .and().csrf().ignoringAntMatchers("/h2-console/**") //application.proper-에 있는 path이름이랑 동일해야함.
                 .and()
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and()
-                .formLogin().usernameParameter("email").loginPage("/member/login").loginProcessingUrl("/member/login").defaultSuccessUrl("/")
+                .csrf().disable().formLogin().usernameParameter("email").loginPage("/member/login").loginProcessingUrl("/member/login").defaultSuccessUrl("/")
                 .and()	//해당 주소와 일치할 때 로그아웃
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID") //true를 주면 세션 자체가 삭제됨
