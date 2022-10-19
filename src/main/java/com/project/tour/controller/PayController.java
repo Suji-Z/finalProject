@@ -4,6 +4,8 @@ import com.project.tour.domain.*;
 import com.project.tour.kakao.vo.KakaoPayApprove;
 import com.project.tour.kakao.vo.KakaoPayReady;
 import com.project.tour.kakao.service.KakaoPayService;
+import com.project.tour.oauth.dto.SessionUser;
+import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.PayService;
 import com.project.tour.service.UserBookingService;
@@ -41,14 +43,24 @@ public class PayController {
     //마이페이지에서 결제대기 누르면 넘어오는 결제 페이지
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public String getPay(Model model, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
+    public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 71; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 75; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
+        model.addAttribute("member",member);
 
         //userBooking 정보 넘기기
         UserBooking userBooking = userBookingService.getUserBooking(bookingNum);
         model.addAttribute("userBooking",userBooking);
-;
+        ;
         return "booking-pay/payment";
     }
 
@@ -56,10 +68,18 @@ public class PayController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/confirmation/{id}") //id : bookingNum
     @ResponseBody
-    public ResponseEntity<?> paying(PayForm payForm, UserBookingForm userBookingForm,
-                                 Principal principal, Model model, @PathVariable("id") Long id,
-                                 @RequestParam("impUid") String impUid,
-                                 @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice){
+    public ResponseEntity<?> paying(PayForm payForm, UserBookingForm userBookingForm, Principal principal,
+                                    @LoginUser SessionUser user, Model model, @PathVariable("id") Long id,
+                                    @RequestParam("impUid") String impUid,
+                                    @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice){
+
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
 
         //payForm에 데이터 저장
         payForm.setPayMethod(payMethod);
@@ -69,7 +89,6 @@ public class PayController {
 
         //데이터 저장할 때 넘길 정보 : userbooking,member
         UserBooking userBooking = userBookingService.getUserBooking(id);
-        Member member = memberService.getMember(principal.getName());
 
         //1. pay 테이블 데이터 저장
         payService.create(userBooking, member, payDate, payForm);
@@ -82,9 +101,10 @@ public class PayController {
     }
 
     @GetMapping("/payments/complete")
-    public @ResponseBody HashMap<String,Object> confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
-                             @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") String payTotalPrice,
-                             PayForm payForm){
+    @ResponseBody
+    public HashMap<String,Object> confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
+                                               @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") String payTotalPrice,
+                                               PayForm payForm){
 
         RestTemplate template = new RestTemplate();
 
@@ -101,11 +121,18 @@ public class PayController {
     }
 
     @GetMapping("/hello")
-    public String confirmation(Model model, Principal principal){
+    public String confirmation(Model model, @LoginUser SessionUser user, Principal principal){
+
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
 
         //confirmation에 띄울 정보
         //member정보
-        Member member = memberService.getMember(principal.getName());
         model.addAttribute("member",member);
 
         //pay 테이블 데이터 들고오기
