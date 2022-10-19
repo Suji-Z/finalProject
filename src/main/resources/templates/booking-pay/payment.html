@@ -185,12 +185,14 @@
                                     </span>
                                 </label>
                             </div>
-                            <button type="button" class="btn btn_theme btn_md" onclick="kakaoSubmit();">결제하기</button>
+                            <button type="button" class="btn btn_theme btn_md" onclick="requestPay();">결제하기</button>
 
                             <!--카카오페이 정보 전달-->
                             <input type="hidden" id="kakaoname" th:value="${userBooking.member.name}">
                             <input type="hidden" id="kakaoemail" th:value="${userBooking.member.email}">
                             <input type="hidden" id="kakaotel" th:value="${userBooking.member.phone}">
+                            <input type="hidden" id="packageName" th:value="${userBooking.APackage.packageName}">
+                            <input type="hidden" id="packageNum" th:value="${userBooking.APackage.id}">
                         </div>
                     </div>
                 </div>
