@@ -27,6 +27,8 @@ public class MypageService {
 
     private final CouponRepository couponRepository;
 
+    private final BookingRepository bookingRepository;
+
     //리뷰
     public List<Review> getMypageReview(Long id){
 
@@ -95,6 +97,26 @@ public class MypageService {
         member.setKeyword(keyword);
 
         memberRepository.save(member);
+    }
+
+    //예약내역
+    public Page<UserBooking> getMypageBooking(Long id,Pageable pageable){
+
+        List<Sort.Order> sort = new ArrayList<Sort.Order>();
+        sort.add(Sort.Order.desc("id")); //MemberId
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ?
+                        0 : pageable.getPageNumber() -1, //반환할 페이지
+                pageable.getPageSize(), //반환할 리스트 갯수
+                Sort.by(sort)); //정렬 매개변수 적용
+
+        return bookingRepository.findByMember_Id(id,pageable);
+
+
+
+
+
     }
 
 

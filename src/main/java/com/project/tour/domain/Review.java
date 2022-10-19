@@ -36,6 +36,11 @@ public class Review {
     @ManyToOne
     private Member author;
 
+    //결제완료한 패키지 정보
+    @ManyToOne
+    @JoinColumn(name = "packageNum")
+    private Package reviewPackages;
+
     //하나의 리뷰에 많은 댓글
     @OneToMany(mappedBy = "reviewNum", cascade = CascadeType.REMOVE)
     private List<Review_reply> replyList;

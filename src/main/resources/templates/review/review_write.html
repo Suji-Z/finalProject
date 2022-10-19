@@ -50,9 +50,8 @@
 
 <!-- Tour Booking Submission Areas -->
 <section id="dashboard_main_arae" class="section_padding">
-  <form th:action th:object="${reviewForm}" method="post"
+  <form th:object="${reviewForm}" method="post"
   enctype="multipart/form-data"> <!-- 파일업로드 -->
-
   <div class="container">
     <div class="row">
       <div class="col-lg-4-sally">
@@ -80,21 +79,22 @@
             <div class="tour_booking_form_box">
               <div class="your_info_arae">
                 <ul>
-                 <!-- <li>
+                  <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
                       <span style="text-align:center;margin-top: 15px">구매 상품</span>
                     </div>
                     <div class="form-group col-lg-7">
+          <!-- 결제완료한 패키지 이름 반복문 -->
                       <span>
-                        <select class="form-select" th:field="*{}" style="border-radius: 3px" aria-label="Default select example">
-                          <option selected>선택하세요</option>
-                          <option>제주도 어쩌구</option>
-                          <option>동남아 어쩌구</option>
-                          
+                        <select class="form-select" style="border-radius: 3px" aria-label="Default select example" th:if="${bookingReview.isEmpty()}">
+                          <option>구매하신 패키지 상품이 없습니다</option></select>
+                        <select th:name="packageNum" class="form-select" style="border-radius: 3px" aria-label="Default select example" th:if="${!bookingReview.isEmpty()}">
+                          <option th:each="bookingReview : ${bookingReview}" th:value="${bookingReview.APackage.id}" th:text="${bookingReview.APackage.packageName}">제주도 어쩌구</option>
                         </select>
                       </span>
+           <!-- -->
                     </div>
-                  </li>-->
+                  </li>
                     <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
                       <span style="text-align:center;margin-top: 15px">별점</span>
@@ -124,7 +124,6 @@
                       <span style="text-align:center;margin-top: 15px">후기 이미지</span>
                     </div>
                         <div class="form-group col-lg-7">
-
                   <span>
                      <input type="file" name="image" accept="image/png, image/jpeg" style="border-radius: 3px">
                     </span></div>
@@ -143,14 +142,12 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
     </div>
   </div>
  
     <div class="option-item" align="center">
-      <button class="btn btn_theme btn_md" type="submit">글올리기</button>
+      <button th:disabled="${bookingReview.isEmpty()} ? 'disabled' " class="btn btn_theme btn_md" type="submit">글올리기</button>
       <a th:href="@{/review/jejuList}" class="btn btn_theme btn_md">취소하기</a>
     </div>
 
