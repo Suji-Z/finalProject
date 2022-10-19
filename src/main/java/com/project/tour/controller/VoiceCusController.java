@@ -56,12 +56,27 @@ public class VoiceCusController {
     }
 
     @RequestMapping("/article/{id}")
-    public String article(Model model, @PathVariable("id") Integer id,@LoginUser SessionUser user){
+    public String article(Model model, @PathVariable("id") Integer id,@LoginUser SessionUser user,Principal principal){
 
         VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
 
-        String email = user.getEmail();
-        String name = user.getName();
+        System.out.println("회원 정보:"+principal.getName());
+
+        String email;
+        String name;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            Member member = memberService.getName(principal.getName());
+            email = member.getEmail();
+            name = member.getName();
+
+        }else {
+
+            email = user.getEmail();
+            name = user.getName();
+
+        }
 
         model.addAttribute("voiceCus",voiceCus);
         model.addAttribute("email",email);
@@ -78,7 +93,6 @@ public class VoiceCusController {
 
 
         model.addAttribute("voiceCusForm",new VoiceCusForm());
-        model.addAttribute("name",user.getName());
 
         return "voicecus/voicecus-create";
     }
@@ -92,7 +106,18 @@ public class VoiceCusController {
             return "voicecus/voicecus-create";
         }
 
-        Member member = memberService.getName(user.getEmail());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
 
 
         voiceCusService.create(voiceCusForm.getSubject(),voiceCusForm.getContent(),voiceCusForm.getTypes(),member);
