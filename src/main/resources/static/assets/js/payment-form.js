@@ -1,13 +1,10 @@
 $(document).ready(function () {
     $('input[type="radio"]').on('click', (function () {
         var inputValue = $(this).attr("value");
-        var targetBox = $("." + inputValue);
-        $(".payment_toggle").not(targetBox).hide();
-        $(targetBox).show();
 
-        if (inputValue=='red'){
+        if (inputValue=='신용카드'){
             $("#payMethod").val("신용카드");
-        }else if(inputValue=='green'){
+        }else if(inputValue=='계좌이체'){
             $("#payMethod").val("계좌이체");
         }else{
             $("#payMethod").val("카카오페이");
