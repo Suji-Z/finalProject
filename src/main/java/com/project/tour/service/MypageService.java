@@ -1,13 +1,7 @@
 package com.project.tour.service;
 
-import com.project.tour.domain.EstimateInquiry;
-import com.project.tour.domain.Member;
-import com.project.tour.domain.QnA;
-import com.project.tour.domain.Review;
-import com.project.tour.repository.EstimateRepository;
-import com.project.tour.repository.MemberRepository;
-import com.project.tour.repository.QnARepository;
-import com.project.tour.repository.ReviewRepository;
+import com.project.tour.domain.*;
+import com.project.tour.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,6 +24,8 @@ public class MypageService {
     private final QnARepository qnARepository;
 
     private final MemberRepository memberRepository;
+
+    private final CouponRepository couponRepository;
 
     //리뷰
     public List<Review> getMypageReview(Long id){
@@ -79,6 +76,25 @@ public class MypageService {
 
         memberRepository.save(member);
 
+    }
+
+    //쿠폰
+    public List<Coupon> getMypageCoupon(String couponNum){
+
+        List<String> coupons = Arrays.asList(couponNum.split(","));
+        List<Coupon> couponlists = couponRepository.findByIdIn(coupons);
+
+        return couponlists;
+
+    }
+
+    //회원정보 수정
+    public void updateProfile(Member member, String name, String birth, String keyword){
+        member.setName(name);
+        member.setBirth(birth);
+        member.setKeyword(keyword);
+
+        memberRepository.save(member);
     }
 
 
