@@ -24,6 +24,9 @@ public class Pay {
     Member member;
 
     String payMethod;
+
+    int payTotalPrice; //적립금 사용한 금액
+
     String payDate;
 
     String payInfo;
