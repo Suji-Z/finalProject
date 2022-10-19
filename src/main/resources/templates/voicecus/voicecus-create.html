@@ -19,9 +19,9 @@
 <section id="tour_booking_submission" class="section_padding" style="margin: auto">
   <div class="col-lg-8">
   </div>
-  <form  th:object="${voiceCusForm}" method="post">
+  <form th:action th:object="${voiceCusForm}" method="post">
 
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
     <!-- <input type="hidden" th:field="name" th:value='<sec:authentication property="principal.name"/>' /> -->
   <div class="container" style="margin: auto; width: 70%">
     <div class="row">

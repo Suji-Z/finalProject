@@ -5,6 +5,8 @@ import com.project.tour.domain.MailDTO;
 import com.project.tour.domain.Member;
 import com.project.tour.domain.MemberCreate;
 import com.project.tour.domain.Package;
+import com.project.tour.oauth.dto.BaseAuthUserRepository;
+import com.project.tour.oauth.model.BaseAuthUser;
 import com.project.tour.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.*;
 
 @RequiredArgsConstructor
