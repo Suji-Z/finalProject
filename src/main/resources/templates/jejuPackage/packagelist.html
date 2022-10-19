@@ -36,7 +36,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="oneway_search_form">
-                                                <form th:action="@{/jeju/search}" method="post">
+                                                <form th:action="@{/jeju/list}" method="get">
                                                     <div class="row">
                                                         <div class="col-lg-3 col-md-3 col-sm-12 col-12">
                                                             <div class="flight_Search_boxed">
@@ -474,23 +474,23 @@
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list?page=1}" aria-label="Previous">
+                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},counthidden=${param.hiddencount})}" aria-label="Previous">
                                             <span aria-hidden="true">≪</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <li class="page-item" th:style="${paging.first}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number})}">＜</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},counthidden=${param.hiddencount})}">＜</a>
                                     </li>
                                     <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                                         th:classappend="(${page}==${paging.number+1})?'active'">
-                                        <a class="page-link" th:href=@{/jeju/list(page=${page})} th:text="${page}"></a>
+                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},counthidden=${param.hiddencount})} th:text="${page}"></a>
                                     </li>
                                     <li class="page-item" th:style="${paging.last}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2})}">＞</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},counthidden=${param.hiddencount})}">＞</a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages})}"
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},counthidden=${param.hiddencount})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">≫</span>
                                             <span class="sr-only">Next</span>

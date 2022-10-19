@@ -38,13 +38,12 @@
                             <div class="theme_common_box_two">
                                 <div class="theme_two_box_img">
                                     <a href="hotel-details.html">
-                                        <!-- <img  th:src="@{${recom.getPhotosImagePath1}" width="330px" height="220px"> -->
-                                        <img src="/assets/img/tab-img/hotel1.png" width="330px" height="220px">
+                                        <img th:src="@{${recom.getPhotosImagePath1}}" width="330px" height="220px">
                                     </a>
                                 </div>
                                 <div class="theme_two_box_content">
                                     <h4><a href="hotel-details.html" th:text="${recom.packageName}"></a></h4>
-                                    <h3></h3>
+                                    <h3 th:text="&{recom.packagedatelist[0].aprice}"></h3>
                                 </div>
                             </div>
                         </div>
