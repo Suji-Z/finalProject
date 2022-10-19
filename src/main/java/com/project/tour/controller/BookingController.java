@@ -2,6 +2,8 @@ package com.project.tour.controller;
 
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
+import com.project.tour.oauth.dto.SessionUser;
+import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +40,17 @@ public class BookingController {
     /* 예약 디테일 띄우기 */
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @PostMapping("/detail/{id}") //packageNum 가지고 오기
-    public String bookingDetail(Model model, Principal principal, UserBookingForm userBookingForm,
-                                BookingDTO bookingform,@PathVariable("id") Long packageNum
+    public String bookingDetail(Model model, @LoginUser SessionUser user, Principal principal, UserBookingForm userBookingForm,
+                                BookingDTO bookingform, @PathVariable("id") Long packageNum
                                 ) throws Exception{
+
+        //로그인 정보 확인
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
 
         //예약하기 버튼 누르면 package table의 packageNum가져오기
         //user table, package table 끌고 오기
@@ -65,8 +75,6 @@ public class BookingController {
         model.addAttribute("packageDate",packageDate);
 
         //3. user에 맞는 memberData 넘기기
-        String email = principal.getName();  //login 아이디(email) 정보 가져오기
-        Member member = memberService.getMember(email);  //login 아이디를 매개변수로 넘겨서 memberData 끌고오기
         model.addAttribute("member", member);
 
         //4. user가 가지고 있는 coupon 번호와 동일한 coupon의 정보 넘기기
@@ -106,10 +114,18 @@ public class BookingController {
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @PostMapping("/confirmation/{id}") //id=packageNum
     public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult,
-                               Principal principal,Model model, @PathVariable("id") Long id) {
+                               @LoginUser SessionUser user, Principal principal, Model model, @PathVariable("id") Long id) {
 
         if(bindingResult.hasErrors()){
             return "booking-pay/booking";
+        }
+
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
         }
 
         //bookingTotalPrice 검증
@@ -119,7 +135,6 @@ public class BookingController {
 
         //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
         Package apackage = packageService.getPackage(id);
-        Member member = memberService.getMember(principal.getName());
         String bookingDate = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
 
