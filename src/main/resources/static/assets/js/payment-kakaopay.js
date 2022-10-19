@@ -31,9 +31,9 @@ function kakaoPay() {
     IMP.request_pay({ //요청하는 것들
         pg : 'kakaopay', //카카오페이 API래핑
         pay_method : 'card',
-        merchant_uid: 'p74aadds',  // 상점에서관리하는 상품번호
+        merchant_uid: 'package'+bookingNum,  // 상점에서관리하는 상품번호
         name : packageName, //상품명
-        amount : '20', //가격
+        amount : payTotalPrice1, //가격
         buyer_email : email, //구매자 이메일
         buyer_name : name, //구매자 이름
         buyer_tel : tel //구매자 번호
@@ -45,58 +45,60 @@ function kakaoPay() {
             alert(rsp.imp_uid +" / " + rsp.merchant_uid);
 
         $.ajax({
-            url: "/pay/payments/complete", // 예: https://www.myservice.com/payments/complete
+            url: "/pay/payments/complete/", // 예: https://www.myservice.com/payments/complete
             type: "Get",
             headers: { "Content-Type": "application/json" },
             data: {
                 impUid: rsp.imp_uid,
                 merchantUid: rsp.merchant_uid,
                 payMethod: '카카오페이',
-                payTotalPrice :payTotalPrice1
+                payTotalPrice :payTotalPrice1,
+                bookingNum : bookingNum
             },
 
-        }).done(function (data) {
+        });
+        } else {
 
-          alert(payMethod.value);
+            alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
 
-            $.ajax({
-                url: '/pay/confirmation/'+bookingNum, // 예: https://www.myservice.com/payments/complete
-                type: "Get",
-                headers: { "Content-Type": "application/json" },
-                data: {
-                    impUid: rsp.imp_uid,
-                    payMethod: data.payMethod,
-                    payTotalPrice : data.payTotalPrice
+            let url = '/payments/fail';
 
-                },
-                    success : function(url){
-                    location.href=url;
-                }
-                });
+        }
+    });
 
-//              $.post({
-//                    url: '/pay/confirmation/'+bookingNum,
-//                  data: {
+}
+//             .done(function (data) {
 //
-//                    }
-//                  }).done(function( data ) {
+//           alert(payMethod.value);
 //
-//                      $( "body" ).html(data);
+//             $.ajax({
+//                 url: '/pay/confirmation/'+bookingNum, // 예: https://www.myservice.com/payments/complete
+//                 type: "Get",
+//                 headers: { "Content-Type": "application/json" },
+//                 data: {
+//                     impUid: rsp.imp_uid,
+//                     payMethod: data.payMethod,
+//                     payTotalPrice : data.payTotalPrice
 //
-//                  });
-              });
+//                 },
+//                     success : function(url){
+//                     location.href=url;
+//                 }
+//                 });
+//
+// //              $.post({
+// //                    url: '/pay/confirmation/'+bookingNum,
+// //                  data: {
+// //
+// //                    }
+// //                  }).done(function( data ) {
+// //
+// //                      $( "body" ).html(data);
+// //
+// //                  });
+//               });
 //
 //          let url = '/pay/confirmation/'+bookingNum;
 //          location.href=url;
 
 
-      } else {
-
-        alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
-
-        let url = '/payments/fail';
-
-      }
-    });
-
-}

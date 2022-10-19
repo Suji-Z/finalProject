@@ -1,8 +1,6 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.*;
-import com.project.tour.kakao.vo.KakaoPayApprove;
-import com.project.tour.kakao.vo.KakaoPayReady;
 import com.project.tour.kakao.service.KakaoPayService;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
@@ -15,18 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +39,7 @@ public class PayController {
     @GetMapping
     public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 75; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 21; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //로그인 정보
         Member member;
@@ -65,13 +59,18 @@ public class PayController {
     }
 
     //결제 데이터 저장
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/confirmation/{id}") //id : bookingNum
-    @ResponseBody
-    public ResponseEntity<?> paying(PayForm payForm, UserBookingForm userBookingForm, Principal principal,
-                                    @LoginUser SessionUser user, Model model, @PathVariable("id") Long id,
-                                    @RequestParam("impUid") String impUid,
-                                    @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice){
+    @GetMapping("/payments/complete")
+    public String confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
+                                               @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice,
+                                               PayForm payForm, Principal principal, @LoginUser SessionUser user,
+                                             @RequestParam("bookingNum") long id, UserBookingForm userBookingForm, Model model){
+
+        System.out.println("여기오나요");
+
+        RestTemplate template = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         //로그인 정보
         Member member;
@@ -97,32 +96,17 @@ public class PayController {
         userBookingForm.setBookingStatus(2); //form 예약 상태 변경
         userBookingService.modifyBookingStatus(userBooking, userBookingForm);
 
-        return new ResponseEntity("/pay/hello", HttpStatus.OK);
-    }
+        System.out.println("여기오나요2");
 
-    @GetMapping("/payments/complete")
-    @ResponseBody
-    public HashMap<String,Object> confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
-                                               @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") String payTotalPrice,
-                                               PayForm payForm){
-
-        RestTemplate template = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        //json형태 데이터로 넘기기
-        HashMap<String,Object> payInfo = new HashMap<String,Object>();
-        payInfo.put("payMethod",payMethod);
-        payInfo.put("payTotalPrice",payTotalPrice);
-
-        return payInfo;
+        return "redirect:/pay/complete";
 
     }
 
-    @GetMapping("/hello")
+    //저장 후 결제완료 창 띄우기 > 다 되는데 return이 안됨..
+    @GetMapping("/complete")
     public String confirmation(Model model, @LoginUser SessionUser user, Principal principal){
 
+        System.out.println("여기는 오나요 3");
         //로그인 정보
         Member member;
         if(memberService.existByEmail(principal.getName())){
@@ -152,6 +136,41 @@ public class PayController {
         return "booking-pay/payment_fail";
 
     }
+
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/confirmation/{id}") //id : bookingNum
+//    @ResponseBody
+//    public ResponseEntity<?> paying(PayForm payForm, UserBookingForm userBookingForm, Principal principal,
+//                                    @LoginUser SessionUser user, Model model, @PathVariable("id") Long id,
+//                                    @RequestParam("impUid") String impUid,
+//                                    @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice){
+//
+//        //로그인 정보
+//        Member member;
+//        if(memberService.existByEmail(principal.getName())){
+//            member = memberService.getName(principal.getName());
+//        }else{
+//            member = memberService.getName(user.getEmail());
+//        }
+//
+//        //payForm에 데이터 저장
+//        payForm.setPayMethod(payMethod);
+//        payForm.setPayInfo(impUid);
+//        payForm.setTotalPrice(payTotalPrice);
+//        payDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
+//
+//        //데이터 저장할 때 넘길 정보 : userbooking,member
+//        UserBooking userBooking = userBookingService.getUserBooking(id);
+//
+//        //1. pay 테이블 데이터 저장
+//        payService.create(userBooking, member, payDate, payForm);
+//
+//        //2. userBooking 테이블 bookingStatus 데이터 수정
+//        userBookingForm.setBookingStatus(2); //form 예약 상태 변경
+//        userBookingService.modifyBookingStatus(userBooking, userBookingForm);
+//
+//        return new ResponseEntity("/pay/hello", HttpStatus.OK);
+//    }
 
 
 
