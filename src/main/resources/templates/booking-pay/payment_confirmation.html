@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+<!-- preloader Area -->
+<!-- Header Area -->
+<!-- search -->
+
+<!-- Common Banner Area -->
+<section id="common_banner" style="background-image: url('/assets/img/banner/banner01.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="common_bannner_text">
+                    <h2>결제완료</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><span><i class="fas fa-circle"></i></span> Payment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tour Booking Submission Areas -->
+<section id="tour_booking_submission" class="section_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tou_booking_form_Wrapper">
+                    <div class="tour_booking_form_box mb-4">
+                        <div class="booking_success_arae">
+                            <div class="booking_success_img">
+                                <img src="/assets/img/icon/right.png" alt="img">
+                            </div>
+                            <div class="booking_success_text">
+                                <h3><a th:text="${member.name}"></a>님의 결제가 성공적으로 완료되었습니다.</h3>
+                                <h6>자세한 결제정보 확인은 [마이페이지 > 결제확인]에서 확인 가능합니다.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="tou_booking_form_Wrapper">
+                    <div class="booking_tour_form"></div>
+                </div>
+                <div class="tou_booking_form_Wrapper">
+                    <h3 class="heading_theme">결제정보</h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="tou_booking_form_Wrapper">
+                    <div class="tour_booking_form_box">
+                        <div class="your_info_arae">
+                            <ul>
+                                <li><span class="name_first">결제번호</span> <span class="last_name" th:text="${pay.id}">예약번호</span></li>
+                                <li><span class="name_first">예약날짜</span> <span
+                                        class="last_name" th:text="${pay.payDate}"></span></li>
+                                <li><span class="name_first">출발일</span> <span
+                                        class="last_name" th:text="${pay.userBooking.departure}"></span></li>
+                                <li><span class="name_first">도착일</span> <span
+                                        class="last_name" th:text="${pay.userBooking.arrival}">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
+                                <li><span class="name_first">예약인원</span> <span
+                                        class="last_name" th:text="|총 ${pay.userBooking.bookingTotalCount}명
+                                            (성인 : ${pay.userBooking.aCount}명, 아동 : ${pay.userBooking.cCount}명, 유아 : ${pay.userBooking.bCount}명) |">4명</span></li>
+                                <li><span class="name_first">결제 금액</span> <span class="last_name" th:text="|${pay.payTotalPrice}원|"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cta Area -->
+<!-- Footer  -->
+
+</body>
+
+</html>

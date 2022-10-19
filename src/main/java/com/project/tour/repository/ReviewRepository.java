@@ -16,6 +16,7 @@ public interface ReviewRepository extends JpaRepository <Review,Long> {
 
     Page<Review> findAll(Pageable pageable);
 
+    //마이페이지에 출력할 멤버의 리뷰 리스트(댓글이랑 같이 띄울때 페이징처리 할건지 생각)
     List<Review> findByAuthor_Id(Long id);
 
 

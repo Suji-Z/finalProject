@@ -2,15 +2,13 @@ package com.project.tour.controller;
 
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.service.AdminPackageDateService;
-import com.project.tour.service.AdminPackageService;
-import com.project.tour.service.MemberService;
-import com.project.tour.service.UserBookingService;
+import com.project.tour.service.*;
 import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -19,8 +17,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -35,6 +35,8 @@ public class AdminController {
    private final UserBookingService userBookingService;
 
    private final MemberService memberService;
+
+   private final MypageService mypageService;
 
     @GetMapping("/main")
     public String admin_main() {
@@ -68,24 +70,22 @@ public class AdminController {
 
     @PostMapping("/packageForm")
     public String createPackagePost(PackageCreate packageCreate, @RequestParam("image1") MultipartFile multipartFile1,
-                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException {
+                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
 
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
-
-
 
         packageCreate.setPreviewImage(fileName1);
         packageCreate.setDetailImage(fileName2);
 
         Package aPackage = adminPackageService.create(packageCreate);
-
-       List<PackageDate > packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
         String uploadDir1 =  "package-preview/" + aPackage.getId();
         String uploadDir2 =  "package-detail/" + aPackage.getId();
-
         PackageFileUpload.saveFile1(uploadDir1,fileName1,multipartFile1);
         PackageFileUpload.saveFile2(uploadDir2,fileName2,multipartFile2);
+
+        List<PackageDate > packageDate = adminPackageDateService.createDate(packageCreate,aPackage);
+
 
         return "redirect:/admin/packageList";
     }
@@ -106,7 +106,6 @@ public class AdminController {
     public String packageDelete(@PathVariable("id") Long id) {
 
         Package aPackage = adminPackageService.getPackage(id);
-
         adminPackageService.delete(aPackage);
 
         return "redirect:/admin/packageList";
@@ -174,6 +173,8 @@ public class AdminController {
     }
 
 //회원 관리
+
+    //회원 리스트
     @GetMapping("/user")
     public String userList(Model model, @PageableDefault Pageable pageable, Member member) {
 
@@ -184,10 +185,63 @@ public class AdminController {
         return "admin/admin_UserList";
     }
 
+    //회원 정보 수정(관리자용)
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/user/update/{email}")
+    public String updateUser(Model model, Principal principal, MemberCreate memberCreate,@PathVariable("email") String eamil){
+
+        Member member = memberService.getMember(String.valueOf(eamil));
+        memberCreate.setBirth(member.getBirth());
+        memberCreate.setEmail(member.getEmail());
+        memberCreate.setName(member.getName());
+        memberCreate.setEmail(member.getEmail());
+        memberCreate.setPhone_num(member.getPhone());
+        memberCreate.setPassword1(member.getPassword());
 
 
+        String keywords = member.getKeyword();
+
+        System.out.println(keywords);
+
+        String words[] = keywords.split(",");
+
+        String keyword = "";
+
+        for(int i = 0;i<words.length;i++){
+            keyword = words[i];
+
+        }
 
 
+        return "admin/admin_profileUpdate";
+
+    }
+
+    /* 추후 수정 (회원 수정, 탈퇴)
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/user/update/{email}")
+    public String updateUser(@Valid MemberCreate memberCreate, BindingResult bindingResult,@PathVariable("email") String eamil){
+
+        Member member = memberService.getMember(String.valueOf(eamil));
+
+        mypageService.updateProfile(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword());
+
+        return "redirect:/admin/user";
+
+    }
+
+    //회원 탈퇴 시키기
+
+    @GetMapping("/user/delete/{email}")
+    public String packageDelete(@PathVariable("email") String eamil) {
+
+        Member member = memberService.getMember(String.valueOf(eamil));
+        adminPackageService.delete(aPackage);
+
+        return "redirect:/admin/packageList";
+    }
+*/
 
 
 //판매관련

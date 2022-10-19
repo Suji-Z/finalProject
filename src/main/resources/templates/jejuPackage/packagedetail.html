@@ -44,107 +44,111 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <form th:action method="post">
-                <input type="hidden" id="packagenum" th:value="${package.id}">
-                <div class="tour_details_right_sidebar_wrapper">
-                    <div class="tour_detail_right_sidebar">
-                        <div class="tour_details_right_boxed">
-                            <div class="tour_details_right_box_heading">
-                                <h3>여행 날짜</h3>
-                            </div>
-                            <div class="edit_date_form">
-                                <div class="form-group">
-                                    <label for="datePicker">출발일 선택</label>
-                                    <input type="text" id="datePicker"  placeholder="날짜를 선택해주세요" class="form-control" readonly="readonly"
-                                       style="background: url('/assets/img/icon/calander.png') no-repeat 10px 15px;
-                                       background-size: 20px;background-position: 95% 50%; cursor:pointer;" onchange="selectdatePackage()">
-                            </div>
-                            <div class="select_person_side">
-                                <h3>인원 선택</h3>
-                                <div class="select_person_item">
-                                    <div class="select_person_left">
-                                        <h6>어른</h6>
-                                        <p>만12세 이상</p>
+                <form th:action="@{|/booking/detail/${package.id}|}" th:object="${bookingform}" method="post">
+                    <input type="hidden" th:field="*{bookingacount}">
+                    <input type="hidden" th:field="*{bookingbcount}">
+                    <input type="hidden" th:field="*{bookingccount}">
+                    <input type="hidden" id="packagenum" th:value="${package.id}">
+                    <div class="tour_details_right_sidebar_wrapper">
+                        <div class="tour_detail_right_sidebar">
+                            <div class="tour_details_right_boxed">
+                                <div class="tour_details_right_box_heading">
+                                    <h3>여행 날짜</h3>
+                                </div>
+                                <div class="edit_date_form">
+                                    <div class="form-group">
+                                        <label for="datePicker">출발일 선택</label>
+                                        <input type="text" id="datePicker" placeholder="날짜를 선택해주세요" class="form-control"
+                                               th:field="*{departure}"
+                                               readonly="readonly"
+                                               style="background: url('/assets/img/icon/calander.png') no-repeat 10px 15px;
+                                       background-size: 20px;background-position: 95% 50%; cursor:pointer;"
+                                               onchange="selectdatePackage()">
                                     </div>
-                                    <div class="select_person_right">
-                                        <div class="button-set">
-                                            <button type="button"
-                                                    class="btn-subtract">
-                                                <i class="fas fa-minus"
-                                                   aria-hidden="true"></i>
-                                            </button>
-                                            <span class="count pcount" id="acount">0</span>
-                                            <button type="button"
-                                                    class="btn-add">
-                                                <i class="fas fa-plus"
-                                                   aria-hidden="true"></i>
-                                            </button>
+                                    <div class="select_person_side" style="display:none">
+                                        <h3>인원 선택</h3>
+                                        <div class="select_person_item">
+                                            <div class="select_person_left">
+                                                <h6>어른</h6>
+                                                <p>만12세 이상</p>
+                                            </div>
+                                            <div class="select_person_right">
+                                                <div class="button-set">
+                                                    <button type="button"
+                                                            class="btn-subtract">
+                                                        <i class="fas fa-minus"
+                                                           aria-hidden="true"></i>
+                                                    </button>
+                                                    <span class="count pcount" id="acount">0</span>
+                                                    <button type="button"
+                                                            class="btn-add">
+                                                        <i class="fas fa-plus"
+                                                           aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="select_person_item">
+                                            <div class="select_person_left">
+                                                <h6>아이</h6>
+                                                <p>만2살 이상 만 12살 미만</p>
+                                            </div>
+                                            <div class="select_person_right">
+                                                <div class="button-set">
+                                                    <button type="button" class="btn-subtract-c">
+                                                        <i class="fas fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <span class="count ccount" id="ccount">0</span>
+                                                    <button type="button" class="btn-add-c">
+                                                        <i class="fas fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="select_person_item">
+                                            <div class="select_person_left">
+                                                <h6>유아</h6>
+                                                <p> 24개월 이하</p>
+                                            </div>
+                                            <div class="select_person_right">
+                                                <div class="button-set">
+                                                    <button type="button" class="btn-subtract-in">
+                                                        <i class="fas fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <span class="count incount" id="bcount">0</span>
+                                                    <button type="button" class="btn-add-in">
+                                                        <i class="fas fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="select_person_item">
-                                    <div class="select_person_left">
-                                        <h6>아이</h6>
-                                        <p>만2살 이상 만 12살 미만</p>
-                                    </div>
-                                    <div class="select_person_right">
-                                        <div class="button-set">
-                                            <button type="button" class="btn-subtract-c">
-                                                <i class="fas fa-minus" aria-hidden="true"></i>
-                                            </button>
-                                            <span class="count ccount" id="ccount">0</span>
-                                            <button type="button" class="btn-add-c">
-                                                <i class="fas fa-plus" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="select_person_item">
-                                    <div class="select_person_left">
-                                        <h6>유아</h6>
-                                        <p> 24개월 이하</p>
-                                    </div>
-                                    <div class="select_person_right">
-                                        <div class="button-set">
-                                            <button type="button" class="btn-subtract-in">
-                                                <i class="fas fa-minus" aria-hidden="true"></i>
-                                            </button>
-                                            <span class="count incount" id="bcount">0</span>
-                                            <button type="button" class="btn-add-in">
-                                                <i class="fas fa-plus" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-check write_spical_check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
-                                    <label class="form-check-label" for="flexCheckDefaultf1">
-                            <span class="main_spical_check">
-                                <span>좋은말로할때<a href="terms-service.html">약관</a>에 동의하세요 </span>
-                            </span>
-                                    </label>
+                                <div class="tour_select_offer_bar_bottom_sally">
+                                    <button class="btn btn_theme btn_md w-100" >예약하기</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="tour_select_offer_bar_bottom">
-                            <button class="btn btn_theme btn_md w-100">예약하기</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="tour_detail_right_sidebar">
-                    <div class="tour_details_right_boxed">
-                        <div class="tour_details_right_box_heading">
-                            <h3>총 선택인원</h3>
-                        </div>
+                        <div class="tour_detail_right_sidebar">
+                            <div class="tour_details_right_boxed">
+                                <div class="tour_details_right_box_heading">
+                                    <h3>총 선택인원</h3>
+                                </div>
 
                         <div class="tour_booking_amount_area">
                             <ul>
+                                <div id="adult_count_price"  style="display:none">
                                 <li><span>어른 x <i id="totalacount"></i></span><span id="aprice"><del id="bfaprice"></del></span></li>
                                 <li><span>할인</span><span id="aftaprice"></span></li>
+                                </div>
+                                <div id="child_count_price"  style="display:none">
                                 <li><span>아이 x <i id="totalccount"></i></span><span id="cprice"><del id="bfcprice"></del></span></li>
                                 <li><span>할인</span ><span id="aftcprice"></span></li>
+                                </div>
+                                <div id="baby_count_price"  style="display:none">
                                 <li><span>유아 x <i id="totalbcount"></i></span><span id="bprice"><del id="bfbprice"></del></span></li>
                                 <li><span>할인</span><span id="aftbprice"></span></li>
+                                </div>
                             </ul>
 
 
@@ -152,94 +156,94 @@
                                 <h6>총 가격 <span id="totalprice"></span></h6>
                             </div>
 
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
                 </form>
+            </div>
         </div>
-    </div>
-    <!-- 리뷰 섹션-->
+        <!-- 리뷰 섹션-->
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="write_your_review_wrapper">
-                    <h3 class="heading_theme">리뷰 작성</h3>
-                    <div class="write_review_inner_boxed">
-                        <form action="!#" id="news_comment_form">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-froup">
-                                        <input type="text" class="form-control bg_input"
-                                               placeholder="작성자 아이디">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="write_your_review_wrapper">
+                        <h3 class="heading_theme">리뷰 작성</h3>
+                        <div class="write_review_inner_boxed">
+                            <form action="!#" id="news_comment_form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-froup">
+                                            <input type="text" class="form-control bg_input"
+                                                   placeholder="작성자 아이디">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <form class="mb-3" name="myform" id="myform" method="post">
-                                        <fieldset>
-                                            <span class="text-bold">별점을 선택</span>
-                                            <input type="radio" name="reviewStar" value="5" id="rate1"><label
-                                                for="rate1">★</label>
-                                            <input type="radio" name="reviewStar" value="4" id="rate2"><label
-                                                for="rate2">★</label>
-                                            <input type="radio" name="reviewStar" value="3" id="rate3"><label
-                                                for="rate3">★</label>
-                                            <input type="radio" name="reviewStar" value="2" id="rate4"><label
-                                                for="rate4">★</label>
-                                            <input type="radio" name="reviewStar" value="1" id="rate5"><label
-                                                for="rate5">★</label>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-froup">
+                                    <div class="col-lg-6">
+                                        <form class="mb-3" name="myform" id="myform" method="post">
+                                            <fieldset>
+                                                <span class="text-bold">별점을 선택</span>
+                                                <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                                                    for="rate1">★</label>
+                                                <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                                                    for="rate2">★</label>
+                                                <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                                                    for="rate3">★</label>
+                                                <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                                                    for="rate4">★</label>
+                                                <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                                                    for="rate5">★</label>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-froup">
                                             <textarea rows="6" placeholder="리뷰를 입력해주세요"
                                                       class="form-control bg_input"></textarea>
-                                    </div>
-                                    <div class="comment_form_submit">
-                                        <button class="btn btn_theme btn_md">등록하기</button>
+                                        </div>
+                                        <div class="comment_form_submit">
+                                            <button class="btn btn_theme btn_md">등록하기</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="all_review_wrapper">
-                    <h3 class="heading_theme">All review</h3>
-                </div>
-            </div>
-<!-- 리뷰 반복문 시작 -->
-            <div class="col-md-7">
-                <div class="all_review_box">
-                    <div class="all_review_date_area">
-                        <div class="all_review_star">
-                            <h5>Excellent</h5>
-                            <div class="review_star_all">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="all_review_date">
-                        <h5>김태리 - 08 Dec, 2021</h5>
-                    </div>
-
-                    <div class="all_review_text">
-                        <p>" 제주도 처음 갔는데 너무 좋았어요 가이드님도 너무 친절해요 굿굿^^ "</p>
-                    </div>
                 </div>
             </div>
-<!-- 리뷰 반복문 끝 -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="all_review_wrapper">
+                        <h3 class="heading_theme">All review</h3>
+                    </div>
+                </div>
+                <!-- 리뷰 반복문 시작 -->
+                <div class="col-md-7">
+                    <div class="all_review_box">
+                        <div class="all_review_date_area">
+                            <div class="all_review_star">
+                                <h5>Excellent</h5>
+                                <div class="review_star_all">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="all_review_date">
+                            <h5>김태리 - 08 Dec, 2021</h5>
+                        </div>
+
+                        <div class="all_review_text">
+                            <p>" 제주도 처음 갔는데 너무 좋았어요 가이드님도 너무 친절해요 굿굿^^ "</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 리뷰 반복문 끝 -->
+            </div>
         </div>
-    </div>
     </div>
     </div>
     </div>

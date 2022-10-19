@@ -67,6 +67,7 @@
                       <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                            style="">
                           <ul>
+                              <li><a th:href="@{/mypage/pwdUpdate}">비밀번호 수정</a></li>
                               <li><a th:href="@{/mypage/update}">내 정보 수정</a></li>
                               <li><a th:href="@{/mypage/unregister}">회원 탈퇴</a></li>
                           </ul>
@@ -91,6 +92,7 @@
                           <ul>
                               <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
                               <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                              <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
                           </ul>
                       </div>
 
@@ -123,9 +125,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>웰컴쿠폰(신규회원 가입)</td>
-                <td align="center">10%</td>
+              <tr th
+              <tr th:if="${mypageCoupons.isEmpty()}"><td th:colspan="4">보유하신 쿠폰이 없습니다</td></tr>
+              <tr th:each="mypageCoupons : ${mypageCoupons}">
+              <td th:text="${mypageCoupons.couponName}">웰컴쿠폰(신규회원 가입)</td>
+                <td th:text="|${#numbers.formatInteger((mypageCoupons.couponRate)*100,2)}%|" align="center">10%</td>
                 <td>2022-12-31</td>
                
 

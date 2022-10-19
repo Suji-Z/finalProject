@@ -1,7 +1,9 @@
 package com.project.tour.controller;
 
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.PackageDate;
+import com.project.tour.service.CouponService;
+import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
 import com.project.tour.service.PackageDateService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -24,10 +27,12 @@ public class JejuPackageController {
 
     @Autowired
     private final PackageService packageService;
-
+    @Autowired
+    private final MemberService memberService;
     @Autowired
     private final PackageDateService packagedateService;
-
+    @Autowired
+    private final CouponService couponService;
 
     /**
      * 전체리스트
@@ -102,11 +107,8 @@ public class JejuPackageController {
 
         Package apackage = packageService.getPackage(id);
 
-        //PackageDate packageDate = packagedateService.getPackageDate2(id);
-
         model.addAttribute("package", apackage);
-        //model.addAttribute("packageDate",packageDate);
-
+        model.addAttribute("bookingform",new BookingDTO());
         return "jejuPackage/packagedetail";
     }
 
@@ -132,8 +134,8 @@ public class JejuPackageController {
 
         /** 정가 */
         aprice = getPackagePrice.getAprice() * acount;
-        bprice = getPackagePrice.getCprice() * ccount;
-        cprice = getPackagePrice.getBprice() * bcount;
+        bprice = getPackagePrice.getBprice() * bcount;
+        cprice = getPackagePrice.getCprice() * ccount;
 
         if(getPackagePrice.getDiscount()==null){
 

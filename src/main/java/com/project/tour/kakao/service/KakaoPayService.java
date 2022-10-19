@@ -1,4 +1,4 @@
-package com.project.tour.service;
+package com.project.tour.kakao.service;
 
 import com.project.tour.domain.Member;
 import com.project.tour.domain.UserBooking;
