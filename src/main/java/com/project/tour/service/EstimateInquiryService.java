@@ -22,7 +22,7 @@ public class EstimateInquiryService {
 
     private final EstimateRepository estimateRepository;
 
-    //페이징처리
+    //전체리스트 페이징처리
     public Page<EstimateInquiry> getList(Pageable pageable){
 
         List<Sort.Order> sort = new ArrayList<Sort.Order>();
@@ -35,6 +35,21 @@ public class EstimateInquiryService {
                 Sort.by(sort)); //정렬 매개변수 적용
 
         return estimateRepository.findAll(pageable);
+    }
+
+    //나의문의글 페이징처리
+    public Page<EstimateInquiry> getMyList(String name, Pageable pageable){
+
+        List<Sort.Order> sort = new ArrayList<Sort.Order>();
+        sort.add(Sort.Order.desc("id")); //EstimateNum
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ?
+                        0 : pageable.getPageNumber() -1, //반환할 페이지
+                pageable.getPageSize(), //반환할 리스트 갯수
+                Sort.by(sort)); //정렬 매개변수 적용
+
+        return estimateRepository.findByEmail(name,pageable);
     }
 
     //문의 올리기
@@ -92,4 +107,5 @@ public class EstimateInquiryService {
         else
             throw new DataNotFoundException("확인할수 없는 게시물 입니다.");
     }
+
 }
