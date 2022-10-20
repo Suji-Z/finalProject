@@ -113,7 +113,7 @@
                                     </h2>
                              <h5 th:text="${review.author.name}"></h5>
                              
-                             <h5 th:text="${#temporals.format(review.created,'yy-MM-dd')}"></h5>
+                             <h5 th:text="${#temporals.format(review.created,'yyyy-MM-dd HH:mm')}"></h5>
 
                                     <script type="text/javascript">
                                         const recommendBtn = document.getElementsByClassName("recommend"); //recommend라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라
@@ -234,7 +234,7 @@
                                 <div class="comment_text">
                                     <div class="comment_author_name">
                                         <h4 th:text="${reviewReply.author.name}">배수지</h4> &nbsp;
-                                        <h5 th:text="${#temporals.format(reviewReply.created,'yy-MM-dd')}"></h5>&nbsp;
+                                        <h5 th:text="${#temporals.format(reviewReply.created,'yyyy-MM-dd HH:mm')}"></h5>&nbsp;
                                         <a th:if="${#lists.size(reviewReply.voter)}==0" class="replyRecommend"
                                            href="javascript:void(0);" th:data-uri="@{|/review/replyVote/${reviewReply.id}|}">
 

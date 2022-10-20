@@ -123,47 +123,52 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>02.</td>
-                <td align="left">투어가이드좀 바꾸세요-_-</td>
-                <td>답변대기중</td>
-                <td>2022-09-25</td>
-
-              </tr>
+              <tr th:if="${paging.isEmpty()}"><td colspan="4"> 작성하신 고객의 소리가 없습니다. </td></tr>
+              <th:block th:each="mypageVcus,loop : ${paging}">
                   <tr>
-                <td>01.</td>
-                <td align="left">대체적으로 만족하였으나 건의사항이 있습니다</td>
-                <td>완료</td>
-                <td>2019-03-20</td>
-
-              </tr>
+                      <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                      <td align="left">
+                          <a style="color: black;" th:href="@{|/voiceCus/article/${mypageVcus.id}|}" th:text="${mypageVcus.subject}"></a>
+                      </td>
+                      <td th:if="${!mypageVcus.voiceCusReplyList.isEmpty()}">답변완료</td>
+                      <td th:if="${mypageVcus.voiceCusReplyList.isEmpty()}">답변대기중</td>
+                      <td th:text="${#temporals.format(mypageVcus.createdDate,'yyyy-MM-dd')}"></td>
+                  </tr>
+              </th:block>
              
               </tbody>
             </table>
           </div>
           <div class="option-item">
-            <a href="become-vendor.html" class="btn  btn_navber">글올리기</a>
+            <a th:href="@{/voiceCus/create}" class="btn  btn_navber">글올리기</a>
           </div>
         </div>
-        <div class="pagination_area">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+          <div class="pagination_area" th:if="${!paging.isEmpty()}">
+              <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/voicecusList?page=1}" aria-label="Previous">
+                          <span aria-hidden="true">≪</span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                  </li>
+                  <li class="page-item" th:style="${paging.first}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/voicecusList(page=${paging.number})}">＜</a>
+                  </li>
+                  <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                      th:classappend="(${page}==${paging.number+1})?'active'">
+                      <a class="page-link" th:href=@{/mypage/voicecusList(page=${page})} th:text="${page}"></a>
+                  </li>
+                  <li class="page-item" th:style="${paging.last}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/voicecusList(page=${paging.number+2})}">＞</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/voicecusList(page=${paging.totalPages})}" aria-label="Next">
+                          <span aria-hidden="true">≫</span>
+                          <span class="sr-only">Next</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
       </div>
     </div>
   </div>

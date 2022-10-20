@@ -16,4 +16,7 @@ public interface VoiceCusRepository extends JpaRepository<VoiceCus, Integer> {
     VoiceCus findByTypes(String types);
 
     Page<VoiceCus> findAll(Pageable pageable);
+
+    //마이페이지에 출력할 멤버의 고객의소리 리스트
+    Page<VoiceCus> findByAuthor_Id(Long id, Pageable pageable);
 }

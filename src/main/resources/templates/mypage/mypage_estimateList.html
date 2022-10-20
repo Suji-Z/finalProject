@@ -118,7 +118,7 @@
 
                   <th width="200">제목</th>
 
-<!--                <th width="150">문의지역</th>-->
+                <th width="150">답변여부</th>
 
                 <th width="100">등록일</th>
              
@@ -136,7 +136,8 @@
                       <td align="left">
                           <a style="color: black;" th:href="@{|/estimate/inquiry/article/${mypageInquiry.id}|}" th:text="${mypageInquiry.title}"></a>
                       </td>
-<!--                      <td th:text="|${mypageInquiry.location1}&nbsp;&nbsp;${mypageInquiry.location2}|"></td>-->
+                      <td th:if="${!mypageInquiry.estimateReplyList.isEmpty()}">답변완료</td>
+                      <td th:if="${mypageInquiry.estimateReplyList.isEmpty()}">답변대기중</td>
                       <td th:text="${#temporals.format(mypageInquiry.created,'yyyy-MM-dd')}"></td>
                   </tr>
             
