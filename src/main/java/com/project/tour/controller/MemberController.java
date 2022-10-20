@@ -40,13 +40,6 @@ public class MemberController {
         }
     }
 
-  /*  @GetMapping("/login/searchEmail")
-    public ResponseEntity<?> searchEmail(@RequestParam(value = "name") String name,String phone_num) throws  Exception {
-
-        if(memberService.existByName(name) == true && memberService.existByPhone_num(phone_num)==true){
-            throw new BadRequestException("사용자 정보가 일치합니다.");
-        }
-    }*/
 
 
     @GetMapping("/join")
