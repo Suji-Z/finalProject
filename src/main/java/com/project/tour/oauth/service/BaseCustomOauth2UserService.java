@@ -86,7 +86,7 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
 
         if(!memberRepository.existsByEmail(authUser.getEmail())){
 
-            Member member = new Member(authUser.getName(),authUser.getEmail());
+            Member member = new Member(authUser.getName(),authUser.getEmail(),"social");
 
             memberRepository.save(member);
 

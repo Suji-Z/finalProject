@@ -1,6 +1,7 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.MailDTO;
+import com.project.tour.domain.Member;
 import com.project.tour.domain.MemberCreate;
 import com.project.tour.service.MailService;
 import com.project.tour.service.MemberService;
@@ -40,13 +41,6 @@ public class MemberController {
         }
     }
 
-  /*  @GetMapping("/login/searchEmail")
-    public ResponseEntity<?> searchEmail(@RequestParam(value = "name") String name,String phone_num) throws  Exception {
-
-        if(memberService.existByName(name) == true && memberService.existByPhone_num(phone_num)==true){
-            throw new BadRequestException("사용자 정보가 일치합니다.");
-        }
-    }*/
 
 
     @GetMapping("/join")
@@ -93,6 +87,13 @@ public class MemberController {
         return "redirect:/";
     }
 
+    public String socialInfo(Member member){
+
+        String info = member.getSocial();
+
+        return info;
+    }
+
     @GetMapping("/member/login")
     public String login(){
 
@@ -101,6 +102,7 @@ public class MemberController {
 
     @GetMapping("/member/login/searchEmail")
     public String searchEmail(){
+
         return "member/forgot-email";
     }
 
