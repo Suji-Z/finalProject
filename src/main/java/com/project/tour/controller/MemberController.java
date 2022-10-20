@@ -101,6 +101,7 @@ public class MemberController {
 
     @GetMapping("/member/login/searchEmail")
     public String searchEmail(){
+
         return "member/forgot-email";
     }
 
