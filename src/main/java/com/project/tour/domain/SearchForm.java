@@ -11,7 +11,8 @@ public class SearchForm {
     private String departure;
     private Integer totcount;
     private String keyword;
-    private Integer pricerange;
+    private Integer pricerangestr;
+    private Integer pricerangeend;
     private Double reviewstar;
     private String transport;
     private Integer travelPeriod;
