@@ -55,6 +55,9 @@ function kakaoPay() {
                 payTotalPrice :payTotalPrice1,
                 bookingNum : bookingNum
             },
+            success : function(url){
+                location.href=url;
+            }
 
         });
         } else {
@@ -100,5 +103,3 @@ function kakaoPay() {
 //
 //          let url = '/pay/confirmation/'+bookingNum;
 //          location.href=url;
-
-

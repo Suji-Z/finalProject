@@ -39,7 +39,7 @@ public class PayController {
     @GetMapping
     public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 21; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 97; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //로그인 정보
         Member member;
@@ -60,10 +60,10 @@ public class PayController {
 
     //결제 데이터 저장
     @GetMapping("/payments/complete")
-    public String confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
-                                               @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice,
-                                               PayForm payForm, Principal principal, @LoginUser SessionUser user,
-                                             @RequestParam("bookingNum") long id, UserBookingForm userBookingForm, Model model){
+    public ResponseEntity<?> confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
+                             @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice,
+                             PayForm payForm, Principal principal, @LoginUser SessionUser user,
+                             @RequestParam("bookingNum") long id, UserBookingForm userBookingForm, Model model){
 
         System.out.println("여기오나요");
 
@@ -98,7 +98,7 @@ public class PayController {
 
         System.out.println("여기오나요2");
 
-        return "redirect:/pay/complete";
+        return new ResponseEntity("/pay/complete", HttpStatus.OK);
 
     }
 
