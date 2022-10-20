@@ -28,16 +28,17 @@
 
 <!-- Tour Booking Submission Areas -->
 <section id="tour_booking_submission" class="section_padding" style="margin: auto">
+  <form th:action="@{/notice/write}" th:object="${noticeForm}" method="post">
   <div class="col-lg-8">
   </div>
   <div class="container" style="margin: auto; width: 70%">
     <div class="row">
-
       <div class="col-lg-13">
         <div class="tou_booking_form_Wrapper">
 
           <div class="booking_tour_form">
             <h3 class="heading_theme">공지사항</h3>
+
             <div class="tour_booking_form_box">
               <div class="your_info_arae">
                 <ul>
@@ -46,7 +47,7 @@
                     <span style="text-align:center;margin-top: 15px">제목</span>
                     </div>
                     <div class="form-group col-lg-7">
-                    <span><input type="text" class="shform-control" name="" style="border-radius: 3px"></span>
+                    <span><input type="text" class="shform-control" th:field="*{subject}" style="border-radius: 3px"></span>
                     </div>
                   </li>
 
@@ -55,7 +56,7 @@
                       <span style="text-align:center;margin-top: 15px">작성자</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <span><input type="text" class="shform-control" name="" style="border-radius: 3px"></span>
+                      <span><a class="shform-control" name="" style="border-radius: 3px" >관리자</a></span>
                     </div>
                   </li>
 
@@ -65,11 +66,11 @@
                     </div>
                     <div class="form-group col-lg-7">
                       <span>
-                        <select class="form-select" style="border-radius: 3px" aria-label="Default select example">
-                          <option selected>질문 카테고리를 선택하세요</option>
-                          <option value="해외">이벤트</option>
-                          <option value="제주">공지사항</option>
-                          <option value="기타">기타</option>
+                        <select class="form-select" style="border-radius: 3px" aria-label="Default select example" id="categorychk">
+                          <option selected>카테고리를 선택하세요</option>
+                          <option value="여행기획전" th:field="*{category}">여행기획전</option>
+                          <option value="이벤트/쿠폰" th:field="*{category}">이벤트/쿠폰</option>
+                          <option value="기타" th:field="*{category}">기타</option>
                         </select>
                       </span>
                     </div>
@@ -77,10 +78,10 @@
                     
                     <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
-                      <span style="text-align:center;margin-top: 15px">파일업로드</span>
+                      <span style="text-align:center;margin-top: 15px">사진업로드</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <span><input type="file" class="shform-control" name="" style="border-radius: 3px"></span>
+                      <span><input type="file" class="shform-control" th:field="*{noticeImage}" style="border-radius: 3px"></span>
                     </div>
                   </li>
 
@@ -89,13 +90,14 @@
                       <span style="text-align:center;margin-top: 15px">내용</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <span><textarea type="text" class="shform-control" name="" style="border-radius: 3px" rows="7"></textarea></span>
+                      <span><textarea type="text" class="shform-control" th:field="*{content}" style="border-radius: 3px" rows="7"></textarea></span>
                     </div>
                   </li>
 
                 </ul>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -103,37 +105,9 @@
     </div>
   </div>
   <div class="common_form_submit">
-    <button class="btn btn_theme btn_md">등록하기</button>
+    <button class="btn btn_theme btn_md" type="submit" onclick="return noticeConfirm();">등록하기</button>
+    <a class="btn btn_theme btn_md" th:href="@{/notice/list}"> 취소하기</a>
   </div>
-
+  </form>
 </section>
-
-
-<!-- Cta Area -->
-<section id="cta_area">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-7">
-        <div class="cta_left">
-          <div class="cta_icon">
-            <img src="assets/img/common/email.png" alt="icon">
-          </div>
-          <div class="cta_content">
-            <h4>Get the latest news and offers</h4>
-            <h2>Subscribe to our newsletter</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-5">
-        <div class="cat_form">
-          <form id="cta_form_wrappper">
-            <div class="input-group"><input type="text" class="form-control" placeholder="Enter your mail address"><button class="btn btn_theme btn_md" type="button">Subscribe</button></div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 </body></html>

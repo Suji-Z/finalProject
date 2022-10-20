@@ -33,9 +33,9 @@ public class UserBookingService {
         userBooking.setDeparture(userBookingForm.getDeparture());
         userBooking.setArrival(userBookingForm.getArrival());
         userBooking.setTravelPeriod(userBookingForm.getTravelPeriod());
-        userBooking.setACount(userBookingForm.getACount()); //코딩전
-        userBooking.setBCount(userBookingForm.getBCount()); //코딩전
-        userBooking.setCCount(userBookingForm.getCCount()); //코딩전
+        userBooking.setACount(userBookingForm.getACount());
+        userBooking.setBCount(userBookingForm.getBCount());
+        userBooking.setCCount(userBookingForm.getCCount());
         userBooking.setTravelerName(userBookingForm.getTravelerName());
         userBooking.setTravelerTel(userBookingForm.getTravelerTel());
         userBooking.setTravelerBirth(userBookingForm.getTravelerBirth());
