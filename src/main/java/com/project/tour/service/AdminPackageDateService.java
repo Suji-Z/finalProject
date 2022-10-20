@@ -5,8 +5,11 @@ import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageCreate;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.AdminPackageDateRepository;
-import javafx.scene.input.DataFormat;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -66,7 +69,7 @@ public class AdminPackageDateService {
             packageDate.setDiscount(packageCreate.getDiscount());
             packageDate.setPackages(packages);
             packageDate.setRemaincount(packageCreate.getCount());
-          //  cal1.add(Calendar.DATE, 1);
+            //  cal1.add(Calendar.DATE, 1);
 
             if(cal1.before(cal2)) {
                 cal3.add(Calendar.DATE, 1);
@@ -82,11 +85,11 @@ public class AdminPackageDateService {
 
             packageDates.add(packageDate);
         }
-      return adminPackageDateRepository.saveAll(packageDates);
+        return adminPackageDateRepository.saveAll(packageDates);
     }
 
 
-    public PackageDate getDate(Date id) {
+    public PackageDate getDate(Long id) {
         Optional<PackageDate> op = adminPackageDateRepository.findById(Long.valueOf(String.valueOf(id))); //하나의 데이터 읽어옴
 
         if (op.isPresent())
@@ -96,7 +99,17 @@ public class AdminPackageDateService {
 
 
     }
+
+    public Page<PackageDate> getList(Long id,Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return adminPackageDateRepository.findByPackages_Id(id,pageable);
+    }
 }
-
-
-

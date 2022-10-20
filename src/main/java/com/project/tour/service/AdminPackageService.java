@@ -6,12 +6,14 @@ import com.project.tour.domain.Package;
 import com.project.tour.repository.AdminPackageDateRepository;
 import com.project.tour.repository.AdminPackageRepository;
 import com.project.tour.repository.BookingRepository;
+import com.project.tour.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +27,8 @@ public class AdminPackageService {
     private final AdminPackageRepository adminPackageRepository;
     private final AdminPackageRepository adminPackageDateRepository;
     private final BookingRepository bookingRepository;
+
+    private  final MemberRepository memberRepository;
 
 
     //패키지 상품 업로드
@@ -70,8 +74,10 @@ public class AdminPackageService {
 
 
     //패키지 상품 삭제
-    public void delete(Package aPackage) {
+    public void deletePackage(Long id) {
+        Package aPackage = adminPackageRepository.findById(id).get();
         adminPackageRepository.delete(aPackage);
+
     }
 
     public Package getPackage(Long id) {
@@ -115,6 +121,19 @@ public class AdminPackageService {
 
     }
 
+    //회원 정보 수정
+    public void updateUser(Member member, String name, String birth, String keyword,String phone){
+        member.setName(name);
+        member.setBirth(birth);
+        member.setKeyword(keyword);
+        member.setPhone(phone);
+
+        memberRepository.save(member);
+    }
+
+    //회원탈퇴
+    public void delete(Member member) {
+        memberRepository.delete(member);
+    }
+
 }
-
-

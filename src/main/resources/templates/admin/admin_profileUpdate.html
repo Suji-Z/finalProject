@@ -209,9 +209,6 @@
                         <div class="form-group col-lg-5">
                             <input type="text" class="shform-control" th:field="*{phone_num}" id="phone_num" name="phone_num" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
                         </div>&nbsp;&nbsp;
-                        <div class="">
-                            <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" onclick="phoneCheck()" style="height: 35px;font-size: 11pt">인증번호 전송</button>
-                        </div>
                     </li>
 
                     <li style="margin-top: -40px;">
@@ -222,18 +219,6 @@
                         </div>-->
                     </li>
 
-                    <li style=" border-bottom-color: white;">
-                        <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
-                            <span style="text-align:center;">인증번호</span>
-                        </div>
-                        <div class="form-group col-lg-5">
-                            <input type="text" class="shform-control" id="sms_num" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">
-                        </div>&nbsp;&nbsp;
-                        <div class="">
-                            <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" id="checkBtn" >본인확인</button>
-                            <input type="hidden" name="checked_phone" value="">
-                        </div>
-                    </li>
 
                     <li style="margin-top: -40px;">
                         <div class="col-lg-2">
@@ -268,17 +253,17 @@
 
                         <div class="col-lg-2">
 
-                                <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="healing">&nbsp;힐링
+                                <input type="checkbox"name="keyword" th:value="healing"  th:checked=${#strings.contains(keywords,'healing')} ? 'checked' : ''>&nbsp;힐링
 
                         </div>
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="activity" >&nbsp;액티비티
+                            <input type="checkbox"  name="keyword" th:value="activity"   th:checked=${#strings.contains(keywords,'activity')} ? 'checked' : ''>&nbsp;액티비티
                         </div>
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="golf">&nbsp;골프
+                            <input type="checkbox" name="keyword" th:value="golf" th:checked=${#strings.contains(keywords,'golf')} ? 'checked' : ''>&nbsp;골프
                         </div>
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="hocance">&nbsp;호캉스
+                            <input type="checkbox" name="keyword" th:value="hocance"  th:checked=${#strings.contains(keywords,'hocance')} ? 'checked' : ''>&nbsp;호캉스
                         </div>
 
                     </li>
@@ -286,16 +271,16 @@
                         <div class="col-lg-2"></div>
 
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="family">&nbsp;가족여행
+                            <input type="checkbox"  name="keyword" th:value="family"  th:checked=${#strings.contains(keywords,'family')} ? 'checked' : ''>&nbsp;가족여행
                         </div>
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="food">&nbsp;식도락여행
+                            <input type="checkbox" name="keyword" th:value="food"  th:checked=${#strings.contains(keywords,'food')} ? 'checked' : ''>&nbsp;식도락여행
                         </div>
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="culture">&nbsp;문화/예술
+                            <input type="checkbox" name="keyword" th:value="culture"  th:checked=${#strings.contains(keywords,'culture')} ? 'checked' : ''>&nbsp;문화/예술
                         </div>
                         <div class="col-lg-2">
-                            <input type="checkbox" th:field="*{keyword}" name="keyword" th:value="animal">&nbsp;애견동반
+                            <input type="checkbox"  name="keyword" th:value="animal"  th:checked=${#strings.contains(keywords,'animal')} ? 'checked' : ''>&nbsp;애견동반
                         </div>
 
                     </li>
