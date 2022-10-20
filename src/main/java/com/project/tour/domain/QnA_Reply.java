@@ -27,7 +27,8 @@ public class QnA_Reply {
 
     //원글의 답글
     @ManyToOne
-    private QnA qna;
+    @JoinColumn(name="qnaNum")
+    private QnA qnaNum;
 
 
 }
