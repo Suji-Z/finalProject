@@ -17,7 +17,7 @@ $(function () {
         const sum = i + j + k;
         selectdatePackage();
         $('.final-count').text(`${sum}`);
-        $('#counthidden').val(sum);
+        $('#totcount').val(sum);
     }
 
     var i = 0;

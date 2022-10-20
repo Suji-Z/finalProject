@@ -37,9 +37,25 @@ public class EstimateController {
 
     /** 견적문의 리스트 출력 */
     @GetMapping("/list")
-    public String estimateList(Model model, @PageableDefault Pageable pageable) {
+    public String estimateList(Model model, @PageableDefault Pageable pageable,Principal principal) {
 
         Page<EstimateInquiry> paging = estimateInquiryService.getList(pageable);
+
+        model.addAttribute("paging",paging);
+
+        return "estimate/estimateList";
+    }
+
+    /** 마이 견적문의 리스트 출력 */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mylist")
+    public String estimateMyList(Model model, @PageableDefault Pageable pageable,Principal principal) {
+
+        log.info(principal.getName());
+
+        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(principal.getName(),pageable);
+
+        log.info(principal.getName());
 
         model.addAttribute("paging",paging);
 

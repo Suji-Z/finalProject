@@ -3,6 +3,7 @@ package com.project.tour.service;
 import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
+import com.project.tour.domain.UserBooking;
 import com.project.tour.repository.PackageDateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,15 @@ public class PackageDateService {
             return packageDate.get();
         else
             throw new DataNotFoundException("package Not Found");
+
+    }
+
+    //결제완료 시 remainCount 수정하기
+    public void modifyRemainCount(PackageDate packageDate, int bookingTotalCount){
+
+        int remainCount = packageDate.getRemaincount()-bookingTotalCount;
+        packageDate.setRemaincount(remainCount);
+        packageDateRepository.save(packageDate);
 
     }
 
