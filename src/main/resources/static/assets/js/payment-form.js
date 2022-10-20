@@ -58,7 +58,7 @@ function payConfirm() {
     IMP.request_pay({ //요청하는 것들
         pg : pgName, //카카오페이 API래핑
         pay_method : pgMethod,
-        merchant_uid: 'package'+$("#bookingNum").val(),  // 상점에서관리하는 상품번호
+        merchant_uid: 'packageorder'+$("#bookingNum").val(),  // 상점에서관리하는 상품번호
         name : $("#packageName").val(), //상품명
         amount : payTotalPrice1, //가격
         buyer_email : $("#kakaoemail").val(), //구매자 이메일
