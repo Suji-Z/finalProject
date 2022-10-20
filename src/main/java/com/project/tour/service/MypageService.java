@@ -91,10 +91,11 @@ public class MypageService {
     }
 
     //회원정보 수정
-    public void updateProfile(Member member, String name, String birth, String keyword){
+    public void updateProfile(Member member, String name, String birth, String keyword, String phoneNum){
         member.setName(name);
         member.setBirth(birth);
         member.setKeyword(keyword);
+        member.setPhone(phoneNum);
 
         memberRepository.save(member);
     }
