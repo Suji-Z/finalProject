@@ -3,19 +3,12 @@ package com.project.tour.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Entity
 @Getter
 @Setter
-public class Notice {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "noticeNum")
-    private Long id;
+public class NoticeForm {
 
     private String category;
 
@@ -28,8 +21,4 @@ public class Notice {
     private String noticeImage;
 
     private int hitCount;
-
-    @OneToMany(mappedBy = "notice",cascade = CascadeType.REMOVE)
-    private List<NoticeReply> noticeReplyList;
-
 }
