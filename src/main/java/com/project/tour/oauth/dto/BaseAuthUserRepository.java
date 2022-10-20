@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface BaseAuthUserRepository extends JpaRepository<BaseAuthUser,Long> {
 
+    BaseAuthUser findById(String id);
     Optional<BaseAuthUser> findByEmail(String email);
 }

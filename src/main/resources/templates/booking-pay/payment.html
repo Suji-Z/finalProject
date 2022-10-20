@@ -113,64 +113,28 @@
                             <h3 class="heading_theme">결제방법</h3>
                             <div class="tour_booking_form_box">
                                 <div class="booking_payment_boxed">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1" value="red" >
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                신용카드
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault2" value="green" >
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                계좌이체
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault4" value="white" >
-                                            <label class="form-check-label" for="flexRadioDefault4">
-                                                <img src="/assets/img/icon/pay_kakao.png" style="width:60px; height:25px;">
-                                            </label>
-                                            <input type="text" id="payMethod" name="payMethod" th:value="${payMethod}" hidden>
-                                        </div>
-
-                                        <div class="payment_filed_wrapper">
-                                            <div class="payment_card payment_toggle red">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control bg_input"
-                                                            placeholder="카드번호(0000-0000-0000-0000)">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control bg_input"
-                                                            placeholder="소유자명(영문)">
-                                                    </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control bg_input"
-                                                                placeholder="YYYY/MM/DD">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control bg_input"
-                                                                placeholder="CVC">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="paypal_payment payment_toggle green">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control bg_input"
-                                                            placeholder="입금자명을 입력해주세요">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1" value="신용카드" >
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            신용카드
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault2" value="계좌이체" >
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            계좌이체
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault4" value="카카오페이" >
+                                        <label class="form-check-label" for="flexRadioDefault4">
+                                            <img src="/assets/img/icon/pay_kakao.png" style="width:60px; height:25px;">
+                                        </label>
+                                        <input type="text" id="payMethod" name="payMethod" th:value="${payMethod}" hidden>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -187,12 +151,13 @@
                             </div>
                             <button type="button" class="btn btn_theme btn_md" onclick="requestPay();">결제하기</button>
 
-                            <!--카카오페이 정보 전달-->
+                            <!--카카오페이 데이터 전달-->
                             <input type="hidden" id="kakaoname" th:value="${userBooking.member.name}">
                             <input type="hidden" id="kakaoemail" th:value="${userBooking.member.email}">
                             <input type="hidden" id="kakaotel" th:value="${userBooking.member.phone}">
                             <input type="hidden" id="packageName" th:value="${userBooking.APackage.packageName}">
                             <input type="hidden" id="packageNum" th:value="${userBooking.APackage.id}">
+                            <input type="hidden" id="bookingNum" th:value="${userBooking.id}">
                         </div>
                     </div>
                 </div>
