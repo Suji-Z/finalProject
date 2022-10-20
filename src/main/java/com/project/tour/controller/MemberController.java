@@ -92,10 +92,11 @@ public class MemberController {
         String info = member.getSocial();
 
         return info;
-    }
+}
 
     @GetMapping("/member/login")
     public String login(){
+
 
         return "member/login";
     }
