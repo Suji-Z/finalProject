@@ -106,7 +106,7 @@ public class MypageController {
         memberCreate.setEmail(member.getEmail());
         memberCreate.setName(member.getName());
         memberCreate.setEmail(member.getEmail());
-        //memberCreate.setPhone_num(member.getPhone());
+        memberCreate.setPhone_num(member.getPhone());
         //memberCreate.setKeyword(member.getKeyword());
 
         //키워드 가져오기
@@ -132,7 +132,7 @@ public class MypageController {
         String keyword = memberCreate.getKeyword();
         System.out.println(keyword);
 
-        mypageService.updateProfile(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword());
+        mypageService.updateProfile(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword(),memberCreate.getPhone_num());
 
         return "redirect:/mypage/update";
 
