@@ -1,9 +1,7 @@
 package com.project.tour.service;
 
-import com.project.tour.domain.Member;
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.UserBooking;
-import com.project.tour.domain.UserBookingForm;
 import com.project.tour.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +25,7 @@ public class UserBookingService {
 
 
     //예약 데이터 저장하기
-    public void create(UserBookingForm userBookingForm, int bookingTotalPrice, String bookingDate,
+    public void create(UserBookingForm userBookingForm, int bookingTotalPrice,
                        Package apackage, Member member){
 
         UserBooking userBooking = new UserBooking();
@@ -42,7 +40,7 @@ public class UserBookingService {
         userBooking.setTravelerTel(userBookingForm.getTravelerTel());
         userBooking.setTravelerBirth(userBookingForm.getTravelerBirth());
         userBooking.setRequest(userBookingForm.getRequest());
-        userBooking.setBookingDate(bookingDate);
+        userBooking.setBookingDate(LocalDateTime.now());
         userBooking.setBookingTotalPrice(bookingTotalPrice);
         userBooking.setBookingStatus(0);
         userBooking.setBookingTotalCount(userBooking.getACount()+
@@ -74,20 +72,20 @@ public class UserBookingService {
         return result.get();
     }
 
-    //예약자와 예약날짜로 예약번호 조회
-    public long getBookingNum(Member member, String bookingDate){
-
-        long bookingNum = bookingRepository.findByMemberAndBookingDate(member, bookingDate)
-                .get().getId();
-
-        return bookingNum;
-    }
-
     //결제완료시 예약상태 변경
     public void modifyBookingStatus(UserBooking userBooking, int status){
 
         userBooking.setBookingStatus(status);
         bookingRepository.save(userBooking);
+    }
+
+    //방금 예약한 booking데이터 끌고 오기
+    public UserBooking getRecentBooking(){
+
+        long id = bookingRepository.maxPayNum();
+        Optional<UserBooking> result = bookingRepository.findById(id);
+
+        return result.get();
     }
 }
 

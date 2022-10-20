@@ -18,7 +18,6 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -131,23 +130,16 @@ public class BookingController {
 
         //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
         Package apackage = packageService.getPackage(id);
-        userBookingForm.setBookingDate(LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS")));
-        String bookingDate = LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
 
         //데이터 저장
-        userBookingService.create(userBookingForm, priceForm.getBookingTotalPrice(), bookingDate, apackage, member);
+        userBookingService.create(userBookingForm, priceForm.getBookingTotalPrice(), apackage, member);
 
         //confirmation에 띄울 정보 
         //1.member 테이블
         model.addAttribute("member",member);
 
         //2.userbooking 테이블
-        //임시 : bookingNum 어떻게 가져올지 고민
-        long bookingNum =
-                userBookingService.getBookingNum(member, bookingDate);
-        UserBooking userBooking = userBookingService.getUserBooking(bookingNum);
+        UserBooking userBooking = userBookingService.getRecentBooking();
         model.addAttribute("userBooking",userBooking);
 
         return "booking-pay/booking_confirmation";

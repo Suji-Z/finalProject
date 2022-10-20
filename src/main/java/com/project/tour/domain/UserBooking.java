@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter @Setter
@@ -31,7 +32,7 @@ public class UserBooking {
     @Column(columnDefinition = "TEXT",length = 500)
     private String request;
 
-    private String bookingDate;
+    private LocalDateTime bookingDate;
 
     private int bookingTotalPrice;
 

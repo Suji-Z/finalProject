@@ -6,8 +6,10 @@ import com.project.tour.domain.UserBooking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +20,11 @@ public interface BookingRepository extends JpaRepository<UserBooking, Long> {
     Optional<UserBooking> findById(Long id);
 
     //사용자 정보와 예약날짜를 가지고 bookingNum 가져오기
-    Optional<UserBooking> findByMemberAndBookingDate(Member member, String bookingDate);
+    Optional<UserBooking> findByMemberAndBookingDate(Member member, LocalDateTime bookingDate);
 
-    //예약번호로 예약정보 가져오기
-
+    //방금 예약한 번호 들고오기
+    @Query(value = "SELECT max(id) FROM Pay")
+    public Long maxPayNum();
 
     //마이페이지에 출력할 멤버의 예약 리스트
     Page<UserBooking> findByMember_Id(Long id, Pageable pageable);
