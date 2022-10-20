@@ -13,9 +13,10 @@
         </div>
     </div>
 </section>
-
+<section>
+    <form th:action="@{/jeju/list}" th:object="${searchForm}" method="get">
 <!-- Form Area -->
-<section id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
+<div id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -36,17 +37,17 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="oneway_search_form">
-                                                <form th:action="@{/jeju/list}" method="get">
+
                                                     <div class="row">
                                                         <div class="col-lg-3 col-md-3 col-sm-12 col-12">
                                                             <div class="flight_Search_boxed">
                                                                 <p>지역</p>
-                                                                <select name="location" id="location">
+                                                                <select th:field="*{location}" >
                                                                     <option value="">지역을 선택해주세요</option>
-                                                                    <option value="서귀포">서귀포</option>
-                                                                    <option value="중문">중문</option>
-                                                                    <option value="애월">애월</option>
-                                                                    <option value="제주시">제주시</option>
+                                                                    <option th:value="서귀포">서귀포</option>
+                                                                    <option th:value="중문">중문</option>
+                                                                    <option th:value="애월">애월</option>
+                                                                    <option th:value="제주시">제주시</option>
                                                                 </select>
 
                                                                 <div class="plan_icon_posation">
@@ -59,7 +60,7 @@
                                                                 <div class="flight_Search_boxed date_flex_area">
                                                                     <div class="Journey_date" >
                                                                         <p>출발예정일</p>
-                                                                        <input type="text" id="datePicker" name="date" placeholder="날짜를 선택해주세요"
+                                                                        <input type="text" id="datePicker" name="date" placeholder="날짜를 선택해주세요" th:field="*{departure}"
                                                                                readonly="readonly" style="background: url('/assets/img/icon/calander.png') no-repeat 10px 15px;
                                                                                background-size: 20px;background-position: right; cursor:pointer;">
                                                                     </div>
@@ -75,9 +76,9 @@
                                                                             data-toggle="dropdown" type="button"
                                                                             id="dropdownMenuButton1" name="count"
                                                                             data-bs-toggle="dropdown"
-                                                                            aria-expanded="false" data-value="">0
+                                                                            aria-expanded="false" data-value="">[[*{totcount}]]
                                                                     </button>
-                                                                    <input type="hidden" name="counthidden" id="counthidden">
+                                                                    <input type="hidden" th:field="*{totcount}"/>
                                                                     명
                                                                     <div class="dropdown-menu dropdown_passenger_info"
                                                                          aria-labelledby="dropdownMenuButton1" style="">
@@ -159,11 +160,10 @@
                                                             </div>
                                                         </div>
                                                         <div class="top_form_search_button">
-                                                         <!--   <button class="btn btn_theme btn_md" type="button" onclick="searchJejuPackage()"> 검색</button> -->
-                                                            <button class="btn btn_theme btn_md"> 검색</button>
+                                                           <button class="btn btn_theme btn_md"> 검색</button>
                                                         </div>
                                                     </div>
-                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
@@ -176,10 +176,10 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 
 <!-- Flight Search Areas -->
-<section id="explore_area" class="section_padding">
+<div id="explore_area" class="section_padding">
     <div class="row">
         <div class="col-lg-10 offset-lg-1">
             <div class="">
@@ -189,37 +189,29 @@
                             <div class="theme_nav_tab">
                                 <nav class="theme_nav_tab_item">
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <button class="nav-link" id="nav-healing-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-nepal" type="button" role="tab"
-                                                aria-controls="nav-nepal" aria-selected="false">힐링
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="healing"
+                                                th:classappend="*{keyword == 'healing'} ? 'active' : ''" data-bs-toggle="tab" role="tab">힐링
                                         </button>
-                                        <button class="nav-link" id="nav-activity-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-malaysia" type="button" role="tab"
-                                                aria-controls="nav-malaysia" aria-selected="false">액티비티
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="activity"
+                                                th:classappend="*{keyword == 'activity'} ? 'active' : ''" data-bs-toggle="tab" role="tab">액티비티
                                         </button>
-                                        <button class="nav-link" id="nav-golf-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-indonesia" type="button" role="tab"
-                                                aria-controls="nav-indonesia" aria-selected="false">골프
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="golf"
+                                                th:classappend="*{keyword == 'golf'} ? 'active' : ''" data-bs-toggle="tab" role="tab">골프
                                         </button>
-                                        <button class="nav-link" id="nav-hotel-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-turkey" type="button" role="tab"
-                                                aria-controls="nav-turkey" aria-selected="false">호캉스
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="hocance"
+                                                th:classappend="*{keyword == 'hocance'} ? 'active' : ''" data-bs-toggle="tab" role="tab">호캉스
                                         </button>
-                                        <button class="nav-link" id="nav-family-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-china" type="button" role="tab"
-                                                aria-controls="nav-china" aria-selected="false">가족여행
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="family"
+                                                th:classappend="*{keyword == 'family'} ? 'active' : ''" data-bs-toggle="tab" role="tab">가족여행
                                         </button>
-                                        <button class="nav-link" id="nav-food-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-darjeeling" type="button" role="tab"
-                                                aria-controls="nav-darjeeling" aria-selected="false">식도락여행
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="food"
+                                                th:classappend="*{keyword == 'food'} ? 'active' : ''" data-bs-toggle="tab" role="tab">식도락여행
                                         </button>
-                                        <button class="nav-link" id="nav-cultural-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-darjeeling" type="button" role="tab"
-                                                aria-controls="nav-darjeeling" aria-selected="false">문화/예술
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="culture"
+                                                th:classappend="*{keyword == 'culture'} ? 'active' : ''" data-bs-toggle="tab" role="tab">문화/예술
                                         </button>
-                                        <button class="nav-link" id="nav-dog-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-darjeeling" type="button" role="tab"
-                                                aria-controls="nav-darjeeling" aria-selected="false">애견동반
+                                        <button class="nav-link" th:field="*{keyword}" name="keyword" value="animal"
+                                                th:classappend="*{keyword == 'animal'} ? 'active' : ''" data-bs-toggle="tab" role="tab">애견동반
                                         </button>
                                     </div>
                                 </nav>
@@ -247,7 +239,7 @@
                             </p>
                             <div id="slider-range"></div>
                         </div>
-                        <button class="apply" type="button">적용하기</button>
+                        <button class="apply">적용하기</button>
                     </div>
 
                     <div class="left_side_search_boxed">
@@ -255,7 +247,6 @@
                             <h5>리뷰</h5>
                         </div>
                         <div class="filter_review">
-                            <form class="review_star">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
                                     <label class="form-check-label" for="flexCheckDefault1">
@@ -306,7 +297,6 @@
                                         <i class="fas fa-star color_asse" aria-hidden="true"></i>
                                     </label>
                                 </div>
-                            </form>
                         </div>
                     </div>
 
@@ -422,12 +412,7 @@
                                                 <i class="fas fa-heart"></i>
                                             </div>
 
-                                            <span th:switch="${package.location2}">
-                                                <a th:case="'서귀포'" th:href="@{|/jeju/seogwipo/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
-                                                <a th:case="'중문'" th:href="@{|/jeju/jungmun/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
-                                                <a th:case="'애월'" th:href="@{|/jeju/aeowl/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
-                                                <a th:case="'제주시'" th:href="@{|/jeju/jejusi/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
-                                            </span>
+                                                <a th:href="@{|/jeju/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
 
                                           <div class="multi_city_flight_lists_content">
                                             <h3><a th:href="@{|/jeju/${package.location2}/${package.id}|}" th:text="${package.packageName}"></a></h3>
@@ -460,11 +445,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span th:switch="${package.location2}">
-                                                <a th:case="'서귀포'" th:href="@{|/jeju/seogwipo/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
-                                                <a th:case="'중문'" th:href="@{|/jeju/jungmun/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
-                                                <a th:case="'애월'" th:href="@{|/jeju/aeowl/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
-                                                <a th:case="'제주시'" th:href="@{|/jeju/jejusi/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                                        <span>
+                                            <a th:href="@{|/jeju/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
                                         </span>
                                     </div>
                                 </div>
@@ -474,23 +456,23 @@
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},counthidden=${param.hiddencount})}" aria-label="Previous">
+                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}" aria-label="Previous">
                                             <span aria-hidden="true">≪</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <li class="page-item" th:style="${paging.first}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},counthidden=${param.hiddencount})}">＜</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}">＜</a>
                                     </li>
                                     <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                                         th:classappend="(${page}==${paging.number+1})?'active'">
-                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},counthidden=${param.hiddencount})} th:text="${page}"></a>
+                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})} th:text="${page}"></a>
                                     </li>
                                     <li class="page-item" th:style="${paging.last}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},counthidden=${param.hiddencount})}">＞</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}">＞</a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},counthidden=${param.hiddencount})}"
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">≫</span>
                                             <span class="sr-only">Next</span>
@@ -505,12 +487,13 @@
         </div>
     </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
+    </form>
 </section>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </div>
 
 </body>
