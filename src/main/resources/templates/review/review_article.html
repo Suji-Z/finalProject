@@ -102,12 +102,11 @@
                              <h5>작성일</h5>
                                     </div>
                                 <div class="valid_date_area_one">
-                                    <h2 align="right"><a th:if="${#lists.size(review.voter)}==0" class="recommend"
-                                                         href="javascript:void(0);" th:data-uri="@{|/review/vote/${review.id}|}">
+                                    <h2 align="right"><a th:if="${!reviewLike}" class="recommend" th:href="@{|/review/vote/${review.id}|}">
 
                                         <i class="fa-regular fa-heart"></i></a></h2>
 
-                                    <h2 align="right"><a th:if="${#lists.size(review.voter)}!=0" class="cancel"
+                                    <h2 align="right"><a th:if="${reviewLike}" class="cancel"
                                                          href="javascript:void(0);" th:data-uri="@{|/review/vote/${review.id}|}">
                                         <i class="fas fa-heart"></i></a>
                                     </h2>
