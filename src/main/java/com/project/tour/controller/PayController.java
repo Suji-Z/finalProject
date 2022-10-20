@@ -40,7 +40,7 @@ public class PayController {
     @GetMapping
     public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 106; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 108; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //로그인 정보
         Member member;

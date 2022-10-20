@@ -53,7 +53,7 @@
                                         <li><span class="name_first">출발일</span> <span
                                                 class="last_name" th:text="${userBooking.departure}">departureDate</span></li>
                                         <li><span class="name_first">도착일</span> <span
-                                                class="last_name" th:text="${userBooking.departure}+${userBooking.travelPeriod+1}">departureDate+travelPeriod+1</span></li>
+                                                class="last_name" th:text="${userBooking.arrival}">departureDate+travelPeriod+1</span></li>
 
                                     </ul>
 
@@ -98,7 +98,8 @@
                                         <li> 예약 금액 <span th:text="${userBooking.bookingTotalPrice}" id="bookingPrice" name="bookingPrice"
                                                          th:value="${userBooking.bookingTotalPrice}"></span></li>
                                         <li> 포인트<span><input type="text" style="width:80px;" id="pointApply" name="pointApply"></span></li>
-                                        <li>&nbsp;<span th:text="|(보유 포인트 ${userBooking.member.point})|" ></span></li>
+                                        <li>&nbsp;<span id="remainPoint" th:text="|(보유 포인트 ${userBooking.member.point})|" ></span></li>
+                                        <li>&nbsp;<a style="color : red" id="pointMessage" ></a></li>
                                         <input type="hidden" id="point" th:value="${userBooking.member.point}">
                                     </ul>
                                 </div>
