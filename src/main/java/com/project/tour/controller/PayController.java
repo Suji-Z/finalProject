@@ -1,7 +1,6 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.*;
-import com.project.tour.kakao.service.KakaoPayService;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
