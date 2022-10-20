@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,9 +40,15 @@ public class JejuPackageController {
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
                               @RequestParam(value = "keyword", required = false) String keyword,
+                              @RequestParam(value = "transport", required = false) String transport,
+                              @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
+                              @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
+                              @RequestParam(value = "reviewstar", required = false) Double reviewstar,
+                              @RequestParam(value = "travelPeriod", required = false) Integer travelPeriod,
                               Model model, @PageableDefault(size = 5) Pageable pageable,
                               SearchForm searchForm) {
 
+        //여행객 버튼 기본값 0출력
         if(searchForm.getTotcount() ==null || searchForm.getTotcount().equals("")){
             searchForm.setTotcount(0);
         }
@@ -52,22 +59,29 @@ public class JejuPackageController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             date = today.format(formatter);
 
-        } else {
+        } else {//날짜포맷 db와 맞추기
             date = date.replaceAll("-", "");
+        }
+
+        //항공사 다중선택시
+        List<String> transports = null;
+        if (searchForm.getTransport() != null) {
+            transports = Arrays.asList(searchForm.getTransport().split(","));
         }
 
         log.info(date);
         log.info(location);
         log.info(String.valueOf(count));
         log.info(searchForm.getKeyword());
+        log.info(searchForm.getTransport());
 
-        Page<Package> paging = packageService.getSearchList(location, date, count,keyword, pageable);
+        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transports,pageable);
 
         model.addAttribute("paging", paging);
-        if(searchForm==null){
+        if(searchForm==null){ //검색전 최초로딩시
             model.addAttribute("searchForm", new SearchForm());
         }
-        else {
+        else {//검색후 검색데이터 유지
             model.addAttribute("searchForm", searchForm);
         }
         return "jejuPackage/packagelist";
