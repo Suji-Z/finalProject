@@ -63,8 +63,8 @@
                         <div class="your_info_arae">
                             <ul>
                                 <li><span class="name_first">결제번호</span> <span class="last_name" th:text="${pay.id}">예약번호</span></li>
-                                <li><span class="name_first" th:text="${pay.payDate}">결제날짜</span> <span
-                                        class="last_name" id="payDate"></span></li>
+                                <li><span class="name_first" >결제날짜</span> <span
+                                        class="last_name" th:text="${pay.payDate}"></span></li>
                                 <li><span class="name_first">출발일</span> <span
                                         class="last_name" th:text="${pay.userBooking.departure}"></span></li>
                                 <li><span class="name_first">도착일</span> <span

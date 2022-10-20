@@ -5,6 +5,7 @@ import com.project.tour.kakao.service.KakaoPayService;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
+import com.project.tour.service.PackageDateService;
 import com.project.tour.service.PayService;
 import com.project.tour.service.UserBookingService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class PayController {
     private final UserBookingService userBookingService;
     private final PayService payService;
     private final MemberService memberService;
-    private final KakaoPayService kakaoPayService;
+    private final PackageDateService packageDateService;
 
     String payDate ="";
 
@@ -39,7 +40,7 @@ public class PayController {
     @GetMapping
     public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 97; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 106; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //로그인 정보
         Member member;
@@ -64,8 +65,6 @@ public class PayController {
                              @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice,
                              PayForm payForm, Principal principal, @LoginUser SessionUser user,
                              @RequestParam("bookingNum") long id, UserBookingForm userBookingForm, Model model){
-
-        System.out.println("여기오나요");
 
         RestTemplate template = new RestTemplate();
 
@@ -93,10 +92,12 @@ public class PayController {
         payService.create(userBooking, member, payDate, payForm);
 
         //2. userBooking 테이블 bookingStatus 데이터 수정
-        userBookingForm.setBookingStatus(2); //form 예약 상태 변경
-        userBookingService.modifyBookingStatus(userBooking, userBookingForm);
+        userBookingService.modifyBookingStatus(userBooking, 2);
 
-        System.out.println("여기오나요2");
+        //3. packageDate 테이블 remainCount 수정
+        int bookingTotalCount = userBooking.getBookingTotalCount();
+        PackageDate packageDate = packageDateService.getPackageDate(userBooking.getAPackage(), userBooking.getDeparture());
+        packageDateService.modifyRemainCount(packageDate, bookingTotalCount);
 
         return new ResponseEntity("/pay/complete", HttpStatus.OK);
 
@@ -136,42 +137,6 @@ public class PayController {
         return "booking-pay/payment_fail";
 
     }
-
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("/confirmation/{id}") //id : bookingNum
-//    @ResponseBody
-//    public ResponseEntity<?> paying(PayForm payForm, UserBookingForm userBookingForm, Principal principal,
-//                                    @LoginUser SessionUser user, Model model, @PathVariable("id") Long id,
-//                                    @RequestParam("impUid") String impUid,
-//                                    @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice){
-//
-//        //로그인 정보
-//        Member member;
-//        if(memberService.existByEmail(principal.getName())){
-//            member = memberService.getName(principal.getName());
-//        }else{
-//            member = memberService.getName(user.getEmail());
-//        }
-//
-//        //payForm에 데이터 저장
-//        payForm.setPayMethod(payMethod);
-//        payForm.setPayInfo(impUid);
-//        payForm.setTotalPrice(payTotalPrice);
-//        payDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
-//
-//        //데이터 저장할 때 넘길 정보 : userbooking,member
-//        UserBooking userBooking = userBookingService.getUserBooking(id);
-//
-//        //1. pay 테이블 데이터 저장
-//        payService.create(userBooking, member, payDate, payForm);
-//
-//        //2. userBooking 테이블 bookingStatus 데이터 수정
-//        userBookingForm.setBookingStatus(2); //form 예약 상태 변경
-//        userBookingService.modifyBookingStatus(userBooking, userBookingForm);
-//
-//        return new ResponseEntity("/pay/hello", HttpStatus.OK);
-//    }
-
 
 
 

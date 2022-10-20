@@ -13,8 +13,14 @@ function selectdatePackage(){
 
     if(acount!=0){
      $('#adult_count_price').show();
+     $('.tour_select_offer_bar_bottom_sally').show();
+     $('.tour_select_offer_bar_bottom_sally_x').hide();
+
+
     }else{
      $('#adult_count_price').hide();
+     $('.tour_select_offer_bar_bottom_sally').hide();
+     $('.tour_select_offer_bar_bottom_sally_x').show();
     }
 
     if(bcount!=0){
@@ -55,21 +61,21 @@ function selectdatePackage(){
 
                 if(data.discount==null){
 
-                $('#aprice').html(data.aprice);
-                $('#cprice').html(data.cprice);
-                $('#bprice').html(data.bprice);
+                $('#aprice').html(data.aprice.toLocaleString()+'원');
+                $('#cprice').html(data.cprice.toLocaleString()+'원');
+                $('#bprice').html(data.bprice.toLocaleString()+'원');
                 totalcount = data.aprice+data.cprice+data.bprice;
-                $('#totalprice').html(totalcount);
+                $('#totalprice').html(totalcount.toLocaleString()+'원');
                 }else {
 
-                $('#bfaprice').html(data.aprice);
-                $('#bfcprice').html(data.cprice);
-                $('#bfbprice').html(data.bprice)
-                $('#aftaprice').html(data.dcaprice);
-                $('#aftbprice').html(data.dcbprice);
-                $('#aftcprice').html(data.dccprice);
+                $('#bfaprice').html(data.aprice.toLocaleString()+'원');
+                $('#bfcprice').html(data.cprice.toLocaleString()+'원');
+                $('#bfbprice').html(data.bprice.toLocaleString()+'원')
+                $('#aftaprice').html(data.dcaprice.toLocaleString()+'원');
+                $('#aftbprice').html(data.dcbprice.toLocaleString()+'원');
+                $('#aftcprice').html(data.dccprice.toLocaleString()+'원');
                  totalcount = data.dcaprice+data.dcbprice+data.dccprice;
-                $('#totalprice').html(totalcount);
+                $('#totalprice').html(totalcount.toLocaleString()+'원');
                 }
 
                } else {

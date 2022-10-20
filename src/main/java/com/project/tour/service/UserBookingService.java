@@ -84,10 +84,9 @@ public class UserBookingService {
     }
 
     //결제완료시 예약상태 변경
-    public void modifyBookingStatus(UserBooking userBooking, UserBookingForm userBookingForm){
+    public void modifyBookingStatus(UserBooking userBooking, int status){
 
-        userBooking.setBookingStatus(userBookingForm.getBookingStatus());
-
+        userBooking.setBookingStatus(status);
         bookingRepository.save(userBooking);
     }
 }
