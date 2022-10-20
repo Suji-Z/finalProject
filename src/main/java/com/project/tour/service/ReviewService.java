@@ -3,9 +3,13 @@ package com.project.tour.service;
 
 import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.Member;
+import com.project.tour.domain.Package;
 import com.project.tour.domain.Review;
+import com.project.tour.domain.UserBooking;
+import com.project.tour.repository.BookingRepository;
 import com.project.tour.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +27,9 @@ public class ReviewService {
 
     private  final ReviewRepository reviewRepository;
 
-    public Review create(String subject, String content,String reviewImage, Double score, Member author ){
+    private final BookingRepository bookingRepository;
+
+    public Review create(String subject, String content, String reviewImage, Double score, Member author, Package reviewPackage){
         Review review = new Review();
 
         review.setSubject(subject);
@@ -32,6 +38,7 @@ public class ReviewService {
         review.setCreated(LocalDateTime.now());
         review.setReviewImage(reviewImage);
         review.setAuthor(author);
+        review.setReviewPackages(reviewPackage);
 
         return reviewRepository.save(review);
     }
@@ -91,15 +98,24 @@ public class ReviewService {
     }
 
     public void update(Review review, String subject, String content,
-                       String reviewImage, Double score){
+                       String reviewImage, Double score, Package reviewPackage){
 
         review.setSubject(subject);
         review.setContent(content);
         review.setReviewImage(reviewImage);
         review.setScore(score);
+        review.setReviewPackages(reviewPackage);
 
         reviewRepository.save(review);
 
+
+    }
+
+    public List<UserBooking> getBookingReview(Long id, int status){
+
+        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatus(id,status);
+
+        return op;
 
     }
 

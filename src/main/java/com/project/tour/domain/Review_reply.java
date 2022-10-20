@@ -31,4 +31,9 @@ public class Review_reply {
 
     @ManyToMany
     Set<Member> voter;
+
+    ////결제완료한 패키지 정보
+    @ManyToOne
+    @JoinColumn(name = "packageNum")
+    private Package reviewPackages;
 }

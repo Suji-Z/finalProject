@@ -57,9 +57,17 @@ public class MypageController {
         return "mypage/mypage_bookingCancel_List";
 
     }
+    //예약내역
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/bookingList")
-    public String booking_list(){
+    public String booking_list(Model model, Principal principal, @PageableDefault Pageable pageable){
+
+        Member member = memberService.getMember(principal.getName());
+        Long memberId = member.getId();
+
+        Page<UserBooking> paging = mypageService.getMypageBooking(memberId,pageable);
+
+        model.addAttribute("paging",paging);
 
         return "mypage/mypage_bookingList";
 
