@@ -409,7 +409,7 @@
                       </div>
                     </div>
                   <div class="flight_search_right">
-                    <div class="flight_search_right_content" th:each="packageDate : ${apcakage.packageDateList}">
+                    <div class="flight_search_right_content" th:each="packageDate : ${apcakage.packagedatelist}">
                     <h5><i><del th:text="${#numbers.formatInteger(packageDate.aprice,1,'COMMA')}"></del></i></h5>
                       <h2><span th:text="|${#numbers.formatInteger(packageDate.aprice - (packageDate.aprice *(packageDate.discount * 0.01)),1,'COMMA')}원|"></span><sup th:text="|${packageDate.discount}% OFF|"></sup></h2>
                      <br/><br/>

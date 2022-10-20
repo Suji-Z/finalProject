@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -53,6 +54,7 @@ public class MemberService {
         member.setBirth(memberCreate.getBirth());
         member.setPhone(memberCreate.getPhone_num());
         member.setCoupons("1");
+        member.setCreatedDate(LocalDateTime.now());
         member.setKeyword(memberCreate.getKeyword());
 
 

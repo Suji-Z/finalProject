@@ -83,7 +83,9 @@
                 <div class="col-lg-6">
                     <br/><br/>
                     <div class="section_heading_center">
-                            <a href="news-details.html"><img src="/assets/img/news/news-1.PNG" alt="img"></a>
+
+                        <img th:width="300" th:height="300" th:src="@{${review.reviewPackages.photosImagePath1}}"/>
+
                         </div>
                 </div>
 
@@ -96,8 +98,8 @@
                                         <h5>이용상품</h5>
                                     </div>
                                     <div class="valid_date_area_one">
-                                        <h5>베트남 다낭</h5>
-                                        <h5>어쩌구 패키지</h5>
+                                        <h5 th:text="|${review.reviewPackages.location1}&nbsp;${review.reviewPackages.location2}|">베트남 다낭</h5>
+                                        <h5 th:text="${review.reviewPackages.packageName}">어쩌구 패키지</h5>
                                     </div>
                                 
                         </div>

@@ -152,51 +152,53 @@
                     <li style="margin-top: -40px;">
                         <div class="col-lg-2">
                         </div>
-                       <!-- <div th:if="${#fields.hasErrors('name')}" role="alert">
+                        <div th:if="${#fields.hasErrors('name')}" role="alert">
                             <p style="font-size: 10pt;color: red" th:errors="*{name}" th:text="${err}"></p>
+                        </div>
+                    </li>
+
+                    <li style="border-bottom-color: white;">
+                        <div class="col-lg-2" style="text-align: center; margin-top: 10px">
+                            <label th:for="phone_num" style="text-align:center;">연락처</label>
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <input type="text" class="shform-control" th:field="*{phone_num}" name="phone_num" style="border-radius: 3px; font-size: 10pt"
+                                    placeholder="휴대폰번호(숫자만 입력)">
+                            <input type="hidden" name="phone_num2"  th:value="*{phone_num}" />
+                        </div>&nbsp;&nbsp;
+                        <div class="">
+                            <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" style="height: 35px;font-size: 11pt" onclick="mypagePhoneCheck()">인증번호 전송</button>
+                        </div>
+                    </li>
+
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                       <!-- <div th:if="${#fields.hasErrors('phone_num')}" role="alert">
+                            <p style="font-size: 10pt;color: red" th:errors="*{phone_num}" th:text="${err}"></p>
                         </div>-->
                     </li>
 
-<!--                    <li style="border-bottom-color: white;">-->
-<!--                        <div class="col-lg-2" style="text-align: center; margin-top: 10px">-->
-<!--                            <label th:for="phone_num" style="text-align:center;">연락처</label>-->
-<!--                        </div>-->
-<!--                        <div class="form-group col-lg-5">-->
-<!--                            <input type="text" class="shform-control" th:field="*{phone_num}" id="phone_num" name="phone_num" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">-->
-<!--                        </div>&nbsp;&nbsp;-->
-<!--                        <div class="">-->
-<!--                            <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" onclick="phoneCheck()" style="height: 35px;font-size: 11pt">인증번호 전송</button>-->
-<!--                        </div>-->
-<!--                    </li>-->
+                    <li style=" border-bottom-color: white;">
+                        <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
+                            <span style="text-align:center;">인증번호</span>
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <input type="text" class="shform-control" id="sms_num" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">
+                        </div>&nbsp;&nbsp;
+                        <div class="">
+                            <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" id="checkBtn" >본인확인</button>
+                            <input type="hidden" name="checked_phone" value="">
+                        </div>
+                    </li>
 
-<!--                    <li style="margin-top: -40px;">-->
-<!--                        <div class="col-lg-2">-->
-<!--                        </div>-->
-<!--                       &lt;!&ndash; <div th:if="${#fields.hasErrors('phone_num')}" role="alert">-->
-<!--                            <p style="font-size: 10pt;color: red" th:errors="*{phone_num}" th:text="${err}"></p>-->
-<!--                        </div>&ndash;&gt;-->
-<!--                    </li>-->
-
-<!--                    <li style=" border-bottom-color: white;">-->
-<!--                        <div class="col-lg-2" style="text-align: center; margin-top: 10px;">-->
-<!--                            <span style="text-align:center;">인증번호</span>-->
-<!--                        </div>-->
-<!--                        <div class="form-group col-lg-5">-->
-<!--                            <input type="text" class="shform-control" id="sms_num" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">-->
-<!--                        </div>&nbsp;&nbsp;-->
-<!--                        <div class="">-->
-<!--                            <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" id="checkBtn" >본인확인</button>-->
-<!--                            <input type="hidden" name="checked_phone" value="">-->
-<!--                        </div>-->
-<!--                    </li>-->
-
-<!--                    <li style="margin-top: -40px;">-->
-<!--                        <div class="col-lg-2">-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <span class="successPhoneChk" id="successPhoneChk"></span>-->
-<!--                        </div>-->
-<!--                    </li>-->
+                    <li style="margin-top: -40px;">
+                        <div class="col-lg-2">
+                        </div>
+                        <div>
+                            <span class="successPhoneChk" id="successPhoneChk"></span>
+                        </div>
+                    </li>
 
 
                     <li style="border-bottom-color: white;">
@@ -211,9 +213,9 @@
                     <li style="margin-top: -40px;">
                         <div class="col-lg-2">
                         </div>
-                        <!--<div th:if="${#fields.hasErrors('birth')}" role="alert">
+                        <div th:if="${#fields.hasErrors('birth')}" role="alert">
                             <p style="font-size: 10pt;color: red" th:errors="*{birth}" th:text="${err}"></p>
-                        </div>-->
+                        </div>
                     </li>
 
                     <li style="border-bottom-color: white;">
@@ -272,7 +274,7 @@
             </div>
         </div>
         <div class="common_form_submit">
-            <button class="btn btn_theme btn_md" type="submit" id="signup" onclick="return checkConfirm();">수정하기</button>
+            <button class="btn btn_theme btn_md" type="submit" id="signup" onclick="return profileUpdateConfirm();">수정하기</button>
              <button class="btn btn_theme btn_md">취소</button>
         </div>
 

@@ -2570,6 +2570,12 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     margin-top: 15px;
 }
 
+.tour_select_offer_bar_bottom_sally_x button {
+    border-radius: 10px;
+    margin-top: 15px;
+    background-color: gray;
+}
+
 .select_offer_modal.offcanvas {
     position: fixed;
     bottom: 0;
