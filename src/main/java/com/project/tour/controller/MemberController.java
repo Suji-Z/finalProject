@@ -1,6 +1,7 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.MailDTO;
+import com.project.tour.domain.Member;
 import com.project.tour.domain.MemberCreate;
 import com.project.tour.service.MailService;
 import com.project.tour.service.MemberService;
@@ -84,6 +85,13 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    public String socialInfo(Member member){
+
+        String info = member.getSocial();
+
+        return info;
     }
 
     @GetMapping("/member/login")
