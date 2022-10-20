@@ -99,6 +99,7 @@ public class MypageService {
         memberRepository.save(member);
     }
 
+
     //예약내역
     public Page<UserBooking> getMypageBooking(Long id,Pageable pageable){
 
@@ -118,6 +119,7 @@ public class MypageService {
 
 
     }
+
 
 
 }

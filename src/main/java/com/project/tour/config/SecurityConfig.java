@@ -45,6 +45,8 @@ public class SecurityConfig{
                 .logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID") //true를 주면 세션 자체가 삭제됨
                 .invalidateHttpSession(true)
                 .and()
+                //.oauth2Login().disable().csrf().disable().formLogin().usernameParameter("email")
+                //.and()
                 .oauth2Login()
                 .loginPage("/login").defaultSuccessUrl("/").userInfoEndpoint().userService(baseCustomOauth2UserService)
 

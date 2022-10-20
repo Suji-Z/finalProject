@@ -3,14 +3,18 @@ package com.project.tour.service;
 import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.Member;
 import com.project.tour.domain.VoiceCus;
+import com.project.tour.oauth.dto.BaseAuthUserRepository;
+import com.project.tour.oauth.model.BaseAuthUser;
 import com.project.tour.repository.VoiceCusRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,9 @@ import java.util.Optional;
 public class VoiceCusService {
 
     private final VoiceCusRepository voiceCusRepository;
+
+    @Autowired
+    private final BaseAuthUserRepository baseAuthUserRepository;
 
     public List<VoiceCus> getList(){
 
@@ -48,7 +55,19 @@ public class VoiceCusService {
             throw new DataNotFoundException("해당 게시글을 찾을 수 없습니다.");
     }
 
+    public String email(Principal principal){
+
+
+        BaseAuthUser socialId=baseAuthUserRepository.findById(principal.getName());
+
+        System.out.println(socialId.getEmail());
+
+        return socialId.getEmail();
+
+    }
+
     public void create(String subject, String content, String types, Member author){
+
 
         VoiceCus voiceCus = new VoiceCus();
 

@@ -112,7 +112,10 @@
                                         <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}">01</td>
                                         <td th:text="${package.packageName}"></td>
                                         <td th:text="|${package.location1} ${package.location2}|"></td>
-                                        <td th:text="|${#strings.substring(package.postStart,0,10)} / ${#strings.substring(package.postEnd,0,10)}|"> </td>
+                                        <td>
+                                            <span th:text="${#strings.substring(package.postStart,0,10)}"/>
+                                            <span>~</span>
+                                          <span th:text="${#strings.substring(package.postEnd,0,10)}"/> </td>
 
                                             <td>
                                             <a th:href="@{|/admin/package/modify/${package.id}|}" th:text="수정" class="btn btn-sm btn-outline-secondary"  />
