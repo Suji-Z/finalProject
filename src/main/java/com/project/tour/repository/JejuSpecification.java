@@ -49,4 +49,9 @@ public class JejuSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get("transport")).value(transport);
     }
 
+    //여행기한
+    public static Specification<Package> equalPeriod(List<Integer> period){
+        return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get("travelPeriod")).value(period);
+    }
+
 }
