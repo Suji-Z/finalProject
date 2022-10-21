@@ -1,6 +1,7 @@
 package com.project.tour.repository;
 
 import com.project.tour.domain.Package;
+import com.project.tour.domain.PackageDate;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.JoinType;
@@ -48,5 +49,22 @@ public class JejuSpecification {
     public static Specification<Package> equalTransport(List<String> transport){
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get("transport")).value(transport);
     }
+
+    //여행기한
+    public static Specification<Package> equalPeriod(List<Integer> period){
+        return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get("travelPeriod")).value(period);
+    }
+
+     //가격범위
+    public static Specification<Package> betweenPrice(Integer pricerangestr, Integer pricerangeend){
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.between(root
+                        .join("packagedatelist", JoinType.LEFT)
+                        .get("aprice"), pricerangestr,pricerangeend);
+
+    }
+
+
+
 
 }

@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -31,6 +29,26 @@ public class JejuPackageController {
     @Autowired
     private final PackageDateService packagedateService;
 
+    @ModelAttribute("transports")
+    public Map<String, String> transport() {
+        Map<String, String> transport = new LinkedHashMap<>();
+        transport.put("대한항공", "대한항공");
+        transport.put("아시아나항공", "아시아나항공");
+        transport.put("제주항공", "제주항공");
+        transport.put("진에어", "진에어");
+        transport.put("티웨이", "티웨이");
+        return transport;
+    }
+
+    @ModelAttribute("travelPeriods")
+    public Map<String, String> travelPeriod() {
+        Map<String, String> travelPeriod = new LinkedHashMap<>();
+        travelPeriod.put("1,2", "2일 ~ 3일");
+        travelPeriod.put("3,4", "4일 ~ 5일");
+        travelPeriod.put("5,6", "6일 ~ 7일");
+        travelPeriod.put("7,8,9", "8일 ~ 10일");
+        return travelPeriod;
+    }
 
     /**
      * 전체리스트
@@ -40,16 +58,15 @@ public class JejuPackageController {
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
                               @RequestParam(value = "keyword", required = false) String keyword,
-                              @RequestParam(value = "transport", required = false) String transport,
+                              @RequestParam(value = "transports", required = false) String transports,
+                              @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
                               @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
                               @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
-                              @RequestParam(value = "reviewstar", required = false) Double reviewstar,
-                              @RequestParam(value = "travelPeriod", required = false) Integer travelPeriod,
                               Model model, @PageableDefault(size = 5) Pageable pageable,
                               SearchForm searchForm) {
 
         //여행객 버튼 기본값 0출력
-        if(searchForm.getTotcount() ==null || searchForm.getTotcount().equals("")){
+        if(searchForm.getTotcount() == null || searchForm.getTotcount().equals("")){
             searchForm.setTotcount(0);
         }
 
@@ -63,27 +80,55 @@ public class JejuPackageController {
             date = date.replaceAll("-", "");
         }
 
-        //항공사 다중선택시
-        List<String> transports = null;
-        if (searchForm.getTransport() != null) {
-            transports = Arrays.asList(searchForm.getTransport().split(","));
+        if(keyword==null || keyword.equals("")){
+            keyword=null;
         }
 
-        log.info(date);
-        log.info(location);
-        log.info(String.valueOf(count));
-        log.info(searchForm.getKeyword());
-        log.info(searchForm.getTransport());
+        //항공사 다중선택시
+        List<String> transport = null;
+        if (transports == null || transports.equals("")) {
+            transports=null;
+        } else {
+            transport = Arrays.asList(transports.split(","));
+        }
 
-        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transports,pageable);
+        //여행기간
+        List<Integer> period = null;
+        List<String> periods;
+        if(travelPeriods==null || travelPeriods.equals("")){
+        }else {
+            period = new ArrayList<>();
+            periods = Arrays.asList(travelPeriods.split(","));
+
+            Iterator<String> it = periods.iterator();
+
+            while(it.hasNext()){
+                period.add(Integer.parseInt(it.next()));
+                }
+        }
+
+        //가격범위
+        if(pricerangestr==null || pricerangestr.equals("") && pricerangeend==null || pricerangeend.equals("")){
+            pricerangestr =null;
+            pricerangeend = null;
+        }else{
+            log.info("pricerangestr : " + pricerangestr);
+            log.info("pricerangeend : " + pricerangeend);
+        }
+
+
+        log.info("DATE : " + date);
+        log.info("LOCATION : " + location);
+        log.info("COUNT : " + String.valueOf(count));
+        log.info("KEYWORD : " + keyword);
+        log.info("TRANSPORTS : " + transports);
+        log.info("TRAVELPERIOD : " + travelPeriods);
+
+        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
         model.addAttribute("paging", paging);
-        if(searchForm==null){ //검색전 최초로딩시
-            model.addAttribute("searchForm", new SearchForm());
-        }
-        else {//검색후 검색데이터 유지
-            model.addAttribute("searchForm", searchForm);
-        }
+        model.addAttribute("searchForm", searchForm);
+
         return "jejuPackage/packagelist";
     }
 

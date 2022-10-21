@@ -21,4 +21,6 @@ public class NoticeForm {
     private String noticeImage;
 
     private int hitCount;
+
+    private boolean pin;
 }

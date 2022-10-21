@@ -177,7 +177,31 @@ public class MemberService {
         return memberRepository.findAll(pageable);
     }
 
+    public Page<Member> getPaidList(Pageable pageable){
 
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
 
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return memberRepository.findAll(pageable);
+    }
+
+    //관리자 매출조회
+    public Page<Member> getpayList(List<Long> memberid,Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable= PageRequest.of(
+                pageable.getPageNumber()<=0?0:
+                        pageable.getPageNumber()-1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return memberRepository.findByIdIn(memberid,pageable);
+    }
 
 }

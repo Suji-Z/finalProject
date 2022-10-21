@@ -48,10 +48,14 @@ public class PackageService {
 
         return jejuRepository.findAll(spec);
     }
-    public Page<Package> getSearchList(String location, String date, Integer count, String keyword,List<String> transport,Pageable pageable) {
+    public Page<Package> getSearchList(String location, String date, Integer count, String keyword,
+                                       List<String> transport, List<Integer> period, Integer pricerangestr, Integer pricerangeend ,
+                                       Pageable pageable) {
 
+        /** 날짜 */
         Specification<Package> spec = Specification.where(JejuSpecification.greaterThanOrEqualToDeparture(date));
 
+        /** 상세지역 */
         if (location == null || location.equals("")) {
             location = "제주";
             spec = spec.and(JejuSpecification.equalLocation1(location));
@@ -59,26 +63,30 @@ public class PackageService {
             spec = spec.and(JejuSpecification.equalLocation2(location));
         }
 
+        /** 여행객수 */
         if (count != null) {
             spec = spec.and(JejuSpecification.greaterThanOrEqualToRemaincount(count));
         }
 
+        /** 키워드 */
         if (keyword != null) {
             spec = spec.and(JejuSpecification.equalKeyword(keyword));
         }
 
+        /** 항공사 */
         if(transport!=null){
             spec = spec.and(JejuSpecification.equalTransport(transport));
         }
 
-        //페이징처리
-        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-        sorts.add(Sort.Order.desc("id"));
+        /** 여행기한 */
+        if(period !=null){
+            spec = spec.and(JejuSpecification.equalPeriod(period));
+        }
 
-        pageable = PageRequest.of(
-                pageable.getPageNumber() <= 0 ? 0 :
-                        pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(sorts));
+        /** 가격범위 */
+        if(pricerangestr !=null || pricerangeend !=null){
+            spec = spec.and(JejuSpecification.betweenPrice(pricerangestr,pricerangeend));
+        }
 
         List<Package> searchPackage = jejuRepository.findAll(spec);
 
@@ -89,44 +97,19 @@ public class PackageService {
             packageNum.add(it.next().getId());
         }
 
+
+        //페이징처리
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ? 0 :
+                        pageable.getPageNumber() - 1,
+                pageable.getPageSize(), Sort.by(sorts));
+
         return packageRepository.findByIdIn(packageNum, pageable);
 
     }
-
-    /**
-     * 검색결과 페이징처리
-     * 상세지역 / 출발일 /여행객수
-     */
-    public Page<Package> getfullsearchList(String location, String date, Integer count, Pageable pageable) {
-
-        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-        sorts.add(Sort.Order.desc("id"));
-
-        pageable = PageRequest.of(
-                pageable.getPageNumber() <= 0 ? 0 :
-                        pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(sorts));
-
-        return packageRepository.findByLocation2AndPackagedatelist_DepartureContainingAndPackagedatelist_RemaincountGreaterThanEqual(location, date, count, pageable);
-    }
-
-    /**
-     * 검색결과 페이징처리
-     * 출발일 /여행객수
-     */
-    public Page<Package> getdatecountsearchList(String location, String date, Integer count, Pageable pageable) {
-
-        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-        sorts.add(Sort.Order.desc("id"));
-
-        pageable = PageRequest.of(
-                pageable.getPageNumber() <= 0 ? 0 :
-                        pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(sorts));
-
-        return packageRepository.findByLocation1AndPackagedatelist_DepartureContainingAndPackagedatelist_RemaincountGreaterThanEqual(location, date, count, pageable);
-    }
-
 
     //데이터 불러오기 위한 임시
     private void create(Package apackage, PackageDate packageDate) {

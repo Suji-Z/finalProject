@@ -49,7 +49,6 @@
                                                                     <option th:value="애월">애월</option>
                                                                     <option th:value="제주시">제주시</option>
                                                                 </select>
-
                                                                 <div class="plan_icon_posation">
                                                                     <i class="fas fa-plane-departure"></i>
                                                                 </div>
@@ -233,57 +232,27 @@
                             <h5>가격필터</h5>
                         </div>
                         <div class="filter-price">
-                            <p>
+                            <p style="margin-bottom:10px;">
                                 <label for="amount">가격범위：</label>
-                                <input type="text" id="amount" style="border:0; color:black; font-weight:bold; background:white;" disabled="disabled">
+                                <input type="text" id="amount" style="width:70%; border:0; color:black; font-weight:bold; background:white;" disabled="disabled">
                             </p>
                             <div id="slider-range"></div>
                         </div>
                         <button class="apply">적용하기</button>
+                        <input type="hidden" id="pricerangestr" th:field="*{pricerangestr}"/>
+                        <input type="hidden" id="pricerangeend" th:field="*{pricerangeend}"/>
                     </div>
                     <div class="left_side_search_boxed">
                         <div class="left_side_search_heading">
                             <h5>항공사</h5>
                         </div>
                         <div class="tour_search_type">
-                            <div class="form-check">
+                            <div class="form-check" th:each="transport : ${transports}">
                                 <label>
-                                <input class="form-check-input" type="checkbox" name="transport" value="대한항공" th:field="*{transport}">
-                                        <span class="area_flex_one">
-                                            <span>대한항공</span>
-                                        </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label>
-                                <input class="form-check-input" type="checkbox" name="transport" value="아시아나항공" th:field="*{transport}">
-                                        <span class="area_flex_one">
-                                            <span>아시아나항공</span>
-                                        </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label>
-                                <input class="form-check-input" type="checkbox" name="transport" value="제주항공" th:field="*{transport}">
-                                        <span class="area_flex_one">
-                                            <span>제주항공</span>
-                                        </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label>
-                                <input class="form-check-input" type="checkbox" name="transport" value="진에어항공" th:field="*{transport}">
-                                        <span class="area_flex_one">
-                                            <span>진에어</span>
-                                        </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label>
-                                <input class="form-check-input" type="checkbox" name="transport" value="티웨이항공" th:field="*{transport}">
-                                        <span class="area_flex_one">
-                                            <span>티웨이</span>
-                                        </span>
+                               <input class="form-check-input" type="checkbox" th:value="${transport.key}" th:field="*{transports}">
+                                    <span class="area_flex_one">
+                                            <span th:text="${transport.value}"></span>
+                                    </span>
                                 </label>
                             </div>
                         </div>
@@ -293,47 +262,22 @@
                             <h5>여행기간</h5>
                         </div>
                         <div class="tour_search_type">
-                            <div class="form-check">
+                            <div class="form-check" th:each="travelPeriod : ${travelPeriods}">
                                 <label>
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt1">
+                                <input class="form-check-input" type="checkbox" th:value="${travelPeriod.key}" th:field="*{travelPeriods}">
                                         <span class="area_flex_one">
-                                            <span>당일</span>
+                                           <span th:text="${travelPeriod.value}"></span>
                                         </span>
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt2">
-                                <label class="form-check-label" for="flexCheckDefaultt2">
-                                        <span class="area_flex_one">
-                                            <span>2 ~ 4일</span>
-                                            <span>14</span>
-                                        </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt3">
-                                <label class="form-check-label" for="flexCheckDefaultt3">
-                                        <span class="area_flex_one">
-                                            <span>5 ~ 9일</span>
-                                            <span>62</span>
-                                        </span>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt4">
-                                <label class="form-check-label" for="flexCheckDefaultt4">
-                                        <span class="area_flex_one">
-                                            <span>10일 이상</span>
-                                            <span>08</span>
-                                        </span>
-                                </label>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-9">
+                <div class="dashboard_common_table" style="background:none; padding:10px; margin-bottom:20px;">
+                    <h3 th:text="|제주도 패키지 &nbsp;&nbsp;&nbsp; ${paging.totalElements}개|"></h3>
+                </div>
                 <div th:if="${paging.isEmpty()}" align="center"><img src="/assets/img/notfoundpackage.png"></div>
                 <div class="row" >
                     <div class="col-lg-12">
@@ -391,23 +335,23 @@
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}" aria-label="Previous">
+                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
                                             <span aria-hidden="true">≪</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <li class="page-item" th:style="${paging.first}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}">＜</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
                                     </li>
                                     <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                                         th:classappend="(${page}==${paging.number+1})?'active'">
-                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})} th:text="${page}"></a>
+                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
                                     </li>
                                     <li class="page-item" th:style="${paging.last}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}">＞</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword})}"
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">≫</span>
                                             <span class="sr-only">Next</span>
@@ -424,12 +368,6 @@
     </div>
     </form>
 </section>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-</div>
 
 </body>
 </html>

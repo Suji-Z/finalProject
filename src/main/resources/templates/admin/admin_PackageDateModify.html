@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+    <!-- Common Banner Area -->
+    <section id="common_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="common_bannner_text">
+                        <h2>패키지 상품 등록</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><span><i class="fas fa-circle"></i></span> Package</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Booking Submission Areas -->
+    <section id="tour_booking_submission" class="section_padding" style="margin: auto">
+        <form th:action th:object="${packageCreate}" method="post" enctype="multipart/form-data">
+        <div class="col-lg-8">
+        </div>
+        <div class="container" style="margin: auto; width: 70%">
+            <div class="row">
+
+                <div class="col-lg-13">
+                    <div class="tou_booking_form_Wrapper">
+
+                        <div class="booking_tour_form">
+                            <h3 class="heading_theme">패키지 출발일별 정보 수정</h3>
+                            <div class="tour_booking_form_box">
+                                <div class="your_info_arae">
+                                    <ul>
+                                        <li><span style="text-align:center;width: 14%">출발 일자</span>
+                                            <span th:text="*{departure}" ></span></li>
+
+                                        <li><span style="text-align:center;width: 14%">패키지 가격 <br/></span>
+                                            <span>
+                                                성인 &nbsp; <input type="text" th:field="*{aprice}">  원 </br></br>
+                                                아동 &nbsp; <input type="text" th:field="*{cprice}"> 원 </br></br>
+                                                유아 &nbsp; <input type="text" th:field="*{bprice}"> 원
+                                            </span>
+                                        </li>
+
+                                        <li><span style="text-align:center;width: 14%">패키지 할인율</span>
+                                            <span> <input type="text" style="width: 100px" th:field="*{discount}"> %</span></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="common_form_submit">
+            <button class="btn btn_theme btn_md" type="submit">등록하기</button>
+        </div>
+        </form>
+
+    </section>
+
+
+
+
+</body>
+
+</html>

@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="common_bannner_text">
-                    <h2>Q&A</h2>
+                    <h2>공지사항</h2>
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><span><i class="fas fa-circle"></i></span> Package</li>
@@ -42,36 +42,43 @@
                             <div class="your_info_arae">
                                 <ul>
                                     <li>
-                                        <span style="font-size: 15pt;margin: auto">굿바이 코로나 이벤트</span></li>
+                                        <span style="font-size: 15pt;margin: auto" th:text="${notice.subject}">굿바이 코로나 이벤트</span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성자</span>
                                         <span>관리자</span>
-                                        <span style="width: 40%"></span>
+                                        <span style="width: 38%"></span>
                                         <colspan style="text-align:center;width: 100px">분류</colspan>
-                                    <span>행사/이벤트</span></li>
+                                    <span th:text="${notice.category}">행사/이벤트</span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성일</span>
-                                        <span>2022.09.26</span>
+                                        <span th:text="${#temporals.format(notice.created,'yyyy-MM-dd HH:mm')}">2022.09.26</span>
                                         <span style="width: 38%"></span>
                                         <colspan style="text-align:center;width: 100px">조회수</colspan>
-                                        <span>10</span></li>
-
+                                        <span th:text="${notice.hitCount}">10</span></li>
 
 
                                     <li><span style="padding: 20px 80px 20px 0px;" valign="top" height="200"></span>
                                         <div class="col-lg-8">
                                          <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
-                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly">이벤트 안내사항이랑 할인 하는 제품으로 가는 링크 달아주기?</textarea>
+                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
+                                                   th:text="${notice.content}"></textarea>
+                                            <div class="">
+                                                <img th:src="@{${notice.photosImagePath}}"/>
+                                            </div>
                                      </div> </li>
 
                                     <li>
-                                        <span style="padding-left: 50px;padding-right: 30px">이전글 : </span>
-                                        공지사항
+                                        <span th:if="${afterSubject}==''" style="padding-left: 50px;padding-right: 30px;"
+                                           th:text="|다음글 : ${afterSubject}|"> </span>
+                                        <a th:href="@{|/notice/article/${notice.id+1}|}"><span th:if="${afterSubject}!=''" style="padding-left: 50px;padding-right: 30px;"
+                                            th:text="|다음글 : ${afterSubject}|" ></span></a>
                                     </li>
 
                                     <li>
-                                        <span style="padding-left: 50px;padding-right: 30px">다음글 : </span>
-                                        뭐시깽이 이벤트
+                                        <span th:if="${beforeSubject}==''" style="padding-left: 50px;padding-right: 30px;"
+                                           th:text="|이전글 : ${beforeSubject}|"> </span>
+                                        <a th:href="@{|/notice/article/${notice.id-1}|}" ><span th:if="${beforeSubject}!=''" style="padding-left: 50px;padding-right: 30px;"
+                                               th:text="|이전글 : ${beforeSubject}|" ></span></a>
                                     </li>
 
                                 </ul>
@@ -82,44 +89,17 @@
             </div>
 
         </div>
-        <button type="button" class="btn btn-outline-secondary">수정</button>
-        <button type="button" class="btn btn-outline-secondary">삭제</button>
+        <button type="button" sec:authorize="hasRole('ADMIN')" th:onclick="|location.href='@{|/notice/modify/${notice.id}|}'|" class="btn btn-outline-secondary">수정</button>
+        <button type="button" sec:authorize="hasRole('ADMIN')" th:onclick="|location.href='@{|/notice/delete/${notice.id}|}'|" class="btn btn-outline-secondary">삭제</button>
+
 
 
 
     </div>
     <div class="common_form_submit">
-        <button class="btn btn_theme btn_md">리스트</button>
+        <button sec:authorize="isAuthenticated()" class="btn btn_theme btn_md" th:onclick="|location.href='@{/notice/list}'|">리스트</button>
     </div>
 
 </section>
-
-
-<!-- Cta Area -->
-<section id="cta_area">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="cta_left">
-                    <div class="cta_icon">
-                        <img src="assets/img/common/email.png" alt="icon">
-                    </div>
-                    <div class="cta_content">
-                        <h4>Get the latest news and offers</h4>
-                        <h2>Subscribe to our newsletter</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="cat_form">
-                    <form id="cta_form_wrappper">
-                        <div class="input-group"><input type="text" class="form-control" placeholder="Enter your mail address"><button class="btn btn_theme btn_md" type="button">Subscribe</button></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 
 </body></html>

@@ -39,35 +39,35 @@
                                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                           style="">
                                          <ul>
-                                             <li><a href="hotel-booking.html">패키지 상품 등록</a></li>
-                                             <li><a href="flight-booking.html">패키지 상품 리스트</a></li>
+                                             <li><a th:href="@{/admin/packageList}">패키지 상품 리스트</a></li>
                                          </ul>
                                      </div>
 
                                  </li>
+
+                 <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
+                     <span> </span>
+                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                          style="">
+                         <ul>
+                             <li><a th:href="@{/admin/bookingUser}">회원 예약 관리 </a></li>
+                         </ul>
+                     </div>
+
+                 </li>
                                 
                                 <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                         style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">회원 리스트</a></li>
+                                            <li><a th:href="@{/admin/user}">회원 리스트</a></li>
                                             <li><a href="flight-booking.html"></a></li>
                                         </ul>
                                     </div>
                                     
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                        style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">패키지 예약 현황</a></li>
-                                            <li><a href="flight-booking.html">회원 예약 관리 </a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                </li>
+
 
 
                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
@@ -75,8 +75,8 @@
                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                           style="">
                          <ul>
-                             <li><a href="hotel-booking.html">패키지별 매출 관리</a></li>
-                             <li><a href="flight-booking.html">회원별 매출 관리</a></li>
+                             <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
+                             <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                          </ul>
                      </div>
 
@@ -98,32 +98,42 @@
                             
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                <div class="counter_item">
-                                    <img src="assets/img/icon/user.png" alt="icon">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                                       <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                                   </svg>
                                     <h3 class="counter"></h3>
                                     <br/>
-                                   <a href="mypage_profileUpdate.html"> <h4><b>상품 관리</b></h4></a>
+                                   <a th:href="@{/admin/packageList}"> <h4><b>상품 관리</b></h4></a>
                                     
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                 <div class="counter_item">
-                                    <img src="assets/img/icon/bank.png" alt="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    </svg>
                                     <h3 class="counter"></h3>
                                     <br/>
-                                    <a href="mypage_coupon.html"> <h4><b>회원</b></h4></a>
+                                    <a th:href="@{/admin/user}">  <h4><b>회원</b></h4></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                 <div class="counter_item">
-                                    <img src="assets/img/icon/world-map.png" alt="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                        <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    </svg>
                                     <h3 class="counter"></h3>
                                     <br/>
-                                    <a href="mypage_point.html"><h4><b>예약</b></h4></a>
+                                    <a th:href="@{/admin/bookingUser}"><h4><b>예약</b></h4></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                 <div class="counter_item">
-                                    <img src="assets/img/icon/calander.png" alt="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
                                     <h3 class="counter"></h3>
                                     <br/>
                                     <a href="mypage_q&a_list.html"><h4><b>게시물 관리</b></h4></a>

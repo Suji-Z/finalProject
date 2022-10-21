@@ -34,42 +34,72 @@
 
                     </div>
 
-                    <div class="dashboard_menu_area">
-                        <ul>
-                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>패키지 관리</b>
-                                <span> </span>
-                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                     style="">
-                                    <ul>
-                                        <li><a href="hotel-booking.html">패키지 상품 등록</a></li>
-                                        <li><a href="flight-booking.html">패키지 상품 리스트</a></li>
-                                    </ul>
+                    <section id="dashboard_main_arae" class="section_padding">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4-sally">
+                                    <div class="dashboard_sidebar">
+                                        <div class="dashboard_sidebar_user">
+
+                                            <h2>Admin</h2>
+
+                                        </div>
+
+                                        <div class="dashboard_menu_area">
+                                            <ul>
+
+                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>패키지 관리</b>
+                                                    <span> </span>
+                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                                         style="">
+                                                        <ul>
+                                                            <li><a th:href="@{/admin/packageList}">패키지 상품 리스트</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </li>
+
+                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
+                                                    <span> </span>
+                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                                         style="">
+                                                        <ul>
+                                                            <li><a th:href="@{/admin/bookingUser}">회원 예약 관리 </a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </li>
+
+                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
+                                                    <span> </span>
+                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                                         style="">
+                                                        <ul>
+                                                            <li><a th:href="@{/admin/user}">회원 리스트</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </li>
+
+
+
+                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
+                                                    <span> </span>
+                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                                         style="">
+                                                        <ul>
+                                                            <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
+                                                            <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </li>
+
+                                            </ul>
                                 </div>
 
                             </li>
 
-                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
-                                <span> </span>
-                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                     style="">
-                                    <ul>
-                                        <li><a href="hotel-booking.html">회원 리스트</a></li>
-                                        <li><a href="flight-booking.html"></a></li>
-                                    </ul>
-                                </div>
-
-                            </li>
-                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
-                                <span> </span>
-                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                     style="">
-                                    <ul>
-                                        <li><a href="hotel-booking.html">패키지 예약 현황</a></li>
-                                        <li><a href="flight-booking.html">회원 예약 관리 </a></li>
-                                    </ul>
-                                </div>
-
-                            </li>
 
 
                             <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
@@ -77,8 +107,8 @@
                                 <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                      style="">
                                     <ul>
-                                        <li><a href="hotel-booking.html">패키지별 매출 관리</a></li>
-                                        <li><a href="flight-booking.html">회원별 매출 관리</a></li>
+                                        <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
+                                        <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                                     </ul>
 
 
@@ -95,22 +125,35 @@
                         <table class="table">
                             <thead>
                             <tr>
+                                <th>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="allCheckBox" onclick="allChecked()">
+                                    </label>
+                                </th>
                                 <th>no</th>
                                 <th>패키지명</th>
                                 <th>출발일</th>
                                 <th>여행 기간</th>
                                 <th>정원</th>
+                                <th>비고</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                            <tr th:if="${paging.isEmpty()}"><td colspan="8"> 등록된 상품이 없습니다. </td></tr>
+                            <tr th:if="${paging.isEmpty()}"><td colspan="8"> 출발 예정인 상품이 없습니다. </td></tr>
                             <th:block th:each="packageDate,loop : ${paging}">
-                                <td th:text="${packageDate.id}"></td>
+                                <td>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="chk" class="chk"onclick="chkClicked()" th:value="${packageDate.id}">
+                                    </label>
+                                </td>
+                                <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                                 <td th:text="${packageDate.packages.packageName}"></td>
                                 <td th:text="${packageDate.departure}"></td>
                                 <td th:text="|${packageDate.packages.travelPeriod}박 ${packageDate.packages.travelPeriod+1}일|"></td>
                                 <td th:text="|${packageDate.packages.count - packageDate.remaincount} / ${packageDate.packages.count}|"></td>
+                                <td>
+                                    <a th:href="@{|/admin/package/departure/modify/${packageDate.id}|}" >수정</a>
                                 </td>
                                 </tr>
                             </th:block>
@@ -118,6 +161,9 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="option-item">
+                    <a href='javascript:dateDelete();' class="btn btn_navber">삭제</a>
                 </div>
                 <div class="pagination_area" th:if="${!paging.isEmpty()}">
                     <ul class="pagination"
@@ -156,3 +202,104 @@
 </body>
 
 </html>
+
+
+<script>
+
+    //체크박스 전체 선택 클릭 이벤트
+    function allChecked(target){
+
+        //전체 체크박스 버튼
+        const checkbox = document.getElementById('allCheckBox');
+
+        //전체 체크박스 버튼 체크 여부
+        const is_checked = checkbox.checked;
+
+        //전체 체크박스 제외한 모든 체크박스
+        if(is_checked){
+            //체크박스 전체 체크
+            chkAllChecked()
+        }
+
+        else{
+            //체크박스 전체 해제
+            chkAllUnChecked()
+        }
+    }
+
+    //자식 체크박스 클릭 이벤트
+    function chkClicked(){
+
+        //체크박스 전체개수
+        const allCount = document.querySelectorAll(".chk").length;
+
+        //체크된 체크박스 전체개수
+        const query = 'input[name="chk"]:checked'
+        const selectedElements = document.querySelectorAll(query)
+        const selectedElementsCnt = selectedElements.length;
+
+        //체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 전체 체크박스 체크
+        if(allCount == selectedElementsCnt){
+            document.getElementById('allCheckBox').checked = true;
+        }
+
+        //같지않으면 전체 체크박스 해제
+        else{
+            document.getElementById('allCheckBox').checked = false;
+        }
+    }
+
+    //체크박스 전체 체크
+    function chkAllChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = true;
+        });
+    }
+
+    //체크박스 전체 체크 해제
+    function chkAllUnChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = false;
+        });
+    }
+
+    //글삭제
+    function dateDelete(){
+        //체크박스 체크된 항목
+        const query = 'input[name="chk"]:checked'
+        const selectedElements = document.querySelectorAll(query)
+
+        //체크박스 체크된 항목의 개수
+        const selectedElementsCnt = selectedElements.length;
+
+        if(selectedElementsCnt == 0){
+            alert("삭제할 항목을 선택해주세요.");
+            return false;
+        }
+
+        else{
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                //배열생성
+                const arr = new Array(selectedElementsCnt);
+
+                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
+                    arr[i] = v.value;
+                });
+
+                const form = document.createElement('form');
+                form.setAttribute('method', 'post');        //Post 메소드 적용
+                form.setAttribute('action','booking/departure/delete');
+
+                var input1 = document.createElement('input');
+                input1.setAttribute("type", "hidden");
+                input1.setAttribute("name", "packageDate");
+                input1.setAttribute("value", arr);
+                form.appendChild(input1);
+                console.log(form);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    }
+
+</script>
