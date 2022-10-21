@@ -1,7 +1,6 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.*;
-import com.project.tour.kakao.service.KakaoPayService;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
@@ -21,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,14 +31,12 @@ public class PayController {
     private final MemberService memberService;
     private final PackageDateService packageDateService;
 
-    String payDate ="";
-
     //마이페이지에서 결제대기 누르면 넘어오는 결제 페이지
     @PreAuthorize("isAuthenticated()")
     @GetMapping
     public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 106; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
+        long bookingNum = 4; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //로그인 정보
         Member member;
@@ -83,13 +79,12 @@ public class PayController {
         payForm.setPayMethod(payMethod);
         payForm.setPayInfo(impUid);
         payForm.setTotalPrice(payTotalPrice);
-        payDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
 
         //데이터 저장할 때 넘길 정보 : userbooking,member
         UserBooking userBooking = userBookingService.getUserBooking(id);
 
         //1. pay 테이블 데이터 저장
-        payService.create(userBooking, member, payDate, payForm);
+        payService.create(userBooking, member, payForm);
 
         //2. userBooking 테이블 bookingStatus 데이터 수정
         userBookingService.modifyBookingStatus(userBooking, 2);
@@ -107,7 +102,6 @@ public class PayController {
     @GetMapping("/complete")
     public String confirmation(Model model, @LoginUser SessionUser user, Principal principal){
 
-        System.out.println("여기는 오나요 3");
         //로그인 정보
         Member member;
         if(memberService.existByEmail(principal.getName())){
@@ -120,12 +114,9 @@ public class PayController {
         //member정보
         model.addAttribute("member",member);
 
-        //pay 테이블 데이터 들고오기
-        long payNum = payService.getPayNum(member, payDate);
-        Pay pay = payService.getPay(payNum);
+        //제일 마지막에 결제된 pay정보를 들고 오기
+        Pay pay = payService.getRecentPay();
         model.addAttribute("pay",pay);
-
-        System.out.println("pay.getPayTotalPrice() = " + pay.getPayTotalPrice());
 
         return "booking-pay/payment_confirmation";
 

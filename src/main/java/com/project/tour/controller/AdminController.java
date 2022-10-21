@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -28,15 +29,15 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-   private final AdminPackageService adminPackageService;
+    private final AdminPackageService adminPackageService;
 
-   private final AdminPackageDateService adminPackageDateService;
+    private final AdminPackageDateService adminPackageDateService;
 
-   private final UserBookingService userBookingService;
+    private final UserBookingService userBookingService;
 
-   private final MemberService memberService;
+    private final MemberService memberService;
 
-   private final MypageService mypageService;
+    private final MypageService mypageService;
 
     @GetMapping("/main")
     public String admin_main() {
@@ -44,12 +45,19 @@ public class AdminController {
     }
 
     @GetMapping("/booking")
-    public String admin_booking() {
+    public String admin_booking(
+            @RequestParam(value = "packageno", required = false) Long packageNum,
+            Model model, @PageableDefault Pageable pageable) {
+
+        Page<PackageDate> paging = adminPackageDateService.getList(packageNum,pageable);
+        model.addAttribute("paging",paging);
+      // model.addAttribute("date",packageDate);
+
         return "admin/admin_Booking";
     }
 
 
- //예약 회원 조회
+    //예약 회원 조회
     @GetMapping("/bookingUser")
     public String admin_bookingUser(Model model, @PageableDefault Pageable pageable,Package aPackage, Member member) {
 
@@ -57,6 +65,7 @@ public class AdminController {
         model.addAttribute("Member",member);
         model.addAttribute("Package",aPackage);
         model.addAttribute("paging",paging);
+        model.addAttribute("localDateTime", LocalDateTime.now());
 
         return "admin/admin_BookingUser";
     }
@@ -70,7 +79,7 @@ public class AdminController {
 
     @PostMapping("/packageForm")
     public String createPackagePost(PackageCreate packageCreate, @RequestParam("image1") MultipartFile multipartFile1,
-                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
+                                    @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
 
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
@@ -101,26 +110,29 @@ public class AdminController {
         return "admin/admin_PackageList";
     }
 
-   //패키지 상품 삭제
-    @GetMapping("/package/delete/{id}")
-    public String packageDelete(@PathVariable("id") Long id) {
+    //패키지 상품 삭제
+    @PostMapping("/package/delete")
+    public String packageDelete(@RequestParam List<String> packageNum) {
 
-        Package aPackage = adminPackageService.getPackage(id);
-        adminPackageService.delete(aPackage);
-
+        for(int i=0; i<packageNum.size(); i++){
+            Long id = Long.valueOf(packageNum.get(i));
+            adminPackageService.deletePackage(id);
+        }
         return "redirect:/admin/packageList";
     }
 
     //패키지 상품 수정
 
-   @GetMapping("/package/modify/{id}")
-   public String packageModify(PackageCreate packageModify,
-                               BindingResult bindingResult,@PathVariable("id") Long id ){
+    @GetMapping("/package/modify/{id}")
+    public String packageModify(PackageCreate packageModify,
+                                BindingResult bindingResult,@PathVariable("id") Long id ){
+
+
 
         Package aPackage = adminPackageService.getPackage(id);
+        PackageDate packageDate = adminPackageDateService.getDate(id);
 
-
-       packageModify.setPackageName(aPackage.getPackageName());
+        packageModify.setPackageName(aPackage.getPackageName());
         packageModify.setLocation1(aPackage.getLocation1());
         packageModify.setLocation2(aPackage.getLocation2());
         packageModify.setHotelName(aPackage.getHotelName());
@@ -134,9 +146,11 @@ public class AdminController {
         packageModify.setPreviewImage(aPackage.getPreviewImage());
         packageModify.setDetailImage(aPackage.getDetailImage());
 
+        packageModify.setAprice(packageDate.getAprice());
 
 
-       return "admin/admin_Package";
+
+        return "admin/admin_Package";
     }
 
     @PostMapping("package/modify/{id}")
@@ -186,38 +200,25 @@ public class AdminController {
     }
 
     //회원 정보 수정(관리자용)
-    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/user/update/{email}")
-    public String updateUser(Model model, Principal principal, MemberCreate memberCreate,@PathVariable("email") String eamil){
+    public String updateUser(Model model, Principal principal,
+                             MemberCreate memberCreate,@PathVariable("email") String eamil){
 
         Member member = memberService.getMember(String.valueOf(eamil));
         memberCreate.setBirth(member.getBirth());
         memberCreate.setEmail(member.getEmail());
         memberCreate.setName(member.getName());
-        memberCreate.setEmail(member.getEmail());
         memberCreate.setPhone_num(member.getPhone());
         memberCreate.setPassword1(member.getPassword());
 
-
         String keywords = member.getKeyword();
-
         System.out.println(keywords);
 
-        String words[] = keywords.split(",");
-
-        String keyword = "";
-
-        for(int i = 0;i<words.length;i++){
-            keyword = words[i];
-
-        }
-
+        model.addAttribute("keywords",keywords);
 
         return "admin/admin_profileUpdate";
 
     }
-
-    /* 추후 수정 (회원 수정, 탈퇴)
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/user/update/{email}")
@@ -225,23 +226,23 @@ public class AdminController {
 
         Member member = memberService.getMember(String.valueOf(eamil));
 
-        mypageService.updateProfile(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword());
+        String keyword = memberCreate.getKeyword();
+        System.out.println(keyword);
+
+
+        adminPackageService.updateUser(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword(),memberCreate.getPhone_num());
 
         return "redirect:/admin/user";
-
     }
 
     //회원 탈퇴 시키기
-
     @GetMapping("/user/delete/{email}")
-    public String packageDelete(@PathVariable("email") String eamil) {
-
-        Member member = memberService.getMember(String.valueOf(eamil));
-        adminPackageService.delete(aPackage);
-
-        return "redirect:/admin/packageList";
+    public String packageDelete(@PathVariable("email") String email) {
+        Member member = memberService.getMember(String.valueOf(email));
+        adminPackageService.delete(member);
+        return "redirect:/admin/user";
     }
-*/
+
 
 
 //판매관련

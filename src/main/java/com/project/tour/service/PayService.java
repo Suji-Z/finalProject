@@ -16,13 +16,13 @@ public class PayService {
     private final PayRepository payRepository;
 
     //pay테이블 저장하기
-    public void create(UserBooking userBooking, Member member, String payDate, PayForm payForm){
+    public void create(UserBooking userBooking, Member member, PayForm payForm){
 
         Pay pay = new Pay();
 
         pay.setUserBooking(userBooking);
         pay.setMember(member);
-        pay.setPayDate(payDate);
+        pay.setPayDate(LocalDateTime.now());
         pay.setPayInfo(payForm.getPayInfo());
         pay.setPayTotalPrice(payForm.getTotalPrice());
         pay.setPayMethod(payForm.getPayMethod());
@@ -31,11 +31,20 @@ public class PayService {
     }
 
     //
-    public long getPayNum(Member member, String payDate){
+//    public long getPayNum(Member member, LocalDateTime payDate){
+//
+//        long payNum = payRepository.findByMemberAndPayDate(member, payDate).get().getId();
+//
+//        return payNum;
+//    }
 
-        long payNum = payRepository.findByMemberAndPayDate(member, payDate).get().getId();
+    //member가 예약한 정보중에 젤 최근에 예약한 정보 가져오기
+    public  Pay getRecentPay(){
 
-        return payNum;
+        long id = payRepository.maxPayNum();
+        Optional<Pay> result = payRepository.findById(id);
+
+        return result.get();
     }
 
     public Pay getPay(long payNum){

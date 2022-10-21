@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +23,14 @@ public class CouponService {
     //user 가지고 있는 쿠폰번호로 쿠폰 정보 검색
     public List<Coupon> getCoupon(String couponNum){
 
-        //String[] str =couponNum.split(","); //1,2,3을 1 2 3으로 분리시켜 배열 저장
-        List<String> strlist = Arrays.asList(couponNum.split(",")); //1,2,3을 1 2 3으로 분리시켜 리스트 저장
-        List<Coupon> coupons = couponRepository.findByIdIn(strlist);
+        List<Coupon> coupons = new ArrayList<>();
+
+        if(!couponNum.equals("")){
+
+            //String[] str =couponNum.split(","); //1,2,3을 1 2 3으로 분리시켜 배열 저장
+            List<String> strlist = Arrays.asList(couponNum.split(",")); //1,2,3을 1 2 3으로 분리시켜 리스트 저장
+            coupons = couponRepository.findByIdIn(strlist);
+        }
 
         return coupons;
 

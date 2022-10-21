@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class UserBookingForm {
 
     private String request;
 
-    private String bookingDate;
+    private LocalDateTime bookingDate;
 
     private int bookingTotalPrice;
 

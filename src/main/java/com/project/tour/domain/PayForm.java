@@ -3,6 +3,8 @@ package com.project.tour.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class PayForm {
@@ -11,7 +13,7 @@ public class PayForm {
 
     int totalPrice;
 
-    String payDate;
+    LocalDateTime payDate;
 
     String payInfo;
 }

@@ -64,11 +64,11 @@
                                 <ul>
                                     <li><span class="name_first">예약번호</span> <span class="last_name" th:text="${userBooking.id}">예약번호</span></li>
                                     <li><span class="name_first">예약날짜</span> <span
-                                            class="last_name" th:text="${userBooking.bookingDate}"></span></li>
+                                            class="last_name" th:text="${#temporals.format(userBooking.bookingDate,'yyyy-MM-dd HH:mm:ss')}"></span></li>
                                     <li><span class="name_first">출발일</span> <span
-                                            class="last_name" th:text="${userBooking.departure}"></span></li>
+                                            class="last_name" th:text="${#temporals.createDate(userBooking.departure, 'yyyyMMdd')}"></span></li>
                                     <li><span class="name_first">도착일</span> <span
-                                            class="last_name" th:text="${userBooking.arrival}">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
+                                            class="last_name" th:text="${#temporals.createDate(userBooking.arrival, 'yyyyMMdd')}"></span></li>
                                     <li><span class="name_first">예약인원</span> <span
                                             class="last_name" th:text="|총 ${userBooking.bookingTotalCount}명
                                             (성인 : ${userBooking.aCount}명, 아동 : ${userBooking.cCount}명, 유아 : ${userBooking.bCount}명) |">4명</span></li>
@@ -88,7 +88,7 @@
                                     <li><span class="name_first">여행자 생년월일</span> <span
                                             class="last_name" th:text="${userBooking.travelerBirth}"></span></li>
                                     <li><span class="name_first">총 결제금액</span> <span
-                                            class="last_name" th:text="${userBooking.bookingTotalPrice}">4명</span></li>
+                                            class="last_name" th:text="|${userBooking.bookingTotalPrice}원|">4명</span></li>
                                     <li><span class="name_first">요청사항</span> <span
                                             class="last_name" th:text="${userBooking.request}">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
                                 </ul>

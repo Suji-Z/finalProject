@@ -64,11 +64,11 @@
                             <ul>
                                 <li><span class="name_first">결제번호</span> <span class="last_name" th:text="${pay.id}">예약번호</span></li>
                                 <li><span class="name_first" >결제날짜</span> <span
-                                        class="last_name" th:text="${pay.payDate}"></span></li>
+                                        class="last_name" th:text="${#temporals.format(pay.payDate,'yyyy-MM-dd HH:mm:ss')}"></span></li>
                                 <li><span class="name_first">출발일</span> <span
-                                        class="last_name" th:text="${pay.userBooking.departure}"></span></li>
+                                        class="last_name" th:text="${#temporals.createDate(pay.userBooking.departure, 'yyyyMMdd')}"></span></li>
                                 <li><span class="name_first">도착일</span> <span
-                                        class="last_name" th:text="${pay.userBooking.arrival}">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
+                                        class="last_name" th:text="${#temporals.createDate(pay.userBooking.arrival, 'yyyyMMdd')}">2022-10-14 PM06:00 (endDate + flighthour)</span></li>
                                 <li><span class="name_first">예약인원</span> <span
                                         class="last_name" th:text="|총 ${pay.userBooking.bookingTotalCount}명
                                             (성인 : ${pay.userBooking.aCount}명, 아동 : ${pay.userBooking.cCount}명, 유아 : ${pay.userBooking.bCount}명) |">4명</span></li>
