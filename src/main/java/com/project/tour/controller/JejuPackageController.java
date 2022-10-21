@@ -82,21 +82,20 @@ public class JejuPackageController {
             keyword=null;
         }
 
-        if (transports==null || transports.equals("")){
-            transports=null;
-        }
-
         //항공사 다중선택시
         List<String> transport = null;
-        if (transports != null || !transports.equals("")) {
+        if (transports == null || transports.equals("")) {
+            transports=null;
+        } else {
             transport = Arrays.asList(transports.split(","));
         }
 
         //여행기간
         List<Integer> period = null;
         List<String> periods = null;
-
-        if(travelPeriods!=null || !travelPeriods.equals("")){
+        if(travelPeriods==null || travelPeriods.equals("")){
+            travelPeriods=null;
+        }else {
             period = new ArrayList<>();
             periods = Arrays.asList(travelPeriods.split(","));
 
