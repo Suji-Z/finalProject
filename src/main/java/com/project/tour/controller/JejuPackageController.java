@@ -60,6 +60,8 @@ public class JejuPackageController {
                               @RequestParam(value = "keyword", required = false) String keyword,
                               @RequestParam(value = "transports", required = false) String transports,
                               @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
+                              @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
+                              @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
                               Model model, @PageableDefault(size = 5) Pageable pageable,
                               SearchForm searchForm) {
 
@@ -92,9 +94,8 @@ public class JejuPackageController {
 
         //여행기간
         List<Integer> period = null;
-        List<String> periods = null;
+        List<String> periods;
         if(travelPeriods==null || travelPeriods.equals("")){
-            travelPeriods=null;
         }else {
             period = new ArrayList<>();
             periods = Arrays.asList(travelPeriods.split(","));
@@ -106,6 +107,16 @@ public class JejuPackageController {
                 }
         }
 
+        //가격범위
+        if(pricerangestr==null || pricerangestr.equals("") && pricerangeend==null || pricerangeend.equals("")){
+            pricerangestr =null;
+            pricerangeend = null;
+        }else{
+            log.info("pricerangestr : " + pricerangestr);
+            log.info("pricerangeend : " + pricerangeend);
+        }
+
+
         log.info("DATE : " + date);
         log.info("LOCATION : " + location);
         log.info("COUNT : " + String.valueOf(count));
@@ -113,7 +124,7 @@ public class JejuPackageController {
         log.info("TRANSPORTS : " + transports);
         log.info("TRAVELPERIOD : " + travelPeriods);
 
-        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pageable);
+        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
         model.addAttribute("paging", paging);
         model.addAttribute("searchForm", searchForm);

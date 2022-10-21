@@ -232,12 +232,15 @@
                             <h5>가격필터</h5>
                         </div>
                         <div class="filter-price">
-                            <p>
+                            <p style="margin-bottom:10px;">
                                 <label for="amount">가격범위：</label>
-                                <input type="text" id="amount" style="border:0; color:black; font-weight:bold; background:white;" disabled="disabled">
+                                <input type="text" id="amount" style="width:70%; border:0; color:black; font-weight:bold; background:white;" disabled="disabled">
                             </p>
                             <div id="slider-range"></div>
                         </div>
+                        <button class="apply">적용하기</button>
+                        <input type="hidden" id="pricerangestr" th:field="*{pricerangestr}"/>
+                        <input type="hidden" id="pricerangeend" th:field="*{pricerangeend}"/>
                     </div>
                     <div class="left_side_search_boxed">
                         <div class="left_side_search_heading">
@@ -332,23 +335,23 @@
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods})}" aria-label="Previous">
+                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
                                             <span aria-hidden="true">≪</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <li class="page-item" th:style="${paging.first}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods})}">＜</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
                                     </li>
                                     <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                                         th:classappend="(${page}==${paging.number+1})?'active'">
-                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods})} th:text="${page}"></a>
+                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
                                     </li>
                                     <li class="page-item" th:style="${paging.last}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods})}">＞</a>
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods})}"
+                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">≫</span>
                                             <span class="sr-only">Next</span>
