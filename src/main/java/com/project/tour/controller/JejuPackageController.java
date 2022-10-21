@@ -58,9 +58,12 @@ public class JejuPackageController {
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
                               @RequestParam(value = "keyword", required = false) String keyword,
-                              @RequestParam(value = "transports", required = false) List<String> transports,
+                              @RequestParam(value = "transports", required = false) String transports,
                               @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
-                              Model model, @PageableDefault Pageable pageable, SearchForm searchForm) {
+                              @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
+                              @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
+                              Model model, @PageableDefault(size = 5) Pageable pageable,
+                              SearchForm searchForm) {
 
         //여행객 버튼 기본값 0출력
         if(searchForm.getTotcount() == null || searchForm.getTotcount().equals("")){
@@ -77,11 +80,24 @@ public class JejuPackageController {
             date = date.replaceAll("-", "");
         }
 
-        //여행기간
-        List<Integer> period = new ArrayList<>();
-        List<String> periods = null;
+        if(keyword==null || keyword.equals("")){
+            keyword=null;
+        }
 
-        if(travelPeriods!=null){
+        //항공사 다중선택시
+        List<String> transport = null;
+        if (transports == null || transports.equals("")) {
+            transports=null;
+        } else {
+            transport = Arrays.asList(transports.split(","));
+        }
+
+        //여행기간
+        List<Integer> period = null;
+        List<String> periods;
+        if(travelPeriods==null || travelPeriods.equals("")){
+        }else {
+            period = new ArrayList<>();
             periods = Arrays.asList(travelPeriods.split(","));
 
             Iterator<String> it = periods.iterator();
@@ -91,6 +107,16 @@ public class JejuPackageController {
                 }
         }
 
+        //가격범위
+        if(pricerangestr==null || pricerangestr.equals("") && pricerangeend==null || pricerangeend.equals("")){
+            pricerangestr =null;
+            pricerangeend = null;
+        }else{
+            log.info("pricerangestr : " + pricerangestr);
+            log.info("pricerangeend : " + pricerangeend);
+        }
+
+
         log.info("DATE : " + date);
         log.info("LOCATION : " + location);
         log.info("COUNT : " + String.valueOf(count));
@@ -98,7 +124,7 @@ public class JejuPackageController {
         log.info("TRANSPORTS : " + transports);
         log.info("TRAVELPERIOD : " + travelPeriods);
 
-        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transports,period,pageable);
+        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
         model.addAttribute("paging", paging);
         model.addAttribute("searchForm", searchForm);

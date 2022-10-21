@@ -48,7 +48,9 @@ public class PackageService {
 
         return jejuRepository.findAll(spec);
     }
-    public Page<Package> getSearchList(String location, String date, Integer count, String keyword, List<String> transport, List<Integer> period, Pageable pageable) {
+    public Page<Package> getSearchList(String location, String date, Integer count, String keyword,
+                                       List<String> transport, List<Integer> period, Integer pricerangestr, Integer pricerangeend ,
+                                       Pageable pageable) {
 
         /** 날짜 */
         Specification<Package> spec = Specification.where(JejuSpecification.greaterThanOrEqualToDeparture(date));
@@ -81,6 +83,11 @@ public class PackageService {
             spec = spec.and(JejuSpecification.equalPeriod(period));
         }
 
+        /** 가격범위 */
+        if(pricerangestr !=null || pricerangeend !=null){
+            spec = spec.and(JejuSpecification.betweenPrice(pricerangestr,pricerangeend));
+        }
+
         List<Package> searchPackage = jejuRepository.findAll(spec);
 
         //중복제거
@@ -89,6 +96,7 @@ public class PackageService {
         while (it.hasNext()) {
             packageNum.add(it.next().getId());
         }
+
 
         //페이징처리
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
