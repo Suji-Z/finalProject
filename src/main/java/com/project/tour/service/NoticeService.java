@@ -32,6 +32,7 @@ public class NoticeService {
         notice.setNoticeImage(noticeForm.getNoticeImage());
         notice.setContent(noticeForm.getContent());
         notice.setHitCount(0);
+        notice.setPin(noticeForm.isPin());
 
         noticeRepository.save(notice);
 
@@ -43,6 +44,7 @@ public class NoticeService {
     public Page<Notice> getList(Pageable pageable){
 
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("pin"));
         sorts.add(Sort.Order.desc("id"));
 
         pageable = PageRequest.of(
@@ -85,6 +87,7 @@ public class NoticeService {
         notice.get().setCreated(LocalDateTime.now());
         notice.get().setNoticeImage(noticeForm.getNoticeImage());
         notice.get().setContent(noticeForm.getContent());
+        notice.get().setPin(noticeForm.isPin());
 
         noticeRepository.save(notice.get());
 
@@ -106,6 +109,12 @@ public class NoticeService {
 
         noticeRepository.save(notice.get());
 
+    }
+
+    //고정된 게시글 수
+    public int searchPin(){
+
+        return noticeRepository.countPin();
 
     }
 

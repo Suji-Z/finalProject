@@ -48,6 +48,8 @@
                     </div>
                     <div class="form-group col-lg-7">
                     <span><input type="text" class="shform-control" th:field="*{subject}" style="border-radius: 3px"></span>
+                      <span><input type="checkbox" th:field="${noticeForm.pin}" onclick="pinCheck(this);">이 글을 상단에 고정하기(최대 3개)</span>
+                      <input type="hidden" th:value="${pinCount}" id="pinCount"/>
                     </div>
                   </li>
 
@@ -81,7 +83,8 @@
                       <span style="text-align:center;margin-top: 15px">사진업로드</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <span><input type="file" class="shform-control" id="fileName" name="fileName" style="border-radius: 3px"></span>
+                      <span><input type="file" class="shform-control" id="fileName" name="fileName"
+                                   style="border-radius: 3px" accept="image/png, image/jpeg"></span>
                     </div>
                   </li>
 
@@ -91,6 +94,7 @@
                     </div>
                     <div class="form-group col-lg-7">
                       <span><textarea type="text" class="shform-control" th:field="*{content}" style="border-radius: 3px" rows="7"></textarea></span>
+                      <span><input type="checkbox" id="couponBtn" onclick="couponBtn();">쿠폰 발급 버튼 만들기</span>
                     </div>
                   </li>
 

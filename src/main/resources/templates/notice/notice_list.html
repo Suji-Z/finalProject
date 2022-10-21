@@ -70,13 +70,19 @@
               <tr th:if="${paging.isEmpty()}"><td colspan="5"> 게시글이 없습니다. </td></tr>
               <th:block th:each="notice,loop : ${paging}">
                 <tr>
-                  <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                  <td th:if="${!notice.pin}" th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                  <td th:if="${notice.pin}" ><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-megaphone-fill" viewBox="0 0 16 16">
+                    <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
+                  </svg></td>
+
                   <td th:if="${notice.category=='여행기획전'}">여행기획전</td>
                   <td th:if="${notice.category=='이벤트쿠폰'}">이벤트/쿠폰</td>
                   <td th:if="${notice.category=='기타'}">기타</td>
                   <td th:align="left">
-                    <a sec:authorize="isAuthenticated()" th:href="@{|/notice/article/${notice.id}|}" th:text="${notice.subject}"></a>
-                    <a sec:authorize="isAnonymous()" th:text="${notice.subject}"></a>
+                    <b th:if="${notice.pin}"><a sec:authorize="isAuthenticated()" th:href="@{|/notice/article/${notice.id}|}" th:text="${notice.subject}"></a></b>
+                    <b th:if="${notice.pin}"><a sec:authorize="isAnonymous()" th:text="${notice.subject}"></a></b>
+                    <a th:if="${!notice.pin}" sec:authorize="isAuthenticated()" th:href="@{|/notice/article/${notice.id}|}" th:text="${notice.subject}"></a>
+                    <a th:if="${!notice.pin}" sec:authorize="isAnonymous()" th:text="${notice.subject}"></a>
                   </td>
                   <td>관리자</td>
                   <td th:text="${#temporals.format(notice.created,'yyyy-MM-dd HH:mm')}">2022-09-25</td>
@@ -96,7 +102,8 @@
             <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,
                     endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
 
-              <li><a class="page-link" th:href="@{/notice/list?page=1}">&laquo;</a></li>
+              <li class="page-item" th:style="${paging.first}?'display:none'">
+                <a class="page-link" th:href="@{/notice/list?page=1}">&laquo;</a></li>
 
               <li class="page-item" th:style="${paging.first}?'display:none'">
                 <a class="page-link" th:href="@{/notice/list(page=${paging.number})}">&lsaquo;</a>
@@ -111,7 +118,7 @@
                 <a class="page-link" th:href="@{/notice/list(page=${paging.number+2})}">&rsaquo;</a>
               </li>
 
-              <li class="page-item">
+              <li class="page-item" th:style="${paging.first}?'display:none'">
                 <a class="page-link" th:href="@{/notice/list(page=${paging.totalPages})}" >&rsaquo;</a>
               </li>
             </ul>

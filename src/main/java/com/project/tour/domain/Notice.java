@@ -29,6 +29,8 @@ public class Notice {
 
     private int hitCount;
 
+    private Boolean pin;
+
     @OneToMany(mappedBy = "notice",cascade = CascadeType.REMOVE)
     private List<NoticeReply> noticeReplyList;
 
@@ -37,7 +39,7 @@ public class Notice {
     public String getPhotosImagePath() {
         if (noticeImage == null || id == null) return null;
 
-        return "notice-photo/notice" + id + "'s file";
+        return "notice-photo/notice" + id + "'s file/" + noticeImage;
     }
 
 }

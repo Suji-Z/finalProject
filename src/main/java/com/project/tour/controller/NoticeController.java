@@ -8,6 +8,7 @@ import com.project.tour.service.MemberService;
 import com.project.tour.service.NoticeService;
 import com.project.tour.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -31,6 +32,7 @@ import java.util.List;
 @RequestMapping("/notice")
 public class NoticeController {
 
+    @Autowired
     private final NoticeService noticeService;
 
     //글작성 페이지 띄우기 : 관리자만 가능
@@ -38,6 +40,9 @@ public class NoticeController {
     @GetMapping("/write")
     public String noticeWrite(@LoginUser SessionUser user, Principal principal,
                               NoticeForm noticeForm,Model model) {
+
+    int pinCount = noticeService.searchPin();
+    model.addAttribute("pinCount",pinCount);
 
         return "notice/notice_create";
     }
@@ -49,7 +54,7 @@ public class NoticeController {
                                @RequestParam("fileName") MultipartFile multipartFile) throws IOException {
 
         if(bindingResult.hasErrors()){
-            return "review/review_write";
+            return "notice/list";
         }
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -58,7 +63,10 @@ public class NoticeController {
         Notice notice = noticeService.create(noticeForm); //저장 후 객체 호출
 
         String uploadDir =  "notice-photo/notice" + notice.getId() + "'s file";
-        FileUploadUtil.saveFile(uploadDir,fileName,multipartFile);
+
+        if(!fileName.isEmpty()) {
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
 
         return"redirect:/notice/list";
 
@@ -114,7 +122,7 @@ public class NoticeController {
 
     }
 
-    //게시글 삭제
+    //게시글 수정
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/modify/{id}")
     public String noticeModify2(@PathVariable("id") Long id, Model model, @Valid NoticeForm noticeForm,

@@ -56,13 +56,15 @@
                                         <colspan style="text-align:center;width: 100px">조회수</colspan>
                                         <span th:text="${notice.hitCount}">10</span></li>
 
-aa
 
                                     <li><span style="padding: 20px 80px 20px 0px;" valign="top" height="200"></span>
                                         <div class="col-lg-8">
                                          <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
                                             resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
-                                                   th:text="${notice.content}">이벤트 안내사항이랑 할인 하는 제품으로 가는 링크 달아주기?</textarea>
+                                                   th:text="${notice.content}"></textarea>
+                                            <div class="">
+                                                <img th:src="@{${notice.photosImagePath}}"/>
+                                            </div>
                                      </div> </li>
 
                                     <li>
