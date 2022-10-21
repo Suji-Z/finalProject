@@ -3,6 +3,8 @@ package com.project.tour.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class SearchForm {
@@ -13,8 +15,7 @@ public class SearchForm {
     private String keyword;
     private Integer pricerangestr;
     private Integer pricerangeend;
-    private Double reviewstar;
-    private String transport;
-    private Integer travelPeriod;
+    private List<String> transports;
+    private List<String> travelPeriods;
 
 }
