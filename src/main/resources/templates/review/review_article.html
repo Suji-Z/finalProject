@@ -232,14 +232,13 @@
                                     <div class="comment_author_name">
                                         <h4 th:text="${reviewReply.author.name}">배수지</h4> &nbsp;
                                         <h5 th:text="${#temporals.format(reviewReply.created,'yyyy-MM-dd HH:mm')}"></h5>&nbsp;
-                                        <a th:if="${#lists.size(reviewReply.voter)}==0" class="replyRecommend"
-                                           href="javascript:void(0);" th:data-uri="@{|/review/replyVote/${reviewReply.id}|}">
 
-                                            <i class="fa-regular fa-heart"></i>좋아요</a>
+                                        <a th:if="${!replyLike}" class="replyRecommend" th:href="@{|/review/replyVote/${reviewReply.id}|}">
 
-                                        <a th:if="${#lists.size(reviewReply.voter)}!=0" class="replyCancel"
-                                           href="javascript:void(0);" th:data-uri="@{|/review/replyVote/${reviewReply.id}|}">
-                                            <i class="fas fa-heart"></i>좋아요</a>
+                                            <i class="fa-regular fa-heart"></i>좋아요</a>&nbsp;
+
+                                        <a th:if="${replyLike}" class="replyCancel" th:href="@{|/review/replyVote/${reviewReply.id}|}">
+                                            <i class="fas fa-heart"></i>좋아요</a>&nbsp;
 
 
 
@@ -249,29 +248,29 @@
                                         <a th:href="@{|/review/replyDelete/${reviewReply.id}|}" sec:authorize="isAuthenticated()"
                                            th:if="${reviewReply.author!=null and #authentication.getPrincipal().getUsername()==reviewReply.author.email}">삭제</a>
 
-                                        <script type="text/javascript">
-                                            const replyRecommendBtn = document.getElementsByClassName("replyRecommend");
-                                            Array.from(replyRecommendBtn).forEach(function(element){
-                                                element.addEventListener('click',function(){
-                                                    if(confirm("댓글을 추천하시겠습니까?")){
+<!--                                        <script type="text/javascript">-->
+<!--                                            const replyRecommendBtn = document.getElementsByClassName("replyRecommend");-->
+<!--                                            Array.from(replyRecommendBtn).forEach(function(element){-->
+<!--                                                element.addEventListener('click',function(){-->
+<!--                                                    if(confirm("댓글을 추천하시겠습니까?")){-->
 
-                                                        location.href=this.dataset.uri;
-                                                    }
-                                                });
-                                            });
+<!--                                                        location.href=this.dataset.uri;-->
+<!--                                                    }-->
+<!--                                                });-->
+<!--                                            });-->
 
 
-                                            const replyCancelBtn = document.getElementsByClassName("replyCancel");
-                                            Array.from(replyCancelBtn).forEach(function(element){
-                                                element.addEventListener('click',function(){
-                                                    if(confirm("댓글추천을 취소하시겠습니까?")){
+<!--                                            const replyCancelBtn = document.getElementsByClassName("replyCancel");-->
+<!--                                            Array.from(replyCancelBtn).forEach(function(element){-->
+<!--                                                element.addEventListener('click',function(){-->
+<!--                                                    if(confirm("댓글추천을 취소하시겠습니까?")){-->
 
-                                                        location.href=this.dataset.uri;
-                                                    }
-                                                });
-                                            });
+<!--                                                        location.href=this.dataset.uri;-->
+<!--                                                    }-->
+<!--                                                });-->
+<!--                                            });-->
 
-                                        </script>
+<!--                                        </script>-->
 
 
                                     </div>
