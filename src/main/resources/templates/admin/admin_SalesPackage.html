@@ -9,10 +9,10 @@
 
                 <div class="col-lg-12">
                     <div class="common_bannner_text">
-                        <h2>패키지별 매출</h2>
+                        <h2>패키지 결제 내역</h2>
                         <ul>
                             <li><a href="index.html">Home</a></li>
-                            <li><span><i class="fas fa-circle"></i></span>Booking List</li>
+                            <li><span><i class="fas fa-circle"></i></span>Package Sales List</li>
                         </ul>
                     </div>
                 </div>
@@ -41,8 +41,18 @@
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">패키지 상품 등록</a></li>
-                                            <li><a href="flight-booking.html">패키지 상품 리스트</a></li>
+                                            <li><a th:href="@{/admin/packageList}">패키지 상품 리스트</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                         style="">
+                                        <ul>
+                                            <li><a th:href="@{/admin/bookingUser}">회원 예약 관리 </a></li>
                                         </ul>
                                     </div>
 
@@ -53,31 +63,22 @@
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">회원 리스트</a></li>
+                                            <li><a th:href="@{/admin/user}">회원 리스트</a></li>
                                             <li><a href="flight-booking.html"></a></li>
                                         </ul>
                                     </div>
 
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">패키지 예약 현황</a></li>
-                                            <li><a href="flight-booking.html">회원 예약 관리 </a></li>
-                                        </ul>
-                                    </div>
 
-                                </li>
+
 
                                 <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">패키지별 매출 관리</a></li>
-                                            <li><a href="flight-booking.html">회원별 매출 관리</a></li>
+                                            <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
+                                            <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                                         </ul>
                                     </div>
 
@@ -94,51 +95,67 @@
                 <div class="col-lg-8-sally">
 
                     <div class="dashboard_common_table">
-                        <h3>패키지별 매출 관리</h3>
+                        <h3>패키지 결제 내역</h3>
                         <div class="table-responsive-lg table_common_area">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>패키지 번호</th>
+                                        <th>지역</th>
                                         <th>패키지 이름</th>
                                         <th>게시 기간</th>
-                                        <th>인원</th>
                                         <th>총 매출액</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>01</td>
-                                        <td>터키 아이스크림 먹는 패키지</td>
-                                        <td>2022.10.01~2022.10.31</td>
-                                        <td>20명</td>
-                                        <td>1,500,000원</td>
+                                <tr th:if="${paging.isEmpty()}"><td colspan="8"> 결제된 상품이 없습니다. </td></tr>
+                                <th:block th:each="pay,loop : ${paging}">
+                                    <td th:text="${pay.userBooking.aPackage.id}"></td>
+                                    <td th:text="|${pay.userBooking.aPackage.location1} ${pay.userBooking.aPackage.location2}|"></td>
+                                    <td th:text="${pay.userBooking.aPackage.packageName}"></td>
+                                    <td>
+                                        <span th:text="${#strings.substring(pay.userBooking.aPackage.postStart,0,10)}"/>
+                                        <span> ~ </span>
+                                        <span th:text="${#strings.substring(pay.userBooking.aPackage.postEnd,0,10)}"/>
+
+
+                                        <!--                                    <td th:text="${#strings.substring(pay.postStart,0,10)}"></td>-->
+<!--                                    <td>-->
+<!--                                        <span th:text="${#strings.substring(pay.postStart,0,10)}"/>-->
+<!--                                        <span>~</span>-->
+<!--                                        <span th:text="${#strings.substring(pay.postEnd,0,10)}"/>-->
+<!--                                    </td>-->
+                                    <td th:text="${pay.payTotalPrice}">
+                                    </td>
+                                    </td>
                                     </tr>
-                                    <tr>
-                                        <td>02</td>
-                                        <td>터키 아이스크림 안 먹는 패키지</td>
-                                        <td>2022.10.01~2022.10.31</td>
-                                        <td>4명</td>
-                                        <td>1,500,000원</td>
-                                    </tr>
+                                </th:block>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="pagination_area">
-                        <ul class="pagination">
+                    <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                        <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
+                                <a class="page-link" th:href="@{/admin/sales/package/?page=1}" aria-label="Previous">
+                                    <span aria-hidden="true">≪</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item" th:style="${paging.first}?'display:none'">
+                                <a class="page-link" th:href="@{/admin/sales/package(page=${paging.number})}">＜</a>
+                            </li>
+                            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                                th:classappend="(${page}==${paging.number+1})?'active'">
+                                <a class="page-link" th:href=@{/admin/sales/package(page=${page})} th:text="${page}"></a>
+                            </li>
+                            <li class="page-item" th:style="${paging.last}?'display:none'">
+                                <a class="page-link" th:href="@{/admin/sales/package(page=${paging.number+2})}">＞</a>
+                            </li>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
+                                <a class="page-link" th:href="@{/admin/sales/package(page=${paging.totalPages})}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">≫</span>
                                     <span class="sr-only">Next</span>
                                 </a>
                             </li>

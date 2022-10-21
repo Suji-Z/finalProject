@@ -41,8 +41,18 @@
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">패키지 상품 등록</a></li>
-                                            <li><a href="flight-booking.html">패키지 상품 리스트</a></li>
+                                            <li><a th:href="@{/admin/packageList}">패키지 상품 리스트</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                         style="">
+                                        <ul>
+                                            <li><a th:href="@{/admin/bookingUser}">회원 예약 관리 </a></li>
                                         </ul>
                                     </div>
 
@@ -53,31 +63,22 @@
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">회원 리스트</a></li>
+                                            <li><a th:href="@{/admin/user}">회원 리스트</a></li>
                                             <li><a href="flight-booking.html"></a></li>
                                         </ul>
                                     </div>
 
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">패키지 예약 현황</a></li>
-                                            <li><a href="flight-booking.html">회원 예약 관리 </a></li>
-                                        </ul>
-                                    </div>
 
-                                </li>
+
 
                                 <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a href="hotel-booking.html">패키지별 매출 관리</a></li>
-                                            <li><a href="flight-booking.html">회원별 매출 관리</a></li>
+                                            <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
+                                            <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                                         </ul>
                                     </div>
 

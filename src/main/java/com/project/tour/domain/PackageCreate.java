@@ -53,6 +53,8 @@ public class PackageCreate {
 
     private Long packageNum;
 
+    private String departure;
+
 
 
                                                                                                                                                                                                        private String transport;
