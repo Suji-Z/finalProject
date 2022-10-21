@@ -168,6 +168,7 @@ public class ReviewController {
         Review review = reviewService.getReview(id);
 
 
+
         Member member;
 
         if(memberService.existByEmail(principal.getName())){
@@ -354,6 +355,7 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/replyVote/{id}")
     public String reviewReplyVote(Principal principal, @PathVariable("id") Long id,@LoginUser SessionUser user){
+
 
         Review_reply review_reply = reviewReplyService.getReply(id);
 

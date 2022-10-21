@@ -108,6 +108,8 @@
                                     <h2 align="right"><a th:if="${reviewLike}" class="cancel" th:href="@{|/review/vote/${review.id}|}">
                                         <i class="fas fa-heart"></i></a>
                                     </h2>
+
+                                    <input type="text" id="reviewNum" name="reviewNum" th:value="${review.id}" hidden>
                              <h5 th:text="${review.author.name}"></h5>
                              
                              <h5 th:text="${#temporals.format(review.created,'yyyy-MM-dd HH:mm')}"></h5>
