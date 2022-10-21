@@ -5,6 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
 </head>
 
 <body>
@@ -62,10 +65,18 @@
                                          <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
                                             resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
                                                    th:text="${notice.content}"></textarea>
-                                            <div class="">
-                                                <img th:src="@{${notice.photosImagePath}}"/>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col-lg-8">
+                                            <div class="form-control">
+                                                <div class="">
+                                                    <span><h4> <img src="/assets/img/icon/hand-thumbs-up.svg" th:height="40" th:width="40"/>이 글이 도움되었습니다.</h4></span>
+                                                </div>
+                                                <br/>
                                             </div>
-                                     </div> </li>
+                                        </div>
+                                    </li>
 
                                     <li>
                                         <span th:if="${afterSubject}==''" style="padding-left: 50px;padding-right: 30px;"

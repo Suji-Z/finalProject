@@ -62,7 +62,7 @@ public class NoticeController {
 
         Notice notice = noticeService.create(noticeForm); //저장 후 객체 호출
 
-        String uploadDir =  "notice-photo/notice" + notice.getId() + "'s file";
+        String uploadDir =  "review-photo/" + notice.getId();
 
         if(!fileName.isEmpty()) {
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
@@ -86,7 +86,7 @@ public class NoticeController {
 
     //게시글 보기
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/article/{id}")
+    @RequestMapping("/article/{id}")
     public String noticeArticle(@PathVariable("id") Long id, Model model) {
 
         String beforeSubject = noticeService.getSubject(id-1);
