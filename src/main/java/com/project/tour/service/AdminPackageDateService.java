@@ -87,10 +87,25 @@ public class AdminPackageDateService {
         }
         return adminPackageDateRepository.saveAll(packageDates);
     }
+//출발일 삭제
+    public void deleteDate(Integer id) {
+        PackageDate packageDate = adminPackageDateRepository.findById(id).get();
+        adminPackageDateRepository.delete(packageDate);
+    }
 
+    //출발일 수정
 
-    public PackageDate getDate(Long id) {
-        Optional<PackageDate> op = adminPackageDateRepository.findById(Long.valueOf(String.valueOf(id))); //하나의 데이터 읽어옴
+    public void modifyDate (PackageDate packageDate, PackageCreate packageCreate) {
+        packageDate.setAprice(packageCreate.getAprice());
+        packageDate.setBprice(packageCreate.getBprice());
+        packageDate.setCprice(packageCreate.getCprice());
+        packageDate.setDiscount(packageCreate.getDiscount());
+        adminPackageDateRepository.save(packageDate);
+
+    }
+
+    public PackageDate getDate(Integer id) {
+        Optional<PackageDate> op = adminPackageDateRepository.findById(id); //하나의 데이터 읽어옴
 
         if (op.isPresent())
             return op.get();

@@ -3,6 +3,7 @@ package com.project.tour.controller;
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.service.*;
+import com.project.tour.util.FileUploadUtil;
 import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,9 +39,15 @@ public class AdminController {
 
     private final UserBookingService userBookingService;
 
+    private final PayService payService;
+
     private final MemberService memberService;
 
+    private final AdminSalesService adminSalesService;
+
     private final MypageService mypageService;
+
+
 
     @GetMapping("/main")
     public String admin_main() {
@@ -121,16 +131,25 @@ public class AdminController {
         return "redirect:/admin/packageList";
     }
 
+    //패키지 출발일 삭제
+    @PostMapping("/booking/departure/delete")
+    public String departureDelete(@RequestParam List<String> packageDate) {
+
+        for(int i=0; i<packageDate.size(); i++){
+            Integer id = Integer.valueOf(packageDate.get(i));
+            adminPackageDateService.deleteDate(id);
+        }
+        return "redirect:/admin/packageList";
+    }
+
+
     //패키지 상품 수정
 
     @GetMapping("/package/modify/{id}")
     public String packageModify(PackageCreate packageModify,
                                 BindingResult bindingResult,@PathVariable("id") Long id ){
 
-
-
         Package aPackage = adminPackageService.getPackage(id);
-        PackageDate packageDate = adminPackageDateService.getDate(id);
 
         packageModify.setPackageName(aPackage.getPackageName());
         packageModify.setLocation1(aPackage.getLocation1());
@@ -143,22 +162,32 @@ public class AdminController {
         packageModify.setPostEnd(aPackage.getPostEnd());
         packageModify.setTravelPeriod(aPackage.getTravelPeriod());
         packageModify.setKeyword(aPackage.getKeyword());
-        packageModify.setPreviewImage(aPackage.getPreviewImage());
-        packageModify.setDetailImage(aPackage.getDetailImage());
 
-        packageModify.setAprice(packageDate.getAprice());
-
-
-
-        return "admin/admin_Package";
+        return "admin/admin_PackageModify";
     }
 
-    @PostMapping("package/modify/{id}")
-    public String packageModify(@Validated PackageCreate packageCreate, @PathVariable("id") Long id) {
+    @PostMapping("/package/modify/{id}")
+    public String packageModify2(@Valid PackageCreate packageCreate,BindingResult bindingResult,
+                                 @RequestParam("image1") MultipartFile multipartFile1,
+                                 @RequestParam("image2") MultipartFile multipartFile2,
+
+                                 @PathVariable("id") Long id) throws IOException {
 
         Package aPackage = adminPackageService.getPackage(id);
 
+        String preview = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
+        String detail = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
+        packageCreate.setPreviewImage(preview);
+        packageCreate.setDetailImage(detail);
+
         adminPackageService.modify(aPackage,packageCreate);
+
+        String uploadDir1 = "package-preview/" + aPackage.getId();
+        String uploadDir2 = "package-detail/" + aPackage.getId();
+
+        FileUploadUtil.saveFile(uploadDir1,preview,multipartFile1);
+        FileUploadUtil.saveFile(uploadDir2,preview,multipartFile2);
+
         return "redirect:/admin/packageList";
 
     }
@@ -173,6 +202,39 @@ public class AdminController {
 
         return "admin/admin_BookingUser";
     }
+
+
+    // 패키지  출발일 수정
+    @GetMapping("/package/departure/modify/{id}")
+    public String departureModify(PackageCreate packageModify,
+                                  BindingResult bindingResult,@PathVariable("id") Integer id ){
+
+        PackageDate packageDate = adminPackageDateService.getDate(id);
+
+        packageModify.setAprice(packageDate.getAprice());
+        packageModify.setBprice(packageDate.getBprice());
+        packageModify.setCprice(packageDate.getCprice());
+        packageModify.setDiscount(packageDate.getDiscount());
+        packageModify.setDeparture(packageDate.getDeparture());
+
+        return "admin/admin_PackageDateModify";
+    }
+
+    @PostMapping("/package/departure/modify/{id}")
+    public String departureModify2(@Valid PackageCreate packageCreate,BindingResult bindingResult,
+                                 @PathVariable("id") Integer id) throws IOException {
+
+
+        PackageDate packageDate = adminPackageDateService.getDate(id);
+
+        adminPackageDateService.modifyDate(packageDate,packageCreate);
+
+        return "redirect:/admin/packageList";
+
+    }
+
+
+    //회원 예약 관리
 
     @GetMapping("package/bookingCheck/{id}")
     public String bookingCheck(@Validated UserBookingForm userBookingForm, @PathVariable("id") Long id){
@@ -247,9 +309,15 @@ public class AdminController {
 
 //판매관련
 
+//패키지 상품별 판매 관리
+    @GetMapping("/sales/package")
+    public String salesPackage(Model model,@PageableDefault Pageable pageable, Pay pay, Package aPackage) {
 
-    @GetMapping("admin_salespackage")
-    public String admin_salespackage() {
+        Page<Pay> paging =adminSalesService.getPayList(pageable);
+        model.addAttribute("paging",paging);
+        model.addAttribute("Pay",pay);
+        model.addAttribute("Package",aPackage);
+
         return "admin/admin_SalesPackage";
     }
 
@@ -258,8 +326,25 @@ public class AdminController {
         return "admin/admin_SalesPackageList";
     }
 
-    @GetMapping("admin_salesuser")
-    public String admin_salesuser() {
+    @GetMapping("/sales/user")
+    public String salesUser(Model model,@PageableDefault Pageable pageable, Pay pay, Package aPackage, Member member) {
+
+        List<Pay> paylist = payService.findAll();
+
+        Iterator<Pay> it = paylist.iterator();
+
+        List<Long> memberid = new ArrayList<>();
+
+        while (it.hasNext()){
+            memberid.add(it.next().getMember().getId());
+        }
+
+        Page<Member> paging = memberService.getpayList(memberid, pageable);
+
+        model.addAttribute("paging",paging);
+        model.addAttribute("Pay",pay);
+        model.addAttribute("Package",aPackage);
+
         return "admin/admin_salesUser";
     }
 

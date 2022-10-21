@@ -2,166 +2,166 @@
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 
-    <!-- Common Banner Area -->
-    <section id="common_banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="common_bannner_text">
-                        <h2>고객 예약 현황</h2>
+<!-- Common Banner Area -->
+<section id="common_banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="common_bannner_text">
+                    <h2>고객 예약 현황</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><span><i class="fas fa-circle"></i></span>Booking List</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Area -->
+
+<section id="dashboard_main_arae" class="section_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4-sally">
+                <div class="dashboard_sidebar">
+                    <div class="dashboard_sidebar_user">
+
+                        <h2>Admin</h2>
+
+                    </div>
+
+                    <div class="dashboard_menu_area">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><span><i class="fas fa-circle"></i></span>Booking List</li>
+
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>패키지 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a href="hotel-booking.html">패키지 상품 등록</a></li>
+                                        <li><a href="flight-booking.html">패키지 상품 리스트</a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a href="hotel-booking.html">회원 리스트</a></li>
+                                        <li><a href="flight-booking.html"></a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a href="hotel-booking.html">패키지 예약 현황</a></li>
+                                        <li><a href="flight-booking.html">회원 예약 관리 </a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a href="hotel-booking.html">패키지별 매출 관리</a></li>
+                                        <li><a href="flight-booking.html">회원별 매출 관리</a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+
+
+
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Dashboard Area -->
-
-    <section id="dashboard_main_arae" class="section_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4-sally">
-                    <div class="dashboard_sidebar">
-                        <div class="dashboard_sidebar_user">
-
-                            <h2>Admin</h2>
-
-                        </div>
-
-                        <div class="dashboard_menu_area">
-                            <ul>
-
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>패키지 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">패키지 상품 등록</a></li>
-                                            <li><a href="flight-booking.html">패키지 상품 리스트</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">회원 리스트</a></li>
-                                            <li><a href="flight-booking.html"></a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">패키지 예약 현황</a></li>
-                                            <li><a href="flight-booking.html">회원 예약 관리 </a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a href="hotel-booking.html">패키지별 매출 관리</a></li>
-                                            <li><a href="flight-booking.html">회원별 매출 관리</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
 
 
+            <div class="col-lg-8-sally">
 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-8-sally">
-
-                    <div class="dashboard_common_table">
-                        <h3>예약 현황 관리</h3>
-                        <div class="table-responsive-lg table_common_area">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>아이디</th>
-                                        <th>예약일</th>
-                                        <th>상품명</th>
-                                        <th>여행 기간</th>
-                                        <th>금액</th>
-                                        <th>진행상황</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:if="${paging.isEmpty()}"><td colspan="8"> 예약된 상품이 없습니다. </td></tr>
-                                    <th:block th:each="bookingUser,loop : ${paging}">
-                                        <td th:text="${bookingUser.member.email}"></td>
-                                        <td th:text="${#strings.substring(bookingUser.departure,0,10)}"></td>
-                                        <td th:text="${bookingUser.APackage.packageName}"></td>
-                                        <td th:text="|${#strings.substring(bookingUser.departure,0,10)} - ${#strings.substring(bookingUser.arrival,0,10)}|"></td>
-                                        <td th:text="${bookingUser.bookingTotalPrice}"></td>
-                                        <td th:switch="${bookingUser.bookingStatus}">
+                <div class="dashboard_common_table">
+                    <h3>예약 현황 관리</h3>
+                    <div class="table-responsive-lg table_common_area">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>아이디</th>
+                                <th>예약일</th>
+                                <th>상품명</th>
+                                <th>여행 기간</th>
+                                <th>금액</th>
+                                <th>진행상황</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${paging.isEmpty()}"><td colspan="8"> 예약된 상품이 없습니다. </td></tr>
+                            <th:block th:each="bookingUser,loop : ${paging}">
+                                <td th:text="${bookingUser.member.email}"></td>
+                              <!--  <td th:text="${#strings.substring(bookingUser.departure,0,10)}"></td>-->t
+                                <td th:text="${bookingUser.APackage.packageName}"></td>
+                               <!-- <td th:text="|${#strings.substring(bookingUser.departure,0,10)} - ${#strings.substring(bookingUser.arrival,0,10)}|"></td>-->
+                                <td th:text="${bookingUser.bookingTotalPrice}"></td>
+                                <td th:switch="${bookingUser.bookingStatus}">
                                             <span th:case="0">예약 확인 중
                                                <a th:href="@{|/admin/package/bookingCheck/${bookingUser.id}|}" th:text="승인" class="btn btn-sm btn-outline-secondary"></a>
                                             </span>
-                                            <span th:case="1" style="color:#46a546">결제 대기 중 </span>
-                                            <span th:case="2" style="color: #0044cc">결제 완료 </span>
-                                        </td>
-                                            </td>
-                                    </tr>
-                                    </th:block>
+                                    <span th:case="1" style="color:#46a546">결제 대기 중 </span>
+                                    <span th:case="2" style="color: #0044cc">결제 완료 </span>
+                                </td>
+                                </td>
+                                </tr>
+                            </th:block>
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="pagination_area" th:if="${!paging.isEmpty()}">
-                        <ul class="pagination"
-                            th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/admin/bookingUser?page=1}" aria-label="Previous">
-                                    <span aria-hidden="true">≪</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item" th:style="${paging.first}?'display:none'">
-                                <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.number})}">＜</a>
-                            </li>
-                            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
-                                th:classappend="(${page}==${paging.number+1})?'active'">
-                                <a class="page-link" th:href=@{/admin/bookingUser(page=${page})} th:text="${page}"></a>
-                            </li>
-                            <li class="page-item" th:style="${paging.last}?'display:none'">
-                                <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.number+2})}">＞</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.totalPages})}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">≫</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                    <ul class="pagination"
+                        th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/admin/bookingUser?page=1}" aria-label="Previous">
+                                <span aria-hidden="true">≪</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:style="${paging.first}?'display:none'">
+                            <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.number})}">＜</a>
+                        </li>
+                        <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                            th:classappend="(${page}==${paging.number+1})?'active'">
+                            <a class="page-link" th:href=@{/admin/bookingUser(page=${page})} th:text="${page}"></a>
+                        </li>
+                        <li class="page-item" th:style="${paging.last}?'display:none'">
+                            <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.number+2})}">＞</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/admin/bookingUser(page=${paging.totalPages})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">≫</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
 
-    </section>
+</section>
 
 </body>
 
