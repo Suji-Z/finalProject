@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layoutFile :: layout(~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+    <!-- Common Banner Area -->
+    <section id="common_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="common_bannner_text">
+                        <h2>패키지 상품 수정</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><span><i class="fas fa-circle"></i></span> Package</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Booking Submission Areas -->
+    <section id="tour_booking_submission" class="section_padding" style="margin: auto">
+        <form th:action th:object="${packageCreate}" method="post" enctype="multipart/form-data">
+        <div class="col-lg-8">
+        </div>
+        <div class="container" style="margin: auto; width: 70%">
+            <div class="row">
+
+                <div class="col-lg-13">
+                    <div class="tou_booking_form_Wrapper">
+
+                        <div class="booking_tour_form">
+                            <h3 class="heading_theme">패키지 상품 수정</h3>
+                            <div class="tour_booking_form_box">
+                                <div class="your_info_arae">
+                                    <ul>
+                                        <li><span style="text-align:center;width: 14%">패키지 이름</span>
+                                            <span><input type="text" th:field="*{packageName}" style="width:500px;border-radius: 3px"></span></li>
+                                        <li><span style="text-align:center;width: 14%">여행 지역</span>
+                                            <span>
+                                                <select th:field="*{location1}" onchange="categoryChange(this)">
+	                                            <option value="" selected="selected">선택하세요</option>
+                                                    <option th:value="아시아">아시아</option>
+                                                    <option th:value="유럽">유럽</option>
+	                                                <option th:value="미국">미국</option>
+                                                    <option th:value="제주">제주</option>
+                                                </select>
+
+                                                <select th:field="*{location2}">
+                                                    <option value="" selected="selected">상세 지역을 선택하세요</option>
+                                                </select>
+
+                                                <script>
+                                                    function categoryChange(f) {
+                                                        var location2_a = ["일본", "중국", "홍콩", "발리","태국","싱가폴","베트남","필리핀"];
+                                                        var location2_b = ["스페인","영국","프랑스","이탈리아","독일","그리스","터키"];
+                                                        var location2_c = ["하와이","뉴욕","LA","라스베이거스","워싱턴","시카고","캐나다"];
+                                                        var location2_d = ["제주시", "중문", "서귀포", "애월"];
+                                                        var target = document.getElementById("location2");
+
+                                                        if(f.value == "아시아") var e = location2_a;
+                                                        else if(f.value == "유럽") var e = location2_b;
+                                                        else if(f.value == "미국") var e = location2_c;
+                                                        else if(f.value == "제주") var e = location2_d;
+
+                                                        target.options.length = 0;
+
+                                                        for (x in e) {
+                                                            var opt = document.createElement("option");
+                                                            opt.setAttribute("th:value",e[x]);
+                                                            opt.innerHTML = e[x];
+                                                            target.appendChild(opt);
+                                                        }
+                                                    }
+                                                </script>
+
+
+                                            </span></li>
+
+                                        <li><span style="text-align:center;width: 14%">패키지 예약 인원</span>
+                                            <span> <input type="text" style="width: 100px" th:field="*{count}"> </span></li>
+
+
+                                    
+                                        <li><span style="text-align:center;width: 14%">상품 게시 기간</span>
+                                            <span>
+                                                시작일 &nbsp;  <input style="width: 200px" type="date" th:field="*{postStart}"></br></br>
+                                                마감일  &nbsp; <input style="width: 200px" type="date" th:field="*{postEnd}">
+                                            </span></li>
+
+                                        <li><span style="text-align:center;width: 14%">여행 기간</span>
+                                            <span> <input type="text" style="width: 300px" th:field="*{travelPeriod}"> </span></li>
+
+
+
+                                        <li><span style="text-align:center;width: 14%">숙소</span>
+                                            <span> <input type="text" style="width: 300px" th:field="*{hotelName}"> </span></li>
+
+                                        <li><span style="text-align:center;width: 14%">교통</span>
+                                            <span>
+                                                 <select style="width: 250px" th:field="*{transport}">
+                                                     <option value = "" selected>항공사를 선택하세요</option>
+                                                     <option value = "대한항공">대한항공</option>
+                                                     <option value = "아시아나항공">아시아나항공</option>
+                                                      <option value = "아시아나항공">제주항공</option>
+                                                      <option value = "티웨이항공">티웨이항공</option>
+                                                       <option value = "필리핀항공">필리핀항공</option>
+                                                      <option value = "비엣젯항공">비엣젯항공</option>
+                                                       <option value = "ANA항공">ANA항공</option>
+                                                   </select>
+                                            </span></li>
+                                        <li><span style="text-align:center;width: 14%">썸네일 이미지</span>
+                                            <span>
+                                                <input type="file" name="image1" accept="image/png, image/jpeg" style="border-radius: 3px">
+                                            </span></li>
+                                        <li><span style="text-align:center;width: 14%">패키지 상세 이미지</span>
+                                            <span>
+                                                <input type="file" name="image2" accept="image/png, image/jpeg" style="border-radius: 3px">
+                                            </span></li>
+
+                                        <li><span style="text-align:center;width: 14%">패키지 키워드 </span>
+
+                                            <span>
+                                                <input type="radio" th:field="*{keyword}" value="healing"/> 힐링
+                                                <input type="radio" th:field="*{keyword}"  value="activity"/> 액티비티
+                                                <input type="radio" th:field="*{keyword}"  value="golf"/> 골프&nbsp;&nbsp;
+                                                <input type="radio" th:field="*{keyword}"  value="hocance"/> 호캉스&nbsp;&nbsp;<br/>
+                                                <input type="radio" th:field="*{keyword}"  value="family"/> 가족여행 &nbsp;&nbsp;
+                                                <input type="radio" th:field="*{keyword}"  value="food"/> 식도락여행&nbsp;&nbsp;
+                                                <input type="radio" th:field="*{keyword}"  value="culture"/> 문화/예술&nbsp;&nbsp;
+                                                <input type="radio" th:field="*{keyword}"  value="animal"/> 애견동반
+                                            </span>
+
+                                        </li>
+
+                                        <li><span style="text-align:center;width: 14%">패키지 상세 설명</span>
+                                            <span> <textarea type="text" style="width: 650px" rows="8" th:field="*{packageInfo}"></textarea> </span></li>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="common_form_submit">
+            <button class="btn btn_theme btn_md" type="submit">등록하기</button>
+        </div>
+        </form>
+
+    </section>
+
+
+
+
+</body>
+
+</html>
