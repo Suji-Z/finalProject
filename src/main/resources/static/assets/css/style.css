@@ -4353,6 +4353,13 @@ textarea {
     color: var(--main-color);
 }
 
+.href-jennie a:hover{
+    color: var(--main-color);
+}
+.href-jennie a{
+    color: var(--black-color);
+}
+
 .common_form_submit {
     text-align: center;
 }

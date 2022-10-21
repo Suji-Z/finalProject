@@ -32,4 +32,12 @@ public class Notice {
     @OneToMany(mappedBy = "notice",cascade = CascadeType.REMOVE)
     private List<NoticeReply> noticeReplyList;
 
+    //이미지 경로 불러오기
+    @Transient
+    public String getPhotosImagePath() {
+        if (noticeImage == null || id == null) return null;
+
+        return "notice-photo/notice" + id + "'s file";
+    }
+
 }

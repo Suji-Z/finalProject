@@ -57,113 +57,67 @@
             <table class="table">
               <thead>
               <tr>
-                <th width="130">글번호</th>
+                <th width="100">글번호</th>
+                <th width="180">분류</th>
                 <th width="500">제목</th>
                 <th width="130">글쓴이</th>
                 <th width="180">작성일</th>
-                <th>조회수</th>
+                <th width="130">조회수</th>
 
 
               </tr>
               </thead>
-              <tbody>
-              <tr>
-                <td>06.</td>
-                <td align="left">2022년 3분기 가을여행이벤트안내</td>
-                <td>관리자</td>
-                <td>2022-09-25</td>
-                <td>10</td>
+              <tr th:if="${paging.isEmpty()}"><td colspan="5"> 게시글이 없습니다. </td></tr>
+              <th:block th:each="notice,loop : ${paging}">
+                <tr>
+                  <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+                  <td th:if="${notice.category=='여행기획전'}">여행기획전</td>
+                  <td th:if="${notice.category=='이벤트쿠폰'}">이벤트/쿠폰</td>
+                  <td th:if="${notice.category=='기타'}">기타</td>
+                  <td th:align="left">
+                    <a sec:authorize="isAuthenticated()" th:href="@{|/notice/article/${notice.id}|}" th:text="${notice.subject}"></a>
+                    <a sec:authorize="isAnonymous()" th:text="${notice.subject}"></a>
+                  </td>
+                  <td>관리자</td>
+                  <td th:text="${#temporals.format(notice.created,'yyyy-MM-dd HH:mm')}">2022-09-25</td>
+                  <td th:text="${notice.hitCount}">0</td>
 
-
-
-
-              </tr>
-              <tr>
-                <td>05.</td>
-                <td align="left">
-                  제주도 골프패키지 NEW 오픈이벤트</td>
-                <td>관리자</td>
-                <td>2022-09-26</td>
-                <td>10</td>
-
-
-
-
-              </tr>
-              <tr>
-                <td>04.</td>
-                <td align="left">굿바이 코로나 이벤트</td>
-                <td>관리자</td>
-                <td>2022-09-25</td>
-                <td>10</td>
-
-              </tr>
-
-              <tr>
-                <td>03.</td>
-                <td align="left">
-                  홈페이지 리뉴얼 안내</td>
-                <td>관리자</td>
-                <td>2022-09-26</td>
-                <td>10</td>
-
-
-
-
-
-              </tr>
-              <tr>
-                <td>02.</td>
-                <td align="left">공지사항</td>
-                <td>관리자</td>
-                <td>2022-09-25</td>
-                <td>10</td>
-
-
-
-
-
-              </tr>
-              <tr>
-                <td>01.</td>
-                <td align="left">
-                  홈페이지 오픈이벤트</td>
-                <td>관리자</td>
-                <td>2022-09-26</td>
-                <td>10</td>
-
-
-
-
-
-              </tr>
-              </tbody>
+                </tr>
             </table>
           </div>
           <div class="option-item">
-            <a href="become-vendor.html" class="btn  btn_navber">글올리기</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/notice/write}" class="btn btn_navber">글올리기</a>
           </div>
             
         </div>
-        <div class="pagination_area">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
+
+        <div class="col-lg-12" th:if="${!paging.isEmpty()}">
+          <div class="pagination_area">
+            <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,
+                    endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+
+              <li><a class="page-link" th:href="@{/notice/list?page=1}">&laquo;</a></li>
+
+              <li class="page-item" th:style="${paging.first}?'display:none'">
+                <a class="page-link" th:href="@{/notice/list(page=${paging.number})}">&lsaquo;</a>
+              </li>
+
+              <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                  th:classappend="(${page}==${paging.number+1})?'active'">
+                <a class="page-link" th:href="@{/notice/list(page=${page})}" th:text="${page}"></a>
+              </li>
+
+              <li class="page-item" th:style="${paging.last}?'display:none'">
+                <a class="page-link" th:href="@{/notice/list(page=${paging.number+2})}">&rsaquo;</a>
+              </li>
+
+              <li class="page-item">
+                <a class="page-link" th:href="@{/notice/list(page=${paging.totalPages})}" >&rsaquo;</a>
+              </li>
+            </ul>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
