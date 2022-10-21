@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,8 +46,8 @@ public class Review {
     @OneToMany(mappedBy = "reviewNum", cascade = CascadeType.REMOVE)
     private List<Review_reply> replyList;
 
-    @ManyToMany
-    Set<Member> voter;
+//    @ManyToMany
+//    Set<Member> voter;
 
     @Transient
     public String getPhotosImagePath() {
@@ -54,6 +55,10 @@ public class Review {
 
         return "/review-photo/" + id + "/" + reviewImage;
     }
+
+    //리뷰에 좋아요
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = CascadeType.REMOVE)
+    private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
 
 

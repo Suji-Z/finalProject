@@ -2,11 +2,11 @@ package com.project.tour.service;
 
 
 import com.project.tour.controller.DataNotFoundException;
-import com.project.tour.domain.Member;
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.Review;
-import com.project.tour.domain.UserBooking;
 import com.project.tour.repository.BookingRepository;
+import com.project.tour.repository.MemberRepository;
+import com.project.tour.repository.ReviewLikeRepository;
 import com.project.tour.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -14,12 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Optionals;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +31,10 @@ public class ReviewService {
     private  final ReviewRepository reviewRepository;
 
     private final BookingRepository bookingRepository;
+
+    private final MemberRepository memberRepository;
+
+    private final ReviewLikeRepository reviewLikeRepository;
 
     public Review create(String subject, String content, String reviewImage, Double score, Member author, Package reviewPackage){
         Review review = new Review();
@@ -81,20 +88,26 @@ public class ReviewService {
 
     public void vote(Review review, Member member){
 
-        if(review.getVoter().isEmpty()){
-            review.getVoter().add(member);
-            reviewRepository.save(review);
-        }else{
-            review.setVoter(null);
-            reviewRepository.save(review);
+        ReviewLike reviewLike = new ReviewLike();
 
-        }
+        reviewLike.setReview(review);
+        reviewLike.setMember(member);
+
+        reviewLikeRepository.save(reviewLike);
 
     }
 
     public void delete(Review review){
 
         reviewRepository.delete(review);
+    }
+
+
+    public void deleteLike(Long id1, Long id2){
+
+        Optional<ReviewLike> reviewId = reviewLikeRepository.findByMember_IdAndReview_Id(id1, id2);
+
+        reviewLikeRepository.delete(reviewId.get());
     }
 
     public void update(Review review, String subject, String content,
@@ -118,6 +131,21 @@ public class ReviewService {
         return op;
 
     }
+
+    //리뷰라이크 가져오기
+    public boolean getReviewLike(Long id1,Long id2){
+
+        Optional<ReviewLike> op2 = reviewLikeRepository.findByMember_IdAndReview_Id(id1,id2);
+
+        if(op2.isPresent())
+            return true;
+        else
+            return false;
+
+
+    }
+
+
 
 
 

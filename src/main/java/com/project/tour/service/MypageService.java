@@ -29,6 +29,8 @@ public class MypageService {
 
     private final BookingRepository bookingRepository;
 
+    private final VoiceCusRepository voiceCusRepository;
+
     //리뷰
     public List<Review> getMypageReview(Long id){
 
@@ -115,9 +117,21 @@ public class MypageService {
 
         return bookingRepository.findByMember_Id(id,pageable);
 
+    }
 
+    //고객의소리
+    public Page<VoiceCus> getMypageVcus(Long id, Pageable pageable){
 
+        List<Sort.Order> sort = new ArrayList<Sort.Order>();
+        sort.add(Sort.Order.desc("id")); //MemberId
 
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ?
+                        0 : pageable.getPageNumber() -1, //반환할 페이지
+                pageable.getPageSize(), //반환할 리스트 갯수
+                Sort.by(sort)); //정렬 매개변수 적용
+
+        return voiceCusRepository.findByAuthor_Id(id,pageable);
 
     }
 

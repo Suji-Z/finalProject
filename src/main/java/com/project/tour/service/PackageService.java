@@ -42,8 +42,13 @@ public class PackageService {
 
         return packageRepository.findAll(pageable);
     }
+    public List<Package> getSearch(String keyword) {
 
-    public Page<Package> getSearchList(String location, String date, Integer count, String keyword,Pageable pageable) {
+        Specification<Package> spec = Specification.where(JejuSpecification.equalKeyword(keyword));
+
+        return jejuRepository.findAll(spec);
+    }
+    public Page<Package> getSearchList(String location, String date, Integer count, String keyword,List<String> transport,Pageable pageable) {
 
         Specification<Package> spec = Specification.where(JejuSpecification.greaterThanOrEqualToDeparture(date));
 
@@ -60,6 +65,10 @@ public class PackageService {
 
         if (keyword != null) {
             spec = spec.and(JejuSpecification.equalKeyword(keyword));
+        }
+
+        if(transport!=null){
+            spec = spec.and(JejuSpecification.equalTransport(transport));
         }
 
         //페이징처리

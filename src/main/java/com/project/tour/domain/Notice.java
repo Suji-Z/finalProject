@@ -7,34 +7,29 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class QnA {
-
+public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qnaNum")
+    @Column(name = "noticeNum")
     private Long id;
 
-    private String qnacategory;
+    private String category;
 
     private String subject;
 
     private String content;
 
-    private String password;
-
     private LocalDateTime created;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String noticeImage;
 
-    private String name;
+    private int hitCount;
 
-    @OneToMany(mappedBy = "qnaNum", cascade = CascadeType.REMOVE)
-    private List<QnA_Reply> replyList;
+    @OneToMany(mappedBy = "notice",cascade = CascadeType.REMOVE)
+    private List<NoticeReply> noticeReplyList;
 
 }

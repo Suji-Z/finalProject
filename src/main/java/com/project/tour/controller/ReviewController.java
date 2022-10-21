@@ -1,8 +1,11 @@
 package com.project.tour.controller;
 
 
+
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
+import com.project.tour.oauth.dto.SessionUser;
+import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
 import com.project.tour.service.ReviewReplyService;
@@ -41,6 +44,9 @@ public class ReviewController {
     private final ReviewReplyService reviewReplyService;
 
     private final PackageService packageService;
+
+
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/write")
@@ -156,15 +162,32 @@ public class ReviewController {
     }
 
     @RequestMapping (value = "/article/{id}")
-    public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,Principal principal){
+    public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,Principal principal,@LoginUser SessionUser user){
 
         Review review = reviewService.getReview(id);
 /*
         좋아요 추가코드 (보안중ㅠㅠ)
         Member member = memberService.getMember(principal.getName());
         Long memberId = member.getId();
+
+
 */
 
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        Long id2 = member.getId();
+
+        model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
         model.addAttribute("review",review);
 
@@ -173,7 +196,20 @@ public class ReviewController {
     }
 
     @RequestMapping (value = "/abroadList")
-    public String abroadList(Model model, @PageableDefault Pageable pageable){
+    public String abroadList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user ){
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
 
         Page<Review> paging = reviewService.getList(pageable);
         model.addAttribute("paging",paging);
@@ -211,11 +247,33 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
-    public String reviewVote(Principal principal, @PathVariable("id") Long id){
+    public String reviewVote(Model model, Principal principal, @PathVariable("id") Long id,@LoginUser SessionUser user){
 
         Review review = reviewService.getReview(id);
-        Member member = memberService.getMember(principal.getName());
-        reviewService.vote(review,member);
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        if(reviewService.getReviewLike(member.getId(),id)){
+            reviewService.deleteLike(member.getId(),id);
+
+        }else{
+            reviewService.vote(review,member);
+        }
+
+
+
+
+
 
         return String.format("redirect:/review/article/%s",id);
 

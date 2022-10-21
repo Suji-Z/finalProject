@@ -1,6 +1,8 @@
 package com.project.tour.controller;
 
 import com.project.tour.domain.*;
+import com.project.tour.oauth.dto.SessionUser;
+import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.MypageService;
 import com.project.tour.service.ReviewReplyService;
@@ -40,9 +42,19 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping (value = "/")
-    public String main(Model model, Principal principal){
+    public String main(Model model, Principal principal,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
 
         model.addAttribute("member",member);
 
@@ -60,9 +72,20 @@ public class MypageController {
     //예약내역
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/bookingList")
-    public String booking_list(Model model, Principal principal, @PageableDefault Pageable pageable){
+    public String booking_list(Model model, Principal principal, @PageableDefault Pageable pageable,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
         Long memberId = member.getId();
 
         Page<UserBooking> paging = mypageService.getMypageBooking(memberId,pageable);
@@ -75,9 +98,21 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/coupon")
-    public String coupon(Model model, Principal principal){
+    public String coupon(Model model, Principal principal,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
 
         String couponNum = member.getCoupons();
         List<Coupon> coupons = mypageService.getMypageCoupon(couponNum);
@@ -98,9 +133,21 @@ public class MypageController {
     //회원정보 띄우기
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/update")
-    public String update1(Model model, Principal principal, MemberCreate memberCreate){
+    public String update1(Model model, Principal principal, MemberCreate memberCreate,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
 
         memberCreate.setBirth(member.getBirth());
         memberCreate.setEmail(member.getEmail());
@@ -124,9 +171,21 @@ public class MypageController {
     //회원정보 수정하기
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/update")
-    public String update2(@Valid MemberCreate memberCreate,BindingResult bindingResult,Principal principal){
+    public String update2(@Valid MemberCreate memberCreate,BindingResult bindingResult,Principal principal,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
 
         //키워드 들어온거 확인해보기
         String keyword = memberCreate.getKeyword();
@@ -149,14 +208,27 @@ public class MypageController {
 
     //비밀번호 변경하기
     @PostMapping(value = "/pwdUpdate")
-    public String pwdUpdate2(@Valid PwdUpdateForm pwdUpdateForm,BindingResult bindingResult,Principal principal) {
+    public String pwdUpdate2(@Valid PwdUpdateForm pwdUpdateForm,BindingResult bindingResult,Principal principal,@LoginUser SessionUser user) {
+
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
 
         if(bindingResult.hasErrors()){
             System.out.println("얍");
             return "mypage/mypage_pwdUpdate";
         }
 
-        Member member = memberService.getMember(principal.getName());
+        member = memberService.getMember(principal.getName());
 
         if(!pwdUpdateForm.getPassword1().equals(pwdUpdateForm.getPassword2())){
             bindingResult.addError(new FieldError("memberCreate","password2","비밀번호가 일치하지 않습니다."));
@@ -185,9 +257,21 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/qna")
-    public String qna(Model model, Principal principal,@PageableDefault Pageable pageable){
+    public String qna(Model model, Principal principal,@PageableDefault Pageable pageable,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
 
         Long memberId = member.getId();
 
@@ -201,9 +285,21 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/reviewList")
-    public String review_list(Model model, Principal principal){
+    public String review_list(Model model, Principal principal,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
 
         Long memberId = member.getId();
 
@@ -219,9 +315,21 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/estimateList")
-    public String estimate_list(Model model, Principal principal,@PageableDefault Pageable pageable){
+    public String estimate_list(Model model, Principal principal,@PageableDefault Pageable pageable,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
 
         String email = member.getEmail();
 
@@ -240,9 +348,29 @@ public class MypageController {
 
     }
 
+    //고객의 소리
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/voicecusList")
-    public String voicecus_list(){
+    public String voicecus_list(Model model, @PageableDefault Pageable pageable,
+                                Principal principal,@LoginUser SessionUser user){
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        Long id = member.getId();
+
+        Page<VoiceCus> paging = mypageService.getMypageVcus(id,pageable);
+
+        model.addAttribute("paging",paging);
 
         return "mypage/mypage_voicecus_list";
 

@@ -4,31 +4,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class QnA_Reply {
+public class NoticeReply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "replyNum")
+    @Column(name = "noticeReplyNum")
     private Long id;
 
-    private Integer ordernum;
+    private String name;
 
-    private Integer layer;
-
-    private Integer parent;
-
-    private String title;
+    private LocalDateTime created;
 
     private String content;
 
-    //원글의 답글
     @ManyToOne
-    @JoinColumn(name="qnaNum")
-    private QnA qnaNum;
+    private Notice notice;
+
 
 
 }

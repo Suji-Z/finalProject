@@ -21,7 +21,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String main(Model model, @LoginUser SessionUser user,
-                       @RequestParam(value = "keyword") String keyword) {
+                       @RequestParam(value = "keyword", required = false) String keyword) {
 
         //model.addAttribute("posts",postsService.findAllDesc());
 
@@ -30,12 +30,21 @@ public class HomeController {
             model.addAttribute("name",user.getName());
         }
 
-        Package packages =  packageService.getKeyword(keyword);
+        if(keyword==null) {
+
+            keyword = "healing";
+
+        }
+
+        List<Package> theme = packageService.getSearch(keyword);
+
+        System.out.println("패키지 사이즈"+theme.size());
+
+        model.addAttribute("theme",theme);
+        model.addAttribute("keyword",keyword);
 
 
-        model.addAttribute("theme",packages);
-        model.addAttribute("keyword",packages.getKeyword());
 
-        return "main";
+        return "/main";
     }
 }

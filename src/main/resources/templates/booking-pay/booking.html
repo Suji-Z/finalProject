@@ -51,9 +51,9 @@
                                     <li><span class="name_first">예약기간</span>
                                         <span class="last_name" th:text="|${apackage.travelPeriod}박 ${apackage.travelPeriod+1}일|">travelPeriod</span></li>
                                     <li><span class="name_first">출발일</span> <span
-                                            class="last_name" th:text="${bookingForm.departure}">departureDate</span></li>
+                                            class="last_name" th:text="${#temporals.createDate(bookingForm.departure, 'yyyyMMdd')}">departureDate</span></li>
                                     <li><span class="name_first">도착일</span> <span
-                                            class="last_name" th:text="${bookingForm.arrival}">departureDate+travelPeriod+1</span></li>
+                                            class="last_name" th:text="${#temporals.createDate(bookingForm.arrival, 'yyyyMMdd')}">departureDate+travelPeriod+1</span></li>
 
                                 </ul>
 
