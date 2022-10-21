@@ -5,6 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 </head>
 
 <body>
@@ -235,13 +236,16 @@
                                         <h4 th:text="${reviewReply.author.name}">배수지</h4> &nbsp;
                                         <h5 th:text="${#temporals.format(reviewReply.created,'yyyy-MM-dd HH:mm')}"></h5>&nbsp;
 
-                                        <a th:if="${!replyLike}" class="replyRecommend" th:href="@{|/review/replyVote/${reviewReply.id}|}">
+                                        <a  class="replyRecommend" id="likeOff" onclick="likeBtn()" type="button">
 
                                             <i class="fa-regular fa-heart"></i>좋아요</a>&nbsp;
 
-                                        <a th:if="${replyLike}" class="replyCancel" th:href="@{|/review/replyVote/${reviewReply.id}|}">
+                                        <a class="replyCancel" id="likeOn" style="display: none" type="button" onclick="dislikeBtn()">
+
                                             <i class="fas fa-heart"></i>좋아요</a>&nbsp;
 
+                                        <input type="hidden" th:value="${review.id}" id="reviewId" name="reviewId"/>
+                                        <input type="hidden" th:value="${reviewReply.id}" id="replyId"/>
 
 
                                         <a th:href="@{|/review/replyUpdate/${reviewReply.id}|}"
@@ -321,7 +325,10 @@
     </section>
 
 
+
+
 </body>
+
 
 
 </html>

@@ -161,13 +161,17 @@ public class ReviewController {
 
     }
 
-    @RequestMapping (value = "/article/{id}")
+    @RequestMapping (value = {"/article/{id}","/article/reply"})
     public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,
-                          Principal principal,@LoginUser SessionUser user){
+                          Principal principal,@LoginUser SessionUser user,@RequestParam(value = "replyLike",required = false) Boolean replyLike){
 
         Review review = reviewService.getReview(id);
 
+        if(replyLike==null||replyLike.equals("")){
 
+            replyLike=false;
+
+        }
 
         Member member;
 
@@ -183,8 +187,10 @@ public class ReviewController {
 
         Long id2 = member.getId();
 
+        System.out.println("좋아요 상태:" +replyLike);
 
-        model.addAttribute("replyLike",reviewReplyService.getReplyLike(id2,id));
+
+        model.addAttribute("replyLike",replyLike);
 
         model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
