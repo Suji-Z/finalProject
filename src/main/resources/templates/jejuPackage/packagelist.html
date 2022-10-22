@@ -14,7 +14,7 @@
     </div>
 </section>
 <section>
-    <form th:action="@{/jeju/list}" th:object="${searchForm}" method="get">
+    <form th:action="@{/package/jeju}" th:object="${searchForm}" method="get">
 <!-- Form Area -->
 <div id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
     <div class="container">
@@ -291,10 +291,10 @@
                                                 <i class="fas fa-heart"></i>
                                             </div>
 
-                                                <a th:href="@{|/jeju/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
+                                                <a th:href="@{|/package/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
 
                                           <div class="multi_city_flight_lists_content">
-                                            <h3><a th:href="@{|/jeju/${package.location2}/${package.id}|}" th:text="${package.packageName}"></a></h3>
+                                            <h3><a th:href="@{|/package/${package.id}|}" th:text="${package.packageName}"></a></h3>
                                             <br/>
                                             <h5 th:text="${package.packageInfo}"></h5>
                                           </div>
@@ -325,7 +325,7 @@
                                             </div>
                                         </div>
                                         <span>
-                                            <a th:href="@{|/jeju/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
+                                            <a th:href="@{|/booking/detail/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
                                         </span>
                                     </div>
                                 </div>
@@ -335,23 +335,23 @@
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
+                                        <a class="page-link" th:href="@{/package/jeju?(page=1,location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
                                             <span aria-hidden="true">≪</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <li class="page-item" th:style="${paging.first}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
+                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.number},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
                                     </li>
                                     <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                                         th:classappend="(${page}==${paging.number+1})?'active'">
-                                        <a class="page-link" th:href=@{/jeju/list(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
+                                        <a class="page-link" th:href=@{/package/jeju(page=${page},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
                                     </li>
                                     <li class="page-item" th:style="${paging.last}?'display:none'">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
+                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.number+2},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/jeju/list(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
+                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.totalPages},location=${param.location},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">≫</span>
                                             <span class="sr-only">Next</span>
