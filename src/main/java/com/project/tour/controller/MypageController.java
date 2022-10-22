@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -64,7 +65,31 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/cancelList")
-    public String cancel_list(){
+    public String cancel_list(Model model, Principal principal, @PageableDefault Pageable pageable,@LoginUser SessionUser user){
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
+
+        //결제완료된 부킹리스트 가져오기
+        Long memberId = member.getId();
+        int status = 3; // 0:예약확인중 1:결제대기중 2:결제완료 3:예약취소
+
+        List<UserBooking> mypageBookingCancle =  mypageService.getMypageCancelBooking(memberId,status);
+
+        System.out.println(mypageBookingCancle.size());
+
+        model.addAttribute("mypageBookingCancle",mypageBookingCancle);
 
         return "mypage/mypage_bookingCancel_List";
 
@@ -87,6 +112,7 @@ public class MypageController {
         }
 
         Long memberId = member.getId();
+
 
         Page<UserBooking> paging = mypageService.getMypageBooking(memberId,pageable);
 
@@ -114,8 +140,16 @@ public class MypageController {
 
         member = memberService.getMember(principal.getName());
 
+        LocalDateTime time = member.getCreatedDate();
+
+        //웰컴쿠폰 유효기간 : '가입 시기'로부터 + 1달
+        LocalDateTime plusTime = time.plusMonths(1);
+
+
         String couponNum = member.getCoupons();
         List<Coupon> coupons = mypageService.getMypageCoupon(couponNum);
+
+        model.addAttribute("plusTime",plusTime);
         model.addAttribute("mypageCoupons",coupons);
 
         return "mypage/mypage_coupon";
@@ -124,7 +158,22 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/point")
-    public String point(){
+    public String point(Model model, Principal principal, @LoginUser SessionUser user){
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
+
+        model.addAttribute("member",member);
 
         return "mypage/mypage_point";
 

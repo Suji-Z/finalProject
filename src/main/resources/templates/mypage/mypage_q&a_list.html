@@ -115,7 +115,7 @@
               <tr>
                 <th width="130">글번호</th>
                 <th width="680">제목</th>
-<!--                <th width="200">답변여부</th>-->
+                <th width="200">답변여부</th>
                 <th width="200">작성일</th>
 
 
@@ -130,8 +130,8 @@
                       <td align="left">
                           <a style="color: black;" th:href="@{|/qna/question/article/${mypageQna.id}|}" th:text="${mypageQna.subject}"></a>
                       </td>
-<!--                      <td th:if="${!mypageQna.isEmpty()}">답변완료</td>-->
-<!--                      <td th:if="${mypageVcus.voiceCusReplyList.isEmpty()}">답변대기중</td>-->
+                      <td th:if="${!mypageQna.replyList.isEmpty()}">답변완료</td>
+                      <td th:if="${mypageQna.replyList.isEmpty()}">답변대기중</td>
                       <td th:text="${#temporals.format(mypageQna.created,'yyyy-MM-dd')}"></td>
                   </tr>
               </th:block>

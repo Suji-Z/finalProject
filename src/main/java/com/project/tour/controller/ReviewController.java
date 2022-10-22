@@ -161,17 +161,17 @@ public class ReviewController {
 
     }
 
-    @RequestMapping (value = "/article/{id}")
-    public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,Principal principal,@LoginUser SessionUser user){
+    @RequestMapping (value = {"/article/{id}","/article/reply"})
+    public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,
+                          Principal principal,@LoginUser SessionUser user,@RequestParam(value = "replyLike",required = false) Boolean replyLike){
 
         Review review = reviewService.getReview(id);
-/*
-        좋아요 추가코드 (보안중ㅠㅠ)
-        Member member = memberService.getMember(principal.getName());
-        Long memberId = member.getId();
 
+        if(replyLike==null||replyLike.equals("")){
 
-*/
+            replyLike=false;
+
+        }
 
         Member member;
 
@@ -186,6 +186,11 @@ public class ReviewController {
         }
 
         Long id2 = member.getId();
+
+        System.out.println("좋아요 상태:" +replyLike);
+
+
+        model.addAttribute("replyLike",replyLike);
 
         model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
@@ -355,13 +360,40 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/replyVote/{id}")
-    public String reviewReplyVote(Principal principal, @PathVariable("id") Long id){
+    public String reviewReplyVote(Principal principal, @PathVariable("id") Long id,@LoginUser SessionUser user){
+
 
         Review_reply review_reply = reviewReplyService.getReply(id);
 
-        Member member = memberService.getMember(principal.getName());
+        Review review = reviewService.getReview(review_reply.getReviewNum().getId());
 
-        reviewReplyService.vote(review_reply,member);
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        member = memberService.getMember(principal.getName());
+
+        Long id2 = member.getId();
+
+        if(reviewReplyService.getReplyLike(id2, review.getId())){
+
+            reviewReplyService.deleteReplyLike(id2, review.getId());
+
+
+        }else{
+            reviewReplyService.vote(review_reply,member,review);
+
+        }
+
+
 
         return String.format("redirect:/review/article/%s#reply_%s",
                 review_reply.getReviewNum().getId(),review_reply.getId());
