@@ -36,39 +36,38 @@
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a th:href="@{/abroad/list}" class="nav-link">
+                <a th:href="@{/package/abroad}" class="nav-link">
                   해외여행
                   <i class="fas fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="nav-item">
-                    <a th:href="@{/abroad/europe}" class="nav-link">유럽</a>
+                    <a th:href="@{/package/abroad(location='유럽')}" class="nav-link" id="location_europe">유럽</a>
                   </li>
                   <li class="nav-item">
-                    <a th:href="@{/abroad/america}" class="nav-link">미국</a>
+                    <a th:href="@{/package/abroad(location='미국')}" class="nav-link" id="location_america">미국</a>
                   </li>
                   <li class="nav-item">
-                    <a th:href="@{/abroad/asia}" class="nav-link">아시아</a>
+                    <a th:href="@{/package/abroad(location='아시아')}" class="nav-link" id="location_asia">아시아</a>
                   </li>
                 </ul>
-              </li>
               <li class="nav-item">
-                <a th:href="@{/jeju/list}"  class="nav-link">
+                <a th:href="@{/package/jeju}"  class="nav-link">
                   제주여행
                   <i class="fas fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="nav-item">
-                    <a th:href="@{/jeju/list(location='서귀포')}" class="nav-link">서귀포</a>
+                    <a th:href="@{/package/jeju(location='서귀포')}" class="nav-link">서귀포</a>
                   </li>
                   <li class="nav-item">
-                    <a th:href="@{/jeju/list(location='중문')}" class="nav-link">중문</a>
+                    <a th:href="@{/package/jeju(location='중문')}" class="nav-link">중문</a>
                   </li>
                   <li class="nav-item">
-                    <a th:href="@{/jeju/list(location='애월')}" class="nav-link">애월</a>
+                    <a th:href="@{/package/jeju(location='애월')}" class="nav-link">애월</a>
                   </li>
                   <li class="nav-item">
-                    <a th:href="@{/jeju/list(location='제주시')}" class="nav-link">제주시</a>
+                    <a th:href="@{/package/jeju(location='제주시')}" class="nav-link">제주시</a>
                   </li>
                 </ul>
               </li>

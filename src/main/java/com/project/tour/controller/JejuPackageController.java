@@ -21,7 +21,7 @@ import java.util.*;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/jeju")
+@RequestMapping("/package")
 public class JejuPackageController {
 
     @Autowired
@@ -53,7 +53,7 @@ public class JejuPackageController {
     /**
      * 전체리스트
      */
-    @GetMapping("/list")
+    @GetMapping("/jeju")
     public String packagelist(@RequestParam(value = "location", required = false) String location,
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
@@ -115,7 +115,6 @@ public class JejuPackageController {
             log.info("pricerangestr : " + pricerangestr);
             log.info("pricerangeend : " + pricerangeend);
         }
-
 
         log.info("DATE : " + date);
         log.info("LOCATION : " + location);
