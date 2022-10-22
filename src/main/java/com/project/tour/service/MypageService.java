@@ -106,6 +106,9 @@ public class MypageService {
     //예약내역
     public Page<UserBooking> getMypageBooking(Long id,Pageable pageable){
 
+
+
+
         List<Sort.Order> sort = new ArrayList<Sort.Order>();
         sort.add(Sort.Order.desc("id")); //MemberId
 
@@ -118,6 +121,16 @@ public class MypageService {
         return bookingRepository.findByMember_Id(id,pageable);
 
     }
+
+    //예약취소내역
+    public List<UserBooking> getMypageCancelBooking(Long id,int status){
+
+        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatus(id,status);
+
+        return op;
+
+    }
+
 
     //고객의소리
     public Page<VoiceCus> getMypageVcus(Long id, Pageable pageable){
