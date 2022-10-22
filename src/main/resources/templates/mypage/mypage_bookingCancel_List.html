@@ -117,7 +117,7 @@
               <tr>
                 <th width="130">예약번호</th>
                 <th width="130">예약일</th>
-                <th width="200">상품명</th>
+                <th width="300">상품명</th>
                 <th width="200">출발일</th>
                 <th width="100">인원</th>
                 <th width="200">총금액</th>
@@ -127,14 +127,20 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>01</td>
-                <td>2022-06-24</td>
-                <td>제주어쩌구</td>
-                <td>2022-09-25</td>
-                  <td>2</td>
-                <td>658,000</td>
-                  <td>예약취소</td>
+              <tr th:if="${mypageBookingCancle.isEmpty()}"><td colspan="7"> 예약취소내역이 없습니다. </td></tr>
+
+                  <tr th:each="mypageBookingCancle : ${mypageBookingCancle}">
+                      <td th:text="${mypageBookingCancle.id}">예약번호</td>
+                      <td th:text="${#temporals.format(mypageBookingCancle.bookingDate,'yyyy-MM-dd')}">예약날짜</td>
+                      <td align="center">
+                          <a style="color: black;" th:text="${mypageBookingCancle.APackage.packageName}">패키지이름</a>
+                      </td>
+                      <td th:text="${#temporals.createDate(mypageBookingCancle.arrival,'yyyyMMdd')}">출발일</td>
+                      <td th:text="|${mypageBookingCancle.bookingTotalCount}명|">총인원</td>
+                      <td th:text="|${mypageBookingCancle.bookingTotalPrice}원|">금액</td>
+                      <td>예약취소</td>
+                  </tr>
+
 
             
               </tbody>
@@ -142,25 +148,7 @@
           </div>
          
         </div>
-        <div class="pagination_area">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+
       </div>
     </div>
   </div>

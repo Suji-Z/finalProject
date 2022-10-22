@@ -92,39 +92,39 @@
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/package/abroad}" class="nav-link">
                                     해외여행
                                     <i class="fas fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a th:href="@{/abroad/list}" class="nav-link">유럽</a>
+                                        <a th:href="@{/package/abroad(location='유럽')}" class="nav-link">유럽</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a th:href="@{/abroad/list}" class="nav-link">미국</a>
+                                        <a th:href="@{/package/abroad(location='미국')}" class="nav-link">미국</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a th:href="@{/abroad/list}" class="nav-link">아시아</a>
+                                        <a th:href="@{/package/abroad(location='아시아')}" class="nav-link">아시아</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a th:href="@{/jeju/list}" class="nav-link">
+                                <a th:href="@{/package/jeju}" class="nav-link">
                                     제주여행
                                     <i class="fas fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a th:href="@{/jeju/list(location='서귀포')}" class="nav-link">서귀포</a>
+                                        <a th:href="@{/package/jeju(location='서귀포')}" class="nav-link">서귀포</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a th:href="@{/jeju/list(location='중문')}" class="nav-link">중문</a>
+                                        <a th:href="@{/package/jeju(location='중문')}" class="nav-link">중문</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a th:href="@{/jeju/list(location='애월')}" class="nav-link">애월</a>
+                                        <a th:href="@{/package/jeju(location='애월')}" class="nav-link">애월</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a th:href="@{/jeju/list(location='제주시')}" class="nav-link">제주시</a>
+                                        <a th:href="@{/package/jeju(location='제주시')}" class="nav-link">제주시</a>
                                     </li>
                                 </ul>
                             </li>
@@ -287,13 +287,13 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 col-12" >
                                 <div class="theme_common_box_two img_hover">
                                     <div class="theme_two_box_img">
-                                        <a th:href="@{|/jeju|}">
+                                        <a th:href="@{|/package/${package.id}|}">
                                             <img th:src="@{${package.getPhotosImagePath1()}}" alt="img">
                                         </a>
                                         <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
                                     </div>
                                     <div class="theme_two_box_content">
-                                        <h4 th:text="${package.packageName}"><a th:href="@{|/jeju/${package.id}|}"></a></h4>
+                                        <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
                                         <p><span class="review_rating">4.8/5 Excellent</span> <span
                                                 class="review_count">(1214
                                                     reviewes)</span></p>
@@ -690,9 +690,9 @@
                 </div>
                 <div class="footer_link_area">
                     <ul>
-                        <li><a th:href="@{/abroad/europe}">유럽</a></li>
-                        <li><a th:href="@{/abroad/america}">미국</a></li>
-                        <li><a th:href="@{/abroad/asia}">아시아</a></li>
+                        <li><a th:href="@{/package/abroad(location='유럽')}">유럽</a></li>
+                        <li><a th:href="@{/package/abroad(location='미국')}">미국</a></li>
+                        <li><a th:href="@{/package/abroad(location='아시아')}">아시아</a></li>
                     </ul>
                 </div>
             </div>
@@ -702,11 +702,10 @@
                 </div>
                 <div class="footer_link_area">
                     <ul>
-                        <li><a th:href="@{/jeju/seogwipo}">서귀포</a></li>
-                        <li><a th:href="@{/jeju/jungmun}">중문</a></li>
-                        <li><a th:href="@{/jeju/aewol}">애월</a></li>
-                        <li><a th:href="@{/jeju/jejusi}">제주시</a></li>
-
+                        <li><a th:href="@{/package/jeju(location='서귀포')}">서귀포</a></li>
+                        <li><a th:href="@{/package/jeju(location='중문')}">중문</a></li>
+                        <li><a th:href="@{/package/jeju(location='애월')}">애월</a></li>
+                        <li><a th:href="@{/package/jeju(location='제주시')}">제주시</a></li>
                     </ul>
                 </div>
             </div>

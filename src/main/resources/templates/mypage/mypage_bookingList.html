@@ -109,14 +109,14 @@
       </div>
       <div class="col-lg-8-sally">
           <div class="dashboard_common_table">
-          <h3>예약 내역</h3>
+          <h3>예약 현황</h3>
           <div class="table-responsive-lg table_common_area">
             <table class="table">
               <thead>
               <tr>
                 <th width="130">예약번호</th>
                 <th width="130">예약일</th>
-                <th width="200">상품명</th>
+                <th width="300">상품명</th>
                 <th width="200">출발일</th>
                 <th width="100">인원</th>
                 <th width="200">총금액</th>
@@ -130,8 +130,8 @@
               <th:block th:each="mypageBooking,loop : ${paging}">
                   <tr>
                       <td th:text="${mypageBooking.id}">예약번호</td>
-                      <td th:text="${mypageBooking.bookingDate}">예약날짜</td>
-                      <td align="left">
+                      <td th:text="${#temporals.format(mypageBooking.bookingDate,'yyyy-MM-dd')}">예약날짜</td>
+                      <td align="center">
                           <a style="color: black;" th:text="${mypageBooking.APackage.packageName}">패키지이름</a>
                       </td>
                       <td th:text="${#temporals.createDate(mypageBooking.arrival,'yyyyMMdd')}">출발일</td>
@@ -141,6 +141,7 @@
                           <span th:case="'0'">예약확인중</span>
                           <span th:case="'1'" >결제대기중</span>
                           <span th:case="'2'">결제완료</span>
+                          <span th:case="'3'">예약취소</span>
                       </td>
                   </tr>
               </th:block>

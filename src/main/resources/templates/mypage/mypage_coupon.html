@@ -125,12 +125,18 @@
               </tr>
               </thead>
               <tbody>
-              <tr th
+              <tr>
               <tr th:if="${mypageCoupons.isEmpty()}"><td th:colspan="4">보유하신 쿠폰이 없습니다</td></tr>
               <tr th:each="mypageCoupons : ${mypageCoupons}">
               <td th:text="${mypageCoupons.couponName}">웰컴쿠폰(신규회원 가입)</td>
                 <td th:text="|${#numbers.formatInteger((mypageCoupons.couponRate)*100,2)}%|" align="center">10%</td>
-                <td>2022-12-31</td>
+
+                  <td th:switch="${mypageCoupons.id}">
+                      <span th:case="'0'">2022-12-31</span>
+                      <span th:case="'1'" th:text="${#temporals.format(plusTime,'yyyy-MM-dd')}" ></span>
+                      <span th:case="'2'">2022-12-31</span>
+
+                  </td>
                
 
               </tr>
