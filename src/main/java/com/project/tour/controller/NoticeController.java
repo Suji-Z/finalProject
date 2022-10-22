@@ -120,6 +120,7 @@ public class NoticeController {
         model.addAttribute("beforeSubject", beforeSubject);
         model.addAttribute("afterSubject",afterSubject);
         model.addAttribute("recommendStatus", recommendStatus);
+        model.addAttribute("member",member);
 
         return "notice/notice_article";
     }
