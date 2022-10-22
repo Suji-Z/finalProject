@@ -39,7 +39,7 @@ public class Notice {
     public String getPhotosImagePath() {
         if (noticeImage == null || id == null) return null;
 
-        return "notice-photo/notice" + id + "'s file/" + noticeImage;
+        return "/notice-photo/" + id + "/" + noticeImage;
     }
 
 }

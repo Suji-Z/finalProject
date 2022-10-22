@@ -1,7 +1,11 @@
 package com.project.tour.service;
 
+import com.project.tour.domain.Member;
 import com.project.tour.domain.Notice;
 import com.project.tour.domain.NoticeForm;
+import com.project.tour.domain.NoticeRecommend;
+import com.project.tour.repository.MemberRepository;
+import com.project.tour.repository.NoticeRecommendRepository;
 import com.project.tour.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +24,8 @@ import java.util.Optional;
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final MemberRepository memberRepository;
+    private final NoticeRecommendRepository noticeRecommendRepository;
 
     //저장 후 객체 리턴하기
     public Notice create(NoticeForm noticeForm){
@@ -116,6 +122,43 @@ public class NoticeService {
 
         return noticeRepository.countPin();
 
+    }
+
+    //추천해요 추가
+    public void createRecommend(Member member,Long id){
+
+        Notice notice = noticeRepository.findById(id).get(); //member 찾기
+
+        NoticeRecommend noticeRecommend = new NoticeRecommend();
+
+        noticeRecommend.setMember(member);
+        noticeRecommend.setNotice(notice);
+
+        noticeRecommendRepository.save(noticeRecommend);
+
+    }
+
+    //추천해요 취소
+    public void deleteRecommend(Member member,Long id){
+
+        Notice notice = noticeRepository.findById(id).get(); //member 찾기
+        Optional<NoticeRecommend> noticeRecommend = noticeRecommendRepository.findByMemberAndNotice(member,notice);
+
+        noticeRecommendRepository.delete(noticeRecommend.get());
+
+    }
+
+    //추천해요 상태 확인
+    public int searchRecommend(Member member, Long id){
+
+        Notice notice = noticeRepository.findById(id).get(); //member 찾기
+        Optional<NoticeRecommend> noticeRecommend = noticeRecommendRepository.findByMemberAndNotice(member,notice);
+
+        if(noticeRecommend.isPresent()){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
 }
