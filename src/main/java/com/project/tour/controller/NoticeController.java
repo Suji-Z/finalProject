@@ -25,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -34,6 +35,7 @@ public class NoticeController {
 
     @Autowired
     private final NoticeService noticeService;
+    private final MemberService memberService;
 
     //글작성 페이지 띄우기 : 관리자만 가능
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -87,19 +89,37 @@ public class NoticeController {
     //게시글 보기
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/article/{id}")
-    public String noticeArticle(@PathVariable("id") Long id, Model model) {
+    public String noticeArticle(@PathVariable("id") Long id, Model model, Principal principal, @LoginUser SessionUser user) {
 
         String beforeSubject = noticeService.getSubject(id-1);
         String afterSubject = noticeService.getSubject(id+1);
         Notice notice = noticeService.getNotice(id);
 
+        //로그인 확인
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
         //hitCount 올리기
         int hitCount = notice.getHitCount() + 1;
         noticeService.updateHitCount(hitCount,id);
 
+        //recommendStatus 찾기
+        int recommendStatus = noticeService.searchRecommend(member, id);
+
+        if(recommendStatus==1){
+            model.addAttribute("url","/assets/img/icon/hand-thumbs-up-fill.svg");
+        } else{
+            model.addAttribute("url","/assets/img/icon/hand-thumbs-up.svg");
+        }
+
         model.addAttribute("notice",notice);
         model.addAttribute("beforeSubject", beforeSubject);
         model.addAttribute("afterSubject",afterSubject);
+        model.addAttribute("recommendStatus", recommendStatus);
 
         return "notice/notice_article";
     }
@@ -155,6 +175,32 @@ public class NoticeController {
 
         return "redirect:/notice/list";
 
+    }
+
+    // 추천해요 버튼
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/recommend")
+    public @ResponseBody HashMap<String,Object> noticeRecommend(@RequestParam("recommendStatus") int recommendStatus,
+                                                                Principal principal, @LoginUser SessionUser user,
+                                                                @RequestParam("id") Long id) {
+
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
+        if(recommendStatus==1){
+            noticeService.createRecommend(member, id);
+        }else if(recommendStatus==0){
+            noticeService.deleteRecommend(member, id);
+        }
+
+        HashMap<String,Object> recommendInfo = new HashMap<>();
+        recommendInfo.put("recommendStatus", recommendStatus);
+
+        return recommendInfo;
     }
 
 

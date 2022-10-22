@@ -25,7 +25,7 @@ public class CouponService {
 
         List<Coupon> coupons = new ArrayList<>();
 
-        if(!couponNum.equals("")){
+        if(couponNum!=null){
 
             //String[] str =couponNum.split(","); //1,2,3을 1 2 3으로 분리시켜 배열 저장
             List<String> strlist = Arrays.asList(couponNum.split(",")); //1,2,3을 1 2 3으로 분리시켜 리스트 저장
