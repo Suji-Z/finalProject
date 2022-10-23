@@ -4,18 +4,23 @@ import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.repository.EstimateReplyRepository;
+import com.project.tour.repository.EstimateSearchRepository;
 import com.project.tour.repository.PackageDateRepository;
 import com.project.tour.repository.PackageRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.callback.PasswordCallback;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@RequiredArgsConstructor
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class EstimateReplyService {
 
     @Autowired
@@ -23,7 +28,7 @@ public class EstimateReplyService {
     @Autowired
     private final PackageRepository packageRepository;
     @Autowired
-    private final PackageDateRepository packageDateRepository;
+    private final EstimateSearchRepository searchRepository;
 
     //답변하기
     public void create(EstimateInquiry inquiry,EstimateReplyForm replyForm){
@@ -80,54 +85,68 @@ public class EstimateReplyService {
         return packageRepository.findByIdIn(packageid);
     }
 
-    /** 너무 비효율적이라 다시 생각해보기 */
-    public List<Package> getPackages(EstimateInquiry inquiry){
+    /** Querydsl 사용해서 동적검색 */
+    public List<EstimateSearchDTO> getPackages(EstimateInquiry inquiry) throws ParseException{
 
-        List<PackageDate> packageDate;
-        List<Package> packages;
+        /** 1. 여행일수 */
+        String startDay = inquiry.getStartDay().replaceAll("-","");
+        String endDay = inquiry.getEndDay().replaceAll("-","");
 
-        /** 1. 출발일이 같을때 */
-        int startDay = Integer.parseInt(inquiry.getStartDay().replace("-",""));
-        String startDay1,startDay2;
+        DateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Date start = format.parse(startDay);
+        Date end = format.parse(endDay);
+
+        Long days = (end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000);
+        Integer travelPeriod = (int) (long) days;
+
+        /** 2. 출발일 */
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        //유동적 출발일선택시 flxStart1,2 사용 : 미선택시 startDay 사용
+        String flxStart1 =null;
+        String flxStart2 = null;
         if (inquiry.getFlexibleDay()) {
-            startDay1 = String.valueOf(startDay - 7);
-            startDay2 = String.valueOf(startDay + 7);
-        } else {
-            startDay1 = String.valueOf(startDay);
-            startDay2 = String.valueOf(startDay);
+            cal1.add(Calendar.DATE, -7);
+            flxStart1 = String.valueOf(format.format(cal1.getTime()));
+            cal2.add(Calendar.DATE, 7);
+            flxStart2 = String.valueOf(format.format(cal2.getTime()));
+            startDay=null;
         }
 
-        /** 2.인원수만큼 잔여수량이 있을때 */
-        int total = inquiry.getACount()+ inquiry.getBCount()+ inquiry.getCCount();
+        /** 3.인원수만큼 잔여수량이 있을때 */
+        int totcount = inquiry.getACount()+ inquiry.getBCount()+ inquiry.getCCount();
 
-        /** 3. 가격이 범위안에 있을때 */
-        String price = inquiry.getPrice();
-        int minPrice, maxPrice;
-        if (price.contains("-")) {
-            String[] splitPrice = price.split("-", 2);
+        /** 4. 가격이 범위안에 있을때 */
+
+        Integer price = null;
+        Integer minPrice = null;
+        Integer maxPrice = null;
+        if (inquiry.getPrice().contains("-")) {
+            String[] splitPrice = inquiry.getPrice().split("-", 2);
             minPrice = Integer.parseInt(splitPrice[0]);
             maxPrice = Integer.parseInt(splitPrice[1]);
-            packageDate = packageDateRepository.findByDepartureBetweenAndApriceBetweenAndRemaincountGreaterThanEqual(startDay1, startDay2, minPrice, maxPrice,total);
-
         }else{
-            minPrice = Integer.parseInt(price);
-            packageDate = packageDateRepository.findByDepartureBetweenAndApriceGreaterThanEqualAndRemaincountGreaterThanEqual(startDay1, startDay2, minPrice,total);
-        }
+            price = Integer.parseInt(inquiry.getPrice());
+       }
 
-        /** 중복제거 */
-        Iterator<PackageDate> it = packageDate.iterator();
-        List<Long> packageNum = new ArrayList<>();
-        while(it.hasNext()){
-            System.out.println(it.next().getPackages().getId());
-            packageNum.add(it.next().getPackages().getId());
-        }
-
-        /** 4. 지역이 같을때 */
+        /** 5. 지역이 같을때 */
         String location2 = inquiry.getLocation2();
 
-        packages = packageRepository.findByLocation2AndIdIn(location2,packageNum);
+        //검색조건 객체생성
+        EstimateSearchCondition condition = new EstimateSearchCondition();
 
-        return packages;
+        condition.setTravelPeriod(travelPeriod);
+        condition.setStartday(startDay);
+        condition.setFlxstartday1(flxStart1);
+        condition.setFlxstartday2(flxStart2);
+        condition.setPrice(price);
+        condition.setMinPrice(minPrice);
+        condition.setMaxPrice(maxPrice);
+        condition.setRemaincount(totcount);
+        condition.setLcoation2(location2);
+
+        return searchRepository.searchByWhere(condition);
+
     }
 
 
