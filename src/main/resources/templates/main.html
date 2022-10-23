@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -198,7 +198,7 @@
 <section id="home_two_banner">
     <div class="home_two_banner_slider_wrapper owl-carousel owl-theme">
         <div class="banner_two_slider_item fadeInUp" data-wow-duration="2s"
-             style="background-image: url(/assets/img/banner/banner-two-bg-1.png);">
+             style="background-image: url(/assets/img/banner/main2.jpg);">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
@@ -281,26 +281,90 @@
                 <div class="tab-content" id="nav-tabContent">
 
                     <!-- 테마여행 힐링 리스트 -->
-                    <div class="tab-pane fade show active" id="nav-healing" role="tabpanel"
-                         aria-labelledby="nav-healing-tab" th:if="${!theme.isEmpty()}" th:each="package,loop:${theme}">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-12" >
-                                <div class="theme_common_box_two img_hover">
-                                    <div class="theme_two_box_img">
-                                        <a th:href="@{|/package/${package.id}|}">
-                                            <img th:src="@{${package.getPhotosImagePath1()}}" alt="img">
-                                        </a>
-                                        <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
-                                    </div>
-                                    <div class="theme_two_box_content">
-                                        <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                        <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                class="review_count">(1214
+
+                    <div class="tab-pane fade show active" id="nav-[[${keyword}]]" role="tabpanel"
+                         aria-labelledby="nav-[[${keyword}]]-tab">
+                        <div class="row" id="viewTable">
+
+                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==healing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12"  >
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
+                                            </a>
+                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
                                                     reviewes)</span></p>
-                                        <h3 th:text="${package.packagedatelist[0].aprice}"> <span>Price starts from</span></h3>
+                                            <h3> <span>[[${price}]]&nbsp;원</span></h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </th:block>
+
+                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==activity">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
+                                            </a>
+                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
+                                                    reviewes)</span></p>
+                                            <h3> <span>[[${price}]]&nbsp;원</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+
+                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==food">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
+                                            </a>
+                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
+                                                    reviewes)</span></p>
+                                            <h3> <span>[[${price}]]&nbsp;원</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+
+                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==culture">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
+                                            </a>
+                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
+                                                    reviewes)</span></p>
+                                            <h3> <span>[[${price}]]&nbsp;원</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
 
                         </div>
                     </div>
@@ -310,83 +374,92 @@
 
                     <!-- 테마여행 액티비티 리스트 -->
 
-                    <div class="tab-pane fade" id="nav-activity" role="tabpanel" aria-labelledby="nav-activity-tab">
-                        <div class="row">
+                    <!--
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                <div class="theme_common_box_two img_hover">
-                                    <div class="theme_two_box_img">
-                                        <a href="hotel-details.html">
-                                            <img src="assets/img/tab-img/hotel1.png" alt="img">
-                                        </a>
-                                        <p><i class="fas fa-map-marker-alt"></i>New beach, Thailand</p>
-                                    </div>
-                                    <div class="theme_two_box_content">
-                                        <h4><a href="hotel-details.html">Kantua hotel, Thailand</a></h4>
-                                        <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                class="review_count">(1214
+                    <div class="tab-pane fade" id="nav-activity" role="tabpanel" aria-labelledby="nav-activity-tab">
+                        <div class="row" id="viewTable" name="viewTable">
+
+                            <th:block th:each="package,loop:${theme}" th:if="${theme.get(0).getKeyword()}==activity">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12" id="view">
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a id="href1" th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" alt="img">
+                                            </a>
+                                            <p id="location" th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 id="packName" th:text="${package.packageName}"><a id="href2" th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
                                                     reviewes)</span></p>
-                                        <h3>$99.00 <span>Price starts from</span></h3>
+                                            <h3> <span>Price starts from</span></h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </th:block>
 
                         </div>
                     </div>
 
-                    <!-- 테마추천 식도락여행 시작 -->
+                    테마추천 식도락여행 시작
 
                     <div class="tab-pane fade" id="nav-food" role="tabpanel" aria-labelledby="nav-food-tab">
-                        <div class="row">
+                        <div class="row" name="viewTable">
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                <div class="theme_common_box_two img_hover">
-                                    <div class="theme_two_box_img">
-                                        <a href="hotel-details.html">
-                                            <img src="assets/img/tab-img/hotel1.png" alt="img">
-                                        </a>
-                                        <p><i class="fas fa-map-marker-alt"></i>New beach, Thailand</p>
-                                    </div>
-                                    <div class="theme_two_box_content">
-                                        <h4><a href="hotel-details.html">Kantua hotel, Thailand</a></h4>
-                                        <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                class="review_count">(1214
+                            <th:block th:each="package,loop:${theme}" th:if="${theme.get(0).getKeyword()}==food">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" alt="img">
+                                            </a>
+                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
                                                     reviewes)</span></p>
-                                        <h3>$99.00 <span>Price starts from</span></h3>
+                                            <h3> <span>Price starts from</span></h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </th:block>
 
                         </div>
                     </div>
 
 
-                    <!-- 테마추천 문화/예술 시작 -->
+                     테마추천 문화/예술 시작
 
                     <div class="tab-pane fade" id="nav-culture" role="tabpanel" aria-labelledby="nav-culture-tab">
-                        <div class="row">
+                        <div class="row" name="viewTable">
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                <div class="theme_common_box_two img_hover">
-                                    <div class="theme_two_box_img">
-                                        <a href="hotel-details.html">
-                                            <img src="assets/img/tab-img/hotel1.png" alt="img">
-                                        </a>
-                                        <p><i class="fas fa-map-marker-alt"></i>New beach, Thailand</p>
-                                    </div>
-                                    <div class="theme_two_box_content">
-                                        <h4><a href="hotel-details.html">Kantua hotel, Thailand</a></h4>
-                                        <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                class="review_count">(1214
+                            <th:block th:each="package,loop:${theme}" th:if="${theme.get(0).getKeyword()}==culutre">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                    <div class="theme_common_box_two img_hover">
+                                        <div class="theme_two_box_img">
+                                            <a th:href="@{|/package/${package.id}|}">
+                                                <img th:src="@{${package.photosImagePath1}}" alt="img">
+                                            </a>
+                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                        </div>
+                                        <div class="theme_two_box_content">
+                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
+                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
+                                                    class="review_count">(1214
                                                     reviewes)</span></p>
-                                        <h3>$99.00 <span>Price starts from</span></h3>
+                                            <h3> <span>Price starts from</span></h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </th:block>
+
 
 
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </div>
@@ -762,6 +835,7 @@
 <!-- wow.js -->
 <script src="/assets/js/wow.min.js"></script>
 <!-- Custom js -->
+<script src="/assets/js/main-list.js"></script>
 <script src="/assets/js/custom.js"></script>
 <script src="/assets/js/add-form.js"></script>
 <script src="/assets/js/video.js"></script>
