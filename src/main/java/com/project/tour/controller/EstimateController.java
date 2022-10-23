@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -156,12 +157,12 @@ public class EstimateController {
     /** 답변달기 */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reply/{id}")
-    public String estimateReply(@PathVariable("id") Long id,Principal principal,Model model) {
+    public String estimateReply(@PathVariable("id") Long id,Principal principal,Model model) throws ParseException {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
         /** 견적 범위 내의 패키지리스트 */
-        List<Package> recomPackages = estimateReplyService.getPackages(inquiry);
+        List<EstimateSearchDTO> recomPackages = estimateReplyService.getPackages(inquiry);
 
         model.addAttribute("estimateReplyForm", new EstimateReplyForm());
         model.addAttribute("inquiry",inquiry);
@@ -206,7 +207,7 @@ public class EstimateController {
     /** 답변 수정 */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reply/modify/{id}")
-    public String estimateReplyModifyg(EstimateReplyForm replyForm, @PathVariable("id") Long id,Principal principal,Model model) {
+    public String estimateReplyModifyg(EstimateReplyForm replyForm, @PathVariable("id") Long id,Principal principal,Model model) throws ParseException {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 
@@ -216,7 +217,7 @@ public class EstimateController {
 
         EstimateInquiry inquiry = reply.getEstimateInquiry();
 
-        List<Package> recomPackages = estimateReplyService.getPackages(inquiry);
+        List<EstimateSearchDTO> recomPackages = estimateReplyService.getPackages(inquiry);
 
         model.addAttribute("packages",recomPackages);
         model.addAttribute("inquiry",inquiry);

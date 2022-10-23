@@ -37,13 +37,24 @@
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12"  th:each="recom : ${recomPackages}">
                             <div class="theme_common_box_two">
                                 <div class="theme_two_box_img">
-                                    <a href="hotel-details.html">
+                                    <a th:href="@{|/package/${recom.id}|}">
                                         <img th:src="@{${recom.getPhotosImagePath1}}" width="330px" height="220px">
                                     </a>
                                 </div>
                                 <div class="theme_two_box_content">
                                     <h4><a href="hotel-details.html" th:text="${recom.packageName}"></a></h4>
-                                    <h3 th:text="&{recom.packagedatelist[0].aprice}"></h3>
+                                     <th:block th:if="${not #strings.isEmpty(recom.packagedatelist[0].discount)}">
+                                        <h6 style="text-align-last: right;">
+                                            <del th:text="|${#numbers.formatInteger(recom.packagedatelist[0].aprice,1,'COMMA')}원|"></del>
+                                        </h6>
+                                        <h4 style="text-align-last: right;"><span th:text="|${#numbers.formatInteger(recom.packagedatelist[0].aprice - (recom.packagedatelist[0].aprice *(recom.packagedatelist[0].discount * 0.01)),1,'COMMA')}원|"></span>
+                                        </h4>
+                                     </th:block>
+                                     <th:block th:if="${#strings.isEmpty(recom.packagedatelist[0].discount)}">
+                                         <h6>&nbsp;</h6>
+                                        <h4 style="text-align-last: right;"><span th:text="|${#numbers.formatInteger(recom.packagedatelist[0].aprice,1,'COMMA')}원|"></span>
+                                        </h4>
+                                     </th:block>
                                 </div>
                             </div>
                         </div>

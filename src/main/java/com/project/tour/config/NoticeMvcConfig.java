@@ -11,7 +11,9 @@ import java.nio.file.Paths;
 public class NoticeMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         exposeDirectory("notice-photo", registry);
+
     }
 
     private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
