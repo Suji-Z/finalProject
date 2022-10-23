@@ -497,6 +497,7 @@
 
                 </div>
             </div>
+
             <div class="col-lg-3 col-md-6 col-sm-12 col-12">
                 <div class="choose_desti_wrapper">
                     <div class="choose_inner_wrap">
@@ -512,6 +513,7 @@
 
                 </div>
             </div>
+
             <div class="col-lg-3 col-md-6 col-sm-12 col-12">
                 <div class="choose_desti_wrapper">
                     <div class="choose_inner_wrap">
@@ -549,6 +551,7 @@
 </section>
 
 <!-- Holiday Destinations  Area-->
+    <a sec:authorize="isAuthenticated" th:if="${recommend!=null}">
 <section id="holiday_destinations" class="section_padding_top">
     <div class="container">
         <div class="row">
@@ -557,85 +560,36 @@
                     <div class="col-lg-12">
                         <div class="holiday_left_heading">
                             <div class="heading_area" style="text-align: center">
-
-                                <h2><b>부승관</b>님을 위한 맞춤형 패키지 추천!</h2>
+                                <h2><b>[[${name}]]</b>님을 위한 맞춤형 패키지 추천!</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="holiday_small_boxed">
-                            <a href="top-destinations-details.html">
-                                <img src="assets/img/holiday-img/holiday-1.png" alt="img">
-                                <div class="holiday_small_box_content">
-                                    <div class="holiday_inner_content">
-                                        <div class="rating_outof">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <h5>5 Out of 5</h5>
+
+                    <th:block th:each="recom : ${recommend}" th:if="${recomStat.index<3}">
+                        <div class="col-lg-4">
+                            <div class="holiday_small_boxed">
+                                <a th:href="@{|/package/${recom.id}|}">
+                                    <img th:src="@{${recom.photosImagePath1}}" style="height: 350px" alt="img">
+                                    <div class="holiday_small_box_content">
+                                        <div class="holiday_inner_content">
+                                            <div class="rating_outof">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <h5>5 Out of 5</h5>
+                                            </div>
+                                            <h3 style="font-size: 16pt">[[${recom.location1}]] | [[${recom.packagedatelist.get(0).getAprice()}]]원</h3>
+                                            <h4 style="font-size: 14pt">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h4>
+                                            <p th:text="${recom.packageInfo}"></p>
                                         </div>
-                                        <h3>China | $6000</h3>
-                                        <h4>8 days 7 nights</h4>
-                                        <p>Cupidatat consectetur ea cillum nt
-                                            consectetur excepteur.</p>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
+                    </th:block>
 
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="holiday_small_boxed">
-                            <a href="top-destinations-details.html">
-                                <img src="assets/img/holiday-img/holiday-1.png" alt="img">
-                                <div class="holiday_small_box_content">
-                                    <div class="holiday_inner_content">
-                                        <div class="rating_outof">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <h5>5 Out of 5</h5>
-                                        </div>
-                                        <h3>China | $6000</h3>
-                                        <h4>8 days 7 nights</h4>
-                                        <p>Cupidatat consectetur ea cillum nt
-                                            consectetur excepteur.</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="holiday_small_boxed">
-                            <a href="top-destinations-details.html">
-                                <img src="assets/img/holiday-img/holiday-1.png" alt="img">
-                                <div class="holiday_small_box_content">
-                                    <div class="holiday_inner_content">
-                                        <div class="rating_outof">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <h5>5 Out of 5</h5>
-                                        </div>
-                                        <h3>China | $6000</h3>
-                                        <h4>8 days 7 nights</h4>
-                                        <p>Cupidatat consectetur ea cillum nt
-                                            consectetur excepteur.</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                    </div>
 
                 </div>
             </div>
@@ -643,7 +597,7 @@
         </div>
     </div>
 </section>
-
+    </a>
 <!-- About Area -->
 
 <!-- 여행후기 -->
