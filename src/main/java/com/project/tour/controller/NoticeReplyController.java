@@ -3,6 +3,7 @@ package com.project.tour.controller;
 import com.project.tour.domain.Member;
 import com.project.tour.domain.Notice;
 import com.project.tour.domain.NoticeReply;
+import com.project.tour.domain.NoticeReplyForm;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
@@ -30,11 +31,11 @@ public class NoticeReplyController {
     //댓글 달기
     @PostMapping("/write")
     @ResponseBody
-    public String noticeReplyCreate(@RequestParam("replyForm") HashMap<String,Object> replyForm,
+    public String noticeReplyCreate(@RequestBody Map<String,Object> replyForm,
                                                     Principal principal, @LoginUser SessionUser user, Model model){
 
         System.out.println("replyForm = " + replyForm);
-        System.out.println("replyForm = " + replyForm.get("noticeNum"));
+        System.out.println("replyForm = " + replyForm.get("content"));
 
         //로그인 확인
         Member member;
@@ -44,7 +45,7 @@ public class NoticeReplyController {
             member = memberService.getName(user.getEmail());
         }
 
-        noticeReplyService.create(replyForm);
+//        noticeReplyService.create(replyForm);
         model.addAttribute("commentList", noticeReplyService.getList((Notice) replyForm.get("notice")));
 
         // 수정&삭제 버튼 게시를 위한 유저 정보 전달

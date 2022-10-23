@@ -5,15 +5,10 @@ function replyConfirm(){
     let noticeNum = $("#noticeNum").val();
 
     var replyForm ={
-        id : "0",
-        created : "0",
-        content : $("#content").val(),
-        memberNum : $("#memberNum").val(),
-        noticeNum : $("#noticeNum").val(),
+
+
+        "content" : content,
     };
-
-    alert(JSON.stringify(replyForm));
-
 
     if(content==""){
         alert("내용을 비워둘 수 없습니다.");
@@ -21,14 +16,15 @@ function replyConfirm(){
     }
 
         $.ajax({
+            anyne:true,
             url: '/noticeReply/write',
             type: 'post',
-            data: replyForm,
-            contentType: "json",
+            data: JSON.stringify(replyForm),
+            dataType: "json",
+            contentType:'application/json',
         })
         .done(function (fragment) {
             $('#commentTable').replaceWith(fragment);
         });
-
 
 }
