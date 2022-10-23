@@ -102,11 +102,55 @@
         <button type="button" sec:authorize="hasRole('ADMIN')" th:onclick="|location.href='@{|/notice/delete/${notice.id}|}'|" class="btn btn-outline-secondary">삭제</button>
 
 
+        <!--댓글-->
+        <hr/>
 
+        <!--댓글출력-->
+        <div class="comment_area" id="commentTable">
+
+            <div class="comment_area_boxed" th:each="comment,loop:${commentList}">
+                <div class="comment_text">
+                    <div class="comment_author_name">
+                    <form method="POST">
+                        <div>
+                            <button type="button" class="btn p-0 btn-md" name="commentID">버튼</button>
+                            <h5 th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></h5>
+                        </div>
+                        <div th:text="${comment.content}"></div>
+                        <div class="text-right">
+                            <span><button type="submit" name="submit" value="update">수정</button></span>
+                            <span><button type="submit" name="submit" value="delete">삭제</button></span>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--댓글작성-->
+        <div class="comment_area_form">
+            <form method="POST" onsubmit="return replyConfirm(event);" id="commentForm">
+                <h4 style="color:#99E000;">댓글달기</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-froup">
+                                <textarea rows="1" placeholder="댓글을 입력해 주세요"
+                                class="form-control bg_input" name="CONTENT" id="content"></textarea></div>
+                        <br/>
+                        <div class="comment_form_submit">
+                            <button type="button" class="btn btn-outline-secondary" onclick="return replyConfirm(event);">등록하기</button>
+                        </div>
+
+                        <!--넘길데이터-->
+                        <input type="hidden" id="memberNum" name="memberNum" th:value="${member.id}">
+                    </div>
+                </div>
+            </form>
+        </div>
 
     </div>
     <div class="common_form_submit">
-        <button sec:authorize="isAuthenticated()" class="btn btn_theme btn_md" th:onclick="|location.href='@{/notice/list}'|">리스트</button>
+        <button class="btn btn_theme btn_md" th:onclick="|location.href='@{/notice/list}'|">리스트</button>
     </div>
 
 </section>
