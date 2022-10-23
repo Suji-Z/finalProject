@@ -36,7 +36,7 @@ function selectdatePackage(){
     }
     $.ajax({
         type: 'GET',
-        url: '/jeju/dateprice',
+        url: '/package/dateprice',
         data: {
             'date' : date,
             'acount' : acount,
