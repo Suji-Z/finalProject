@@ -26,14 +26,14 @@ public class NoticeReplyService {
     private final NoticeRepository noticeRepository;
     private final MemberRepository memberRepository;
 
-    public void create(Map<String,Object> replyForm, Long memberNum, Long noticeNum){
+    public void create(String content, Long memberNum, Long noticeNum){
 
         NoticeReply noticeReply = new NoticeReply();
 
         noticeReply.setMember(memberRepository.findById(memberNum).get());
         noticeReply.setCreated(LocalDateTime.now());
         noticeReply.setNotice(noticeRepository.findById(noticeNum).get());
-        noticeReply.setContent((String)replyForm.get("content"));
+        noticeReply.setContent(content);
 
         noticeReplyRepository.save(noticeReply);
 
@@ -45,5 +45,25 @@ public class NoticeReplyService {
         Optional<Notice> notice = noticeRepository.findById(noticeNum);
 
         return noticeReplyRepository.findAllByNotice(notice.get());
+    }
+
+    //댓글 수정
+    public void update(Long replyNum, Long noticeNum, Long memberNum, String content){
+
+        NoticeReply noticeReply = noticeReplyRepository.findById(replyNum).get();
+
+        noticeReply.setContent(content);
+        noticeReply.setCreated(LocalDateTime.now());
+
+        noticeReplyRepository.save(noticeReply);
+
+    }
+
+    //댓글 삭제
+    public void delete(Long replyNum){
+
+        NoticeReply noticeReply = noticeReplyRepository.findById(replyNum).get();
+
+        noticeReplyRepository.delete(noticeReply);
     }
 }

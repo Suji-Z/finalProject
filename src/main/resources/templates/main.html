@@ -140,7 +140,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="visa-details.html" class="nav-link">공지사항</a>
+                                        <a th:href="@{/notice/list}" class="nav-link">공지사항</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="visa-application.html" class="nav-link">QnA</a>
@@ -742,7 +742,7 @@
                 </div>
                 <div class="footer_link_area">
                     <ul>
-                        <li><a href="top-destinations-details.html">공지사항</a></li>
+                        <li><a th:href="@{/notice/list}">공지사항</a></li>
                         <li><a href="top-destinations-details.html">QnA</a></li>
                         <li><a href="flight-search-result.html">FaQ</a></li>
                         <li><a th:href="@{/estimate/list}">견적문의</a></li>
