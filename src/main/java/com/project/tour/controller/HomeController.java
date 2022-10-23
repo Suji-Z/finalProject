@@ -15,17 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Controller
 public class HomeController {
 
     private final PackageService packageService;
-
+/*
     @PostMapping("/main/keyword")
     @ResponseBody
     public Map<String, Object> mainKey(@RequestParam(value = "keyword", required = false) String keyword){
@@ -42,7 +39,7 @@ public class HomeController {
         result.put("packageName",theme.get(0).getPackageName()); //ajax에 잘 넘어가나 확인용
 
         return result;
-    }
+    }*/
 
     @GetMapping("/")
     public String main(Model model,ModelAndView mv, @LoginUser SessionUser user,
@@ -67,15 +64,6 @@ public class HomeController {
 
         System.out.println("패키지 사이즈"+theme.size());
 
-        int price=0;
-
-        for(int i=0;i<theme.size();i++){
-
-            price = theme.get(i).getPackagedatelist().get(i).getAprice();
-
-        }
-
-        model.addAttribute("price",price);
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);
 
@@ -89,15 +77,6 @@ public class HomeController {
 
         System.out.println("패키지 사이즈"+theme.size());
 
-        int price=0;
-
-        for(int i=0;i<theme.size();i++){
-
-           price = theme.get(i).getPackagedatelist().get(i).getAprice();
-
-        }
-
-        model.addAttribute("price",price); //인원별 총가격
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);
 
