@@ -107,13 +107,13 @@
 
         <!--댓글출력-->
         <div class="comment_area" id="commentTable">
-            <div th:if="${notice.noticeReplyList.isEmpty()}">등록된 댓글이 없습니다.</div>
-            <div class="comment_area_boxed" th:each="comment:${commentList}">
+
+            <div class="comment_area_boxed" th:each="comment,loop:${commentList}">
                 <div class="comment_text">
                     <div class="comment_author_name">
                     <form method="POST">
                         <div>
-                            <input type="button" class="btn p-0 btn-md" name="commentID" th:value="${comment.EMAIL}" />
+                            <button type="button" class="btn p-0 btn-md" name="commentID">버튼</button>
                             <h5 th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></h5>
                         </div>
                         <div th:text="${comment.content}"></div>

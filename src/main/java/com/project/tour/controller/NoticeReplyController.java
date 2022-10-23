@@ -30,12 +30,11 @@ public class NoticeReplyController {
 
     //댓글 달기
     @PostMapping("/write")
-    @ResponseBody
     public String noticeReplyCreate(@RequestBody Map<String,Object> replyForm,
-                                                    Principal principal, @LoginUser SessionUser user, Model model){
+                                    Principal principal, @LoginUser SessionUser user,
+                                    Model model){
 
-        System.out.println("replyForm = " + replyForm);
-        System.out.println("replyForm = " + replyForm.get("content"));
+        System.out.println("요기");
 
         //로그인 확인
         Member member;
@@ -45,16 +44,22 @@ public class NoticeReplyController {
             member = memberService.getName(user.getEmail());
         }
 
-//        noticeReplyService.create(replyForm);
-        model.addAttribute("commentList", noticeReplyService.getList((Notice) replyForm.get("notice")));
+        Long memberNum = Long.parseLong(replyForm.get("memberNum").toString());
+        Long noticeNum = Long.parseLong(replyForm.get("noticeNum").toString());
+
+        noticeReplyService.create(replyForm, memberNum, noticeNum);
+        model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
+
+        System.out.println("여기");
 
         // 수정&삭제 버튼 게시를 위한 유저 정보 전달
         Map<String, Object> userInform = new HashMap<String, Object>();
         userInform.put("member", member);
         model.addAttribute("userInform", userInform);
 
+        System.out.println("저기");
 
-        return "/write :: #commentTable";
+        return "notice/notice_article :: #commentTable";
 
 
 
