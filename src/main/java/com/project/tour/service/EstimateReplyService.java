@@ -145,9 +145,8 @@ public class EstimateReplyService {
         condition.setRemaincount(totcount);
         condition.setLcoation2(location2);
 
-        List<EstimateSearchDTO> packages = searchRepository.searchByWhere(condition);
+        return searchRepository.searchByWhere(condition);
 
-        return packages;
     }
 
 
