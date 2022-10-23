@@ -113,13 +113,17 @@
                     <div class="comment_author_name">
                     <form method="POST">
                         <div>
-                            <button type="button" class="btn p-0 btn-md" name="commentID">버튼</button>
-                            <h5 th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></h5>
+                            <div th:text="${comment.member.name}"></div>
+                            <div th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></div>
                         </div>
-                        <div th:text="${comment.content}"></div>
+                        <div id="commentOri" th:text="${comment.content}"></div>
                         <div class="text-right">
-                            <span><button type="submit" name="submit" value="update">수정</button></span>
-                            <span><button type="submit" name="submit" value="delete">삭제</button></span>
+                            <span th:if="${comment.member.id}==${member.id}"><button type="submit" id="updateReply" onclick="return updateReply();"> 수정 </button></span>
+                            <span th:if="${comment.member.id}==${member.id}"><button type="submit" id="deleteReply" onclick="return deleteReply();">삭제</button></span>
+                            <span sec:authorize="hasRole('ADMIN')"><button type="submit" onclick="return deleteReply();">삭제</button></span>
+                        <!--가져갈 데이터-->
+                            <input type="hidden" th:value="${comment.id}" id="replyNum"/>
+
                         </div>
                     </form>
                     </div>
