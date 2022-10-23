@@ -1,8 +1,10 @@
 package com.project.tour.controller;
 
+import com.project.tour.domain.Member;
 import com.project.tour.domain.Package;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
+import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -22,6 +25,8 @@ import java.util.*;
 public class HomeController {
 
     private final PackageService packageService;
+    private final MemberService memberService;
+
 /*
     @PostMapping("/main/keyword")
     @ResponseBody
@@ -42,12 +47,13 @@ public class HomeController {
     }*/
 
     @GetMapping("/")
-    public String main(Model model,ModelAndView mv, @LoginUser SessionUser user,
-                             @RequestParam(value = "keyword", required = false) String keyword) {
+    public String main(Model model, ModelAndView mv, @LoginUser SessionUser user,
+                       @RequestParam(value = "keyword", required = false) String keyword, Principal principal) {
 
         //model.addAttribute("posts",postsService.findAllDesc());
 
         System.out.println("메인키워드는: "+ keyword);
+        String name = null;
 
         if(user!=null){
             model.addAttribute("email",user.getEmail());
@@ -60,10 +66,34 @@ public class HomeController {
 
         }
 
+        String userKeyword = null;
+        List<Package> recommend = null;
+
+
+        if(principal!=null) {
+
+            if (memberService.existByEmail(principal.getName())) {
+
+                Member member = memberService.getName(principal.getName());
+
+                name = member.getName();
+                userKeyword = member.getKeyword();
+
+                recommend = packageService.getSearch(userKeyword);
+
+            } else {
+
+                name = user.getName();
+            }
+        }
+
+
+
         List<Package> theme = packageService.getSearch(keyword);
 
         System.out.println("패키지 사이즈"+theme.size());
-
+        model.addAttribute("recommend",recommend);
+        model.addAttribute("name",name);
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);
 
