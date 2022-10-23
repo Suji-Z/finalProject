@@ -24,9 +24,4 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
     List<Package> findByIdIn(List<Long> packageNums);
     Page<Package> findByIdIn(Set<Long> packageNums, Pageable pageable);
 
-    Page<Package> findByLocation2(String location2, Pageable pageable);
-
-    Page<Package> findByLocation2AndPackagedatelist_DepartureContainingAndPackagedatelist_RemaincountGreaterThanEqual(String location, String date, Integer count, Pageable pageable);
-
-    Page<Package> findByLocation1AndPackagedatelist_DepartureContainingAndPackagedatelist_RemaincountGreaterThanEqual(String location, String date, Integer count, Pageable pageable);
 }
