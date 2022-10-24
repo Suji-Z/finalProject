@@ -1,7 +1,10 @@
 package com.project.tour.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 public class Package {
 
     @Id
@@ -42,6 +46,9 @@ public class Package {
 
     private String keyword;
 
+    @ColumnDefault("0")
+    private Integer bookingCnt;
+
     /**항공사 이름*/
     private String transport;
 
@@ -50,6 +57,11 @@ public class Package {
      * */
     @OneToMany(mappedBy = "packages",cascade = CascadeType.REMOVE)
     private List<PackageDate> packagedatelist;
+
+
+    @OneToMany(mappedBy = "id",cascade = CascadeType.REMOVE)
+    private List<ShortReview> shortReviewList;
+
 
     //이미지 업로드
     @Transient
@@ -64,5 +76,8 @@ public class Package {
 
         return "/package-detail/" + id + "/" + detailImage;
     }
+
+
+
 
 }

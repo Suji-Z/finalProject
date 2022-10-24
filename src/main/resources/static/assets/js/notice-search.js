@@ -1,15 +1,16 @@
 
 
-function noticeDeleteReply(event){
+function noticeSearch(){
 
-  let noticeNum = $("#noticeNum").val();
+  let searchKeyword = $("#searchKeyword").val();
+  let category = $("#noticeFilter").val();
 
       $.ajax({
-          url: '/noticeReply/delete',
+          url: '/notice/search',
           type: 'post',
           data: {
-              replyNum : event.value,
-              noticeNum : $("#noticeNum").val()
+              searchKeyword : searchKeyword,
+              category : category
           },
           success : function(data) {
 

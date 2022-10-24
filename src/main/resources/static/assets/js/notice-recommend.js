@@ -12,9 +12,6 @@ $(function () {
                 i--; // i=0
             }
 
-            alert("하트"+i);
-            alert("글번호"+noticeNum);
-
             $.ajax({
                 url: '/notice/recommend',
                 type: 'GET',

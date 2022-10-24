@@ -210,6 +210,31 @@ public class NoticeController {
     }
 
 
+    //카테고리 필터 씌우기
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/category")
+    public String categoryFilter(@RequestParam("category") String category, @PageableDefault Pageable pageable,
+                                 Model model) {
+
+        Page<Notice> paging = noticeService.getListByCategory(category, pageable);
+        model.addAttribute("paging",paging);
+
+        return "notice/notice_list :: #commentTable";
+    }
+
+    //검색하기
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/search")
+    public String search(@RequestParam("category") String category, @RequestParam("searchKeyword") String searchKeyword,
+                         @PageableDefault Pageable pageable, Model model) {
+
+        Page<Notice> paging = noticeService.getListBySearch(category, searchKeyword, pageable);
+        model.addAttribute("paging",paging);
+
+        return "notice/notice_list :: #commentTable";
+    }
+
+
 
 
 

@@ -6,4 +6,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QnAReplyForm {
+
+    private Long replyNum;
+
+    private String title;
+
+    private String content;
+
+
+
+
+
+
+
+
 }

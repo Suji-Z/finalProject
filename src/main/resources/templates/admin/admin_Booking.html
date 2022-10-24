@@ -34,68 +34,39 @@
 
                     </div>
 
-                    <section id="dashboard_main_arae" class="section_padding">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-4-sally">
-                                    <div class="dashboard_sidebar">
-                                        <div class="dashboard_sidebar_user">
+                    <div class="dashboard_menu_area">
+                        <ul>
 
-                                            <h2>Admin</h2>
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>패키지 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a th:href="@{/admin/packageList}">패키지 상품 리스트</a></li>
+                                    </ul>
+                                </div>
 
-                                        </div>
+                            </li>
 
-                                        <div class="dashboard_menu_area">
-                                            <ul>
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a th:href="@{/admin/bookingUser}">회원 예약 관리 </a></li>
+                                    </ul>
+                                </div>
 
-                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>패키지 관리</b>
-                                                    <span> </span>
-                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                                         style="">
-                                                        <ul>
-                                                            <li><a th:href="@{/admin/packageList}">패키지 상품 리스트</a></li>
-                                                        </ul>
-                                                    </div>
+                            </li>
 
-                                                </li>
-
-                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약 관리</b>
-                                                    <span> </span>
-                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                                         style="">
-                                                        <ul>
-                                                            <li><a th:href="@{/admin/bookingUser}">회원 예약 관리 </a></li>
-                                                        </ul>
-                                                    </div>
-
-                                                </li>
-
-                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
-                                                    <span> </span>
-                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                                         style="">
-                                                        <ul>
-                                                            <li><a th:href="@{/admin/user}">회원 리스트</a></li>
-                                                        </ul>
-                                                    </div>
-
-                                                </li>
-
-
-
-                                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
-                                                    <span> </span>
-                                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                                         style="">
-                                                        <ul>
-                                                            <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
-                                                            <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
-                                                        </ul>
-                                                    </div>
-
-                                                </li>
-
-                                            </ul>
+                            <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
+                                <span> </span>
+                                <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                     style="">
+                                    <ul>
+                                        <li><a th:href="@{/admin/user}">회원 리스트</a></li>
+                                        <li><a href="flight-booking.html"></a></li>
+                                    </ul>
                                 </div>
 
                             </li>
@@ -110,11 +81,16 @@
                                         <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
                                         <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                                     </ul>
+                                </div>
+
+                            </li>
 
 
-                                </div> </ul>
+
+                        </ul>
                     </div>
-                </div></div>
+                </div>
+            </div>
 
 
             <div class="col-lg-8-sally">

@@ -102,6 +102,7 @@
                                         <th>이름</th>
                                         <th>생년월일</th>
                                         <th>연락처</th>
+                                        <th>포인트</th>
                                         <th>비고</th>
                                     </tr>
                                 </thead>
@@ -115,6 +116,7 @@
                                         <td th:text="${member.name}"></td>
                                         <td th:text="${member.birth}"> </td>
                                         <td th:text="${member.phone}"> </td>
+                                        <td th:text="|${member.point} p|" ></td>
                                         <td>
                                             <a th:href="@{|/admin/user/update/${member.email}|}" th:text="수정" class="btn btn-sm btn-outline-secondary"  />
                                             <a th:href="@{|/admin/user/delete/${member.email}|}" th:text="삭제"  class="btn btn-sm btn-outline-secondary"/>

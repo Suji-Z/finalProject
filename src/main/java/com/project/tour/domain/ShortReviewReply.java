@@ -5,33 +5,28 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Getter
 @Setter
 @Entity
-public class QnA {
+public class ShortReviewReply {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qnaNum")
+    @Column(name = "shorReviewReplyNum")
     private Long id;
 
-    private String qnacategory;
-
-    private String subject;
-
+    @Column(length = 3000)
     private String content;
 
     private LocalDateTime created;
 
     @ManyToOne
-    private Member member;
+    private ShortReview shortReviewNum;
 
-    private String Name;
-
-    @OneToMany(mappedBy = "qnaNum", cascade = CascadeType.REMOVE)
-    private List<QnA_Reply> replyList;
+    @ManyToOne
+    private Member userName;
 
 }

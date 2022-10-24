@@ -72,16 +72,9 @@ public class JejuPackageController {
 
         //날짜가 선택되지 않았을때
         if (date == null || date.equals("")) {
-            LocalDate today = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-            date = today.format(formatter);
-
+            date = null;
         } else {//날짜포맷 db와 맞추기
             date = date.replaceAll("-", "");
-        }
-
-        if(keyword==null || keyword.equals("")){
-            keyword=null;
         }
 
         //항공사 다중선택시
@@ -107,15 +100,6 @@ public class JejuPackageController {
                 }
         }
 
-        //가격범위
-        if(pricerangestr==null || pricerangestr.equals("") && pricerangeend==null || pricerangeend.equals("")){
-            pricerangestr =null;
-            pricerangeend = null;
-        }else{
-            log.info("pricerangestr : " + pricerangestr);
-            log.info("pricerangeend : " + pricerangeend);
-        }
-
         log.info("DATE : " + date);
         log.info("LOCATION : " + location);
         log.info("COUNT : " + String.valueOf(count));
@@ -123,7 +107,7 @@ public class JejuPackageController {
         log.info("TRANSPORTS : " + transports);
         log.info("TRAVELPERIOD : " + travelPeriods);
 
-        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
+        Page<PackageSearchDTO> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
         model.addAttribute("paging", paging);
         model.addAttribute("searchForm", searchForm);
@@ -134,7 +118,7 @@ public class JejuPackageController {
     /**
      * 상세페이지
      */
-    @GetMapping("/{id}")
+    @GetMapping("/jeju/{id}")
     public String packagedetail(@PathVariable("id") Long id, Model model) {
 
         Package apackage = packageService.getPackage(id);
@@ -161,16 +145,19 @@ public class JejuPackageController {
         log.info(date.getClass().getTypeName());
 
         /* 해당 날짜에 어른/아이/유아 타입별 가격*/
-        PackageDate getPackagePrice = packagedateService.getPrice(packagenum, date);
-        Integer discount = getPackagePrice.getDiscount();
+        PackageDate getPackage = packagedateService.getPrice(packagenum, date);
+        Integer discount = getPackage.getDiscount();
+        
+        /* 잔여좌석 여부 */
+        Integer remaincount = getPackage.getRemaincount();
+        Integer totcount = acount + bcount + ccount;
 
         /** 정가 */
-        aprice = getPackagePrice.getAprice() * acount;
-        bprice = getPackagePrice.getBprice() * bcount;
-        cprice = getPackagePrice.getCprice() * ccount;
+        aprice = getPackage.getAprice() * acount;
+        bprice = getPackage.getBprice() * bcount;
+        cprice = getPackage.getCprice() * ccount;
 
-        if (getPackagePrice.getDiscount() == null) {
-
+        if (getPackage.getDiscount() == null) {
         } else {/** 할인가 */
 
             dcaprice = (int) (aprice - (aprice * (discount * 0.01)));
@@ -189,6 +176,8 @@ public class JejuPackageController {
         priceInfo.put("bcount", bcount);
         priceInfo.put("bprice", bprice);
         priceInfo.put("discount", discount);
+        priceInfo.put("remaincount", remaincount);
+        priceInfo.put("totcount", totcount);
 
         return priceInfo;
     }
