@@ -29,42 +29,27 @@
                 <div class="tou_booking_form_Wrapper">
 
                     <div class="booking_tour_form">
-                        <h3 class="heading_theme">Q&A</h3>
+                        <h3 class="heading_theme">Q&A 답변</h3>
                         <div class="tour_booking_form_box">
                             <div class="your_info_arae">
                                 <ul>
                                     <li>
-                                        <span style="font-size: 15pt;margin: auto">강쥐랑 같이 여행 가고 싶어요</span></li>
+                                        <span style="font-size: 15pt;margin: auto"
+                                        th:text="${reply.title}"></span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성자</span>
-                                        <span>김히동</span>
+                                        <span>관리자</span>
                                         <span style="width: 40%"></span>
                                         <colspan style="text-align:center;width: 100px">분류</colspan>
-                                    <span>제주여행</span></li>
-
-                                    <li><span style="text-align:center;width: 14%">작성일</span>
-                                        <span>2022.09.26</span>
-                                        <span style="width: 38%"></span>
-                                        <colspan style="text-align:center;width: 100px">조회수</colspan>
-                                        <span>10</span></li>
-
+                                    <span th:text="${qna.qnacategory}"></span></li>
 
 
                                     <li><span style="padding: 20px 80px 20px 0px;" valign="top" height="200"></span>
                                         <div class="col-lg-8">
-                                         <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
-                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly">일월이랑 같이 가고 싶어요</textarea>
+                                         <textarea class="form-control"
+                                                   th:text="${reply.content}" type="text" rows="8" style="padding-left: 20px;
+                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly"></textarea>
                                      </div> </li>
-
-                                    <li>
-                                        <span style="padding-left: 50px;padding-right: 30px">이전글 : </span>
-                                        공짜로 가고싶어요
-                                    </li>
-
-                                    <li>
-                                        <span style="padding-left: 50px;padding-right: 30px">다음글 : </span>
-                                        환전은 어떻게 하나요
-                                    </li>
 
                                 </ul>
                             </div>
@@ -74,15 +59,18 @@
             </div>
 
         </div>
-        <button type="button" class="btn btn-outline-secondary">수정</button>
-        <button type="button" class="btn btn-outline-secondary">삭제</button>
-        <button type="button" class="btn btn-outline-secondary">답변</button>
-
+        <div class="col-lg-8">
+            <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==qna.member.email
+        or #authentication.getPrincipal().getUsername()=='admin@naver.com' and qna.member!=null}">
+                <button type="button" th:onclick="|location.href='@{|/qna/answer/modify/${qna.id}|}'|" class="btn btn-outline-secondary">수정</button>
+                <button type="button" th:onclick="|location.href='@{|/qna/answer/delete/${qna.id}|}'|" class="btn btn-outline-secondary">삭제</button>
+            </a>
+        </div>
 
 
     </div>
     <div class="common_form_submit">
-        <button class="btn btn_theme btn_md">리스트</button>
+        <a th:href="@{/qna/list}" class="btn btn_theme btn_md">리스트</a>
     </div>
 
 </section>

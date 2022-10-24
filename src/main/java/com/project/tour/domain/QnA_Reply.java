@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,20 +16,19 @@ public class QnA_Reply {
     @Column(name = "replyNum")
     private Long id;
 
-    private Integer ordernum;
+    private String title; //글제목
 
-    private Integer layer;
+    private String content; //글내용
 
-    private Integer parent;
+    private LocalDateTime replycreated;
 
-    private String title;
-
-    private String content;
 
     //원글의 답글
     @ManyToOne
     @JoinColumn(name="qnaNum")
     private QnA qnaNum;
 
+    @ManyToOne
+    private Member member;
 
 }
