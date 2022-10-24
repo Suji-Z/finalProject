@@ -118,7 +118,7 @@ public class JejuPackageController {
     /**
      * 상세페이지
      */
-    @GetMapping("/{id}")
+    @GetMapping("jeju/{id}")
     public String packagedetail(@PathVariable("id") Long id, Model model) {
 
         Package apackage = packageService.getPackage(id);
