@@ -10,29 +10,28 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class QnA {
+public class ShortReview {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qnaNum")
+    @Column(name = "shortReviewNum")
     private Long id;
 
-    private String qnacategory;
-
-    private String subject;
-
+    @Column(length = 3000)
     private String content;
+
+    private Double score;
 
     private LocalDateTime created;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private Member userName;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "packageNum")
+    private Package packages;
 
-    @OneToMany(mappedBy = "qnaNum", cascade = CascadeType.REMOVE)
-    private List<QnA_Reply> replyList;
+
 
 }
