@@ -111,7 +111,7 @@
                                 <td th:text="${bookingUser.member.email}"></td>
                                 <td th:text="${bookingUser.APackage.packageName}"></td>
                                 <td th:text="|${#strings.substring(bookingUser.bookingDate,0,10)}|"></td>
-                                <td th:text="${bookingUser.bookingTotalPrice}"></td>
+                                <td th:text="${#numbers.formatInteger(bookingUser.bookingTotalPrice,3,'COMMA')+'원'}"></td>
                                 <td th:switch="${bookingUser.bookingStatus}">
                                             <span th:case="0">예약 확인 중
                                                <a th:href="@{|/admin/package/bookingCheck/${bookingUser.id}|}" th:text="승인" class="btn btn-sm btn-outline-secondary"></a>

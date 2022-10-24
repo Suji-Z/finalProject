@@ -1,11 +1,13 @@
 package com.project.tour.service;
 
 
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.JejuPackageRepository;
 import com.project.tour.repository.JejuSpecification;
 import com.project.tour.repository.PackageRepository;
+import com.project.tour.repository.PackageSearchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class PackageService {
 
     @Autowired
     private final JejuPackageRepository jejuRepository;
+    @Autowired
+    private final PackageSearchRepository searchRepository;
 
     //페이징처리(Ajax)
     /**
@@ -65,6 +69,8 @@ public class PackageService {
 //    }
 
 
+
+
     public List<Package> getSearch(String keyword) {
 
         Specification<Package> spec = Specification.where(JejuSpecification.equalKeyword(keyword));
@@ -78,57 +84,21 @@ public class PackageService {
         return packageRepository.findByKeywordIn(keyword);
     }
 
-
-    public Page<Package> getSearchList(String location, String date, Integer count, String keyword,
-                                       List<String> transport, List<Integer> period, Integer pricerangestr, Integer pricerangeend ,
-                                       Pageable pageable) {
+    public Page<PackageSearchDTO> getSearchList(String location2, String date, Integer count, String keyword,List<String> transport,
+                                                List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Pageable pageable) {
 
 
-        /** 날짜 */
-        Specification<Package> spec = Specification.where(JejuSpecification.greaterThanOrEqualToDeparture(date));
+        PackageSearchCondition condition = new PackageSearchCondition();
 
-        /** 상세지역 */
-        if (location == null || location.equals("")) {
-            location = "제주";
-            spec = spec.and(JejuSpecification.equalLocation1(location));
-        } else {
-            spec = spec.and(JejuSpecification.equalLocation2(location));
-        }
-
-        /** 여행객수 */
-        if (count != null) {
-            spec = spec.and(JejuSpecification.greaterThanOrEqualToRemaincount(count));
-        }
-
-        /** 키워드 */
-        if (keyword != null) {
-            spec = spec.and(JejuSpecification.equalKeyword(keyword));
-        }
-
-        /** 항공사 */
-        if(transport!=null){
-            spec = spec.and(JejuSpecification.equalTransport(transport));
-        }
-
-        /** 여행기한 */
-        if(period !=null){
-            spec = spec.and(JejuSpecification.equalPeriod(period));
-        }
-
-        /** 가격범위 */
-        if(pricerangestr !=null || pricerangeend !=null){
-            spec = spec.and(JejuSpecification.betweenPrice(pricerangestr,pricerangeend));
-        }
-
-        List<Package> searchPackage = jejuRepository.findAll(spec);
-
-        //중복제거
-        Iterator<Package> it = searchPackage.iterator();
-        HashSet<Long> packageNum = new HashSet<>();
-        while (it.hasNext()) {
-            packageNum.add(it.next().getId());
-        }
-
+        condition.setLocation1("제주");
+        condition.setLocation2(location2);
+        condition.setStartday(date);
+        condition.setTotcount(count);
+        condition.setKeyword(keyword);
+        condition.setTransport(transport);
+        condition.setTravelPeriod(travelPeriod);
+        condition.setPricerangestr(pricerangestr);
+        condition.setPricerangeend(pricerangeend);
 
         //페이징처리
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
@@ -137,9 +107,9 @@ public class PackageService {
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ? 0 :
                         pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(sorts));
+                pageable.getPageSize(), Sort.by(Sort.Direction.DESC));
 
-        return packageRepository.findByIdIn(packageNum, pageable);
+        return searchRepository.searchByWhere(condition,pageable);
 
     }
 

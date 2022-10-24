@@ -27,10 +27,9 @@ public class QnA {
     private LocalDateTime created;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
     private Member member;
 
-    private String name;
+    private String Name;
 
     @OneToMany(mappedBy = "qnaNum", cascade = CascadeType.REMOVE)
     private List<QnA_Reply> replyList;

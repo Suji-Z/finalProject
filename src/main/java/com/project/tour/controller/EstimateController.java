@@ -174,15 +174,19 @@ public class EstimateController {
 
     @PostMapping("/reply/{id}")
     public String estimateReply(@Validated EstimateReplyForm replyForm, BindingResult bindingResult,
-                                @PathVariable("id") Long id,Principal principal) {
+                                @PathVariable("id") Long id,Principal principal,Model model) throws ParseException {
+
+        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
+        List<EstimateSearchDTO> recomPackages = estimateReplyService.getPackages(inquiry);
 
         /* 검증에 실패하면 다시 입력폼으로 */
         if(bindingResult.hasErrors()){
             log.info("errors = {}",bindingResult);
+            model.addAttribute("inquiry",inquiry);
+            model.addAttribute("packages",recomPackages);
             return "estimate/estimateReply";
         }
 
-        EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
         estimateReplyService.create(inquiry,replyForm);
 
         return "redirect:/estimate/list";
@@ -195,9 +199,12 @@ public class EstimateController {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 
-        String[] packages = reply.getRecomPackage().split(",");
-
-        List<Package> recomPackages = estimateReplyService.recom(packages);
+        String[] packages = null;
+        List<Package> recomPackages = null;
+        if(reply.getRecomPackage()!=null) {
+            packages = reply.getRecomPackage().split(",");
+            recomPackages = estimateReplyService.recom(packages);
+        }
 
         model.addAttribute("reply",reply);
         model.addAttribute("recomPackages",recomPackages);
@@ -214,6 +221,9 @@ public class EstimateController {
         replyForm.setTitle(reply.getTitle());
         replyForm.setContent(reply.getContent());
         replyForm.setCreated(LocalDateTime.now());
+        replyForm.setRecomPackage(reply.getRecomPackage());
+
+        log.info(replyForm.getRecomPackage());
 
         EstimateInquiry inquiry = reply.getEstimateInquiry();
 

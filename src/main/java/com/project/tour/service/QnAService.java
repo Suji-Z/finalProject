@@ -26,7 +26,7 @@ public class QnAService {
 
     public Page<QnA> getList(Pageable pageable){
         List<Sort.Order> sort = new ArrayList<Sort.Order>();
-        sort.add(Sort.Order.desc("id")); //EstimateNum
+        sort.add(Sort.Order.desc("id"));
 
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ?

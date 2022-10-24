@@ -65,8 +65,12 @@
                                        background-size: 20px;background-position: 95% 50%; cursor:pointer;"
                                                onchange="selectdatePackage()">
                                     </div>
-                                    <div class="select_person_side" style="display:none">
-                                        <h3>인원 선택</h3>
+                                    <div class="date_remaincount" style="border-bottom: 1px solid gray; padding: 5px; display:none">
+                                        <i class="bi bi-person-check-fill"></i>
+                                        잔여수량 <span id="package_remaincount"></span>
+                                        <input type="hidden" id="remaincount_hidden" value="0">
+                                    </div>
+                                    <div class="select_person_side" style="display:none; padding-top:0px;">
                                         <div class="select_person_item">
                                             <div class="select_person_left">
                                                 <h6>어른</h6>
