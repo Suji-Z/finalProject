@@ -62,7 +62,7 @@ public class PackageSearchRepository {
                 .groupBy(package$.id)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy()
+                .orderBy(package$.id.desc())
                 .fetch();
 
         //페이징처리에 필요한 count
