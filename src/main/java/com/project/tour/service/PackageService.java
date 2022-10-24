@@ -3,7 +3,7 @@ package com.project.tour.service;
 
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-
+import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.JejuPackageRepository;
 import com.project.tour.repository.JejuSpecification;
 import com.project.tour.repository.PackageRepository;
