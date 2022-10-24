@@ -204,4 +204,12 @@ public class MemberService {
         return memberRepository.findByIdIn(memberid,pageable);
     }
 
+    //댓글남기면 포인트 적립
+    public void getPoint(Long memberNum){
+
+        Optional<Member> member = memberRepository.findById(memberNum);
+        member.get().setPoint(member.get().getPoint()+500);
+
+    }
+
 }
