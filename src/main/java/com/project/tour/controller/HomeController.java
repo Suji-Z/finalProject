@@ -90,14 +90,16 @@ public class HomeController {
         }
         /** 회원 키워드별 추천 리스트 끝 **/
 
-
-
         //패키지 리스트 셔플로 index번호 매번 바꾸어 출력
         List<Package> theme = packageService.getSearch(keyword);
         Collections.shuffle(theme);
 
-        System.out.println("패키지 사이즈"+theme.size());
+        /** 인기 여행지 출력 **/
 
+
+        List<Package> hitList = packageService.getHitList();
+
+        model.addAttribute("hitList",hitList);
         model.addAttribute("name",name);
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);

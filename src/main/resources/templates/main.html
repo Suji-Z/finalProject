@@ -482,73 +482,28 @@
 
 
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-12 col-8">
+            <th:block th:each="hitLists,loop :${hitList}" th:if="${hitList!=null}">
+            <div class="col-lg-3 col-md-6 col-sm-12 col-8" th:if="${loop.index<4}">
                 <div class="choose_desti_wrapper">
                     <div class="choose_inner_wrap">
                         <div class="choose_boxed_inner">
-                            <img src="assets/img/destination/home-two-des-1.png" alt="img">
-                            <div class="choose_img_text">
-                                <h2>London | $13,500</h2>
-                                <h3>7 days 6 nights</h3>
+                            <a th:href="@{|/package/${hitLists.id}|}">
+                            <img th:src="@{${hitLists.photosImagePath1}}" style="height: 300px" alt="img">
+                            <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;">
+                                <h2 style="font-size: 20pt">[[${hitLists.location1}]] | [[${hitLists.packagedatelist.get(0).getAprice()}]]</h2>
+                                <h3 style="font-size: 18pt">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
                             </div>
+                            </a>
                         </div>
 
                     </div>
-
                 </div>
             </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                <div class="choose_desti_wrapper">
-                    <div class="choose_inner_wrap">
-                        <div class="choose_boxed_inner">
-                            <img src="assets/img/destination/home-two-des-2.png" alt="img">
-                            <div class="choose_img_text">
-                                <h2>Gangtok | $3,500</h2>
-                                <h3>7 days 6 nights</h3>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                <div class="choose_desti_wrapper">
-                    <div class="choose_inner_wrap">
-                        <div class="choose_boxed_inner">
-                            <img src="assets/img/destination/home-two-des-3.png" alt="img">
-                            <div class="choose_img_text">
-                                <h2>Phuket | $2,500</h2>
-                                <h3>7 days 6 nights</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                <div class="choose_desti_wrapper">
-                    <div class="choose_inner_wrap">
-                        <div class="choose_boxed_inner">
-                            <img src="assets/img/destination/home-two-des-4.png" alt="img">
-                            <div class="choose_img_text">
-                                <h2>Sydney | $6,000</h2>
-                                <h3>4 days 3 nights</h3>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-
-
+            </th:block>
         </div>
     </div>
 </section>
+
 
 <!-- Holiday Destinations  Area-->
     <a sec:authorize="isAuthenticated" th:if="${recommend!=null}">

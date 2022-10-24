@@ -1939,7 +1939,7 @@ section {
     width: 100%;
 }
 
-.choose_img_text {
+._text {
     position: absolute;
     bottom: 30px;
     left: 30px;
