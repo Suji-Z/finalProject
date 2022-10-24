@@ -28,10 +28,9 @@ public class NoticeReplyController {
     private final NoticeReplyService noticeReplyService;
     private final NoticeService noticeService;
 
-    //댓글 달기
+    //댓글 수정
     @PostMapping("/update")
     public String noticeReplyUpdate(@RequestParam("noticeNum") Long noticeNum,
-                                    @RequestParam("memberNum") Long memberNum,
                                     @RequestParam("replyNum") Long replyNum,
                                     @RequestParam("content") String content,
                                     Principal principal, @LoginUser SessionUser user,
@@ -45,33 +44,16 @@ public class NoticeReplyController {
             member = memberService.getName(user.getEmail());
         }
 
-        noticeReplyService.update(replyNum, noticeNum, memberNum, content);
+        noticeReplyService.update(replyNum, noticeNum, member.getId(), content);
         model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
 
-        Notice notice = noticeService.getNotice(noticeNum);
-        model.addAttribute("notice", notice);
-
-        int recommendStatus = noticeService.searchRecommend(member, noticeNum);
-
-        if(recommendStatus==1){
-            model.addAttribute("url","/assets/img/icon/hand-thumbs-up-fill.svg");
-        } else{
-            model.addAttribute("url","/assets/img/icon/hand-thumbs-up.svg");
-        }
-
-        String beforeSubject = noticeService.getSubject(noticeNum-1);
-        String afterSubject = noticeService.getSubject(noticeNum+1);
-        model.addAttribute("beforeSubject", beforeSubject);
-        model.addAttribute("afterSubject",afterSubject);
-        model.addAttribute("recommendStatus", recommendStatus);
         model.addAttribute("member",member);
 
 
         return "notice/notice_article :: #commentTable";
     }
 
-    //댓글 수정
-
+    //댓글 달기
     @PostMapping("/write")
     public String noticeReplyCreate(@RequestParam("noticeNum") Long noticeNum,
                                     @RequestParam("memberNum") Long memberNum,
@@ -90,22 +72,6 @@ public class NoticeReplyController {
         noticeReplyService.create(content, memberNum, noticeNum);
         model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
 
-        Notice notice = noticeService.getNotice(noticeNum);
-        model.addAttribute("notice", notice);
-
-        int recommendStatus = noticeService.searchRecommend(member, noticeNum);
-
-        if(recommendStatus==1){
-            model.addAttribute("url","/assets/img/icon/hand-thumbs-up-fill.svg");
-        } else{
-            model.addAttribute("url","/assets/img/icon/hand-thumbs-up.svg");
-        }
-
-        String beforeSubject = noticeService.getSubject(noticeNum-1);
-        String afterSubject = noticeService.getSubject(noticeNum+1);
-        model.addAttribute("beforeSubject", beforeSubject);
-        model.addAttribute("afterSubject",afterSubject);
-        model.addAttribute("recommendStatus", recommendStatus);
         model.addAttribute("member",member);
 
 
@@ -116,8 +82,7 @@ public class NoticeReplyController {
 
     //댓글 삭제
     @PostMapping("/delete")
-    public String noticeReplyDelete(@RequestParam("noticeNum") Long noticeNum,
-                                    @RequestParam("replyNum") Long replyNum,
+    public String noticeReplyDelete(@RequestParam("replyNum") Long replyNum, @RequestParam("noticeNum") Long noticeNum,
                                     Principal principal, @LoginUser SessionUser user,
                                     Model model){
 
@@ -131,25 +96,7 @@ public class NoticeReplyController {
 
         noticeReplyService.delete(replyNum);
         model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
-
-        Notice notice = noticeService.getNotice(noticeNum);
-        model.addAttribute("notice", notice);
-
-        int recommendStatus = noticeService.searchRecommend(member, noticeNum);
-
-        if(recommendStatus==1){
-            model.addAttribute("url","/assets/img/icon/hand-thumbs-up-fill.svg");
-        } else{
-            model.addAttribute("url","/assets/img/icon/hand-thumbs-up.svg");
-        }
-
-        String beforeSubject = noticeService.getSubject(noticeNum-1);
-        String afterSubject = noticeService.getSubject(noticeNum+1);
-        model.addAttribute("beforeSubject", beforeSubject);
-        model.addAttribute("afterSubject",afterSubject);
-        model.addAttribute("recommendStatus", recommendStatus);
         model.addAttribute("member",member);
-
 
         return "notice/notice_article :: #commentTable";
 
