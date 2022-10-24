@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -189,10 +190,18 @@ public class ReviewController {
 
         System.out.println("좋아요 상태:" +replyLike);
 
+        int reviewLike = reviewService.getReviewLike(id2,id);
+
+        if(reviewLike==1){
+            model.addAttribute("reviewLike","fas fa-heart");
+        }else{
+            model.addAttribute("reviewLike","fa-regular fa-heart");
+        }
+
 
         model.addAttribute("replyLike",replyLike);
 
-        model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
+        //model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
         model.addAttribute("review",review);
 
@@ -251,10 +260,14 @@ public class ReviewController {
 
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/vote/{id}")
-    public String reviewVote(Model model, Principal principal, @PathVariable("id") Long id,@LoginUser SessionUser user){
+    @GetMapping("/vote")
+    public @ResponseBody HashMap<String,Object> reviewVote(@RequestParam("recommendStatus") int recommendStatus,
+            Principal principal, @RequestParam("id") Long id, @LoginUser SessionUser user){
 
         Review review = reviewService.getReview(id);
+        System.out.println(id);
+
+        System.out.println("오나요?");
 
         Member member;
 
@@ -268,19 +281,16 @@ public class ReviewController {
 
         }
 
-        if(reviewService.getReviewLike(member.getId(),id)){
-            reviewService.deleteLike(member.getId(),id);
-
-        }else{
+        if(recommendStatus==1){
             reviewService.vote(review,member);
+        }else if(recommendStatus==0){
+            reviewService.deleteLike(member.getId(),id);
         }
 
+        HashMap<String,Object> recommendInfo = new HashMap<>();
+        recommendInfo.put("recommendStatus", recommendStatus);
 
-
-
-
-
-        return String.format("redirect:/review/article/%s",id);
+        return recommendInfo;
 
     }
 

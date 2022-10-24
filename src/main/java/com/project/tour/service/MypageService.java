@@ -3,6 +3,7 @@ package com.project.tour.service;
 import com.project.tour.domain.*;
 import com.project.tour.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +32,8 @@ public class MypageService {
     private final BookingRepository bookingRepository;
 
     private final VoiceCusRepository voiceCusRepository;
+
+    private final PayRepository payRepository;
 
     //리뷰
     public List<Review> getMypageReview(Long id){
@@ -147,6 +151,15 @@ public class MypageService {
         return voiceCusRepository.findByAuthor_Id(id,pageable);
 
     }
+
+    //결제완료한 멤버의 결제리스트(사용포인트출력)
+    public List<Pay> getMypagePay(Long id){
+
+       List<Pay> result = payRepository.findByMember_Id(id);
+
+        return result;
+    }
+
 
 
 

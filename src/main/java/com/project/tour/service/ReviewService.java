@@ -133,14 +133,14 @@ public class ReviewService {
     }
 
     //리뷰라이크 가져오기
-    public boolean getReviewLike(Long id1,Long id2){
+    public int getReviewLike(Long id1,Long id2){
 
         Optional<ReviewLike> op2 = reviewLikeRepository.findByMember_IdAndReview_Id(id1,id2);
 
         if(op2.isPresent())
-            return true;
+            return 1;
         else
-            return false;
+            return 0;
 
 
     }

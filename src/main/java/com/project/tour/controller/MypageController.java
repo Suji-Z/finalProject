@@ -171,8 +171,12 @@ public class MypageController {
 
         }
 
-        member = memberService.getMember(principal.getName());
+        List<Pay> mypagePay = mypageService.getMypagePay(member.getId());
 
+        //결제내역 리스트(사용한 포인트)
+        model.addAttribute("mypagePay",mypagePay);
+
+        //회원정보
         model.addAttribute("member",member);
 
         return "mypage/mypage_point";
@@ -347,8 +351,6 @@ public class MypageController {
             member = memberService.getName(user.getEmail());
 
         }
-
-        member = memberService.getMember(principal.getName());
 
         Long memberId = member.getId();
 

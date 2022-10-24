@@ -2,6 +2,7 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 
@@ -16,4 +17,6 @@ public class PayForm {
     LocalDateTime payDate;
 
     String payInfo;
+
+    int usedPoint;
 }

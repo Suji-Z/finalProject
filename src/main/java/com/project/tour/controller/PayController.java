@@ -80,8 +80,16 @@ public class PayController {
         payForm.setPayInfo(impUid);
         payForm.setTotalPrice(payTotalPrice);
 
+
         //데이터 저장할 때 넘길 정보 : userbooking,member
         UserBooking userBooking = userBookingService.getUserBooking(id);
+
+        //사용한 포인트 저장
+        Integer num = userBooking.getBookingTotalPrice();
+
+        System.out.println("포인트사용전:"+num);
+
+        payForm.setUsedPoint(num-payTotalPrice);
 
         //1. pay 테이블 데이터 저장
         payService.create(userBooking, member, payForm);
