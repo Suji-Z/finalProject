@@ -5,6 +5,7 @@ import com.project.tour.domain.Package;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
+import com.project.tour.service.NoticeReplyService;
 import com.project.tour.service.NoticeService;
 import com.project.tour.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class NoticeController {
     @Autowired
     private final NoticeService noticeService;
     private final MemberService memberService;
+    private final NoticeReplyService noticeReplyService;
 
     //글작성 페이지 띄우기 : 관리자만 가능
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -95,6 +97,9 @@ public class NoticeController {
         String afterSubject = noticeService.getSubject(id+1);
         Notice notice = noticeService.getNotice(id);
 
+        model.addAttribute("commentList", noticeReplyService.getList(id));
+
+
         //로그인 확인
         Member member;
         if(memberService.existByEmail(principal.getName())){
@@ -120,6 +125,7 @@ public class NoticeController {
         model.addAttribute("beforeSubject", beforeSubject);
         model.addAttribute("afterSubject",afterSubject);
         model.addAttribute("recommendStatus", recommendStatus);
+        model.addAttribute("member",member);
 
         return "notice/notice_article";
     }

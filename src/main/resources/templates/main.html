@@ -140,7 +140,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="visa-details.html" class="nav-link">공지사항</a>
+                                        <a th:href="@{/notice/list}" class="nav-link">공지사항</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="visa-application.html" class="nav-link">QnA</a>
@@ -286,8 +286,8 @@
                          aria-labelledby="nav-[[${keyword}]]-tab">
                         <div class="row" id="viewTable">
 
-                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==healing">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12"  >
+                            <th:block th:each="package,loop:${theme}"  th:if="${loop.index<4}">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12" th:if="${keyword}==healing" >
                                     <div class="theme_common_box_two img_hover">
                                         <div class="theme_two_box_img">
                                             <a th:href="@{|/package/${package.id}|}">
@@ -306,8 +306,8 @@
                                 </div>
                             </th:block>
 
-                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==activity">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <th:block th:each="package,loop:${theme}" th:if="${loop.index<4}">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12" th:if="${keyword}==activity">
                                     <div class="theme_common_box_two img_hover">
                                         <div class="theme_two_box_img">
                                             <a th:href="@{|/package/${package.id}|}">
@@ -326,8 +326,8 @@
                                 </div>
                             </th:block>
 
-                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==food">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <th:block th:each="package,loop:${theme}" th:if="${loop.index<4}">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12" th:if="${keyword}==food">
                                     <div class="theme_common_box_two img_hover">
                                         <div class="theme_two_box_img">
                                             <a th:href="@{|/package/${package.id}|}">
@@ -346,8 +346,8 @@
                                 </div>
                             </th:block>
 
-                            <th:block th:each="package,loop:${theme}" th:if="${keyword}==culture">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <th:block th:each="package,loop:${theme}" th:if="${loop.index<4}">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12" th:if="${keyword}==culture">
                                     <div class="theme_common_box_two img_hover">
                                         <div class="theme_two_box_img">
                                             <a th:href="@{|/package/${package.id}|}">
@@ -565,7 +565,7 @@
                         </div>
                     </div>
 
-                    <th:block th:each="recom : ${recommend}" th:if="${recomStat.index<3}">
+                    <th:block th:each="recom : ${recommend}" th:if="${recomStat.index<6}">
                         <div class="col-lg-4">
                             <div class="holiday_small_boxed">
                                 <a th:href="@{|/package/${recom.id}|}">
@@ -742,7 +742,7 @@
                 </div>
                 <div class="footer_link_area">
                     <ul>
-                        <li><a href="top-destinations-details.html">공지사항</a></li>
+                        <li><a th:href="@{/notice/list}">공지사항</a></li>
                         <li><a href="top-destinations-details.html">QnA</a></li>
                         <li><a href="flight-search-result.html">FaQ</a></li>
                         <li><a th:href="@{/estimate/list}">견적문의</a></li>

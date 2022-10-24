@@ -20,6 +20,8 @@
 
 <!-- Tour Booking Submission Areas -->
 <section id="tour_booking_submission" class="section_padding" style="margin: auto">
+  <form th:action th:object="${QnAReplyForm}" method="post">
+
   <div class="col-lg-8">
   </div>
   <div class="container" style="margin: auto; width: 70%">
@@ -29,7 +31,7 @@
         <div class="tou_booking_form_Wrapper">
 
           <div class="booking_tour_form">
-            <h3 class="heading_theme">Q&A</h3>
+            <h3 class="heading_theme">Q&A 답변</h3>
             <div class="tour_booking_form_box">
               <div class="your_info_arae">
                 <ul>
@@ -38,41 +40,17 @@
                     <span style="text-align:center;margin-top: 15px">제목</span>
                     </div>
                     <div class="form-group col-lg-7">
-                    <span><input type="text" class="shform-control" name="" style="border-radius: 3px"></span>
+                    <span><input type="text" th:field="*{title}" class="shform-control" name="" style="border-radius: 3px"></span>
                     </div>
                   </li>
 
-                  <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 15px">
-                      <span style="text-align:center;margin-top: 15px">작성자</span>
-                    </div>
-                    <div class="form-group col-lg-7">
-                      <span><input type="text" class="shform-control" name="" style="border-radius: 3px"></span>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div class="col-lg-2" style="text-align: center; margin-top: 15px">
-                      <span style="text-align:center;margin-top: 15px">분류</span>
-                    </div>
-                    <div class="form-group col-lg-7">
-                      <span>
-                        <select class="form-select" style="border-radius: 3px" aria-label="Default select example">
-                          <option selected>질문 카테고리를 선택하세요</option>
-                          <option value="해외">해외여행</option>
-                          <option value="제주">제주여행</option>
-                          <option value="기타">기타</option>
-                        </select>
-                      </span>
-                    </div>
-                  </li>
 
                   <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
                       <span style="text-align:center;margin-top: 15px">내용</span>
                     </div>
                     <div class="form-group col-lg-7">
-                      <span><textarea type="text" class="shform-control" name="" style="border-radius: 3px" rows="7"></textarea></span>
+                      <span><textarea type="text" th:field="*{content}" class="shform-control" name="" style="border-radius: 3px" rows="7"></textarea></span>
                     </div>
                   </li>
 
@@ -86,9 +64,9 @@
     </div>
   </div>
   <div class="common_form_submit">
-    <button class="btn btn_theme btn_md">등록하기</button>
+    <button class="btn btn_theme btn_md" type="submit">등록하기</button>
   </div>
-
+  </form>
 </section>
 
 

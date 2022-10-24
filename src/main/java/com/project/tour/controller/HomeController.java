@@ -55,20 +55,13 @@ public class HomeController {
         System.out.println("메인키워드는: "+ keyword);
         String name = null;
 
-        if(user!=null){
-            model.addAttribute("email",user.getEmail());
-            model.addAttribute("name",user.getName());
-        }
-
         if(keyword==null) {
 
             keyword = "healing";
 
         }
 
-        String userKeyword = null;
-        List<Package> recommend = null;
-
+        List<Package> recommend = new ArrayList<>();
 
         if(principal!=null) {
 
@@ -77,9 +70,14 @@ public class HomeController {
                 Member member = memberService.getName(principal.getName());
 
                 name = member.getName();
-                userKeyword = member.getKeyword();
 
-                recommend = packageService.getSearch(userKeyword);
+                List<String> userKeyword = Arrays.asList(member.getKeyword().split(","));
+
+                recommend = packageService.getKeyword(userKeyword);
+
+                Collections.shuffle(recommend);
+
+                model.addAttribute("recommend",recommend);
 
             } else {
 
@@ -87,12 +85,11 @@ public class HomeController {
             }
         }
 
-
-
         List<Package> theme = packageService.getSearch(keyword);
+        Collections.shuffle(theme);
 
         System.out.println("패키지 사이즈"+theme.size());
-        model.addAttribute("recommend",recommend);
+
         model.addAttribute("name",name);
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);
@@ -106,6 +103,8 @@ public class HomeController {
         List<Package> theme = packageService.getSearch(keyword);
 
         System.out.println("패키지 사이즈"+theme.size());
+
+        Collections.shuffle(theme);
 
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);

@@ -63,8 +63,9 @@
         </div>
         <a th:href="@{|/qna/question/modify/${qna.id}|}" th:text="수정" class="btn btn-sm btn-outline-secondary" />
         <a th:href="@{|/qna/question/delete/${qna.id}|}" th:text="삭제" class="btn btn-sm btn-outline-secondary" />
-        <button type="button" class="btn btn-outline-secondary">답변</button>
-
+        <a sec:authorize="isAuthenticated" th:if="${email=='admin@naver.com'}">
+            <button type="button"  th:onclick="|location.href='@{|/qna/answer/write/${qna.id}|}'|" class="btn btn-outline-secondary">답변</button>
+        </a>
 
 
     </div>
