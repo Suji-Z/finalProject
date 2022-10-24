@@ -48,6 +48,15 @@ public class PackageService {
 
         return jejuRepository.findAll(spec);
     }
+
+    public List<Package> getKeyword(List<String> keyword){
+
+
+        return packageRepository.findByKeywordIn(keyword);
+    }
+
+
+
     public Page<Package> getSearchList(String location, String date, Integer count, String keyword,
                                        List<String> transport, List<Integer> period, Integer pricerangestr, Integer pricerangeend ,
                                        Pageable pageable) {
