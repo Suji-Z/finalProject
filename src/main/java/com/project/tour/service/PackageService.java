@@ -3,6 +3,7 @@ package com.project.tour.service;
 
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
+
 import com.project.tour.repository.JejuPackageRepository;
 import com.project.tour.repository.JejuSpecification;
 import com.project.tour.repository.PackageRepository;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -23,6 +25,12 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class PackageService {
+
+//    @Transactional
+//    public int updateHitCount(Long id){
+//        return packageRepository.updateHitCount(id);
+//    }
+
 
     @Autowired
     private final PackageRepository packageRepository;
@@ -32,19 +40,37 @@ public class PackageService {
     @Autowired
     private final PackageSearchRepository searchRepository;
 
-    //페이징처리
-    public Page<Package> getList(Pageable pageable) {
+    //페이징처리(Ajax)
+    /**
+     * 게시글 리스트 조회 - (With. pagination information)
+     */
+//    public Map<String, Object> findAll(CommonParams params) {
 
-        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-        sorts.add(Sort.Order.desc("id"));
+        // 게시글 수 조회
+//        int count = PackageRepository.count(params);
 
-        pageable = PageRequest.of(
-                pageable.getPageNumber() <= 0 ? 0 :
-                        pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(sorts));
+        // 등록된 게시글이 없는 경우, 로직 종료
+//        if (count < 1) {
+//            return Collections.emptyMap();
+//        }
 
-        return packageRepository.findAll(pageable);
-    }
+//        // 페이지네이션 정보 계산
+//        Pagination pagination = new Pagination(params);
+//        params.setPagination(pagination);
+//
+//        // 게시글 리스트 조회
+//        List<Package> list = PackageRepository.findAll(params);
+//
+//        // 데이터 반환
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("params", params);
+//        response.put("list", list);
+//        return response;
+//    }
+
+
+
+
     public List<Package> getSearch(String keyword) {
 
         Specification<Package> spec = Specification.where(JejuSpecification.equalKeyword(keyword));
@@ -60,6 +86,7 @@ public class PackageService {
 
     public Page<PackageSearchDTO> getSearchList(String location2, String date, Integer count, String keyword,List<String> transport,
                                                 List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Pageable pageable) {
+
 
         PackageSearchCondition condition = new PackageSearchCondition();
 
@@ -86,35 +113,6 @@ public class PackageService {
 
     }
 
-    //데이터 불러오기 위한 임시
-    private void create(Package apackage, PackageDate packageDate) {
-        Package packages = new Package();
-        PackageDate packageDates = new PackageDate();
-
-        packages.setId(apackage.getId());
-        packages.setLocation1(apackage.getLocation1());
-        packages.setLocation2(apackage.getLocation2());
-        packages.setPackageName(apackage.getPackageName());
-        packages.setHotelName(apackage.getHotelName());
-        packages.setPostStart(apackage.getPostStart());
-        packages.setPostEnd(apackage.getPostEnd());
-        packages.setCount(apackage.getCount());
-        packages.setTravelPeriod(apackage.getTravelPeriod());
-        packages.setPreviewImage(apackage.getPreviewImage());
-        packages.setDetailImage(apackage.getDetailImage());
-        packages.setPackageInfo(apackage.getPackageInfo());
-        packages.setHitCount(apackage.getHitCount());
-        packages.setKeyword(apackage.getKeyword());
-        packages.setTransport(apackage.getTransport());
-        packageDates.setDeparture(packageDate.getDeparture());
-        packageDates.setDiscount(packageDate.getDiscount());
-        packageDates.setAprice(packageDate.getAprice());
-        packageDates.setBprice(packageDate.getBprice());
-        packageDates.setCprice(packageDate.getCprice());
-        packageDates.setRemaincount(packageDate.getRemaincount());
-
-        packageRepository.save(packages);
-    }
 
 
     //특정 packageNum으로 package data 출력(임시)

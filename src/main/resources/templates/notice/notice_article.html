@@ -107,7 +107,6 @@
 
         <!--댓글출력-->
         <div class="comment_area" id="commentTable">
-
             <div class="comment_area_boxed" th:each="comment,loop:${commentList}">
                 <div class="comment_text">
                     <div class="comment_author_name">
@@ -117,12 +116,18 @@
                             <div th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></div>
                         </div>
                         <div id="commentOri" th:text="${comment.content}"></div>
+                        <div class="form-froup">
+                                <textarea rows="1" th:text="${comment.content}" class="form-control bg_input" id="commentBox" style="display:none;"></textarea></div>
                         <div class="text-right">
-                            <span th:if="${comment.member.id}==${member.id}"><button type="submit" id="updateReply" onclick="return updateReply();"> 수정 </button></span>
-                            <span th:if="${comment.member.id}==${member.id}"><button type="submit" id="deleteReply" onclick="return deleteReply();">삭제</button></span>
-                            <span sec:authorize="hasRole('ADMIN')"><button type="submit" onclick="return deleteReply();">삭제</button></span>
+                            <span th:if="${comment.member.id}==${member.id}">
+                                <button id="updateA${comment.id}" name="updateReply1" class="btn btn-outline-secondary" type="button" onclick="noticeUpdateReply1(this);" th:value="${comment.id}" th:text="수정"></button></span>
+                            <span th:if="${comment.member.id}==${member.id}" class="delete${comment.id}">
+                                <button id="deleteReply" class="btn btn-outline-secondary" type="button" onclick="noticeDeleteReply(this);" th:value="${comment.id}">삭제</button></span>
+                            <span th:if="${comment.member.id}==${member.id}" style="display:none;" class="updateB${comment.id}">
+                                <button id="updateReply2" class="btn btn-outline-secondary" type="button" onclick="noticeUpdateReply2();" th:value="${comment.id}">확인</button></span>
+                            <span th:if="${comment.member.id}==${member.id}" style="display:none;" class="cancle${comment.id}">
+                                <button id="cancleReply" class="btn btn-outline-secondary" type="button" onclick="noticeCancleReply();" >취소</button></span>
                         <!--가져갈 데이터-->
-                            <input type="hidden" th:value="${comment.id}" id="replyNum"/>
 
                         </div>
                     </form>
