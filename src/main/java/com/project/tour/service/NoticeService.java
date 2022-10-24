@@ -161,4 +161,43 @@ public class NoticeService {
         }
     }
 
+    //category로 리스트뽑아내기
+    public Page<Notice> getListByCategory(String category, Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("pin"));
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ?
+                        0 : pageable.getPageNumber() -1, //반환할 페이지
+                pageable.getPageSize(), //반환할 리스트 갯수
+                Sort.by(sorts)); //정렬 매개변수 적용
+
+        if(category.equals("0")){
+            return noticeRepository.findAll(pageable);
+        }else return noticeRepository.findByCategory(category,pageable);
+
+    }
+
+    //search 리스트 출력하기
+    public Page<Notice> getListBySearch(String category, String searchKeyword, Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("pin"));
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ?
+                        0 : pageable.getPageNumber() -1, //반환할 페이지
+                pageable.getPageSize(), //반환할 리스트 갯수
+                Sort.by(sorts)); //정렬 매개변수 적용
+
+        if(category.equals("0")){
+            return noticeRepository.findBySubjectContainingIgnoreCase(searchKeyword,pageable);
+        }else return noticeRepository.findByCategoryAndSubjectContainingIgnoreCase(category,searchKeyword,pageable);
+
+
+    }
+
 }

@@ -6,6 +6,7 @@ import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
+import com.project.tour.service.PayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class HomeController {
 
     private final PackageService packageService;
     private final MemberService memberService;
+    private final PayService payService;
 
 /*
     @PostMapping("/main/keyword")
@@ -55,20 +57,14 @@ public class HomeController {
         System.out.println("메인키워드는: "+ keyword);
         String name = null;
 
-        if(user!=null){
-            model.addAttribute("email",user.getEmail());
-            model.addAttribute("name",user.getName());
-        }
-
         if(keyword==null) {
 
             keyword = "healing";
 
         }
 
-        String userKeyword = null;
-        List<Package> recommend = null;
-
+        /** 회원별 선호 키워드로 패키지 리스트 select하는 부분 **/
+        List<Package> recommend = new ArrayList<>();
 
         if(principal!=null) {
 
@@ -77,22 +73,33 @@ public class HomeController {
                 Member member = memberService.getName(principal.getName());
 
                 name = member.getName();
-                userKeyword = member.getKeyword();
 
-                recommend = packageService.getSearch(userKeyword);
+                List<String> userKeyword = Arrays.asList(member.getKeyword().split(","));
+
+                recommend = packageService.getKeyword(userKeyword);
+
+                //패키지 리스트 셔플로 index번호 매번 바꾸어 출력
+                Collections.shuffle(recommend);
+
+                model.addAttribute("recommend",recommend);
 
             } else {
 
                 name = user.getName();
             }
         }
+        /** 회원 키워드별 추천 리스트 끝 **/
 
-
-
+        //패키지 리스트 셔플로 index번호 매번 바꾸어 출력
         List<Package> theme = packageService.getSearch(keyword);
+        Collections.shuffle(theme);
 
-        System.out.println("패키지 사이즈"+theme.size());
-        model.addAttribute("recommend",recommend);
+        /** 인기 여행지 출력 **/
+
+
+        List<Package> hitList = packageService.getHitList();
+
+        model.addAttribute("hitList",hitList);
         model.addAttribute("name",name);
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);
@@ -106,6 +113,8 @@ public class HomeController {
         List<Package> theme = packageService.getSearch(keyword);
 
         System.out.println("패키지 사이즈"+theme.size());
+
+        Collections.shuffle(theme);
 
         model.addAttribute("theme",theme);
         model.addAttribute("keyword",keyword);

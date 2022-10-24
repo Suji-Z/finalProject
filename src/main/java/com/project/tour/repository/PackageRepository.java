@@ -15,11 +15,13 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
 
     Optional<Package> findById(long id);
     Package findByPackageName(String packageName);
-    Package findByKeyword(String keyword);
-
     Page<Package> findAll(Pageable pageable);
 
     List<Package> findByIdIn(List<Long> packageNums);
     Page<Package> findByIdIn(Set<Long> packageNums, Pageable pageable);
+
+    List<Package> findByKeywordIn(List<String> keyword);
+
+    List<Package> findAllByOrderByBookingCntDesc();
 
 }

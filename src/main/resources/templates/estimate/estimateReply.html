@@ -71,7 +71,7 @@
         <div class="tou_booking_form_Wrapper">
           <div class="booking_tour_form">
             <h3 class="heading_theme">답변달기</h3>
-            <div class="tour_booking_form_box">
+            <div class="tour_booking_form_box" style="padding-bottom:40px;">
               <div class="your_info_arae">
                 <ul>
                   <li>
@@ -88,28 +88,29 @@
                       <span style="text-align:center;margin-top: 15px">추천 패키지</span>
                     </div>
                     <!-- 추천패키지 반복문 돌릴구간 -->
-                    <div>
+                    <div style="width: 58.3%;">
                     <div th:if="${packages.isEmpty()}"> 해당 조건의 패키지상품이 없습니다. </div>
                       <div class="form-check" th:each="package : ${packages}">
+                        <label>
                         <input class="form-check-input" type="checkbox" th:field="*{recomPackage}" th:value="${package.id}"/>
-                        <label class="form-check-label" th:for="*{recomPackage}">
                                         <span class="area_flex_one">
                                             <span th:text="${package.packageName}"></span>
-                                            <span th:text="${package.aprice}"></span>
+                                            <span th:text="|${#numbers.formatInteger(package.aprice,1,'COMMA')}원|"></span>
                                         </span>
                         </label>
                       </div>
                     </div>
                      <!-- 추천패키지 반복문 돌릴구간 -->
                   </li>
-
                   <li>
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
                       <span style="text-align:center;margin-top: 6px">답변 내용</span>
                     </div>
                     <div class="form-group col-lg-7">
                       <span><textarea type="text" th:field="*{content}" class="shform-control" name="" style="border-radius: 3px" rows="7"></textarea></span>
-                      <span><div class="form-group col-lg-7" th:errors="*{content}" style="color: #dc3545;"></div></span>
+                      <span style="height:20px;"><div class="form-group col-lg-7" th:errors="*{content}" style="color: #dc3545;"></div></span>
+                    </div>
+                    <div class="form-group col-lg-7">
                     </div>
                   </li>
                 </ul>
@@ -120,9 +121,29 @@
       </div>
     </div>
       <div class="common_form_submit">
-        <button class="btn btn_theme btn_md">답변등록</button>
+        <button th:if="${packages.isEmpty()}" class="btn btn_theme btn_md">답변등록</button>
+        <button th:unless="${packages.isEmpty()}" class="btn btn_theme btn_md" type="submit" onclick="return recomPkgConfirm();">답변등록</button>
       </div>
       </form>
+<script>
+
+function recomPkgConfirm() {
+
+    //체크박스 갯수 제한
+    let chk = document.getElementsByName("recomPackage");
+    let cnt=0;
+
+    chk.forEach(element => {
+        if(element.checked) cnt++;
+    });
+
+    if(cnt ==0 ) {
+       alert('추천패키지는 반드시 한개이상 선택하셔야 합니다.')
+       return false;
+    }
+
+};
+</script>
   </div>
 
   </form>

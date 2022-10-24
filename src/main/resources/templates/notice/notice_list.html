@@ -54,6 +54,20 @@
         <div class="dashboard_common_table">
           <h3>공지사항</h3>
           <div class="table-responsive-lg table_common_area">
+
+            <!--필터와 검색 부분-->
+            <select class="form-select" style="border-radius: 3px; width:15%;" id="noticeFilter">
+              <option selected value="0">전체보기</option>
+              <option value="여행기획전">여행기획전</option>
+              <option value="이벤트쿠폰">이벤트/쿠폰</option>
+              <option value="기타">기타</option>
+            </select>
+            <div style="display: inline-block; margin: 0 5px;  float: right;">
+              <input style="border-radius: 3px;" type="text" id="searchKeyword"/>
+            <span><button class="btn btn-outline-secondary" type="button" onclick="noticeSearch();" >검색</button></span>
+            </div>
+
+            <div id="commentTable">
             <table class="table">
               <thead>
               <tr>
@@ -63,10 +77,9 @@
                 <th width="130">글쓴이</th>
                 <th width="180">작성일</th>
                 <th width="130">조회수</th>
-
-
               </tr>
               </thead>
+
               <tr th:if="${paging.isEmpty()}"><td colspan="5"> 게시글이 없습니다. </td></tr>
               <th:block th:each="notice,loop : ${paging}">
                 <tr>
@@ -87,10 +100,11 @@
                   <td>관리자</td>
                   <td th:text="${#temporals.format(notice.created,'yyyy-MM-dd HH:mm')}">2022-09-25</td>
                   <td th:text="${notice.hitCount}">0</td>
-
                 </tr>
             </table>
+            </div>
           </div>
+
           <div class="option-item">
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/notice/write}" class="btn btn_navber">글올리기</a>
           </div>

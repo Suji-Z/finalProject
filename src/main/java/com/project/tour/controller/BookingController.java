@@ -131,8 +131,16 @@ public class BookingController {
         //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
         Package apackage = packageService.getPackage(id);
 
+        /** 예약시 패키지테이블에 예약횟수 누적 **/
+        if(apackage.getBookingCnt()==null){
+            apackage.setBookingCnt(0);
+        }
+        //예약시 해당 package_num 라인의 cnt에 ++ ---> 예약횟수 조회
+        int bookingCnt = apackage.getBookingCnt()+1;
+
+
         //데이터 저장
-        userBookingService.create(userBookingForm, priceForm.getBookingTotalPrice(), apackage, member);
+        userBookingService.create(userBookingForm, priceForm.getBookingTotalPrice(), apackage, member,bookingCnt);
 
         //confirmation에 띄울 정보 
         //1.member 테이블
