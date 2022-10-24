@@ -54,9 +54,19 @@ public class EstimateController {
     /** 마이 견적문의 리스트 출력 */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/mylist")
-    public String estimateMyList(Model model, @PageableDefault Pageable pageable,@LoginUser SessionUser user) {
+    public String estimateMyList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user) {
 
-        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(user.getEmail(),pageable);
+
+        Member member = null;
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else {
+            member = memberService.getName(user.getEmail());
+        }
+
+        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(member.getEmail(),pageable);
 
         model.addAttribute("paging",paging);
 
