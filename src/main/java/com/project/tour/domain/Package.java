@@ -1,6 +1,6 @@
 package com.project.tour.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,6 +52,11 @@ public class Package {
     @OneToMany(mappedBy = "packages",cascade = CascadeType.REMOVE)
     private List<PackageDate> packagedatelist;
 
+
+    @OneToMany(mappedBy = "id",cascade = CascadeType.REMOVE)
+    private List<ShortReview> shortReviewList;
+
+
     //이미지 업로드
     @Transient
     public String getPhotosImagePath1() {
@@ -65,5 +70,8 @@ public class Package {
 
         return "/package-detail/" + id + "/" + detailImage;
     }
+
+
+
 
 }
