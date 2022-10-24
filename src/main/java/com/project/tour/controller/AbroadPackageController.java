@@ -53,15 +53,15 @@ public class AbroadPackageController {
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
                               @RequestParam(value = "keyword", required = false) String keyword,
-                              @RequestParam(value = "transports", required = false) List<String> transports,
+                              @RequestParam(value = "transports", required = false) String transports,
+                              @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
                               @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
                               @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
-                              @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
                               Model model, @PageableDefault(size = 5) Pageable pageable,
                               SearchForm searchForm) {
 
         //여행객 버튼 기본값 0출력
-        if(searchForm.getTotcount() ==null || searchForm.getTotcount().equals("")){
+        if(searchForm.getTotcount() == null || searchForm.getTotcount().equals("")){
             searchForm.setTotcount(0);
         }
 
@@ -75,18 +75,24 @@ public class AbroadPackageController {
             date = date.replaceAll("-", "");
         }
 
-       //가격 슬라이더 기본값(0에서 100만원
-        if (pricerangestr == null && pricerangeend == null || searchForm.getPricerangestr().equals("") && searchForm.getPricerangeend().equals("")){
-            searchForm.setPricerangestr(0);
-            searchForm.setPricerangeend(1000000);
+        if(keyword==null || keyword.equals("")){
+            keyword=null;
         }
 
+        //항공사 다중선택시
+        List<String> transport = null;
+        if (transports == null || transports.equals("")) {
+            transports=null;
+        } else {
+            transport = Arrays.asList(transports.split(","));
+        }
 
         //여행기간
-        List<Integer> period = new ArrayList<>();
-        List<String> periods = null;
-
-        if(travelPeriods!=null){
+        List<Integer> period = null;
+        List<String> periods;
+        if(travelPeriods==null || travelPeriods.equals("")){
+        }else {
+            period = new ArrayList<>();
             periods = Arrays.asList(travelPeriods.split(","));
 
             Iterator<String> it = periods.iterator();
@@ -96,7 +102,14 @@ public class AbroadPackageController {
             }
         }
 
-
+        //가격범위
+        if(pricerangestr==null || pricerangestr.equals("") && pricerangeend==null || pricerangeend.equals("")){
+            pricerangestr =null;
+            pricerangeend = null;
+        }else{
+            log.info("pricerangestr : " + pricerangestr);
+            log.info("pricerangeend : " + pricerangeend);
+        }
 
         log.info("DATE : " + date);
         log.info("LOCATION : " + location);
@@ -104,20 +117,14 @@ public class AbroadPackageController {
         log.info("KEYWORD : " + keyword);
         log.info("TRANSPORTS : " + transports);
         log.info("TRAVELPERIOD : " + travelPeriods);
-        log.info("PRICERANGESTR : " + pricerangestr);
-        log.info("PRICERANGEEND : " + pricerangeend);
 
 
 
-        Page<Package> paging = packageService.getSearchList(location, date, count,keyword,transports,period,pricerangestr,pricerangeend,pageable);
+        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
         model.addAttribute("paging", paging);
-        if(searchForm==null){ //검색전 최초로딩시
-            model.addAttribute("searchForm", new SearchForm());
-        }
-        else {//검색후 검색데이터 유지
-            model.addAttribute("searchForm", searchForm);
-        }
+        model.addAttribute("searchForm", searchForm);
+
         return "abroadPackage/packagelist";
     }
 
@@ -133,17 +140,21 @@ public class AbroadPackageController {
     @GetMapping("/{id}")
     public String packagedetail(Model model, @PathVariable("id") Long id, Principal principal,@LoginUser SessionUser user){
 
-        Package apackage = packageService.getPackage(id);
+        Package packages = packageService.getPackage(id);
 //        packageService.updateHitCount(id);
 
         String email;
         String name;
+
+
 
         if(memberService.existByEmail(principal.getName())){
 
             Member userName = memberService.getName(principal.getName());
             email = userName.getEmail();
             name = userName.getName();
+
+
         }else {
 
             email = user.getEmail();
@@ -151,7 +162,7 @@ public class AbroadPackageController {
         }
 
 
-        model.addAttribute("package",apackage);
+        model.addAttribute("packages",packages);
         model.addAttribute("shortReviewForm",new ShortReviewForm());
         model.addAttribute("shortReview",new ShortReview());
         model.addAttribute("email",email);
@@ -234,24 +245,30 @@ public class AbroadPackageController {
         ShortReview shortReview = shortReviewService.create(shortReviewForm.getContent(),shortReviewForm.getScore(),userName, packages);
 
 
-        return "redirect:/abroad/detail/{id}";
+        return "redirect:/package/{id}";
     }
 
 
-    //텍스트 리뷰 리스트
-//    @GetMapping("/reviewlist/{id}")
-//    public String reviewlist(Model model, @PathVariable("id")Long id, Principal principal,
-//                             @PageableDefault Pageable pageable){
+   // 텍스트 리뷰 리스트
+//    @RequestMapping("/reviewlist/{id}")
+//    public String reviewlist(Model model, Principal principal,
+//                             @PageableDefault Pageable pageable,Package packages,ShortReview shortReview){
 //
 //
-//        Page<Package> paging = packageService.getList(pageable);
-//        Page<ShortReview> shortReview = shortReviewService.getShortReview(id,pageable);
+////        packages = packageService.getPackage(packages.getId());
+////        Long packageNum = packages.getId();
 //
-//        model.addAttribute("paging",paging);
-//        model.addAttribute("shortReview",shortReview);
+//        List<ShortReview> shortReviews = shortReviewService.getshortReview(packages.getId());
+////        Long packageNum = shortReview.getId();
+//
+//
+//
+////        List<ShortReview> shortReviews = shortReviewService.getshortReview(packageNum);
+//
+//        model.addAttribute("shortReviews",shortReviews);
+//
 //
 //        return "abroadPackage/packagedetail";
-//
 //
 //    }
 

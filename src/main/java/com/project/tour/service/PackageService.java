@@ -113,6 +113,36 @@ public class PackageService {
 
     }
 
+    public Page<PackageSearchDTO> getSearchListabroad(String location2, String date, Integer count, String keyword,List<String> transport,
+                                                List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Pageable pageable) {
+
+
+        PackageSearchCondition condition = new PackageSearchCondition();
+
+        condition.setLocation1("유럽");
+        condition.setLocation2(location2);
+        condition.setStartday(date);
+        condition.setTotcount(count);
+        condition.setKeyword(keyword);
+        condition.setTransport(transport);
+        condition.setTravelPeriod(travelPeriod);
+        condition.setPricerangestr(pricerangestr);
+        condition.setPricerangeend(pricerangeend);
+
+        //페이징처리
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("id"));
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ? 0 :
+                        pageable.getPageNumber() - 1,
+                pageable.getPageSize(), Sort.by(Sort.Direction.DESC));
+
+        return searchRepository.searchByWhere(condition,pageable);
+
+    }
+
+
 
 
     //특정 packageNum으로 package data 출력(임시)
