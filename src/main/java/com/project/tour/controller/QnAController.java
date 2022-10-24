@@ -63,17 +63,29 @@ public class QnAController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/question/write")
-    public String question(@Validated QnAForm qnAForm, BindingResult bindingResult, Principal principal) {
+    public String question(@Validated QnAForm qnAForm, BindingResult bindingResult, Principal principal,
+                           @LoginUser SessionUser user) {
 
         if (bindingResult.hasErrors()) {
-            log.info("errors = {}", bindingResult);
-            return "qna/qnaList";
+            return "qna/questionCreate";
+        }
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
         }
 
-        Member member = memberService.getMember(principal.getName());
-        qnAService.create(qnAForm, member);
 
-        return "redirect:/qna/list";
+
+        qnAService.create(qnAForm,member);
+
+            return "redirect:/qna/list";
 
     }
 
