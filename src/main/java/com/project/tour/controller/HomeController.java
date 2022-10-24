@@ -6,6 +6,7 @@ import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
 import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
+import com.project.tour.service.PayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class HomeController {
 
     private final PackageService packageService;
     private final MemberService memberService;
+    private final PayService payService;
 
 /*
     @PostMapping("/main/keyword")
@@ -61,6 +63,7 @@ public class HomeController {
 
         }
 
+        /** 회원별 선호 키워드로 패키지 리스트 select하는 부분 **/
         List<Package> recommend = new ArrayList<>();
 
         if(principal!=null) {
@@ -75,6 +78,7 @@ public class HomeController {
 
                 recommend = packageService.getKeyword(userKeyword);
 
+                //패키지 리스트 셔플로 index번호 매번 바꾸어 출력
                 Collections.shuffle(recommend);
 
                 model.addAttribute("recommend",recommend);
@@ -84,7 +88,11 @@ public class HomeController {
                 name = user.getName();
             }
         }
+        /** 회원 키워드별 추천 리스트 끝 **/
 
+
+
+        //패키지 리스트 셔플로 index번호 매번 바꾸어 출력
         List<Package> theme = packageService.getSearch(keyword);
         Collections.shuffle(theme);
 

@@ -3,6 +3,7 @@ package com.project.tour.service;
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.repository.BookingRepository;
+import com.project.tour.repository.PackageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +23,11 @@ import java.util.Optional;
 public class UserBookingService {
 
     private final BookingRepository bookingRepository;
-
+    private final PackageRepository packageRepository;
 
     //예약 데이터 저장하기
     public void create(UserBookingForm userBookingForm, int bookingTotalPrice,
-                       Package apackage, Member member){
+                       Package apackage, Member member,int bookingCnt){
 
         UserBooking userBooking = new UserBooking();
 
@@ -48,6 +49,9 @@ public class UserBookingService {
         userBooking.setAPackage(apackage);
         userBooking.setMember(member);
 
+        apackage.setBookingCnt(bookingCnt);
+
+        packageRepository.save(apackage);
         bookingRepository.save(userBooking);
     }
 

@@ -34,5 +34,4 @@ public interface PayRepository extends JpaRepository<Pay,Long> {
 
 
 
-
 }

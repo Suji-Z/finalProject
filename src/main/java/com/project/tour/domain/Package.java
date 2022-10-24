@@ -3,6 +3,8 @@ package com.project.tour.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 public class Package {
 
     @Id
@@ -42,6 +45,9 @@ public class Package {
     private Integer hitCount;
 
     private String keyword;
+
+    @ColumnDefault("0")
+    private Integer bookingCnt;
 
     /**항공사 이름*/
     private String transport;

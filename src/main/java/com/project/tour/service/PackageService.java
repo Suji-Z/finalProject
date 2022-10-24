@@ -3,8 +3,6 @@ package com.project.tour.service;
 
 import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageDate;
-import com.project.tour.paging.CommonParams;
-import com.project.tour.paging.Pagination;
 import com.project.tour.repository.JejuPackageRepository;
 import com.project.tour.repository.JejuSpecification;
 import com.project.tour.repository.PackageRepository;
@@ -65,8 +63,6 @@ public class PackageService {
 //        response.put("list", list);
 //        return response;
 //    }
-
-
 
 
     public List<Package> getSearch(String keyword) {
