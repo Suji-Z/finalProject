@@ -15,6 +15,9 @@ import java.util.Optional;
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     Page<Notice> findAll(Pageable pageable);
+    Page<Notice> findByCategory(String category, Pageable pageable);
+    Page<Notice> findBySubjectContainingIgnoreCase(String searchKeyword, Pageable pageable);
+    Page<Notice> findByCategoryAndSubjectContainingIgnoreCase(String category, String searchKeyword, Pageable pageable);
     Optional<Notice> findById(Long id);
 
     //public Long CountBy();

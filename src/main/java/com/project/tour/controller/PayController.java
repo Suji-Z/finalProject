@@ -33,10 +33,10 @@ public class PayController {
 
     //마이페이지에서 결제대기 누르면 넘어오는 결제 페이지
     @PreAuthorize("isAuthenticated()")
-    @GetMapping
-    public String getPay(Model model, @LoginUser SessionUser user, Principal principal, PayForm payForm, UserBookingForm userBookingForm){
+    @GetMapping("/{id}")
+    public String getPay(Model model, @PathVariable("id") Long bookingNum, @LoginUser SessionUser user,
+                         Principal principal, PayForm payForm, UserBookingForm userBookingForm){
 
-        long bookingNum = 4; //테스트용 코드 마이페이지에서 결제대기상태를 누르면 가지고 오게
 
         //로그인 정보
         Member member;
