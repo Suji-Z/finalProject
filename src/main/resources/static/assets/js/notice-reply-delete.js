@@ -1,25 +1,25 @@
-function deleteReply(){
 
-    let replyNum = $("#replyNum").val();
-    alert(replyNum);
 
-    $.ajax({
-        url: '/noticeReply/delete',
-        type: 'post',
-        data: {
-            replyNum : $("#replyNum").val(),
-            noticeNum : $("#noticeNum").val()
-        },
-        success : function(data) {
+function noticeDeleteReply(event){
 
-            alert("삭제성공");
+  let noticeNum = $("#noticeNum").val();
 
-            $('#commentTable').replaceWith(data);
+      $.ajax({
+          url: '/noticeReply/delete',
+          type: 'post',
+          data: {
+              replyNum : event.value,
+              noticeNum : $("#noticeNum").val()
+          },
+          success : function(data) {
 
-        },
-        error: function(xhr, status, error) {
-            alert('error');
-        }
-    })
+              alert("댓글을 삭제하였습니다.");
+              $('#commentTable').replaceWith(data);
+
+          },
+          error: function(xhr, status, error) {
+              alert('error');
+          }
+      })
 
 }
