@@ -22,4 +22,6 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
 
     List<Package> findByKeywordIn(List<String> keyword);
 
+    List<Package> findAllByOrderByBookingCntDesc();
+
 }

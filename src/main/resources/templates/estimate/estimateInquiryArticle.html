@@ -81,7 +81,7 @@
             th:if="${inquiry.email!=null and #authentication.getPrincipal().getUsername()==inquiry.email}"
             href="javascript:void(0);" th:data-uri="@{|/estimate/inquiry/delete/${inquiry.id}|}">삭제</button>
 
-    <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()=='admin@naver.com'}"
+    <a sec:authorize="isAuthenticated" th:if="${email=='admin@naver.com'}"
        th:href="@{|/estimate/reply/${inquiry.id}|}">
       <button type="button" class="btn btn_theme btn_md">답변달기</button>
     </a>
