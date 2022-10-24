@@ -69,7 +69,10 @@ public class PackageService {
 //    }
 
 
+    public List<Package> getHitList(){
 
+        return packageRepository.findAllByOrderByBookingCntDesc();
+    }
 
     public List<Package> getSearch(String keyword) {
 
