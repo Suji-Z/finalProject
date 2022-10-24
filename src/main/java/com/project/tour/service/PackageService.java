@@ -107,10 +107,9 @@ public class PackageService {
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ? 0 :
                         pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(Sort.Direction.DESC));
+                pageable.getPageSize(), Sort.by(sorts));
 
         return searchRepository.searchByWhere(condition,pageable);
-
     }
 
     public Page<PackageSearchDTO> getSearchListabroad(String location2, String date, Integer count, String keyword,List<String> transport,
@@ -136,7 +135,7 @@ public class PackageService {
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ? 0 :
                         pageable.getPageNumber() - 1,
-                pageable.getPageSize(), Sort.by(Sort.Direction.DESC));
+                pageable.getPageSize(), Sort.by(sorts));
 
         return searchRepository.searchByWhere(condition,pageable);
 
