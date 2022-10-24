@@ -43,7 +43,8 @@ public class PackageSearchRepository {
                         package$.travelPeriod,
                         package$.keyword,
                         packageDate.aprice,
-                        packageDate.discount
+                        packageDate.discount,
+                        package$.count
                 ))
                 .from(package$)
                 .leftJoin(package$.packagedatelist, packageDate)
