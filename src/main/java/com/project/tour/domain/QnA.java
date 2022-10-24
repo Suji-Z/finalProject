@@ -24,8 +24,6 @@ public class QnA {
 
     private String content;
 
-    private String password;
-
     private LocalDateTime created;
 
     @ManyToOne

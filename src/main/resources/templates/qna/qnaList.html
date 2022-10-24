@@ -43,7 +43,7 @@
         <div class="dashboard_common_table">
           <h3>Q&A</h3>
           <div class="table-responsive-lg table_common_area">
-          <table class="table">
+            <table class="table">
               <thead>
               <tr>
                 <th style="width: 70px">글번호</th>
@@ -60,21 +60,28 @@
                   <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                   <td th:text="${qna.qnacategory}"></td>
                   <td align="left">
-                  <a style="color: black;" th:href="@{|/qna/question/article/${qna.id}|}" th:text="${qna.subject}"></a>
+                    <a style="color: black;" th:href="@{|/qna/question/article/${qna.id}|}" th:text="${qna.subject}"></a>
+
+
                   </td>
                   <td th:text="${qna.name}"></td>
                   <td th:text="${#temporals.format(qna.created,'yyyy-MM-dd')}"></td>
                 </tr>
-<!--                &lt;!&ndash; 답변 &ndash;&gt;-->
-<!--                <tr th:if="${!qna.estimateReplyList.isEmpty()}" th:each="reply : ${qna.estimateReplyList}">-->
-<!--                  <td></td>-->
-<!--                  <td align="left">-->
-<!--                    <a style="color: black;" th:href="@{|/estimate/reply/article/${reply.id}|}" th:text="|&nbsp;&nbsp;└【답변】&nbsp;${reply.title}|"></a>-->
-<!--                  </td>-->
-<!--                  <td th:text="관리자"></td>-->
-<!--                  <td th:text="${#temporals.format(inquiry.created,'yyyy-MM-dd')}"></td>-->
-<!--                </tr>-->
-<!--              </th:block>-->
+
+                <!-- 답변 -->
+                <tr th:if="${!qna.replyList.isEmpty()}" th:each="reply : ${qna.replyList}">
+
+                  <td></td>
+                  <td></td>
+                  <td th:align="left">
+                    <i class="bi bi-arrow-return-right"></i>
+                   <span>[답변]</span>
+                    <a style="color: black" th:href="@{|/qna/answer/article/${reply.id}|}" th:text="${reply.title}"></a>
+                  </td>
+                  <td th:text="관리자"></td>
+                  <td th:text="${#temporals.format(reply.replycreated,'yyyy-MM-dd')}"></td>
+                </tr>
+
               </th:block>
 
               </tbody>
@@ -86,28 +93,28 @@
           </div>
         </div>
 
-          <div class="pagination_area" th:if="${!paging.isEmpty()}">
-            <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
-              <li class="page-item">
-                <a class="page-link" th:href="@{/qna/list?page=1}" aria-label="Previous">
-                  <span aria-hidden="true">≪</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li class="page-item" th:style="${paging.first}?'display:none'">
-                <a class="page-link" th:href="@{/qna/list(page=${paging.number})}">＜</a>
-              </li>
-              <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
-                  th:classappend="(${page}==${paging.number+1})?'active'">
-                <a class="page-link" th:href=@{/qna/list(page=${page})} th:text="${page}"></a>
-              </li>
-              <li class="page-item" th:style="${paging.last}?'display:none'">
-                <a class="page-link" th:href="@{/qna/list(page=${paging.number+2})}">＞</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" th:href="@{/qna/list(page=${paging.totalPages})}" aria-label="Next">
-                  <span aria-hidden="true">≫</span>
-                  <span class="sr-only">Next</span>
+        <div class="pagination_area" th:if="${!paging.isEmpty()}">
+          <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+            <li class="page-item">
+              <a class="page-link" th:href="@{/qna/list?page=1}" aria-label="Previous">
+                <span aria-hidden="true">≪</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item" th:style="${paging.first}?'display:none'">
+              <a class="page-link" th:href="@{/qna/list(page=${paging.number})}">＜</a>
+            </li>
+            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                th:classappend="(${page}==${paging.number+1})?'active'">
+              <a class="page-link" th:href=@{/qna/list(page=${page})} th:text="${page}"></a>
+            </li>
+            <li class="page-item" th:style="${paging.last}?'display:none'">
+              <a class="page-link" th:href="@{/qna/list(page=${paging.number+2})}">＞</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" th:href="@{/qna/list(page=${paging.totalPages})}" aria-label="Next">
+                <span aria-hidden="true">≫</span>
+                <span class="sr-only">Next</span>
               </a>
             </li>
           </ul>
