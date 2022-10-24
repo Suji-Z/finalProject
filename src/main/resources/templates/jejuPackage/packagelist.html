@@ -291,7 +291,7 @@
                                                 <i class="fas fa-heart"></i>
                                             </div>
 
-                                                <a th:href="@{|/package/${package.id}|}"><img th:src="@{|/package-preview/${package.id}/${package.previewImage}|}"/></a>
+                                                <a th:href="@{|/package/${package.id}|}"><img th:src="@{|/package-preview/${package.id}/${package.previewImage}|}" style="heigt:500px;"/></a>
 
                                           <div class="multi_city_flight_lists_content">
                                             <h3><a th:href="@{|/package/${package.id}|}" th:text="${package.packageName}"></a></h3>
@@ -303,9 +303,11 @@
                                     <div class="flight_search_right">
                                         <div class="flight_search_right_content">
                                             <th:block th:if="${not #strings.isEmpty(package.discount)}">
+                                                <div class="package_discount_sally">
+                                                    <p th:text="|${package.discount}%|"></p>
+                                                </div>
                                             <h5>
                                                 <del th:text="|${#numbers.formatInteger(package.aprice,1,'COMMA')}원|"></del>
-                                                <sup th:text="|${package.discount}%|"></sup>
                                             </h5>
                                             <h2><span th:text="|${#numbers.formatInteger(package.aprice - (package.aprice *(package.discount * 0.01)),1,'COMMA')}원|"></span>
                                             </h2>
@@ -333,9 +335,9 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <span>
+                                        <div class="flight_search_right_button">
                                             <a th:href="@{|/package/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
-                                        </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
