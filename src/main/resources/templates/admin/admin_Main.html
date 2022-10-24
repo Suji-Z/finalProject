@@ -75,7 +75,7 @@
                      <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                           style="">
                          <ul>
-                             <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
+                             <li><a th:href="@{/admin/sales/package}">패키지 결제 내역</a></li>
                              <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                          </ul>
                      </div>
@@ -136,7 +136,7 @@
                                     </svg>
                                     <h3 class="counter"></h3>
                                     <br/>
-                                    <a href="mypage_q&a_list.html"><h4><b>게시물 관리</b></h4></a>
+                                    <a th:href="@{/qna/list}"><h4><b>문의글 관리</b></h4></a>
                                 </div>
                             </div>
                         </div>
@@ -242,3 +242,4 @@
 </section>
 
 </body></html>
+
