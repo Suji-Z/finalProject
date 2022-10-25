@@ -11,7 +11,7 @@
         <div class="common_bannner_text">
           <h2>Error</h2>
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a th:href="@{/}">Home</a></li>
             <li><span><i class="fas fa-circle"></i></span> Error</li>
           </ul>
         </div>
@@ -28,7 +28,7 @@
         <div class="error_content text-center">
           <img src="/assets/img/common/error.png" alt="img">
           <h2>ERROR [[${status}]] 비정상적인 접근입니다.</h2>
-          <a th:href="/" class="btn btn_theme btn_md">메인으로</a>
+          <a th:href="@{/}" class="btn btn_theme btn_md">메인으로</a>
         </div>
       </div>
     </div>
