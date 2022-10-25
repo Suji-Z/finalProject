@@ -2,6 +2,7 @@
 function noticeUpdateReply1(event){
 
     let replyNum = event.value;
+    alert(replyNum);
 
     $("#commentOri"+replyNum).toggle(); //원래 댓글 내용
     $('#commentBox'+replyNum).toggle(); //textarea
@@ -19,8 +20,14 @@ function noticeUpdateReply2(event){
     let replyNum = event.value;
 
     let commentBox = $('#commentBox'+replyNum).val();
+    let commentOri = $('#commentOri'+replyNum).text();
+
     if(commentBox==""){
         alert("댓글 내용을 입력해주세요.");
+        return false;
+
+    }else if(commentBox == commentOri){
+        alert("변경된 내용이 없습니다.");
         return false;
     }else{
 

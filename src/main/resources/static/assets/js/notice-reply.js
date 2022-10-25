@@ -19,6 +19,7 @@ function replyConfirm(){
         },
         success : function(data) {
 
+            document.getElementById("content").value='';
             $('#commentTable').replaceWith(data);
 
         },

@@ -26,7 +26,7 @@ public class UserBookingService {
     private final PackageRepository packageRepository;
 
     //예약 데이터 저장하기
-    public void create(UserBookingForm userBookingForm, int bookingTotalPrice,
+    public UserBooking create(UserBookingForm userBookingForm, int bookingTotalPrice,
                        Package apackage, Member member,int bookingCnt){
 
         UserBooking userBooking = new UserBooking();
@@ -52,7 +52,7 @@ public class UserBookingService {
         apackage.setBookingCnt(bookingCnt);
 
         packageRepository.save(apackage);
-        bookingRepository.save(userBooking);
+       return bookingRepository.save(userBooking);
     }
 
     public Page<UserBooking> getBookingList(Pageable pageable) {
@@ -90,6 +90,14 @@ public class UserBookingService {
         Optional<UserBooking> result = bookingRepository.findById(id);
 
         return result.get();
+    }
+
+    //예약 취소
+    public void delete(Long id){
+
+        UserBooking userBooking = bookingRepository.findById(id).get();
+        bookingRepository.delete(userBooking);
+
     }
 }
 

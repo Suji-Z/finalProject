@@ -140,18 +140,29 @@ public class BookingController {
 
 
         //데이터 저장
-        userBookingService.create(userBookingForm, priceForm.getBookingTotalPrice(), apackage, member,bookingCnt);
+        UserBooking userBooking = userBookingService.create(userBookingForm,
+                priceForm.getBookingTotalPrice(), apackage, member, bookingCnt);
 
         //confirmation에 띄울 정보 
-        //1.member 테이블
+        //1.memberm,userbooking 테이블
         model.addAttribute("member",member);
-
-        //2.userbooking 테이블
-        UserBooking userBooking = userBookingService.getRecentBooking();
         model.addAttribute("userBooking",userBooking);
 
         return "booking-pay/booking_confirmation";
 
     }
+
+    //예약취소
+    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
+    @GetMapping("/cancle/{id}") //id=bookingNum
+    public String cancle(@LoginUser SessionUser user, Principal principal, Model model,
+                         @PathVariable("id") Long id) {
+
+        userBookingService.delete(id);
+
+        return "redirect:/mypage/cancelList";
+
+    }
+
 
 }
