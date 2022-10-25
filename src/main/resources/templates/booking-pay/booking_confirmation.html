@@ -82,7 +82,7 @@
                         <div class="tour_booking_form_box">
                             <div class="your_info_arae">
                                 <ul>
-                                    <li><span class="name_first">여행자 이름</span> <span class="last_name" th:text="${userBooking.travelerName}">예약번호</span></li>
+                                    <li><span class="name_first">여행자 이름</span> <span class="last_name" th:text="${userBooking.travelerName}"></span></li>
                                     <li><span class="name_first">여행자 연락처</span> <span
                                             class="last_name" th:text="${userBooking.travelerTel}"></span></li>
                                     <li><span class="name_first">여행자 생년월일</span> <span
@@ -95,6 +95,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="common_form_submit" style="display: inline-block; margin: 0 5px;  float: right;">
+                    <button class="btn btn_theme btn_md" th:onclick="|location.href='@{|/booking/cancle/${userBooking.id}|}'|">예약취소</button>
                 </div>
             </div>
         </div>
