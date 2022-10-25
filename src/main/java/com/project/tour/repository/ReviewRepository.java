@@ -19,6 +19,12 @@ public interface ReviewRepository extends JpaRepository <Review,Long> {
     //마이페이지에 출력할 멤버의 리뷰 리스트(댓글이랑 같이 띄울때 페이징처리 할건지 생각)
     List<Review> findByAuthor_Id(Long id);
 
+    //제주리뷰만 보기
+    Page<Review> findByReviewPackages_Location1(String location,Pageable pageable);
+
+    //해외리뷰만 보기
+    Page<Review> findByReviewPackages_Location1In(List<String> location,Pageable pageable);
+
 
 
 

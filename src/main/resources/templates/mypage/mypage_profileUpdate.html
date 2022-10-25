@@ -274,7 +274,8 @@
             </div>
         </div>
         <div class="common_form_submit">
-            <button class="btn btn_theme btn_md" type="submit" id="signup" onclick="return profileUpdateConfirm();">수정하기</button>
+            <button class="btn btn_theme btn_md" type="submit" id="signup" onclick="return profileUpdateConfirm();"
+                    th:disabled="${social!=null} ? 'disabled' ">수정하기</button>
              <button class="btn btn_theme btn_md">취소</button>
         </div>
 
