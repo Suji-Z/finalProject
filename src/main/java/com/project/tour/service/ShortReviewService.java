@@ -1,8 +1,9 @@
 package com.project.tour.service;
 
-import com.project.tour.domain.Member;
+import com.project.tour.controller.DataNotFoundException;
+import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
-import com.project.tour.domain.ShortReview;
+import com.project.tour.repository.BookingRepository;
 import com.project.tour.repository.ShortReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,12 +15,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class ShortReviewService {
 
     private final ShortReviewRepository shortReviewRepository;
+
+    private final BookingRepository bookingRepository;
+
 
 
 
@@ -37,19 +42,53 @@ public class ShortReviewService {
     }
 
 
-    public Page<ShortReview> getShortReview(Long id, Pageable pageable){
+//    public List<UserBooking> getBookingReview(Long id, int status){
+//
+//        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatus(id,status);
+//
+//        return op;
+//
+//    }
 
-        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-        sorts.add(Sort.Order.desc("id"));
 
-        pageable= PageRequest.of(
-                pageable.getPageNumber()<=0?0:
-                        pageable.getPageNumber()-1,
-                pageable.getPageSize(),Sort.by(sorts));
+    public ShortReview getshortReview(Long id){
 
-        return shortReviewRepository.findByPackages_Id(id,pageable);
+        Optional<ShortReview> op = shortReviewRepository.findById(id);
+
+        if(op.isPresent())
+            return op.get();
+        else
+            throw new DataNotFoundException("리뷰가 없습니다");
 
     }
+
+
+    public ShortReview getshortReviewId(Long id,Long packageNum){
+
+        Optional<ShortReview> op = shortReviewRepository.findByIdAndPackages_Id(id,packageNum);
+
+        if(op.isPresent())
+            return op.get();
+        else
+            throw new DataNotFoundException("리뷰가 없습니다");
+
+    }
+
+
+
+    public void update(ShortReview shortReview, String content,
+                       Double score, Package packages){
+
+        shortReview.setContent(content);
+        shortReview.setScore(score);
+        shortReview.setPackages(packages);
+
+        shortReviewRepository.save(shortReview);
+
+
+    }
+
+
 
 
 

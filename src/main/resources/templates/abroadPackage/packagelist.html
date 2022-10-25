@@ -115,7 +115,7 @@
                                   <div class="flight_Search_boxed date_flex_area">
                                     <div class="Journey_date" >
                                       <p>출발예정일</p>
-                                      <input type="text" id="datePicker" name="date" placeholder="날짜를 선택해주세요" th:field="*{departure}"
+                                      <input type="text" id="searchPicker" name="date" placeholder="날짜를 선택해주세요" th:field="*{departure}"
                                              readonly="readonly" style="background: url('/assets/img/icon/calander.png') no-repeat 10px 15px;
                                                                                background-size: 20px;background-position: right; cursor:pointer;">
                                     </div>
@@ -243,15 +243,31 @@
               <div class="theme_nav_tab">
                 <nav class="theme_nav_tab_item">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link" id="nav-healing-tab" data-bs-toggle="tab" data-bs-target="#nav-healing" type="button" role="tab" aria-controls="nav-healing" aria-selected="false">힐링</button>
-                    <button class="nav-link" id="nav-activity-tab" data-bs-toggle="tab" data-bs-target="#nav-activity" type="button" role="tab" aria-controls="nav-activity" aria-selected="false">액티비티</button>
-                    <button class="nav-link" id="nav-golf-tab" data-bs-toggle="tab" data-bs-target="#nav-golf" type="button" role="tab" aria-controls="nav-golf" aria-selected="false">골프</button>
-                    <button class="nav-link" id="nav-hotel-tab" data-bs-toggle="tab" data-bs-target="#nav-hotel" type="button" role="tab" aria-controls="nav-hotel" aria-selected="false">호캉스</button>
-                    <button class="nav-link" id="nav-family-tab" data-bs-toggle="tab" data-bs-target="#nav-family" type="button" role="tab" aria-controls="nav-family" aria-selected="false">가족여행</button>
-                    <button class="nav-link" id="nav-food-tab" data-bs-toggle="tab" data-bs-target="#nav-food" type="button" role="tab" aria-controls="nav-food" aria-selected="false">식도락여행</button>
-                    <button class="nav-link" id="nav-cultural-tab" data-bs-toggle="tab" data-bs-target="#nav-cultural" type="button" role="tab" aria-controls="nav-cultural" aria-selected="false">문화/예술</button>
-                    <button class="nav-link" id="nav-dog-tab" data-bs-toggle="tab" data-bs-target="#nav-dog" type="button" role="tab" aria-controls="nav-dog" aria-selected="false">애견동반</button>
                   </div>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="healing"
+                                th:classappend="*{keyword == 'healing'} ? 'active' : ''" data-bs-toggle="tab" role="tab">힐링
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="activity"
+                            th:classappend="*{keyword == 'activity'} ? 'active' : ''" data-bs-toggle="tab" role="tab">액티비티
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="golf"
+                            th:classappend="*{keyword == 'golf'} ? 'active' : ''" data-bs-toggle="tab" role="tab">골프
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="hocance"
+                            th:classappend="*{keyword == 'hocance'} ? 'active' : ''" data-bs-toggle="tab" role="tab">호캉스
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="family"
+                            th:classappend="*{keyword == 'family'} ? 'active' : ''" data-bs-toggle="tab" role="tab">가족여행
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="food"
+                            th:classappend="*{keyword == 'food'} ? 'active' : ''" data-bs-toggle="tab" role="tab">식도락여행
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="culture"
+                            th:classappend="*{keyword == 'culture'} ? 'active' : ''" data-bs-toggle="tab" role="tab">문화/예술
+                    </button>
+                    <button class="nav-link" th:field="*{keyword}" name="keyword" value="animal"
+                            th:classappend="*{keyword == 'animal'} ? 'active' : ''" data-bs-toggle="tab" role="tab">애견동반
+                    </button>
                 </nav>
               </div>
             </div>
@@ -281,8 +297,8 @@
             <p>
               <label for="amount">가격범위：</label>
               <input type="text" id="amount" style="border:0; color:black; font-weight:bold; background: white;" disabled="disabled">
-              <input type="hidden" id="pricerangestr">
-              <input type="hidden" id="pricerangeend">
+              <input type="hidden" id="pricerangestr" th:field="*{pricerangestr}"/>
+              <input type="hidden" id="pricerangeend" th:field="*{pricerangeend}">
             </p>
             <div id="slider-range"></div>
           </div>
@@ -295,99 +311,34 @@
           <div class="left_side_search_heading">
             <h5>항공사</h5>
           </div>
-          <div class="tour_search_type">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf1">
-              <label class="form-check-label" for="flexCheckDefaultf1">
-                                        <span class="area_flex_one">
-                                            <span>대한항공</span>
-                                            <span>17</span>
-                                        </span>
-              </label>
+            <div class="tour_search_type">
+                <div class="form-check" th:each="transport : ${transports}">
+                    <label>
+                        <input class="form-check-input" type="checkbox" th:value="${transport.key}" th:field="*{transports}">
+                        <span class="area_flex_one">
+                            <span th:text="${transport.value}"></span>
+                        </span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf2">
-              <label class="form-check-label" for="flexCheckDefaultf2">
-                                        <span class="area_flex_one">
-                                            <span>아시아나 </span>
-                                            <span>14</span>
-                                        </span>
-              </label>
+        <div class="left_side_search_boxed">
+            <div class="left_side_search_heading">
+              <h5>여행기간</h5>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf3">
-              <label class="form-check-label" for="flexCheckDefaultf3">
-                                        <span class="area_flex_one">
-                                            <span>제주항공</span>
-                                            <span>30</span>
-                                        </span>
-              </label>
+            <div class="tour_search_type">
+                <div class="form-check" th:each="travelPeriod : ${travelPeriods}">
+                    <label>
+                        <input class="form-check-input" type="checkbox" th:value="${travelPeriod.key}" th:field="*{travelPeriods}">
+                        <span class="area_flex_one">
+                           <span th:text="${travelPeriod.value}"></span>
+                        </span>
+                    </label>
+                </div>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf4">
-              <label class="form-check-label" for="flexCheckDefaultf4">
-                                        <span class="area_flex_one">
-                                            <span>진에어</span>
-                                            <span>22</span>
-                                        </span>
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultf5">
-              <label class="form-check-label" for="flexCheckDefaultf5">
-                                        <span class="area_flex_one">
-                                            <span>티웨이</span>
-                                            <span>41</span>
-                                        </span>
-              </label>
-            </div>
-          </div>
-        </div><div class="left_side_search_boxed">
-        <div class="left_side_search_heading">
-          <h5>여행기간</h5>
-        </div>
-        <div class="tour_search_type">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt1">
-            <label class="form-check-label" for="flexCheckDefaultt1">
-                                        <span class="area_flex_one">
-                                            <span>당일</span>
-                                            <span>20</span>
-                                        </span>
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt2">
-            <label class="form-check-label" for="flexCheckDefaultt2">
-                                        <span class="area_flex_one">
-                                            <span>2 ~ 4일</span>
-                                            <span>14</span>
-                                        </span>
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt3">
-            <label class="form-check-label" for="flexCheckDefaultt3">
-                                        <span class="area_flex_one">
-                                            <span>5 ~ 9일</span>
-                                            <span>62</span>
-                                        </span>
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt4">
-            <label class="form-check-label" for="flexCheckDefaultt4">
-                                        <span class="area_flex_one">
-                                            <span>10일 이상</span>
-                                            <span>08</span>
-                                        </span>
-            </label>
-          </div>
-
         </div>
       </div>
-      </div>
-      </div>
+    </div>
 
       <div class="col-lg-9">
         <div th:if="${paging.isEmpty()}" align="center"><img src="/assets/img/notfoundpackage.png"></div>
@@ -403,10 +354,10 @@
                         <i class="fas fa-heart"></i>
                       </div>
 
-                      <a th:href="@{|/jeju/${package.id}|}"><img th:src="@{${package.getPhotosImagePath1()}}"/></a>
+                      <a th:href="@{|/package/${package.id}|}"><img th:src="@{|/package-preview/${package.id}/${package.previewImage}|}"/></a>
 
                       <div class="multi_city_flight_lists_content">
-                        <h3><a th:href="@{|/jeju/${package.location2}/${package.id}|}" th:text="${package.packageName}"></a></h3>
+                        <h3><a th:href="@{|/package/${package.location2}/${package.id}|}" th:text="${package.packageName}"></a></h3>
                         <br/>
                         <h5 th:text="${package.packageInfo}"></h5>
                       </div>
@@ -414,16 +365,16 @@
                   </div>
                   <div class="flight_search_right">
                     <div class="flight_search_right_content">
-                      <th:block th:if="${not #strings.isEmpty(package.packagedatelist[0].discount)}">
+                      <th:block th:if="${not #strings.isEmpty(package.discount)}">
                         <h5>
-                          <del th:text="|${#numbers.formatInteger(package.packagedatelist[0].aprice,1,'COMMA')}원|"></del>
+                          <del th:text="|${#numbers.formatInteger(package.aprice,1,'COMMA')}원|"></del>
                         </h5>
-                        <h2><span th:text="|${#numbers.formatInteger(package.packagedatelist[0].aprice - (package.packagedatelist[0].aprice *(package.packagedatelist[0].discount * 0.01)),1,'COMMA')}원|"></span>
-                          <sup th:text="|${package.packagedatelist[0].discount}% 할인|"></sup>
+                        <h2><span th:text="|${#numbers.formatInteger(package.aprice - (package.aprice *(package.aprice * 0.01)),1,'COMMA')}원|"></span>
+                          <sup th:text="|${package.discount}% 할인|"></sup>
                         </h2>
                       </th:block>
-                      <th:block th:if="${#strings.isEmpty(package.packagedatelist[0].discount)}">
-                        <h2><span th:text="|${#numbers.formatInteger(package.packagedatelist[0].aprice,1,'COMMA')}원|"></span>
+                      <th:block th:if="${#strings.isEmpty(package.discount)}">
+                        <h2><span th:text="|${#numbers.formatInteger(package.aprice,1,'COMMA')}원|"></span>
                         </h2>
                       </th:block>
 

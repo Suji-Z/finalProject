@@ -19,10 +19,12 @@ public class PackageSearchDTO {
     private Integer discount;
     private Integer count;
 
+    private Integer hitCount;
+
     //추후 희진이 파트 쇼트리뷰 추가
 
     @QueryProjection
-    public PackageSearchDTO(Long id, String packageName, String previewImage, String location2, String packageInfo, String postStart, String postEnd, Integer travelPeriod, String keyword, Integer aprice, Integer discount, Integer count) {
+    public PackageSearchDTO(Long id, String packageName, String previewImage, String location2, String packageInfo, String postStart, String postEnd, Integer travelPeriod, String keyword, Integer aprice, Integer discount, Integer count, Integer hitCount) {
         this.id = id;
         this.packageName = packageName;
         this.previewImage = previewImage;
@@ -35,5 +37,7 @@ public class PackageSearchDTO {
         this.aprice = aprice;
         this.discount = discount;
         this.count = count;
+        this.hitCount = hitCount;
+
     }
 }

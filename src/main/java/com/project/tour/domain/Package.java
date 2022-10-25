@@ -42,6 +42,7 @@ public class Package {
     @Column(length = 3000)
     private String packageInfo;
 
+    @ColumnDefault("0")
     private Integer hitCount;
 
     private String keyword;

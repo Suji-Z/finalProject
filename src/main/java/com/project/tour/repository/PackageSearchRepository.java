@@ -44,7 +44,8 @@ public class PackageSearchRepository {
                         package$.keyword,
                         packageDate.aprice,
                         packageDate.discount,
-                        package$.count
+                        package$.count,
+                        package$.hitCount
                 ))
                 .from(package$)
                 .leftJoin(package$.packagedatelist, packageDate)
