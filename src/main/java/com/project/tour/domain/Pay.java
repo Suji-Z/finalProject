@@ -2,6 +2,7 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,6 +32,8 @@ public class Pay {
     LocalDateTime payDate;
 
     String payInfo;
+
+    int usedPoint;
 
 
 
