@@ -222,9 +222,9 @@
 
                <div class="comment_form_submit" align="center">
                    <a th:href="@{|/review/update/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
-                      th:if="${review.author!=null and #authentication.getPrincipal().getUsername()==review.author.email}">수정하기</a>
+                      th:if="${review.author.id}==${member.id}">수정하기</a>
                    <a th:href="@{|/review/delete/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
-                      th:if="${review.author!=null and #authentication.getPrincipal().getUsername()==review.author.email}">삭제하기</a>
+                      th:if="${review.author.id}==${member.id}">삭제하기</a>
                    <br/><br/>
                </div>
                         
@@ -253,9 +253,9 @@
 
                                         <a th:href="@{|/review/replyUpdate/${reviewReply.id}|}"
                                            sec:authorize="isAuthenticated()"
-                                           th:if="${reviewReply.author!=null and #authentication.getPrincipal().getUsername()==reviewReply.author.email}">수정</a>&nbsp;
+                                           th:if="${reviewReply.author.id}==${member.id}">수정</a>&nbsp;
                                         <a th:href="@{|/review/replyDelete/${reviewReply.id}|}" sec:authorize="isAuthenticated()"
-                                           th:if="${reviewReply.author!=null and #authentication.getPrincipal().getUsername()==reviewReply.author.email}">삭제</a>
+                                           th:if="${reviewReply.author.id}==${member.id}">삭제</a>
 
 <!--                                        <script type="text/javascript">-->
 <!--                                            const replyRecommendBtn = document.getElementsByClassName("replyRecommend");-->

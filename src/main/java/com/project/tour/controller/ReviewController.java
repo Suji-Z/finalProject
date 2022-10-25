@@ -186,6 +186,10 @@ public class ReviewController {
 
         }
 
+        int hitCount = review.getHitCount()+1;
+        reviewService.updateHitCount(hitCount,id);
+
+
         Long id2 = member.getId();
 
         System.out.println("좋아요 상태:" +replyLike);
@@ -204,6 +208,7 @@ public class ReviewController {
         //model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
         model.addAttribute("review",review);
+        model.addAttribute("member",member);
 
         return "review/review_article";
 

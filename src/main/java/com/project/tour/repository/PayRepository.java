@@ -35,4 +35,5 @@ public interface PayRepository extends JpaRepository<Pay,Long> {
     //회원이 결제완료한 내역(사용포인트 출력)
     List<Pay> findByMember_Id(Long id);
 
+
 }

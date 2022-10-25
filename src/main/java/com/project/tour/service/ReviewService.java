@@ -145,6 +145,15 @@ public class ReviewService {
 
     }
 
+    //조회수
+    public void updateHitCount(int num, Long id){
+
+        Optional<Review> op = reviewRepository.findById(id);
+        op.get().setHitCount(num);
+
+        reviewRepository.save(op.get());
+
+    }
 
 
 
