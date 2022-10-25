@@ -4515,7 +4515,12 @@ textarea {
 
 .flight_search_right_content{
 
-    margin-top: 50px;
+    margin-top: 10px;
+}
+
+.flight_search_right_button{
+
+    margin-top: 10px;
 }
 
 .flight_search_right h5 i{
@@ -4537,21 +4542,25 @@ textarea {
     padding-left: 5px;
 }
 
-.flight_search_right h5 sup {
-    font-size: 30px;
-    font-weight: 600;
-    padding: 20px 10px;
-    font-weight: 500;
-    color: #FFFFFF;
-    right: -80px;
-    background:#99E000;
+.package_discount_sally {
+    width: 60px;
+    height: 60px;
+    background-color: #99E000;
     border-radius: 50%;
-    top:2px;
+    margin-left: 80%;
+    margin-bottom: -15%;
 }
 
+.flight_search_right .package_discount_sally p {
+    font-size: 25px;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 60px;
+    text-align: center;
+}
 
 .flight_search_right a {
-    margin-top: 50px;
+    margin-top: 70px;
     width: 250px;
     height: 60px;
     ;
