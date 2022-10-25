@@ -43,16 +43,20 @@
                                         <li><span style="text-align:center;width: 14%">출발 일자</span>
                                             <span th:text="*{departure}" ></span></li>
 
-                                        <li><span style="text-align:center;width: 14%">패키지 가격 <br/></span>
+                                        <li><span style="text-align:center;width: 14%">성인 가격 <br/></span>
                                             <span>
-                                                성인 &nbsp; <input type="text" th:field="*{aprice}">  원 </br></br>
-                                                아동 &nbsp; <input type="text" th:field="*{cprice}"> 원 </br></br>
-                                                유아 &nbsp; <input type="text" th:field="*{bprice}"> 원
+                                                <input type="number" class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" th:field="*{aprice}">  </span>
+                                        <li><span style="text-align:center;width: 14%">아동 가격 <br/></span>
+                                            <span>
+                                                 <input type="number" class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" th:field="*{cprice}"></span>
+                                        <li><span style="text-align:center;width: 14%">유아 가격 <br/></span>
+                                            <span>
+                                                <input type="number" class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" th:field="*{bprice}">
                                             </span>
                                         </li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 할인율</span>
-                                            <span> <input type="text" style="width: 100px" th:field="*{discount}"> %</span></li>
+                                            <span> <input type="number" class="shform-control" style="border-radius: 3px; font-size: 11pt;width: 200px" th:field="*{discount}"></span></li>
 
                                     </ul>
                                 </div>

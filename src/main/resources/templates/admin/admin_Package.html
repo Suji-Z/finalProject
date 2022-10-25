@@ -41,10 +41,16 @@
                                 <div class="your_info_arae">
                                     <ul>
                                         <li><span style="text-align:center;width: 14%">패키지 이름</span>
-                                            <span><input type="text" th:field="*{packageName}" style="width:500px;border-radius: 3px"></span></li>
+                                            <span><input type="text" th:field="*{packageName}"  class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" placeholder="패키지 상품 이름을 입력하세요"></span>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div th:if="${#fields.hasErrors('packageName')}" role="alert">
+                                           <p style="font-size: 10pt;color: red" th:errors="*{packageName}" th:text="${err}"></p>
+                                        </div>
+                                        </li>
+
                                         <li><span style="text-align:center;width: 14%">여행 지역</span>
                                             <span>
-                                                <select th:field="*{location1}" onchange="categoryChange(this)">
+                                                <select class="form-select-sm" style="width: 250px ;font-size: 11pt" th:field="*{location1}" onchange="categoryChange(this)">
 	                                            <option value="" selected="selected">선택하세요</option>
                                                     <option th:value="아시아">아시아</option>
                                                     <option th:value="유럽">유럽</option>
@@ -52,7 +58,7 @@
                                                     <option th:value="제주">제주</option>
                                                 </select>
 
-                                                <select th:field="*{location2}">
+                                                <select class="form-select-sm" style="width: 250px;font-size: 11pt" th:field="*{location2}">
                                                     <option value="" selected="selected">상세 지역을 선택하세요</option>
                                                 </select>
 
@@ -84,39 +90,79 @@
                                             </span></li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 예약 인원</span>
-                                            <span> <input type="text" style="width: 50px" th:field="*{count}"> &nbsp; 명 </span></li>
+                                            <span><input  class="shform-control" type="number" style="border-radius: 3px; font-size: 11pt;width: 200px" placeholder="예)30" th:field="*{count}"></span>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div th:if="${#fields.hasErrors('count')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{count}" th:text="${err}"></p>
+                                            </div>
+                                        </li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 가격 <br/></span>
                                             <span>
-                                                성인 &nbsp; <input type="text" th:field="*{aprice}">  원 </br></br>
-                                                아동 &nbsp; <input type="text" th:field="*{cprice}"> 원 </br></br>
-                                                유아 &nbsp; <input type="text" th:field="*{bprice}"> 원
+                                                <input type="number" th:field="*{aprice}" class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" placeholder="성인 예)100000">
+                                            <div th:if="${#fields.hasErrors('aprice')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{aprice}" th:text="${err}"></p>
+                                            </div>
+
+                                                <input type="number" th:field="*{cprice}" class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" placeholder="아동 예)100000">
+                                            <div th:if="${#fields.hasErrors('cprice')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{cprice}" th:text="${err}"></p>
+                                            </div>
+
+                                                <input type="number" th:field="*{bprice}" class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt" placeholder="유아 예)100000">
+                                            <div th:if="${#fields.hasErrors('bprice')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{bprice}" th:text="${err}"></p>
+                                            </div>
                                             </span>
+                                        </li>
 
                                         <li><span style="text-align:center;width: 14%">상품 할인율</span>
-                                            <span> <input type="text" style="width: 50px" th:field="*{discount}">  &nbsp; %</span></li>
+                                            <span> <input type="number"  class="shform-control" style="border-radius: 3px; font-size: 11pt;width: 200px" th:field="*{discount}" placeholder="예)10"></span></li>
 
 
 
                                         </li>
                                     
-                                        <li><span style="text-align:center;width: 14%">상품 게시 기간</span>
+                                        <li><span style="text-align:center;width: 14%">상품 게시 시작일</span>
                                             <span>
-                                                시작일 &nbsp;  <input style="width: 200px" type="date" th:field="*{postStart}"></br></br>
-                                                마감일  &nbsp; <input style="width: 200px" type="date" th:field="*{postEnd}">
-                                            </span></li>
+                                                <input class="shform-control" style="border-radius: 3px; width: 500px; font-size: 10pt" type="date" th:field="*{postStart}"></span>
+                                                                  <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div th:if="${#fields.hasErrors('postStart')}" role="alert">
+                                           <p style="font-size: 10pt;color: red" th:errors="*{postStart}" th:text="${err}"></p>
+                                        </div>
+                                       </li>
+
+                                        <li><span style="text-align:center;width: 14%">상품 게시 마감일</span>
+                                            <span>
+                                            <input class="shform-control" style="border-radius: 3px;width: 500px; font-size: 10pt"type="date" th:field="*{postEnd}"></span>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div th:if="${#fields.hasErrors('postEnd')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{postEnd}" th:text="${err}"></p>
+                                            </div>
+                                        </li>
+
 
                                         <li><span style="text-align:center;width: 14%">여행 기간</span>
-                                            <span> <input type="text" style="width: 300px" th:field="*{travelPeriod}"> </span></li>
-
+                                            <span> <input class="shform-control" type="number" style="width: 200px;border-radius: 3px; font-size: 11pt" th:field="*{travelPeriod}" placeholder="예) 3"></span>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div th:if="${#fields.hasErrors('travelPeriod')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{travelPeriod}" th:text="${err}"></p>
+                                            </div>
+                                        </li>
 
 
                                         <li><span style="text-align:center;width: 14%">숙소</span>
-                                            <span> <input type="text" style="width: 300px" th:field="*{hotelName}"> </span></li>
+                                            <span> <input type="text" class="shform-control" style="width: 500px;font-size: 11pt"  th:field="*{hotelName}" placeholder="숙소 이름을 입력해주세요"> </span>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div th:if="${#fields.hasErrors('hotelName')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{hotelName}" th:text="${err}"></p>
+                                            </div>
+                                        </li>
+
 
                                         <li><span style="text-align:center;width: 14%">교통</span>
                                             <span>
-                                                 <select style="width: 250px" th:field="*{transport}">
+                                                 <select class="form-select-sm" style="width: 500px;font-size: 11pt"  th:field="*{transport}">
                                                      <option value = "" selected>항공사를 선택하세요</option>
                                                      <option value = "대한항공">대한항공</option>
                                                      <option value = "아시아나항공">아시아나항공</option>
@@ -147,14 +193,19 @@
                                                 <input type="radio" th:field="*{keyword}"  value="food"/> 식도락여행&nbsp;&nbsp;
                                                 <input type="radio" th:field="*{keyword}"  value="culture"/> 문화/예술&nbsp;&nbsp;
                                                 <input type="radio" th:field="*{keyword}"  value="animal"/> 애견동반
+                                                  <div th:if="${#fields.hasErrors('keyword')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{keyword}" th:text="${err}"></p>
+                                            </div>
                                             </span>
+
+
 
                                         </li>
 
 
 
                                         <li><span style="text-align:center;width: 14%">패키지 상세 설명</span>
-                                            <span> <textarea type="text" style="width: 650px" rows="8" th:field="*{packageInfo}"></textarea> </span></li>
+                                            <span> <textarea class="shform-control" type="text" style="width: 650px" rows="10" th:field="*{packageInfo}"></textarea> </span></li>
                                         </li>
                                     </ul>
                                 </div>
