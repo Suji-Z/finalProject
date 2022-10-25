@@ -69,6 +69,9 @@ public class NoticeReplyController {
             member = memberService.getName(user.getEmail());
         }
 
+        //댓글달면 포인트 적립
+        memberService.getPoint(memberNum);
+
         noticeReplyService.create(content, memberNum, noticeNum);
         model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
 

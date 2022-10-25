@@ -60,6 +60,8 @@ public class Review {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = CascadeType.REMOVE)
     private List<ReviewLike> reviewLikeList = new ArrayList<>();
 
+    private int hitCount;
+
 
 
 }

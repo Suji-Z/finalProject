@@ -32,6 +32,7 @@ public class PayService {
         pay.setPayInfo(payForm.getPayInfo());
         pay.setPayTotalPrice(payForm.getTotalPrice());
         pay.setPayMethod(payForm.getPayMethod());
+        pay.setUsedPoint(payForm.getUsedPoint());
 
         payRepository.save(pay);
     }

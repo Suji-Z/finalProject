@@ -46,17 +46,17 @@ public class SalesExcelService {
     private void createExcelDownloadResponse(HttpServletResponse response, List<Pay> payList) {
         try{
             Workbook workbook = new SXSSFWorkbook();
-            Sheet sheet = workbook.createSheet("패키지 상품 매출");
+            Sheet sheet = workbook.createSheet("여행어때매출");
 
             //숫자 포맷은 아래 numberCellStyle을 적용시킬 것이다다
             CellStyle numberCellStyle = workbook.createCellStyle();
             numberCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0"));
 
             //파일명
-            final String fileName = "패키지 상품 매출";
+            final String fileName = "여행어때매출";
 
             //헤더
-            final String[] header = {"결제번호", "이메일","패키지명","지역1","지역2","결제 수단","결제 금액"};
+            final String[] header = {"결제번호","이메일","이름","패키지명","지역1","지역2","출발일","결제 수단","결제 금액"};
             Row row = sheet.createRow(0);
             for (int i = 0; i < header.length; i++) {
                 Cell cell = row.createCell(i);
@@ -77,20 +77,27 @@ public class SalesExcelService {
                 cell.setCellValue(pay.getMember().getEmail());
 
                 cell = row.createCell(2);
-                cell.setCellValue(pay.getUserBooking().getAPackage().getPackageName());
+                cell.setCellValue(pay.getUserBooking().getMember().getName());
 
                 cell = row.createCell(3);
-                cell.setCellValue(pay.getUserBooking().getAPackage().getLocation1());
+                cell.setCellValue(pay.getUserBooking().getAPackage().getPackageName());
 
                 cell = row.createCell(4);
-                cell.setCellValue(pay.getUserBooking().getAPackage().getLocation2());
+                cell.setCellValue(pay.getUserBooking().getAPackage().getLocation1());
 
                 cell = row.createCell(5);
-                cell.setCellValue(pay.getPayMethod());
+                cell.setCellValue(pay.getUserBooking().getAPackage().getLocation2());
 
                 cell = row.createCell(6);
+                cell.setCellValue(pay.getUserBooking().getDeparture());
+
+                cell = row.createCell(7);
+                cell.setCellValue(pay.getPayMethod());
+
+                cell = row.createCell(8);
                 cell.setCellStyle(numberCellStyle);      //숫자포맷 적용
                 cell.setCellValue(pay.getPayTotalPrice());
+
             }
 
 

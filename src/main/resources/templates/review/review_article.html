@@ -103,41 +103,44 @@
                              <h5>작성일</h5>
                                     </div>
                                 <div class="valid_date_area_one">
-                                    <h2 align="right"><a th:if="${!reviewLike}" class="recommend" th:href="@{|/review/vote/${review.id}|}">
-                                        <i class="fa-regular fa-heart"></i></a></h2>
+                                    <h2 align="right"><a>
+                                        <i th:class="${reviewLike}"></i></a></h2>
 
-                                    <h2 align="right"><a th:if="${reviewLike}" class="cancel" th:href="@{|/review/vote/${review.id}|}">
-                                        <i class="fas fa-heart"></i></a>
-                                    </h2>
+<!--                                    <h2 align="right"><a th:if="${reviewLike}" class="cancel" th:href="@{|/review/vote/${review.id}|}">-->
+<!--                                        <i th:class="fas fa-heart"></i></a>-->
+<!--                                    </h2>-->
 
-                                    <input type="text" id="reviewNum" name="reviewNum" th:value="${review.id}" hidden>
+<!--                                    <input type="text" id="reviewNum" name="reviewNum" th:value="${review.id}" hidden>-->
                              <h5 th:text="${review.author.name}"></h5>
                              
                              <h5 th:text="${#temporals.format(review.created,'yyyy-MM-dd HH:mm')}"></h5>
 
-                                    <script type="text/javascript">
-                                        const recommendBtn = document.getElementsByClassName("recommend"); //recommend라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라
-                                        Array.from(recommendBtn).forEach(function(element){ //여러개 있으면 배열로 받아서 하나씩 꺼내고
-                                            element.addEventListener('click',function(){ //그 앨리먼트를 클릭했을때
-                                                if(confirm("리뷰를 추천하시겠습니까?")){ //이 함수를 실행시켜라 이게 true 이면
+                                    <input type="hidden" th:value="${recommendStatus}" id="recommendStatus">
+                                    <input type="hidden" th:value="${review.id}" id="reviewId" name="reviewId"/>
 
-                                                    location.href=this.dataset.uri;
-                                                }
-                                            });
-                                        });
+<!--                                    <script type="text/javascript">-->
+<!--                                        const recommendBtn = document.getElementsByClassName("recommend"); //recommend라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라-->
+<!--                                        Array.from(recommendBtn).forEach(function(element){ //여러개 있으면 배열로 받아서 하나씩 꺼내고-->
+<!--                                            element.addEventListener('click',function(){ //그 앨리먼트를 클릭했을때-->
+<!--                                                if(confirm("리뷰를 추천하시겠습니까?")){ //이 함수를 실행시켜라 이게 true 이면-->
+
+<!--                                                    location.href=this.dataset.uri;-->
+<!--                                                }-->
+<!--                                            });-->
+<!--                                        });-->
 
 
-                                        const cancelBtn = document.getElementsByClassName("cancel"); //cancel라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라
-                                        Array.from(cancelBtn).forEach(function(element){ //여러개 있으면 배열로 받아서 하나씩 꺼내고
-                                            element.addEventListener('click',function(){ //그 앨리먼트를 클릭했을때
-                                                if(confirm("리뷰추천을 취소하시겠습니까?")){ //이 함수를 실행시켜라 이게 true 이면
+<!--                                        const cancelBtn = document.getElementsByClassName("cancel"); //cancel라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라-->
+<!--                                        Array.from(cancelBtn).forEach(function(element){ //여러개 있으면 배열로 받아서 하나씩 꺼내고-->
+<!--                                            element.addEventListener('click',function(){ //그 앨리먼트를 클릭했을때-->
+<!--                                                if(confirm("리뷰추천을 취소하시겠습니까?")){ //이 함수를 실행시켜라 이게 true 이면-->
 
-                                                    location.href=this.dataset.uri;
-                                                }
-                                            });
-                                        });
+<!--                                                    location.href=this.dataset.uri;-->
+<!--                                                }-->
+<!--                                            });-->
+<!--                                        });-->
 
-                                    </script>
+<!--                                    </script>-->
 
 
 
@@ -219,9 +222,9 @@
 
                <div class="comment_form_submit" align="center">
                    <a th:href="@{|/review/update/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
-                      th:if="${review.author!=null and #authentication.getPrincipal().getUsername()==review.author.email}">수정하기</a>
+                      th:if="${review.author.id}==${member.id}">수정하기</a>
                    <a th:href="@{|/review/delete/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
-                      th:if="${review.author!=null and #authentication.getPrincipal().getUsername()==review.author.email}">삭제하기</a>
+                      th:if="${review.author.id}==${member.id}">삭제하기</a>
                    <br/><br/>
                </div>
                         
@@ -244,15 +247,15 @@
 
                                             <i class="fas fa-heart"></i>좋아요</a>&nbsp;
 
-                                        <input type="hidden" th:value="${review.id}" id="reviewId" name="reviewId"/>
+
                                         <input type="hidden" th:value="${reviewReply.id}" id="replyId"/>
 
 
                                         <a th:href="@{|/review/replyUpdate/${reviewReply.id}|}"
                                            sec:authorize="isAuthenticated()"
-                                           th:if="${reviewReply.author!=null and #authentication.getPrincipal().getUsername()==reviewReply.author.email}">수정</a>&nbsp;
+                                           th:if="${reviewReply.author.id}==${member.id}">수정</a>&nbsp;
                                         <a th:href="@{|/review/replyDelete/${reviewReply.id}|}" sec:authorize="isAuthenticated()"
-                                           th:if="${reviewReply.author!=null and #authentication.getPrincipal().getUsername()==reviewReply.author.email}">삭제</a>
+                                           th:if="${reviewReply.author.id}==${member.id}">삭제</a>
 
 <!--                                        <script type="text/javascript">-->
 <!--                                            const replyRecommendBtn = document.getElementsByClassName("replyRecommend");-->

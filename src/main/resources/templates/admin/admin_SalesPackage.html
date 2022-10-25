@@ -28,7 +28,6 @@
                 <div class="col-lg-4-sally">
                     <div class="dashboard_sidebar">
                         <div class="dashboard_sidebar_user">
-
                             <h2>Admin</h2>
 
                         </div>
@@ -58,27 +57,23 @@
 
                                 </li>
 
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
+                                    <span> </span>
+                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
+                                         style="">
+                                        <ul>
+                                            <li><a th:href="@{/admin/sales/package}">패키지 결제 내역</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+
                                 <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>회원 관리</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
                                             <li><a th:href="@{/admin/user}">회원 리스트</a></li>
-                                            <li><a href="flight-booking.html"></a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-
-
-
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>매출 관리</b>
-                                    <span> </span>
-                                    <div class="booing_sidebar_dashboard" id="show_dropdown_item"
-                                         style="">
-                                        <ul>
-                                            <li><a th:href="@{/admin/sales/package}">패키지별 매출 관리</a></li>
-                                            <li><a th:href="@{/admin/sales/user}">회원별 매출 관리</a></li>
                                         </ul>
                                     </div>
 
@@ -123,8 +118,7 @@
                                 </th:block>
                                 </tbody>
                             </table>
-
-                            <a href ="http://localhost:8088/admin/sales/package/download?excelDownload=true">엑셀</a>
+                            <a type="button" class="btn btn-outline-secondary" href ="http://localhost:8088/admin/sales/package/download?excelDownload=true">Excel</a>
                         </div>
                     </div>
                     <div class="pagination_area" th:if="${!paging.isEmpty()}">
