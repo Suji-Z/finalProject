@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +20,7 @@ public class PayService {
     private final PayRepository payRepository;
 
     //pay테이블 저장하기
-    public void create(UserBooking userBooking, Member member, PayForm payForm){
+    public Pay create(UserBooking userBooking, Member member, PayForm payForm){
 
         Pay pay = new Pay();
 
@@ -34,7 +32,7 @@ public class PayService {
         pay.setPayMethod(payForm.getPayMethod());
         pay.setUsedPoint(payForm.getUsedPoint());
 
-        payRepository.save(pay);
+        return payRepository.save(pay);
     }
 
     //
@@ -66,4 +64,21 @@ public class PayService {
         return payRepository.findAll();
 
     }
+
+
+    public void getPoint(Member member,int payTotalCount) throws InterruptedException { //결제 후 10분 뒤 포인트 적립
+
+        Thread.sleep(10000);
+        int point = (int)Math.round(payTotalCount * 0.05); //포인트 적립
+        member.setPoint(member.getPoint()+point);
+
+    }
+
+    //결제 취소
+    public void delete(Long id){
+
+        Pay pay = payRepository.findById(id).get();
+        payRepository.delete(pay);
+    }
+
 }

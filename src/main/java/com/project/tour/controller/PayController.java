@@ -12,9 +12,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,9 +60,9 @@ public class PayController {
     //결제 데이터 저장
     @GetMapping("/payments/complete")
     public ResponseEntity<?> confirmPay(@RequestParam("impUid") String impUid, @RequestParam("merchantUid") String merchantUid,
-                             @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice,
-                             PayForm payForm, Principal principal, @LoginUser SessionUser user,
-                             @RequestParam("bookingNum") long id, UserBookingForm userBookingForm, Model model){
+                                        @RequestParam("payMethod") String payMethod, @RequestParam("payTotalPrice") int payTotalPrice,
+                                        PayForm payForm, Principal principal, @LoginUser SessionUser user,
+                                        @RequestParam("bookingNum") long id, UserBookingForm userBookingForm, Model model) throws InterruptedException{
 
         RestTemplate template = new RestTemplate();
 
@@ -102,11 +104,15 @@ public class PayController {
         PackageDate packageDate = packageDateService.getPackageDate(userBooking.getAPackage(), userBooking.getDeparture());
         packageDateService.modifyRemainCount(packageDate, bookingTotalCount);
 
+        //4. 결제일에서 10분 뒤 포인트5% 적립
+        payService.getPoint(member, payTotalPrice);
+
+
         return new ResponseEntity("/pay/complete", HttpStatus.OK);
 
     }
 
-    //저장 후 결제완료 창 띄우기 > 다 되는데 return이 안됨..
+    //저장 후 결제완료 창 띄우기
     @GetMapping("/complete")
     public String confirmation(Model model, @LoginUser SessionUser user, Principal principal){
 
@@ -134,6 +140,17 @@ public class PayController {
     public String confirmPay1(){
 
         return "booking-pay/payment_fail";
+
+    }
+
+    //결제취소
+    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
+    @GetMapping("/cancle/{id}") //id:payNum
+    public String cancle(@PathVariable("id") Long id) {
+
+        payService.delete(id);
+
+        return "redirect:/mypage/cancelList";
 
     }
 

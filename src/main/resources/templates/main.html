@@ -146,9 +146,6 @@
                                         <a href="visa-application.html" class="nav-link">QnA</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="visa-info.html" class="nav-link">FAQ</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a th:href="@{/estimate/list}" class="nav-link">견적문의</a>
                                     </li>
                                     <li class="nav-item">
@@ -490,7 +487,7 @@
                             <a th:href="@{|/package/${hitLists.id}|}">
                             <img th:src="@{${hitLists.photosImagePath1}}" style="height: 300px" alt="img">
                             <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;">
-                                <h2 style="font-size: 20pt">[[${hitLists.location1}]] | [[${hitLists.packagedatelist.get(0).getAprice()}]]</h2>
+                                <h2 style="font-size: 20pt">[[${hitLists.location1}]] | </h2>
                                 <h3 style="font-size: 18pt">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
                             </div>
                             </a>
@@ -699,7 +696,6 @@
                     <ul>
                         <li><a th:href="@{/notice/list}">공지사항</a></li>
                         <li><a href="top-destinations-details.html">QnA</a></li>
-                        <li><a href="flight-search-result.html">FaQ</a></li>
                         <li><a th:href="@{/estimate/list}">견적문의</a></li>
                         <li><a th:href="@{/voiceCus/list}">고객의소리</a></li>
                     </ul>
