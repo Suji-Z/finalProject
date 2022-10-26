@@ -143,9 +143,9 @@ public class MypageService {
     }
 
     //예약취소내역
-    public List<UserBooking> getMypageCancelBooking(Long id,int status){
+    public List<UserBooking> getMypageCancelBooking(Long id,List<Integer> status){
 
-        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatus(id,status);
+        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatusIn(id,status);
 
         return op;
 

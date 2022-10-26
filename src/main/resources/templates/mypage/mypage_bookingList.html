@@ -142,6 +142,7 @@
                           <a th:href="@{|/pay/${mypageBooking.id}|}"><span th:case="'1'">결제대기중</span></a>
                           <a th:href="@{/pay/complete}"><span th:case="'2'">결제완료</span></a>
                           <span th:case="'3'">예약취소</span>
+                          <span th:case="'4'">결제취소</span>
                       </td>
                   </tr>
               </th:block>

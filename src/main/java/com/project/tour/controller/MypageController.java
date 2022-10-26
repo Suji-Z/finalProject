@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -82,9 +83,16 @@ public class MypageController {
 
         }
 
-        //결제완료된 부킹리스트 가져오기
+        //예약취소된 부킹리스트 가져오기 3:예약취소 4:결제취소
         Long memberId = member.getId();
-        int status = 3; // 0:예약확인중 1:결제대기중 2:결제완료 3:예약취소
+
+        List<Integer> status = new ArrayList<>();
+
+        status.add(3);
+        status.add(4);
+
+        System.out.println(status);
+
 
         List<UserBooking> mypageBookingCancle =  mypageService.getMypageCancelBooking(memberId,status);
 
