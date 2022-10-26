@@ -66,7 +66,7 @@
                                             resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
                                                    th:text="${notice.content}"></textarea>
                                             <div class="">
-                                            <span><h5> <img th:src="${url}" th:height="30" th:width="30"/>이 글이 도움되었습니다.<br/></h5></span>
+                                            <span><h5> <img th:src="${url}" th:height="30" th:width="30" class="recommend"/>이 글이 도움되었습니다.<br/></h5></span>
                                             <br/><br/>
                                             </div>
                                         </div>
@@ -118,7 +118,7 @@
                         <div class="form-froup">
                                 <textarea row="1" th:text="${comment.content}" class="form-control bg_input" th:id="|commentBox${comment.id}|" style="display:none;"></textarea></div>
                       <div style="display: inline-block; margin: 0 5px;  float: right;">
-                            <span th:if="${csomment.member.id}==${member.id}">
+                            <span th:if="${comment.member.id}==${member.id}">
                                 <button th:id="|updateA${comment.id}|" class="btn btn-outline-secondary" type="button" onclick="noticeUpdateReply1(this);" th:value="${comment.id}">수정</button></span>
                             <span th:if="${comment.member.id}==${member.id}">
                                 <button th:id="|delete${comment.id}|" class="btn btn-outline-secondary" type="button" onclick="noticeDeleteReply(this);" th:value="${comment.id}">삭제</button></span>

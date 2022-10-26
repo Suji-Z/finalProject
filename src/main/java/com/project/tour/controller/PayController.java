@@ -104,7 +104,7 @@ public class PayController {
         PackageDate packageDate = packageDateService.getPackageDate(userBooking.getAPackage(), userBooking.getDeparture());
         packageDateService.modifyRemainCount(packageDate, bookingTotalCount);
 
-        //4. 결제일에서 10분 뒤 포인트5% 적립
+        //4. 포인트5% 적립
         payService.getPoint(member, payTotalPrice);
 
 
@@ -143,12 +143,15 @@ public class PayController {
 
     }
 
-    //결제취소
-    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
+    //결제취소 : 결제 테이블 삭제 및 예약상태 4로 변경
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/cancle/{id}") //id:payNum
     public String cancle(@PathVariable("id") Long id) {
 
+        UserBooking userBooking = payService.getPay(id).getUserBooking();
+
         payService.delete(id);
+        userBookingService.modifyBookingStatus(userBooking,4);
 
         return "redirect:/mypage/cancelList";
 

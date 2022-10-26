@@ -34,6 +34,9 @@ public class Notice {
     @OneToMany(mappedBy = "notice",cascade = CascadeType.REMOVE)
     private List<NoticeReply> noticeReplyList;
 
+    @OneToMany(mappedBy = "notice",cascade = CascadeType.REMOVE)
+    private List<NoticeRecommend> noticeRecommends;
+
     //이미지 경로 불러오기
     @Transient
     public String getPhotosImagePath() {

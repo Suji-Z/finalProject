@@ -105,7 +105,7 @@ public class BookingController {
         return couponInfo;
     }
 
-    /* 예약확인 저장 */
+    /* 예약확인 저장 및 창띄우기*/
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @PostMapping("/confirmation/{id}") //id=packageNum
     public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult, BookingPriceDTO priceForm,
@@ -152,13 +152,42 @@ public class BookingController {
 
     }
 
-    //예약취소
+    //마이페이지 - 예약화면띄우기
+    @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
+    @GetMapping("/confirmation/{id}") //id=packageNum
+    public String confirmation1(@LoginUser SessionUser user, Principal principal, Model model,
+                                @PathVariable("id") Long id) {
+
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
+        UserBooking userBooking = userBookingService.getUserBooking(id);
+
+        //confirmation에 띄울 정보
+        //1.memberm,userbooking 테이블
+        model.addAttribute("member",member);
+        model.addAttribute("userBooking",userBooking);
+
+        return "booking-pay/booking_confirmation";
+
+
+
+    }
+
+
+    //예약취소 : 테이블 삭제 아니고 status를 3으로 수정
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @GetMapping("/cancle/{id}") //id=bookingNum
     public String cancle(@LoginUser SessionUser user, Principal principal, Model model,
                          @PathVariable("id") Long id) {
 
-        userBookingService.delete(id);
+        UserBooking userBooking = userBookingService.getUserBooking(id);
+        userBookingService.modifyBookingStatus(userBooking,3);
 
         return "redirect:/mypage/cancelList";
 

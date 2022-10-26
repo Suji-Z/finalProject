@@ -66,9 +66,8 @@ public class PayService {
     }
 
 
-    public void getPoint(Member member,int payTotalCount) throws InterruptedException { //결제 후 10분 뒤 포인트 적립
+    public void getPoint(Member member,int payTotalCount){
 
-        Thread.sleep(10000);
         int point = (int)Math.round(payTotalCount * 0.05); //포인트 적립
         member.setPoint(member.getPoint()+point);
 
