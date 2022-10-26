@@ -211,9 +211,9 @@ public class ReviewController {
         int reviewLike = reviewService.getReviewLike(id2,id);
 
         if(reviewLike==1){
-            model.addAttribute("reviewLike","fas fa-heart");
+            model.addAttribute("url","/assets/img/icon/ReviewHeart2.png");
         }else{
-            model.addAttribute("reviewLike","fa-regular fa-heart");
+            model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
         }
 
 
@@ -223,6 +223,7 @@ public class ReviewController {
 
         model.addAttribute("review",review);
         model.addAttribute("member",member);
+        model.addAttribute("recommendStatus", reviewLike);
 
         return "review/review_article";
 

@@ -30,6 +30,7 @@
 
     <!-- Common Banner Area -->
     <section id="common_banner">
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -47,6 +48,7 @@
 
     <!-- Contact Area -->
 <section id="dashboard_main_arae" class="section_padding">
+
   <div class="container">
     <div class="row">
       <div class="col-lg-4-sally">
@@ -109,7 +111,7 @@
                             <h2>회원탈퇴</h2>
                         </div>
                         <div class="contact_form">
-                            <form action="!#" id="contact_form_content">
+
                                 <div class="row">
                                    
                                     <div class="col-lg-12">
@@ -122,7 +124,7 @@
                                     </div>
                                    
                                 </div>
-                            </form>
+
                         </div>
                         <br/><br/>
                         <section id="common_author_area" class="">
@@ -178,16 +180,18 @@
                             </div>
                          <div class="col-lg-12" align="center">
                                         <div class="form-group">
-                                            <button type="button" class="btn btn_theme btn_md"
-                                                    onclick="return unregisterConfirm();">탈퇴하기</button>&nbsp;&nbsp;&nbsp;
+                                            <a type="button" class="btn btn_theme btn_md"
+                                                    onclick="return unregisterConfirm();" th:href="@{/mypage/unregister2}">탈퇴하기</a>&nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;&nbsp;
-                                            <button type="button" class="btn btn_theme btn_md">취소하기</button>
+                                            <a class="btn btn_theme btn_md"  th:href="@{/mypage/}">취소하기</a>
                                         </div>
                                     </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 
 

@@ -79,9 +79,11 @@
                     <div class="section_heading_center">
                         <h2>여행 후기</h2>
                     </div>
-                
+                      <div align="right">
+                          <span><img th:src="${url}" th:height="40" th:width="40" class="reviewHeart"/><br/></span></div>
            
             <hr/>
+
            <div class="row">
                 <div class="col-lg-6">
                     <br/><br/>
@@ -93,25 +95,25 @@
                <div class="col-lg-5">
                     <div class="news_area_top_right">
 
-                      
-                                            
-                              <br/>          
                             <div class="valid_date_area2">
                          <div class="valid_date_area_one">
+
                              <h2>&nbsp;</h2>
                              <h5>작성자</h5>
                              <h5>작성일</h5>
                                     </div>
-                                <div class="valid_date_area_one">
-                                    <h2 align="right"><a>
-                                        <i th:class="${reviewLike}"></i></a></h2>
 
-<!--                                    <h2 align="right"><a th:if="${reviewLike}" class="cancel" th:href="@{|/review/vote/${review.id}|}">-->
+                                <div class="valid_date_area_one">
+
+                                    <br/><br/>
+
+
+                                        <!--                                    <h2 align="right"><a th:if="${reviewLike}" class="cancel" th:href="@{|/review/vote/${review.id}|}">-->
 <!--                                        <i th:class="fas fa-heart"></i></a>-->
 <!--                                    </h2>-->
 
 <!--                                    <input type="text" id="reviewNum" name="reviewNum" th:value="${review.id}" hidden>-->
-                             <h5 th:text="${review.author.name}"></h5>
+                                    <h5 th:text="${review.author.name}"></h5>
                              
                              <h5 th:text="${#temporals.format(review.created,'yyyy-MM-dd HH:mm')}"></h5>
 
@@ -153,6 +155,7 @@
                            
                         </div>
                             </div>
+                        <br/>
                          <hr/>
                         <div th:if="${review.score.toString().equals('5.0')}" class="review_star_all" align="right">
                             <i class="fas fa-star"></i>
@@ -307,7 +310,7 @@
                                         <br/>
                                         <div class="comment_form_submit">
                                             <button class="btn btn_theme btn_md" type="submit">등록하기</button>
-                                            <a th:href="@{/review/abroadList}" class="btn btn_theme btn_md">취소하기</a>
+                                            <a th:href="@{/review}" class="btn btn_theme btn_md">취소하기</a>
                                         </div>
                                     </div>
                                 </div>

@@ -145,7 +145,8 @@
                             <label th:for="name" style="text-align:center;">이름</label>
                         </div>
                         <div class="form-group col-lg-7">
-                            <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
+                            <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)"
+                            th:readonly="${social!=null}?'reanonly'">
                         </div>
                     </li>
 
@@ -167,7 +168,8 @@
                             <input type="hidden" name="phone_num2"  th:value="*{phone_num}" />
                         </div>&nbsp;&nbsp;
                         <div class="">
-                            <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" style="height: 35px;font-size: 11pt" onclick="mypagePhoneCheck()">인증번호 전송</button>
+                            <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" style="height: 35px;font-size: 11pt" onclick="mypagePhoneCheck()"
+                                    th:disabled="${social!=null} ? 'disabled' ">인증번호 전송</button>
                         </div>
                     </li>
 
@@ -187,7 +189,7 @@
                             <input type="text" class="shform-control" id="sms_num" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">
                         </div>&nbsp;&nbsp;
                         <div class="">
-                            <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" id="checkBtn" >본인확인</button>
+                            <button class="btn btn_theme" style="height: 35px;font-size: 11pt" type="button" id="checkBtn" th:disabled="${social!=null} ? 'disabled' " >본인확인</button>
                             <input type="hidden" name="checked_phone" value="">
                         </div>
                     </li>
@@ -276,7 +278,7 @@
         <div class="common_form_submit">
             <button class="btn btn_theme btn_md" type="submit" id="signup" onclick="return profileUpdateConfirm();"
                     th:disabled="${social!=null} ? 'disabled' ">수정하기</button>
-             <button class="btn btn_theme btn_md">취소</button>
+            <a class="btn btn_theme btn_md"  th:href="@{/mypage/}">취소</a>
         </div>
 
 </form>

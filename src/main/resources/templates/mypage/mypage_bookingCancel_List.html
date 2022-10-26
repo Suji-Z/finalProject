@@ -138,7 +138,10 @@
                       <td th:text="${#temporals.createDate(mypageBookingCancle.arrival,'yyyyMMdd')}">출발일</td>
                       <td th:text="|${mypageBookingCancle.bookingTotalCount}명|">총인원</td>
                       <td th:text="|${mypageBookingCancle.bookingTotalPrice}원|">금액</td>
-                      <td>예약취소</td>
+                      <td th:switch="${mypageBookingCancle.bookingStatus}">
+                          <span th:case="3">예약취소</span>
+                          <span th:case="4">결제취소</span>
+                      </td>
                   </tr>
 
 

@@ -124,7 +124,7 @@
                             
                             <div class="col-lg-2 col-md-6 clo-sm-12 col-12">
                                 <div class="top_service_boxed">
-                                <span style="font-size: 60px">500</span><h2>p</h2>
+                                <span style="font-size: 60px" th:text="${savedPoint1}">500</span><h2>p</h2>
                                 <h3>총 적립 <br/>포인트</h3>
                             </div>
                             </div>
@@ -165,22 +165,15 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>2022-09-01</td>
-                <td align="center">구매적립금(10%)</td>
-                <td>350</td>
-                <td>2023-01-01</td>
+              <tr th:if="${savedPoint.isEmpty()}"><td th:colspan="4">적립된 포인트가 없습니다.</td></tr>
+              <tr th:each="savedPoint : ${savedPoint}">
+                <td th:text="${#temporals.format(savedPoint.created,'yyyy-MM-dd')}">2022-09-01</td>
+                <td align="center"><a th:href="@{|/notice/article/${savedPoint.notice.id}|}">공지사항 댓글작성</a></td>
+                  <td>500</td>
+                  <td th:text="${#temporals.format(savedPoint.created.plusYears(1),'yyyy-MM-dd')}">2022-09-01</td>
 
               </tr>
-                   <tr>
-                <td>2022-07-21</td>
-                <td align="center">구매적립금(10%)</td>
-                <td>150</td>
-                <td>2022-10-21</td>
 
-              </tr>
-                  
-             
               </tbody>
             </table>
           </div>
