@@ -16,6 +16,7 @@ public class PackageSearchCondition {
     private List<String> transport;
     private Integer totcount;
     private String keyword;
+    private Integer hitCount;
 
 
 

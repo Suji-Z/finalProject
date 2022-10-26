@@ -26,10 +26,15 @@ import java.util.*;
 @Service
 public class PackageService {
 
-//    @Transactional
-//    public int updateHitCount(Long id){
-//        return packageRepository.updateHitCount(id);
-//    }
+    @Transactional
+    public void updateHitCount(int hitCount, Long id){
+
+        Optional<Package> packages = packageRepository.findById(id);
+        packages.get().setHitCount(hitCount);
+
+        packageRepository.save(packages.get());
+
+    }
 
 
     @Autowired
@@ -39,34 +44,6 @@ public class PackageService {
     private final JejuPackageRepository jejuRepository;
     @Autowired
     private final PackageSearchRepository searchRepository;
-
-    //페이징처리(Ajax)
-    /**
-     * 게시글 리스트 조회 - (With. pagination information)
-     */
-//    public Map<String, Object> findAll(CommonParams params) {
-
-        // 게시글 수 조회
-//        int count = PackageRepository.count(params);
-
-        // 등록된 게시글이 없는 경우, 로직 종료
-//        if (count < 1) {
-//            return Collections.emptyMap();
-//        }
-
-//        // 페이지네이션 정보 계산
-//        Pagination pagination = new Pagination(params);
-//        params.setPagination(pagination);
-//
-//        // 게시글 리스트 조회
-//        List<Package> list = PackageRepository.findAll(params);
-//
-//        // 데이터 반환
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("params", params);
-//        response.put("list", list);
-//        return response;
-//    }
 
 
     public List<Package> getHitList(){
@@ -116,12 +93,21 @@ public class PackageService {
     }
 
     public Page<PackageSearchDTO> getSearchListabroad(String location2, String date, Integer count, String keyword,List<String> transport,
-                                                List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Pageable pageable) {
+                                                List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Integer hitCount, Pageable pageable,
+                                                      SearchForm searchForm) {
 
 
         PackageSearchCondition condition = new PackageSearchCondition();
 
-        condition.setLocation1("유럽");
+        if(searchForm.getLocation() == "유럽"){
+            condition.setLocation1("유럽");
+
+        } else if (searchForm.getLocation() == "아시아") {
+            condition.setLocation1("아시아");
+
+        }else if (searchForm.getLocation() == "미국") {
+            condition.setLocation1("미국");
+        }
         condition.setLocation2(location2);
         condition.setStartday(date);
         condition.setTotcount(count);
@@ -130,6 +116,7 @@ public class PackageService {
         condition.setTravelPeriod(travelPeriod);
         condition.setPricerangestr(pricerangestr);
         condition.setPricerangeend(pricerangeend);
+        condition.setHitCount(hitCount);
 
         //페이징처리
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();

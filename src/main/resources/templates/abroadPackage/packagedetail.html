@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="common_bannner_text">
-                    <h2>제주여행 패키지</h2>
+                    <h2>해외여행 패키지</h2>
                 </div>
             </div>
         </div>
@@ -24,7 +24,6 @@
                     <div class="tour_details_heading_wrapper">
                         <div class="tour_details_top_heading">
                             <h2 th:text="${package.packageName}"></h2>
-
                         </div>
                         <div class="tour_details_top_heading_right">
                             <h4>★ 4.8/5</h4>
@@ -58,6 +57,7 @@
                                 <div class="edit_date_form">
                                     <div class="form-group">
                                         <label for="datePicker">출발일 선택</label>
+                                        <input type="hidden" id="packagePostEnd" th:field="${package.postEnd}">
                                         <input type="text" id="datePicker" placeholder="날짜를 선택해주세요" class="form-control"
                                                th:field="*{departure}"
                                                readonly="readonly"
@@ -65,8 +65,12 @@
                                        background-size: 20px;background-position: 95% 50%; cursor:pointer;"
                                                onchange="selectdatePackage()">
                                     </div>
-                                    <div class="select_person_side" style="display:none">
-                                        <h3>인원 선택</h3>
+                                    <div class="date_remaincount" style="border-bottom: 1px solid gray; padding: 5px; display:none">
+                                        <i class="bi bi-person-check-fill"></i>
+                                        잔여수량 <span id="package_remaincount"></span>
+                                        <input type="hidden" id="remaincount_hidden" value="0">
+                                    </div>
+                                    <div class="select_person_side" style="display:none; padding-top:0px;">
                                         <div class="select_person_item">
                                             <div class="select_person_left">
                                                 <h6>어른</h6>
@@ -166,14 +170,15 @@
             </div>
         </div>
     <!-- 리뷰 섹션-->
-
-    <form th:action="@{|/abroad/${id}|}" th:object="${shortReviewForm}" method="post">
+<form th:object="${shortReviewForm}" th:method="post">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="review_col-md-7">
                 <div class="write_your_review_wrapper">
-                    <div class="col-md-7">
-                    <h3 class="heading_theme">리뷰 작성</h3>
+<!--                    <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==shortReview.userName.email-->
+<!--                    or #authentication.getPrincipal().getUsername()=='admin@naver.com' and shortReview.userName!=null}">-->
+                        <div class="review_col-md-7">
+                    <h3 class="heading_theme"></h3>
                     <div class="write_review_inner_boxed">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -186,7 +191,7 @@
                                   <span class="star">
                                     ★★★★★
                                     <span>★★★★★</span>
-                                      <input type="range" oninput="drawStar(this)" value="1" step="2" min="0" max="10" th:field="*{score}"/>
+                                      <input type="range" oninput="drawStar(this)" value="1" step="2" min="0" max="10" th:value="${shortReviewForm.score}"/>
                                         <h5 id="result">별점을 드래그 해주세요</h5>
                                   </span>
 
@@ -198,38 +203,56 @@
                                     </div>
                                     <br/>
                                     <div class="comment_form_submit">
-                                        <button class="btn btn_theme btn_md" type="submit">등록하기</button>
+                                        <button class="btn btn_theme btn_md">등록하기</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
+                 </div>
             </div>
-        </div>
-    </form>
+            <br/>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="all_review_wrapper">
                     <h3 class="heading_theme">All review</h3>
                 </div>
             </div>
+
 <!-- 리뷰 반복문 시작 -->
 
                 <div th:if="${package.shortReviewList.isEmpty()}"><h4>등록된 리뷰가 없습니다.</h4></div>
                 <div th:if="${!package.shortReviewList.isEmpty()}"><h4 th:text="|리뷰 ${#lists.size(package.shortReviewList)}개|"></h4></div>
                 <div class="all_review_box" th:each="shortReview : ${package.shortReviewList}">
+                <a th:id="|shortReview_${shortReview.packages.id}|"></a>
+
                     <div class="all_review_date_area">
+
+                        <div class="all_review_date_name">
+                            <h5 th:text="${shortReview.userName.name}"></h5>
+                        </div>
+                        <div class="all_review_date">
+                            <h5 th:text="${#temporals.format(shortReview.created,'yy-MM-dd')}"></h5>
+                        </div>
+
+
                         <div class="all_review_star">
                             <div class="review_star_all">
-                                <p oninput="reviewstar(this)"></p>
-
+                                <span id="scorestar">별점</span>
+                            </div>
+                            <div class="review_star_all">
+                                <h5><input type="text" id="score" th:value="${shortReview.score}" disabled="disabled"  style="background: white; border: none;"></h5>
                             </div>
                         </div>
+
+                    </div><br/>
+
+                    <div class="col-lg-6">
+                        <h5 th:text="${shortReview.packages.id}"></h5>
+                        <h5 th:text="${shortReview.id}" th:id="shortReviewNum"></h5>
                     </div>
-                    <div class="all_review_date">
-                        <h5 th:text="${shortReview.userName.name}"></h5>
-                        <h5 th:text="${#temporals.format(shortReview.created,'yy-MM-dd')}"></h5>
-                    </div>
+
 
                     <div class="all_review_text">
                         <p th:text="${shortReview.content}"></p>
@@ -237,10 +260,21 @@
                 </div>
             </div>
 
+            <div class="comment_form_submit" align="center">
+                <a th:href="@{|/shortReview/update/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
+                   th:if="${email}==${shortReview.userName.email}">수정하기</a>
+                <a th:href="@{|/shortReview/delete/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
+                   th:if="${email}==${shortReview.userName.email}">삭제하기</a>
+                <br/><br/>
+            </div>
+
+
 
 <!-- 리뷰 반복문 끝 -->
         </div>
     </div>
+</form>
+
     </div>
     </div>
     </div>

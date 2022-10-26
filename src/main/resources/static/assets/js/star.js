@@ -10,11 +10,14 @@
 
     }
 
-    var reviewstar = function(target){
 
-        for(var i = 0; i <= target.value; i++){
-            documnet.write("★");
-        }
+    $(document).ready(function reviewstar() {
 
-    }
+        let score = document.getElementById('score').value;
+        let scorestar = ("★").repeat(score);
+        document.getElementById('scorestar').innerHTML
+            = `<p>${scorestar}</p>`;
+
+
+    });
 

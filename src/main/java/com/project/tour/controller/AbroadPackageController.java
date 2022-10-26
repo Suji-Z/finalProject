@@ -4,21 +4,23 @@ import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
-import com.project.tour.service.MemberService;
-import com.project.tour.service.PackageDateService;
-import com.project.tour.service.PackageService;
-import com.project.tour.service.ShortReviewService;
+import com.project.tour.service.*;
+import com.project.tour.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -41,6 +43,8 @@ public class AbroadPackageController {
 
     private final PackageDateService packagedateService;
 
+    private final ShortReviewReplyService shortReviewReplyService;
+
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -54,6 +58,7 @@ public class AbroadPackageController {
                               @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
                               @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
                               @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
+                              @RequestParam(value = "hitCount", required = false) Integer hitCount,
                               Model model, @PageableDefault(size = 5) Pageable pageable,
                               SearchForm searchForm) {
 
@@ -117,7 +122,7 @@ public class AbroadPackageController {
 
 
 
-        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
+        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,hitCount,pageable,searchForm);
 
         model.addAttribute("paging", paging);
         model.addAttribute("searchForm", searchForm);
@@ -125,149 +130,93 @@ public class AbroadPackageController {
         return "abroadPackage/packagelist";
     }
 
-//    @GetMapping("/abroad")
-//    public Map<String, Object> findAll(final CommonParams params) {
-//        return PackageService.findAll(params);
-//    }
 
-
-
-
-    /*상세 페이지*/
-    @GetMapping("/{id}")
-    public String packagedetail(Model model, @PathVariable("id") Long id, Principal principal,@LoginUser SessionUser user){
-
-        Package packages = packageService.getPackage(id);
-//        packageService.updateHitCount(id);
-
-        String email;
-        String name;
-
-
-
-        if(memberService.existByEmail(principal.getName())){
-
-            Member userName = memberService.getName(principal.getName());
-            email = userName.getEmail();
-            name = userName.getName();
-
-
-        }else {
-
-            email = user.getEmail();
-            name = user.getName();
-        }
-
-
-        model.addAttribute("packages",packages);
-        model.addAttribute("shortReviewForm",new ShortReviewForm());
-        model.addAttribute("shortReview",new ShortReview());
-        model.addAttribute("email",email);
-        model.addAttribute("name",name);
-        model.addAttribute("bookingform", new BookingDTO());
-
-
-        return "abroadPackage/packagedetail";
-    }
 
 
     /**
      * 상세페이지 여행날짜별 가격출력
      */
-//    @GetMapping("/dateprice")
-//    @ResponseBody
-//    public HashMap<String, Object> datecountprice(@RequestParam("acount") Integer acount, @RequestParam("ccount") Integer ccount,
-//                                                  @RequestParam("bcount") Integer bcount, @RequestParam("date") String date,
-//                                                  @RequestParam("packagenum") Long packagenum) {
-//
-//        HashMap<String, Object> priceInfo = new HashMap<String, Object>();
-//        int aprice, bprice, cprice, dcaprice, dcbprice, dccprice;
-//
-//        date = date.replaceAll("-", "");
-//
-//        log.info(date.getClass().getTypeName());
-//
-//        /* 해당 날짜에 어른/아이/유아 타입별 가격*/
-//        PackageDate getPackagePrice = packagedateService.getPrice(packagenum, date);
-//        Integer discount = getPackagePrice.getDiscount();
-//
-//        /** 정가 */
-//        aprice = getPackagePrice.getAprice() * acount;
-//        bprice = getPackagePrice.getBprice() * bcount;
-//        cprice = getPackagePrice.getCprice() * ccount;
-//
-//        if (getPackagePrice.getDiscount() == null) {
-//
-//        } else {/** 할인가 */
-//
-//            dcaprice = (int) (aprice - (aprice * (discount * 0.01)));
-//            dcbprice = (int) (bprice - (bprice * (discount * 0.01)));
-//            dccprice = (int) (cprice - (cprice * (discount * 0.01)));
-//            priceInfo.put("dcaprice", dcaprice);
-//            priceInfo.put("dcbprice", dcbprice);
-//            priceInfo.put("dccprice", dccprice);
-//        }
-//
-//        //json형태 데이터로 넘기기
-//        priceInfo.put("acount", acount);
-//        priceInfo.put("aprice", aprice);
-//        priceInfo.put("ccount", ccount);
-//        priceInfo.put("cprice", cprice);
-//        priceInfo.put("bcount", bcount);
-//        priceInfo.put("bprice", bprice);
-//        priceInfo.put("discount", discount);
-//
-//        return priceInfo;
-//    }
+    @GetMapping("/dateprice/abroad")
+    @ResponseBody
+    public HashMap<String, Object> datecountpriceabroad(@RequestParam("acount") Integer acount, @RequestParam("ccount") Integer ccount,
+                                                  @RequestParam("bcount") Integer bcount, @RequestParam("date") String date,
+                                                  @RequestParam("packagenum") Long packagenum) {
 
+        HashMap<String, Object> priceInfo = new HashMap<String, Object>();
+        int aprice, bprice, cprice, dcaprice, dcbprice, dccprice;
 
+        date = date.replaceAll("-", "");
 
+        log.info(date.getClass().getTypeName());
 
+        /* 해당 날짜에 어른/아이/유아 타입별 가격*/
+        PackageDate getPackage = packagedateService.getPrice(packagenum, date);
+        Integer discount = getPackage.getDiscount();
 
-    //텍스트 리뷰 작성
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/create/{id}")
-    public String create(@Valid ShortReviewForm shortReviewForm, BindingResult bindingResult, @PathVariable("id") Long id,
-                         @PageableDefault Pageable pageable, Principal principal, @LoginUser SessionUser user)  throws IOException {
+        /* 잔여좌석 여부 */
+        Integer remaincount = getPackage.getRemaincount();
+        Integer totcount = acount + bcount + ccount;
 
-        if (bindingResult.hasErrors()){
-            return "abroadPackage/packagedetail";
+        /** 정가 */
+        aprice = getPackage.getAprice() * acount;
+        bprice = getPackage.getBprice() * bcount;
+        cprice = getPackage.getCprice() * ccount;
+
+        if (getPackage.getDiscount() == null) {
+        } else {/** 할인가 */
+
+            dcaprice = (int) (aprice - (aprice * (discount * 0.01)));
+            dcbprice = (int) (bprice - (bprice * (discount * 0.01)));
+            dccprice = (int) (cprice - (cprice * (discount * 0.01)));
+            priceInfo.put("dcaprice", dcaprice);
+            priceInfo.put("dcbprice", dcbprice);
+            priceInfo.put("dccprice", dccprice);
         }
 
+        //json형태 데이터로 넘기기
+        priceInfo.put("acount", acount);
+        priceInfo.put("aprice", aprice);
+        priceInfo.put("ccount", ccount);
+        priceInfo.put("cprice", cprice);
+        priceInfo.put("bcount", bcount);
+        priceInfo.put("bprice", bprice);
+        priceInfo.put("discount", discount);
+        priceInfo.put("remaincount", remaincount);
+        priceInfo.put("totcount", totcount);
 
-        Member userName = memberService.getName(user.getName());
-
-        Package packages = packageService.getPackage(id);
-
-        ShortReview shortReview = shortReviewService.create(shortReviewForm.getContent(),shortReviewForm.getScore(),userName, packages);
-
-
-        return "redirect:/package/{id}";
+        return priceInfo;
     }
 
 
-   // 텍스트 리뷰 리스트
-//    @RequestMapping("/reviewlist/{id}")
-//    public String reviewlist(Model model, Principal principal,
-//                             @PageableDefault Pageable pageable,Package packages,ShortReview shortReview){
-//
-//
-////        packages = packageService.getPackage(packages.getId());
-////        Long packageNum = packages.getId();
-//
-//        List<ShortReview> shortReviews = shortReviewService.getshortReview(packages.getId());
-////        Long packageNum = shortReview.getId();
-//
-//
-//
-////        List<ShortReview> shortReviews = shortReviewService.getshortReview(packageNum);
-//
-//        model.addAttribute("shortReviews",shortReviews);
-//
-//
-//        return "abroadPackage/packagedetail";
-//
-//    }
+
+    /*상세 페이지*/
+    @RequestMapping("/{id}")
+    public String packagedetail(Model model, @PathVariable("id") Long id, Principal principal,@LoginUser SessionUser user,
+                                ShortReviewForm shortReviewForm){
+
+        Package packages = packageService.getPackage(id);
+
+        int hitCount = packages.getHitCount()+1;
+        packageService.updateHitCount(hitCount,id);
+
+
+        model.addAttribute("package",packages);
+        model.addAttribute("shortReviewForm",shortReviewForm);
+        model.addAttribute("bookingform",new BookingDTO());
+
+
+        return "abroadPackage/packagedetail";
+
+
+
+
+    }
+
+
+
+
+
+
 
 
 }
