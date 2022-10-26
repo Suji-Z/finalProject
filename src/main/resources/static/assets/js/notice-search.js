@@ -1,26 +1,38 @@
 
 
+// function noticeSearch(){
+//
+//   let searchKeyword = $("#searchKeyword").val();
+//   let category = $("#noticeFilter").val();
+//
+//       $.ajax({
+//           url: '/notice/search',
+//           type: 'post',
+//           data: {
+//               searchKeyword : searchKeyword,
+//               category : category
+//           },
+//           success : function(data) {
+//
+//               alert("댓글을 삭제하였습니다.");
+//               $('#commentTable').replaceWith(data);
+//
+//           },
+//           error: function(xhr, status, error) {
+//               alert('error');
+//           }
+//       })
+//
+// }
+
+
 function noticeSearch(){
 
-  let searchKeyword = $("#searchKeyword").val();
-  let category = $("#noticeFilter").val();
+    alert("여기");
 
-      $.ajax({
-          url: '/notice/search',
-          type: 'post',
-          data: {
-              searchKeyword : searchKeyword,
-              category : category
-          },
-          success : function(data) {
+    let searchKeyword = $("#searchKeyword").val();
+    let category = $("#noticeFilter").val();
+    let pageNum = $("#pageNum").val();
 
-              alert("댓글을 삭제하였습니다.");
-              $('#commentTable').replaceWith(data);
-
-          },
-          error: function(xhr, status, error) {
-              alert('error');
-          }
-      })
-
+    location.href="searching?page="+pageNum+"&category="+category+"&searchKeyword="+searchKeyword;
 }
