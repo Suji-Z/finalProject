@@ -90,7 +90,6 @@ public class QnAController {
     }
 
     //Question Article
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/question/article/{id}")
     public String questionArticle(QnAForm qnAForm, @LoginUser SessionUser user, @PathVariable("id") Long id, Model model, Principal principal) {
@@ -160,7 +159,7 @@ public class QnAController {
 
     //reply 게시글 작성
 
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/answer/write/{id}")
     public String replyCreate(@PathVariable("id") Long id, Principal principal, QnAReplyForm qnAReplyForm, Model model) {
 
@@ -176,6 +175,7 @@ public class QnAController {
     }
 
     @PostMapping("/answer/write/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String replyCreate(Model model, @PathVariable("id") Long id, @Valid QnAReplyForm qnAReplyForm,
                               BindingResult bindingResult, Principal principal) {
         QnA qna = qnAService.getquestion(id);
@@ -190,10 +190,13 @@ public class QnAController {
         return "redirect:/qna/list";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/answer/article/{id}")
-    public String qnaReplyArticle(@PathVariable("id") Long id, Model model) {
+    public String qnaReplyArticle(@PathVariable("id") Long id, Model model, Principal principal) {
         QnA_Reply reply = qnAReplyService.getReply(id);
+
         QnA qna = qnAService.getquestion(id);
+
 
         model.addAttribute("qna", qna);
         model.addAttribute("reply", reply);
@@ -237,6 +240,7 @@ public class QnAController {
         return String.format("redirect:/qna/answer/article/%s", id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/answer/delete/{id}")
     public String deleteReply(@PathVariable("id") Long id, Principal principal) {
 

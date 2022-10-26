@@ -41,10 +41,10 @@
                                 <div class="your_info_arae">
                                     <ul>
                                         <li><span style="text-align:center;width: 14%">패키지 이름</span>
-                                            <span><input type="text" th:field="*{packageName}" style="width:500px;border-radius: 3px"></span></li>
+                                            <span><input type="text" th:field="*{packageName}"  class="shform-control" style="width:500px;border-radius: 3px; font-size: 11pt"></span></li>
                                         <li><span style="text-align:center;width: 14%">여행 지역</span>
                                             <span>
-                                                <select th:field="*{location1}" onchange="categoryChange(this)">
+                                                <select class="form-select-sm" style="width: 250px ;font-size: 11pt" th:field="*{location1}" onchange="categoryChange(this)">
 	                                            <option value="" selected="selected">선택하세요</option>
                                                     <option th:value="아시아">아시아</option>
                                                     <option th:value="유럽">유럽</option>
@@ -52,7 +52,7 @@
                                                     <option th:value="제주">제주</option>
                                                 </select>
 
-                                                <select th:field="*{location2}">
+                                                <select class="form-select-sm" style="width: 250px ;font-size: 11pt" th:field="*{location2}">
                                                     <option value="" selected="selected">상세 지역을 선택하세요</option>
                                                 </select>
 
@@ -84,27 +84,32 @@
                                             </span></li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 예약 인원</span>
-                                            <span> <input type="text" style="width: 100px" th:field="*{count}"> </span></li>
+                                            <span> <input type="number" class="shform-control"  style="border-radius: 3px; font-size: 11pt;width: 200px"  th:field="*{count}"> </span></li>
 
 
                                     
-                                        <li><span style="text-align:center;width: 14%">상품 게시 기간</span>
+                                        <li><span style="text-align:center;width: 14%">상품 게시 시작일</span>
                                             <span>
-                                                시작일 &nbsp;  <input style="width: 200px" type="date" th:field="*{postStart}"></br></br>
-                                                마감일  &nbsp; <input style="width: 200px" type="date" th:field="*{postEnd}">
+                                                <input class="shform-control" style="border-radius: 3px; width: 500px; font-size: 10pt" type="date" th:field="*{postStart}">
                                             </span></li>
 
+                                        <li><span style="text-align:center;width: 14%">상품 게시 마감일</span>
+                                            <span>
+                                       <input class="shform-control" style="border-radius: 3px; width: 500px; font-size: 10pt" type="date" th:field="*{postEnd}">
+                                                 </span></li>
+
+
                                         <li><span style="text-align:center;width: 14%">여행 기간</span>
-                                            <span> <input type="text" style="width: 300px" th:field="*{travelPeriod}"> </span></li>
+                                            <span> <input type="number" class="shform-control" style="width: 200px;border-radius: 3px; font-size: 11pt" th:field="*{travelPeriod}"> </span></li>
 
 
 
                                         <li><span style="text-align:center;width: 14%">숙소</span>
-                                            <span> <input type="text" style="width: 300px" th:field="*{hotelName}"> </span></li>
+                                            <span> <input type="text" class="shform-control" style="width: 500px;font-size: 11pt" th:field="*{hotelName}"> </span></li>
 
                                         <li><span style="text-align:center;width: 14%">교통</span>
                                             <span>
-                                                 <select style="width: 250px" th:field="*{transport}">
+                                                 <select class="form-select-sm" style="width: 500px;font-size: 11pt" th:field="*{transport}">
                                                      <option value = "" selected>항공사를 선택하세요</option>
                                                      <option value = "대한항공">대한항공</option>
                                                      <option value = "아시아나항공">아시아나항공</option>
@@ -124,7 +129,7 @@
                                                 <input type="file" name="image2" accept="image/png, image/jpeg" style="border-radius: 3px">
                                             </span></li>
 
-                                        <li><span style="text-align:center;width: 14%">패키지 키워드 </span>
+                                        <li><span style="eetext-align:center;width: 14%">패키지 키워드 </span>
 
                                             <span>
                                                 <input type="radio" th:field="*{keyword}" value="healing"/> 힐링
@@ -140,7 +145,7 @@
                                         </li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 상세 설명</span>
-                                            <span> <textarea type="text" style="width: 650px" rows="8" th:field="*{packageInfo}"></textarea> </span></li>
+                                            <span> <textarea type="text" class="shform-control"style="width: 650px" rows="10" th:field="*{packageInfo}"></textarea> </span></li>
                                         </li>
                                     </ul>
                                 </div>

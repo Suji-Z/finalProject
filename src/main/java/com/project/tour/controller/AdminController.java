@@ -53,11 +53,13 @@ public class AdminController {
 
 
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/main")
     public String admin_main() {
         return "admin/admin_Main";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/booking")
     public String admin_booking(
             @RequestParam(value = "packageno", required = false) Long packageNum,
@@ -72,6 +74,7 @@ public class AdminController {
 
 
     //예약 회원 조회
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/bookingUser")
     public String admin_bookingUser(Model model, @PageableDefault Pageable pageable,Package aPackage, Member member) {
 
@@ -85,6 +88,7 @@ public class AdminController {
     }
 
     //패키지 상품 등록
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/packageForm")
     public String createPackage(Model model) {
         model.addAttribute("packageCreate",new PackageCreate());
@@ -92,8 +96,11 @@ public class AdminController {
     }
 
     @PostMapping("/packageForm")
-    public String createPackagePost(PackageCreate packageCreate, @RequestParam("image1") MultipartFile multipartFile1,
+    public String createPackagePost(@Valid PackageCreate packageCreate,  BindingResult bindingResult,@RequestParam("image1") MultipartFile multipartFile1,
                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
+//        if(bindingResult.hasErrors()){
+//            return "admin/admin_Package";
+//        }
 
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
@@ -115,6 +122,7 @@ public class AdminController {
 
 
     //패키지 리스트
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/packageList")
     public String packageList(Model model, @PageableDefault Pageable pageable) {
 
@@ -149,6 +157,7 @@ public class AdminController {
 
     //패키지 상품 수정
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/package/modify/{id}")
     public String packageModify(PackageCreate packageModify,
                                 BindingResult bindingResult,@PathVariable("id") Long id ){
@@ -196,6 +205,7 @@ public class AdminController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public String bookingCheck(Model model, Principal principal, UserBookingForm userBookingForm,@PathVariable("id") Long id){
 
@@ -209,6 +219,7 @@ public class AdminController {
 
 
     // 패키지  출발일 수정
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/package/departure/modify/{id}")
     public String departureModify(PackageCreate packageModify,
                                   BindingResult bindingResult,@PathVariable("id") Integer id ){
@@ -240,6 +251,7 @@ public class AdminController {
 
     //회원 예약 관리
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("package/bookingCheck/{id}")
     public String bookingCheck(@Validated UserBookingForm userBookingForm, @PathVariable("id") Long id){
 
@@ -255,6 +267,7 @@ public class AdminController {
 //회원 관리
 
     //회원 리스트
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/user")
     public String userList(Model model, @PageableDefault Pageable pageable, Member member) {
 
@@ -266,11 +279,12 @@ public class AdminController {
     }
 
     //회원 정보 수정(관리자용)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/user/update/{email}")
     public String updateUser(Model model, Principal principal,
-                             MemberCreate memberCreate,@PathVariable("email") String eamil){
+                             MemberCreate memberCreate,@PathVariable("email") String email){
 
-        Member member = memberService.getMember(String.valueOf(eamil));
+        Member member = memberService.getMember(String.valueOf(email));
         memberCreate.setBirth(member.getBirth());
         memberCreate.setEmail(member.getEmail());
         memberCreate.setName(member.getName());
@@ -286,7 +300,7 @@ public class AdminController {
 
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/user/update/{email}")
     public String updateUser(@Valid MemberCreate memberCreate, BindingResult bindingResult,@PathVariable("email") String eamil){
 
@@ -302,6 +316,7 @@ public class AdminController {
     }
 
     //회원 탈퇴 시키기
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/user/delete/{email}")
     public String packageDelete(@PathVariable("email") String email) {
         Member member = memberService.getMember(String.valueOf(email));
@@ -314,7 +329,8 @@ public class AdminController {
 //판매관련
 
 //패키지 상품별 판매 관리
-    @GetMapping("/sales/package")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+@GetMapping("/sales/package")
     public String salesPackage(Model model,@PageableDefault Pageable pageable, Pay pay, Package aPackage) {
 
         Page<Pay> paging =adminSalesService.getPayList(pageable);
@@ -326,16 +342,19 @@ public class AdminController {
     }
 
     //엑셀 다운로드
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/sales/package/download")
     public ResponseEntity pay(HttpServletResponse response, boolean excelDownload){
         return ResponseEntity.ok(salesExcelService.getPackageSales(response,excelDownload));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("admin_salespackagelist")
     public String admin_salespackagelist() {
         return "admin/admin_SalesPackageList";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/sales/user")
     public String salesUser(Model model,@PageableDefault Pageable pageable, Pay pay, Package aPackage, Member member) {
 
@@ -358,6 +377,7 @@ public class AdminController {
         return "admin/admin_salesUser";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("admin_salesuserlist")
     public String admin_salesuserlist() {
         return "admin/admin_SalesUserList";
