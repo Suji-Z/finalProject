@@ -82,8 +82,6 @@ public class MypageController {
 
         }
 
-        member = memberService.getMember(principal.getName());
-
         //결제완료된 부킹리스트 가져오기
         Long memberId = member.getId();
         int status = 3; // 0:예약확인중 1:결제대기중 2:결제완료 3:예약취소
@@ -117,7 +115,9 @@ public class MypageController {
         Long memberId = member.getId();
 
 
+
         Page<UserBooking> paging = mypageService.getMypageBooking(memberId,pageable);
+
 
         model.addAttribute("paging",paging);
 
@@ -135,25 +135,34 @@ public class MypageController {
 
             member = memberService.getName(principal.getName());
 
+            LocalDateTime time = member.getCreatedDate();
+
+            //웰컴쿠폰 유효기간 : '가입 시기'로부터 + 1달
+            LocalDateTime plusTime = time.plusMonths(1);
+            model.addAttribute("plusTime",plusTime);
+
+
         }else{
 
             member = memberService.getName(user.getEmail());
+            model.addAttribute("plusTime",null);
 
         }
 
-        member = memberService.getMember(principal.getName());
-
-        LocalDateTime time = member.getCreatedDate();
-
-        //웰컴쿠폰 유효기간 : '가입 시기'로부터 + 1달
-        LocalDateTime plusTime = time.plusMonths(1);
-
-
         String couponNum = member.getCoupons();
-        List<Coupon> coupons = mypageService.getMypageCoupon(couponNum);
 
-        model.addAttribute("plusTime",plusTime);
-        model.addAttribute("mypageCoupons",coupons);
+        if(couponNum==null || couponNum.equals("")){
+            model.addAttribute("mypageCoupons",null);
+        }else{
+
+            List<Coupon> coupons = mypageService.getMypageCoupon(couponNum);
+            model.addAttribute("mypageCoupons",coupons);
+
+
+        }
+
+
+
 
         return "mypage/mypage_coupon";
 
@@ -175,7 +184,14 @@ public class MypageController {
         }
 
         List<Pay> mypagePay = mypageService.getMypagePay(member.getId());
+        List<NoticeReply> savedPoint = mypageService.getSavedPoint(member.getId());
 
+        int num = savedPoint.size();
+        int savePoint1 = 500 * num;
+
+        //적립된 포인트 리스트
+        model.addAttribute("savedPoint", savedPoint);
+        model.addAttribute("savedPoint1",savePoint1);
 
         //결제내역 리스트(사용한 포인트)
         model.addAttribute("mypagePay",mypagePay);
@@ -221,8 +237,6 @@ public class MypageController {
             model.addAttribute("keywords","n");
 
         }
-
-
 
         model.addAttribute("social",member.getSocial());
 
@@ -347,8 +361,6 @@ public class MypageController {
 
         }
 
-        member = memberService.getMember(principal.getName());
-
         Long memberId = member.getId();
 
         Page<QnA> paging = mypageService.getMypageQnA(memberId,pageable);
@@ -378,6 +390,9 @@ public class MypageController {
         Long memberId = member.getId();
 
         List<Review> mypageReview = mypageService.getMypageReview(memberId);
+        List<ShortReview> mypageShortR = mypageService.getMypageShortR(memberId);
+
+        model.addAttribute("mypageShortR",mypageShortR);
 
         model.addAttribute("mypageReview",mypageReview);
 
@@ -403,8 +418,6 @@ public class MypageController {
 
         }
 
-        member = memberService.getMember(principal.getName());
-
         String email = member.getEmail();
 
         Page<EstimateInquiry> paging = mypageService.getMypageEstimate(email,pageable);
@@ -416,9 +429,32 @@ public class MypageController {
     }
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/unregister")
-    public String unregister(){
+    public String unregisterPage(){
+
 
         return "mypage/mypage_unregister";
+
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/unregister2")
+    public String unregister(Principal principal,@LoginUser SessionUser user){
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        mypageService.unregister(member);
+
+        return "redirect:/";
 
     }
 
@@ -447,6 +483,35 @@ public class MypageController {
         model.addAttribute("paging",paging);
 
         return "mypage/mypage_voicecus_list";
+
+    }
+
+    //리뷰(ShortReview)
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/shortReview")
+    public String shortReview(Model model, Principal principal,@LoginUser SessionUser user) {
+
+        Member member;
+
+        if (memberService.existByEmail(principal.getName())) {
+
+            member = memberService.getName(principal.getName());
+
+        } else {
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        Long memberId = member.getId();
+
+        List<ShortReview> mypageShortR = mypageService.getMypageShortR(memberId);
+
+        model.addAttribute("mypageShortR",mypageShortR);
+
+
+        return "mypage/mypage_reviewList";
+
 
     }
 

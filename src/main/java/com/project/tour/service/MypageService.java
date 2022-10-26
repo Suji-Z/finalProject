@@ -37,7 +37,11 @@ public class MypageService {
 
     private final WishListRepository wishListRepository;
 
-    //리뷰
+    private final ShortReviewRepository shortReviewRepository;
+
+    private final NoticeReplyRepository noticeReplyRepository;
+
+    //여행후기
     public List<Review> getMypageReview(Long id){
 
         List<Review> op = reviewRepository.findByAuthor_Id(id);
@@ -46,6 +50,16 @@ public class MypageService {
 
 
     }
+
+    //리뷰
+    public List<ShortReview> getMypageShortR(Long id){
+
+        List<ShortReview> op = shortReviewRepository.findByUserName_Id(id);
+
+        return op;
+
+    }
+
 
     //견적문의
     public Page<EstimateInquiry> getMypageEstimate(String email, Pageable pageable){
@@ -170,7 +184,17 @@ public class MypageService {
         return result;
     }
 
+    public List<NoticeReply> getSavedPoint(Long id){
 
+        List<NoticeReply> result = noticeReplyRepository.findByMember_Id(id);
+
+        return result;
+    }
+
+    //회원탈퇴
+    public void unregister(Member member){
+        memberRepository.delete(member);
+    }
 
 
 

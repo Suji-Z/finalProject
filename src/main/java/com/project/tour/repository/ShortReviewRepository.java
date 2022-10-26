@@ -16,4 +16,7 @@ public interface ShortReviewRepository extends JpaRepository<ShortReview,Long> {
     List<ShortReview> findByPackages_Id(Long id);
 
     Optional<ShortReview> findByIdAndPackages_Id(Long id, Long packageNum);
+
+    //마이페이지에 내가 쓴 리뷰 출력
+    List<ShortReview> findByUserName_Id(Long id);
 }
