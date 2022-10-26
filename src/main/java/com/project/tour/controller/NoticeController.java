@@ -234,6 +234,18 @@ public class NoticeController {
         return "notice/notice_list :: #commentTable";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/searching")
+    public String searching(@RequestParam("category") String category, @RequestParam("searchKeyword") String searchKeyword,
+                            @PageableDefault Pageable pageable, Model model){
+
+
+        Page<Notice> paging = noticeService.getListBySearch(category, searchKeyword, pageable);
+        model.addAttribute("paging",paging);
+
+        return "notice/notice_list";
+    }
+
 
 
 

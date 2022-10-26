@@ -57,7 +57,7 @@
 
             <!--필터와 검색 부분-->
             <select class="form-select" style="border-radius: 3px; width:15%;" id="noticeFilter">
-              <option selected value="0">전체보기</option>
+              <option value="0">전체보기</option>
               <option value="여행기획전">여행기획전</option>
               <option value="이벤트쿠폰">이벤트/쿠폰</option>
               <option value="기타">기타</option>
@@ -101,6 +101,7 @@
                   <td th:text="${#temporals.format(notice.created,'yyyy-MM-dd HH:mm')}">2022-09-25</td>
                   <td th:text="${notice.hitCount}">0</td>
                 </tr>
+              </th:block>
             </table>
             </div>
           </div>
@@ -120,21 +121,23 @@
                 <a class="page-link" th:href="@{/notice/list?page=1}">&laquo;</a></li>
 
               <li class="page-item" th:style="${paging.first}?'display:none'">
-                <a class="page-link" th:href="@{/notice/list(page=${paging.number})}">&lsaquo;</a>
+                <a class="page-link" th:href="@{/notice/searching(page=${paging.number},category=${param.category},searchKeyword=${param.searchKeyword})}">&lsaquo;</a>
               </li>
 
               <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                   th:classappend="(${page}==${paging.number+1})?'active'">
-                <a class="page-link" th:href="@{/notice/list(page=${page})}" th:text="${page}"></a>
+                <a class="page-link" th:href="@{/notice/searching(page=${page},category=${param.category},searchKeyword=${param.searchKeyword})}" th:text="${page}"></a>
               </li>
 
               <li class="page-item" th:style="${paging.last}?'display:none'">
-                <a class="page-link" th:href="@{/notice/list(page=${paging.number+2})}">&rsaquo;</a>
+                <a class="page-link" th:href="@{/notice/searching(page=${paging.number+2},category=${param.category},searchKeyword=${param.searchKeyword})}">&rsaquo;</a>
               </li>
 
               <li class="page-item" th:style="${paging.first}?'display:none'">
                 <a class="page-link" th:href="@{/notice/list(page=${paging.totalPages})}" >&raquo;</a>
               </li>
+
+              <input type="hidden" id="pageNum" th:value="${paging.number+1}"/>
             </ul>
           </div>
         </div>
