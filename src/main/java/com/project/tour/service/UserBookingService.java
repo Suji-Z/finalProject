@@ -92,13 +92,7 @@ public class UserBookingService {
         return result.get();
     }
 
-    //예약 취소
-    public void delete(Long id){
 
-        UserBooking userBooking = bookingRepository.findById(id).get();
-        bookingRepository.delete(userBooking);
-
-    }
 }
 
 
