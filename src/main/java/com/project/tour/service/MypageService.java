@@ -35,6 +35,8 @@ public class MypageService {
 
     private final PayRepository payRepository;
 
+    private final WishListRepository wishListRepository;
+
     //리뷰
     public List<Review> getMypageReview(Long id){
 
@@ -159,6 +161,15 @@ public class MypageService {
 
         return result;
     }
+
+    //위시리스트
+    public List<WishList> getWishList(Long id){
+
+        List<WishList> result = wishListRepository.findByMember_Id(id);
+
+        return result;
+    }
+
 
 
 

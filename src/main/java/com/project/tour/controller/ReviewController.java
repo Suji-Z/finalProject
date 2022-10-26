@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,6 +48,18 @@ public class ReviewController {
     private final PackageService packageService;
 
 
+
+    //모든 리뷰 보기
+    @RequestMapping
+    public String allReviewList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user ){
+
+
+        Page<Review> paging = reviewService.getList(pageable);
+        model.addAttribute("paging",paging);
+
+        return "review/review_All";
+
+    }
 
 
     @PreAuthorize("isAuthenticated()")
@@ -93,7 +106,7 @@ public class ReviewController {
 
         FileUploadUtil.saveFile(uploadDir,fileName,multipartFile);
 
-        return "redirect:/review/abroadList";
+        return "redirect:/review";
 
     }
 
@@ -162,6 +175,7 @@ public class ReviewController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping (value = {"/article/{id}","/article/reply"})
     public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,
                           Principal principal,@LoginUser SessionUser user,@RequestParam(value = "replyLike",required = false) Boolean replyLike){
@@ -217,20 +231,15 @@ public class ReviewController {
     @RequestMapping (value = "/abroadList")
     public String abroadList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user ){
 
-        Member member;
 
-        if(memberService.existByEmail(principal.getName())){
+        List<String> location = new ArrayList<>();
+        location.add("아시아");
+        location.add("유럽");
+        location.add("미국");
 
-            member = memberService.getName(principal.getName());
+        System.out.println(location);
 
-        }else{
-
-            member = memberService.getName(user.getEmail());
-
-        }
-
-
-        Page<Review> paging = reviewService.getList(pageable);
+        Page<Review> paging = reviewService.getAbroadList(location,pageable);
         model.addAttribute("paging",paging);
 
         return "review/review_Abroad_List";
@@ -240,7 +249,7 @@ public class ReviewController {
     @RequestMapping (value = "/jejuList")
     public String jejuList(Model model, @PageableDefault Pageable pageable){
 
-        Page<Review> paging = reviewService.getList(pageable);
+        Page<Review> paging = reviewService.getJejuList("제주",pageable);
         model.addAttribute("paging",paging);
 
         return "review/review_Jeju_List";

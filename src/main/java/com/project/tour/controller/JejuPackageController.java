@@ -2,18 +2,24 @@ package com.project.tour.controller;
 
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
+import com.project.tour.oauth.dto.SessionUser;
+import com.project.tour.oauth.service.LoginUser;
+import com.project.tour.service.MemberService;
 import com.project.tour.service.PackageService;
 import com.project.tour.service.PackageDateService;
+import com.project.tour.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -28,6 +34,10 @@ public class JejuPackageController {
     private final PackageService packageService;
     @Autowired
     private final PackageDateService packagedateService;
+
+    private final MemberService memberService;
+
+    private final WishListService wishListService;
 
     @ModelAttribute("transports")
     public Map<String, String> transport() {
@@ -119,9 +129,57 @@ public class JejuPackageController {
      * 상세페이지
      */
     @GetMapping("/jeju/{id}")
-    public String packagedetail(@PathVariable("id") Long id, Model model) {
+    public String packagedetail(@PathVariable("id") Long id, Model model,Principal principal,@LoginUser SessionUser user) {
 
         Package apackage = packageService.getPackage(id);
+
+        //위시리스트 (코드 정리 요망)
+
+        Member member;
+
+        if(principal==null && user==null){ //로그아웃
+
+            System.out.println("로그아웃이다");
+            model.addAttribute("wishList","fa-regular fa-heart fa-2x");
+
+        }else if(user!=null){ //간편로그인
+            System.out.println("간편로그인이다");
+
+            member = memberService.getName(user.getEmail());
+
+            Long id2 = member.getId();
+
+            int wish = wishListService.getWishList(id2,id);
+
+            if(wish==1){
+                model.addAttribute("wishList","fas fa-heart fa-2x");
+
+            }else{
+                model.addAttribute("wishLike","fa-regular fa-heart fa-2x");
+            }
+
+        }else if (principal!=null){ //일반회원
+            System.out.println("일반회원이다");
+
+            member = memberService.getName(principal.getName());
+
+            Long id2 = member.getId();
+            System.out.println(id2);
+            System.out.println(id);
+
+            int wish = wishListService.getWishList(id2,id);
+
+            System.out.println(wish);
+
+            if(wish==1){
+                model.addAttribute("wishList","fas fa-heart fa-2x");
+
+            }else{
+                model.addAttribute("wishList","fa-regular fa-heart fa-2x");
+            }
+
+        }
+
 
         model.addAttribute("package", apackage);
         model.addAttribute("bookingform", new BookingDTO());
@@ -180,6 +238,39 @@ public class JejuPackageController {
         priceInfo.put("totcount", totcount);
 
         return priceInfo;
+    }
+
+    //위시리스트
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/jeju/wishList")
+    public @ResponseBody HashMap<String,Object> reviewVote(@RequestParam("recommendStatus") int recommendStatus,
+                                                           Principal principal, @RequestParam("id") Long id, @LoginUser SessionUser user){
+
+        Package packages = packageService.getPackage(id);
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        if(recommendStatus==1){
+            wishListService.wishList(packages,member);
+        }else if(recommendStatus==0){
+            wishListService.deleteWish(member.getId(),id);
+        }
+
+        HashMap<String,Object> recommendInfo = new HashMap<>();
+        recommendInfo.put("recommendStatus", recommendStatus);
+
+        return recommendInfo;
+
     }
 
 }

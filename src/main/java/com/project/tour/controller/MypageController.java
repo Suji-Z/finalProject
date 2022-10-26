@@ -57,6 +57,9 @@ public class MypageController {
 
         }
 
+        List<WishList> wishList = mypageService.getWishList(member.getId());
+
+        model.addAttribute("wishList",wishList);
         model.addAttribute("member",member);
 
         return "mypage/mypage_main";
@@ -173,6 +176,7 @@ public class MypageController {
 
         List<Pay> mypagePay = mypageService.getMypagePay(member.getId());
 
+
         //결제내역 리스트(사용한 포인트)
         model.addAttribute("mypagePay",mypagePay);
 
@@ -200,8 +204,6 @@ public class MypageController {
 
         }
 
-        member = memberService.getMember(principal.getName());
-
         memberCreate.setBirth(member.getBirth());
         memberCreate.setEmail(member.getEmail());
         memberCreate.setName(member.getName());
@@ -211,9 +213,18 @@ public class MypageController {
 
         //키워드 가져오기
         String keywords = member.getKeyword();
-        System.out.println(keywords);
 
-        model.addAttribute("keywords",keywords);
+        if(keywords!=null) {
+            System.out.println(keywords);
+            model.addAttribute("keywords",keywords);
+        }else{
+            model.addAttribute("keywords","n");
+
+        }
+
+
+
+        model.addAttribute("social",member.getSocial());
 
 
         return "mypage/mypage_profileUpdate";
@@ -238,8 +249,6 @@ public class MypageController {
 
         }
 
-        member = memberService.getMember(principal.getName());
-
         //키워드 들어온거 확인해보기
         String keyword = memberCreate.getKeyword();
         System.out.println(keyword);
@@ -252,7 +261,21 @@ public class MypageController {
 
     //비밀번호 변경 html
     @GetMapping(value = "/pwdUpdate")
-    public String pwdUpdate1(PwdUpdateForm pwdUpdateForm, Model model){
+    public String pwdUpdate1(PwdUpdateForm pwdUpdateForm, Model model,Principal principal,@LoginUser SessionUser user){
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
+        model.addAttribute("social",member.getSocial());
 
         model.addAttribute("pwdUpdateForm",pwdUpdateForm);
 
@@ -277,11 +300,11 @@ public class MypageController {
         }
 
         if(bindingResult.hasErrors()){
-            System.out.println("얍");
+            //System.out.println("얍");
             return "mypage/mypage_pwdUpdate";
         }
 
-        member = memberService.getMember(principal.getName());
+
 
         if(!pwdUpdateForm.getPassword1().equals(pwdUpdateForm.getPassword2())){
             bindingResult.addError(new FieldError("memberCreate","password2","비밀번호가 일치하지 않습니다."));
@@ -426,4 +449,6 @@ public class MypageController {
         return "mypage/mypage_voicecus_list";
 
     }
+
+
 }

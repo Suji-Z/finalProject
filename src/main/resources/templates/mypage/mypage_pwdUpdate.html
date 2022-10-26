@@ -173,8 +173,9 @@
             <span style="font-size: 13pt; color: black">
                             비밀번호는 영문 대소문자,숫자,특수문자를 1개 이상 조합하여 8~16자리수로 사용하실 수 있습니다. </span>
         </div>
+
         <div class="common_form_submit">
-            <button class="btn btn_theme btn_md" type="submit">수정하기</button>
+            <button class="btn btn_theme btn_md" type="submit" th:disabled="${social!=null} ? 'disabled' ">수정하기</button>
              <button class="btn btn_theme btn_md" th:href="@{/mypage/}">취소</button>
         </div>
 

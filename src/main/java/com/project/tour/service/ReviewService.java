@@ -155,6 +155,36 @@ public class ReviewService {
 
     }
 
+    public Page<Review> getJejuList(String location, Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("created"));
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ? 0 :
+                        pageable.getPageNumber() - 1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return reviewRepository.findByReviewPackages_Location1(location, pageable);
+
+
+    }
+
+    public Page<Review> getAbroadList(List<String> location, Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("created"));
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ? 0 :
+                        pageable.getPageNumber() - 1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        return reviewRepository.findByReviewPackages_Location1In(location, pageable);
+
+    }
+
+
 
 
 

@@ -65,8 +65,8 @@
 
           <div class="dashboard_menu_area">
              <ul>
-                     <li><a href="dashboard.html">해외 패키지</a></li>
-                     <li><a href="dashboard.html">제주 패키지</a></li>
+               <li><a th:href="@{/review/abroadList}">해외 패키지</a></li>
+               <li><a th:href="@{/review/jejuList}">제주 패키지</a></li>
 
                </ul>
           </div>
@@ -101,7 +101,7 @@
  
     <div class="option-item" align="center">
       <button class="btn btn_theme btn_md" type="submit">수정하기</button>
-      <a th:href="@{/review/abroadList}" class="btn btn_theme btn_md">취소하기</a>
+      <a th:href="@{/review}" class="btn btn_theme btn_md">취소하기</a>
     </div>
 
   </form>
