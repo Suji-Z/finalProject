@@ -39,9 +39,11 @@ public class AbroadPackageController {
 
     private final MemberService memberService;
 
-    private final ShortReviewService shortReviewService;
-
     private final PackageDateService packagedateService;
+
+    private final WishListService wishListService;
+
+    private final ShortReviewService shortReviewService;
 
     private final ShortReviewReplyService shortReviewReplyService;
 
@@ -190,17 +192,108 @@ public class AbroadPackageController {
 
 
     /*상세 페이지*/
+
     @RequestMapping("/{id}")
     public String packagedetail(Model model, @PathVariable("id") Long id, Principal principal,@LoginUser SessionUser user,
                                 ShortReviewForm shortReviewForm){
 
         Package packages = packageService.getPackage(id);
 
-        int hitCount = packages.getHitCount()+1;
-        packageService.updateHitCount(hitCount,id);
+
+        //위시리스트 (코드 정리 요망)
+
+        Member member;
+        String email;
+        String name;
 
 
-        model.addAttribute("package",packages);
+        if(principal==null && user==null){ //로그아웃
+
+            System.out.println("로그아웃이다");
+            model.addAttribute("wishList","fa-regular fa-heart fa-2x");
+
+        }else if(user!=null){ //간편로그인
+            System.out.println("간편로그인이다");
+
+            member = memberService.getName(user.getEmail());
+
+            email = user.getEmail();
+            name = user.getName();
+
+
+            model.addAttribute("email",email);
+            model.addAttribute("name",name);
+
+            Long id2 = member.getId();
+
+            //결제완료된 부킹리스트 가져오기
+            int status = 2; // 0:예약확인중 1:결제대기중 2:결제완료
+
+            List<UserBooking> bookingShortReview = shortReviewService.getBookingShortReview(id2, status, packages);
+            System.out.println(bookingShortReview.size());
+
+
+            model.addAttribute("bookingShortReview", bookingShortReview);
+
+            int wish = wishListService.getWishList(id2,id);
+
+            if(wish==1){
+                model.addAttribute("wishList","fas fa-heart fa-2x");
+
+            }else{
+                model.addAttribute("wishLike","fa-regular fa-heart fa-2x");
+            }
+
+        }else if (principal!=null){ //일반회원
+            System.out.println("일반회원이다");
+
+            member = memberService.getName(principal.getName());
+
+            email = member.getEmail();
+            name = member.getName();
+
+            model.addAttribute("email",email);
+            model.addAttribute("name",name);
+
+            Long id2 = member.getId();
+
+            //결제완료된 부킹리스트 가져오기
+            int status = 2; // 0:예약확인중 1:결제대기중 2:결제완료
+
+            List<UserBooking> bookingShortReview = shortReviewService.getBookingShortReview(id2, status,packages);
+            System.out.println(bookingShortReview.size());
+
+
+            model.addAttribute("bookingShortReview", bookingShortReview);
+
+
+            System.out.println(id2);
+            System.out.println(id);
+
+            int wish = wishListService.getWishList(id2,id);
+
+            System.out.println(wish);
+
+            if(wish==1){
+                model.addAttribute("wishList","fas fa-heart fa-2x");
+
+            }else{
+                model.addAttribute("wishList","fa-regular fa-heart fa-2x");
+            }
+
+        }
+
+            //hitCount 증가
+//        int hitCount = packages.getHitCount()+1;
+//        packageService.updateHitCount(hitCount,id);
+
+        List<ShortReview> shortReviewList = shortReviewService.getshortReviewList(id);
+        Integer size = shortReviewList.size();
+
+
+        model.addAttribute("shortReviewList", shortReviewService.getshortReviewList(id));
+        model.addAttribute("size",size);
+        model.addAttribute("packages",packages);
         model.addAttribute("shortReviewForm",shortReviewForm);
         model.addAttribute("bookingform",new BookingDTO());
 

@@ -46,7 +46,7 @@ public class UserBookingService {
         userBooking.setBookingStatus(0);
         userBooking.setBookingTotalCount(userBooking.getACount()+
                 userBooking.getBCount()+ userBooking.getCCount()); //성인, 아동, 유아 인원수 합산
-        userBooking.setAPackage(apackage);
+        userBooking.setApackage(apackage);
         userBooking.setMember(member);
 
         apackage.setBookingCnt(bookingCnt);
