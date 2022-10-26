@@ -46,7 +46,7 @@ public class UserBooking {
 
     @ManyToOne
     @JoinColumn(name = "packageNum")
-    private Package aPackage;
+    private Package apackage;
 
 
 }

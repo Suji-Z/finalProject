@@ -16,14 +16,16 @@
 </section>
 
 <!-- Tour Search Areas -->
+
 <section id="tour_details_main" class="section_padding">
+    <form th:action="@{|/booking/detail/${packages.id}|}" th:object="${bookingform}" method="post">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="tour_details_leftside_wrapper">
                     <div class="tour_details_heading_wrapper">
                         <div class="tour_details_top_heading">
-                            <h2 th:text="${package.packageName}"></h2>
+                            <h2 th:text="${packages.packageName}"></h2>
                         </div>
                         <div class="tour_details_top_heading_right">
                             <h4>★ 4.8/5</h4>
@@ -37,17 +39,17 @@
                         <h3 class="heading_theme">상세정보</h3>
 
                         <div class="tour_details_boxed_inner">
-                            <img th:src="@{${package.getPhotosImagePath2()}}"/>
+                            <img th:src="@{${packages.getPhotosImagePath2()}}"/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <form th:action="@{|/booking/detail/${package.id}|}" th:object="${bookingform}" method="post">
-                    <input type="hidden" th:field="*{bookingacount}">
-                    <input type="hidden" th:field="*{bookingbcount}">
-                    <input type="hidden" th:field="*{bookingccount}">
-                    <input type="hidden" id="packagenum" th:value="${package.id}">
+
+                    <input type="hidden" th:field="${bookingform.bookingacount}">
+                    <input type="hidden" th:field="${bookingform.bookingbcount}">
+                    <input type="hidden" th:field="${bookingform.bookingccount}">
+                    <input type="hidden" id="packagenum" th:value="${packages.id}">
                     <div class="tour_details_right_sidebar_wrapper">
                         <div class="tour_detail_right_sidebar">
                             <div class="tour_details_right_boxed">
@@ -57,9 +59,9 @@
                                 <div class="edit_date_form">
                                     <div class="form-group">
                                         <label for="datePicker">출발일 선택</label>
-                                        <input type="hidden" id="packagePostEnd" th:field="${package.postEnd}">
+                                        <input type="hidden" id="packagePostEnd" th:field="${packages.postEnd}">
                                         <input type="text" id="datePicker" placeholder="날짜를 선택해주세요" class="form-control"
-                                               th:field="*{departure}"
+                                               th:field="${bookingform.departure}"
                                                readonly="readonly"
                                                style="background: url('/assets/img/icon/calander.png') no-repeat 10px 15px;
                                        background-size: 20px;background-position: 95% 50%; cursor:pointer;"
@@ -166,11 +168,9 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     <!-- 리뷰 섹션-->
-<form th:object="${shortReviewForm}" th:method="post">
     <div class="container">
         <div class="row">
             <div class="review_col-md-7">
@@ -197,13 +197,17 @@
 
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="form-froup">
+                                    <div class="form-froup" th:if="${bookingShortReview.isEmpty()}">
+                                            <textarea rows="6" placeholder="상품을 구매하신 분만 작성이 가능합니다"
+                                                      class="form-control bg_input" disabled="disabled"></textarea>
+                                    </div>
+                                    <div class="form-froup" th:unless="${bookingShortReview.isEmpty()}">
                                             <textarea rows="6" placeholder="리뷰를 입력해주세요"
-                                                      class="form-control bg_input" th:field="*{content}"></textarea>
+                                                      class="form-control bg_input" th:field="${shortReviewForm.content}"></textarea>
                                     </div>
                                     <br/>
                                     <div class="comment_form_submit">
-                                        <button class="btn btn_theme btn_md">등록하기</button>
+                                        <button class="btn btn_theme btn_md" type="button" onclick="return shortreview();">등록하기</button>
                                     </div>
                                 </div>
                             </div>
@@ -213,6 +217,7 @@
             </div>
             <br/>
 
+         <div id="shortReview">
         <div class="row">
             <div class="col-lg-12">
                 <div class="all_review_wrapper">
@@ -221,11 +226,11 @@
             </div>
 
 <!-- 리뷰 반복문 시작 -->
-
-                <div th:if="${package.shortReviewList.isEmpty()}"><h4>등록된 리뷰가 없습니다.</h4></div>
-                <div th:if="${!package.shortReviewList.isEmpty()}"><h4 th:text="|리뷰 ${#lists.size(package.shortReviewList)}개|"></h4></div>
-                <div class="all_review_box" th:each="shortReview : ${package.shortReviewList}">
-                <a th:id="|shortReview_${shortReview.packages.id}|"></a>
+            <div th:if="${size == 0}"><h4>등록된 리뷰가 없습니다.</h4></div>
+            <div th:if="${size != 0}" ><h4 th:text="|리뷰 ${size}개|"></h4></div>
+            <div th:each="shortReview : ${shortReviewList}">
+                <div class="all_review_box">
+<!--                <a th:id="|shortReview_${shortReview.packages.id}|"></a>-->
 
                     <div class="all_review_date_area">
 
@@ -237,22 +242,44 @@
                         </div>
 
 
-                        <div class="all_review_star">
-                            <div class="review_star_all">
-                                <span id="scorestar">별점</span>
-                            </div>
-                            <div class="review_star_all">
-                                <h5><input type="text" id="score" th:value="${shortReview.score}" disabled="disabled"  style="background: white; border: none;"></h5>
-                            </div>
+<!--                        <div class="all_review_star">-->
+<!--                            <div class="review_star_all">-->
+<!--                                <span id="scorestar">별점</span>-->
+<!--                            </div>-->
+<!--                            <div class="review_star_all">-->
+<!--                                <h5><input type="text" id="score" th:value="${shortReview.score}" disabled="disabled"  style="background: white; border: none;"></h5>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div th:if="${shortReview.score.toString().equals('5.0')}" class="review_star_all" style="float: left">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('4.0')}" class="review_star_all" style="float: left">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('3.0')}" class="review_star_all" align="left">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('2.0')}" class="review_star_all" align="left">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('1.0')}" class="review_star_all" align="left">
+                            <i class="fas fa-star"></i>
                         </div>
 
+
+
                     </div><br/>
-
-                    <div class="col-lg-6">
-                        <h5 th:text="${shortReview.packages.id}"></h5>
-                        <h5 th:text="${shortReview.id}" th:id="shortReviewNum"></h5>
-                    </div>
-
 
                     <div class="all_review_text">
                         <p th:text="${shortReview.content}"></p>
@@ -260,25 +287,25 @@
                 </div>
             </div>
 
-            <div class="comment_form_submit" align="center">
-                <a th:href="@{|/shortReview/update/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
-                   th:if="${email}==${shortReview.userName.email}">수정하기</a>
-                <a th:href="@{|/shortReview/delete/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"
-                   th:if="${email}==${shortReview.userName.email}">삭제하기</a>
-                <br/><br/>
-            </div>
-
+<!--            <div class="comment_form_submit" align="center">-->
+<!--                <a th:href="@{|/shortReview/update/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"-->
+<!--                   th:if="${email}==${shortReview.userName.email}">수정하기</a>-->
+<!--                <a th:href="@{|/shortReview/delete/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"-->
+<!--                   th:if="${email}==${shortReview.userName.email}">삭제하기</a>-->
+<!--                <br/><br/>-->
+<!--            </div>-->
+<!--         </div>-->
 
 
 <!-- 리뷰 반복문 끝 -->
         </div>
     </div>
-</form>
+
 
     </div>
     </div>
     </div>
-
+    </form>
 </section>
 
 </body>

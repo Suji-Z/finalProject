@@ -4,6 +4,7 @@ import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.*;
 import com.project.tour.domain.Package;
 import com.project.tour.repository.BookingRepository;
+import com.project.tour.repository.PackageRepository;
 import com.project.tour.repository.ShortReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,12 @@ public class ShortReviewService {
 
     private final BookingRepository bookingRepository;
 
+    private final PackageRepository packageRepository;
 
 
 
-    public ShortReview create(String content, Double score, Member userName, Package packages){
+
+    public ShortReview create(String content, Double score, Member member, Package packages){
 
         ShortReview shortReview = new ShortReview();
 
@@ -36,29 +39,26 @@ public class ShortReviewService {
         shortReview.setScore(score);
         shortReview.setCreated(LocalDateTime.now());
         shortReview.setPackages(packages);
-        shortReview.setUserName(userName);
+        shortReview.setUserName(member);
 
         return shortReviewRepository.save(shortReview);
     }
 
 
-//    public List<UserBooking> getBookingReview(Long id, int status){
-//
-//        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatus(id,status);
-//
-//        return op;
-//
-//    }
+    public List<UserBooking> getBookingShortReview(Long id, int status, Package aPackage){
+
+        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatusAndApackage(id,status,aPackage);
+
+        return op;
+
+    }
 
 
-    public ShortReview getshortReview(Long id){
+    public List<ShortReview> getshortReviewList(Long packageNum){
 
-        Optional<ShortReview> op = shortReviewRepository.findById(id);
+        Optional<Package> packages = packageRepository.findById(packageNum);
 
-        if(op.isPresent())
-            return op.get();
-        else
-            throw new DataNotFoundException("리뷰가 없습니다");
+        return shortReviewRepository.findAllByPackages(packages.get());
 
     }
 

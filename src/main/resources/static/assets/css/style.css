@@ -2849,7 +2849,9 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .write_review_inner_boxed {
     text-align: center;
     padding-top: 20px;
+    padding-left: 20px;
 }
+
 
 .all_review_wrapper {
     margin-top: 80px;
@@ -2862,7 +2864,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     padding: 10px 20px 40px 20px;
     position: relative;
     margin-top: 55px;
-    width: 120%;
+    width: 70%;
 }
 
 .all_review_date_area {
@@ -2873,14 +2875,26 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     align-items: center;
 }
 
-.all_review_date h5 {
+.all_review_date h5{
+    margin-left: 10px;
+    display: flex;
+    justify-content: right;
+    text-align: right;
+    margin-bottom: 80px;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+.all_review_date_name h5{
     margin-left: 10px;
     display: flex;
     justify-content: left;
     align-items: center;
-    margin-bottom: 100px;
-    font-size: 16px;
+    margin-bottom: 80px;
+    font-size: 14px;
+    margin-top: 40px;
 }
+
 
 .all_review_star {
     text-align: left;
@@ -2919,7 +2933,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .all_review_text p {
     padding-top: 15px;
-    font-size: 15px;
+    font-size:16px;
     font-family: Pretendard-Regular;
 }
 
@@ -2943,6 +2957,13 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     font-size: 22px;
     font-weight: 600;
 }
+
+.review_col-md-7{
+    flex: 0 0 auto;
+    width: 75%;
+}
+
+
 
 /* =========================
     Top Destinations Page

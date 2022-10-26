@@ -1,6 +1,7 @@
 package com.project.tour.repository;
 
 import com.project.tour.domain.Member;
+import com.project.tour.domain.Package;
 import com.project.tour.domain.QnA;
 import com.project.tour.domain.UserBooking;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,13 @@ public interface BookingRepository extends JpaRepository<UserBooking, Long> {
     //리뷰페이지에서 사용할 결제완료된 예약정보 리스트 가져오기
     //마이페이지에서 사용할 예약취소,결제완료된 예약정보 리스트 가져오기
     List<UserBooking> findByMember_IdAndBookingStatus(Long id, int status);
+
+
+
+    //상세페이지 쇼트리뷰에서 사용할 예약취소,결제완료된 예약정보 리스트 가져오기
+    List<UserBooking> findByMember_IdAndBookingStatusAndApackage(Long id, int status, Package apackage);
+
+
 
 
 
