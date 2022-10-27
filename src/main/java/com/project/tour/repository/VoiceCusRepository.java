@@ -1,5 +1,6 @@
 package com.project.tour.repository;
 
+import com.project.tour.domain.Package;
 import com.project.tour.domain.VoiceCus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +12,10 @@ public interface VoiceCusRepository extends JpaRepository<VoiceCus, Integer> {
 
     VoiceCus findBySubject(String subject);
     VoiceCus findBySubjectAndContent(String subject,String content);
-    List<VoiceCus> findBySubjectLike(String subject);
+    //Page<VoiceCus> findBySubjectContaining(String subject, Pageable pageable);
 
-    VoiceCus findByTypes(String types);
+    Page<VoiceCus> findByTypes(String type,Pageable pageable);
+
 
     Page<VoiceCus> findAll(Pageable pageable);
 

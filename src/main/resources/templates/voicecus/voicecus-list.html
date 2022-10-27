@@ -38,6 +38,14 @@
       <div class="col-lg-8-sally">
         <div class="dashboard_common_table">
           <h3>고객의 소리</h3>
+          <div class="col-lg-2" style="float: right; padding-top: 10px;padding-bottom: 10px;">
+          <select class="form-select" id="typeValue"  aria-label="Default select example">
+            <option value="total">분류선택</option>
+            <option value="good">칭찬의 소리</option>
+            <option value="bad">불만의 소리</option>
+            <option value="suggestion">건의사항</option>
+          </select>
+          </div>
           <div class="table-responsive-lg table_common_area">
             <table class="table" >
               <thead>
@@ -100,12 +108,15 @@
             <li class="page-item" th:style="${paging.first}?'display:none'">
               <a class="page-link" th:href="@{/voiceCus/list(page=${paging.number})}">＜</a>
             </li>
+            <li class="page-item" th:style="${paging.first}?'display:none'">
+              <a class="page-link" th:href="@{/voiceCus/searching(page=${paging.number},types=${param.types})}">&lsaquo;</a>
+            </li>
             <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                 th:classappend="(${page}==${paging.number+1})?'active'">
-              <a class="page-link" th:href="@{/voiceCus/list(page=${page})}" th:text="${page}"></a>
+              <a class="page-link" th:href="@{/voiceCus/searching(page=${page},types=${param.types})}" th:text="${page}"></a>
             </li>
             <li class="page-item" th:style="${paging.last}?'display:none'">
-              <a class="page-link" th:href="@{/voiceCus/list(page=${paging.number+2})}">＞</a>
+              <a class="page-link" th:href="@{/voiceCus/searching(page=${paging.number+2},types=${param.types})}">＞</a>
             </li>
             <li class="page-item">
               <a class="page-link" th:href="@{/voiceCus/list(page=${paging.totalPages})}" aria-label="Next">
@@ -113,9 +124,12 @@
                 <span class="sr-only">Next</span>
               </a>
             </li>
+            <li class="page-item" th:style="${paging.first}?'display:none'">
+              <a class="page-link" th:href="@{/voiceCus/list(page=${paging.totalPages})}" >&raquo;</a>
+            </li>
+            <input type="hidden" id="voicePageNum" th:value="${paging.number+1}"/>
           </ul>
         </div>
-
       </div>
     </div>
   </div>

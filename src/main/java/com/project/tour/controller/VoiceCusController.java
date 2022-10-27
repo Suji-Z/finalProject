@@ -24,16 +24,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.awt.*;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -162,6 +159,20 @@ public class VoiceCusController {
         voiceCusService.delete(voiceCus);
 
         return "redirect:/voiceCus/list";
+    }
+
+    @RequestMapping("/searching")
+    public String search(@RequestParam("types") String types,@PageableDefault(size = 5) Pageable pageable,
+                         Model model){
+
+        if(types.equals("")||types==null){
+            types="total";
+        }
+
+        Page<VoiceCus> paging = voiceCusService.search(types,pageable);
+        model.addAttribute("paging",paging);
+
+        return "voicecus/voicecus-list";
     }
 
 
