@@ -45,9 +45,9 @@
                                 <div class="your_info_arae">
                                     <ul>
                                         <li><span class="name_first">상품명</span>
-                                            <span class="last_name" th:text="${userBooking.APackage.packageName}">packageName</span></li>
+                                            <span class="last_name" th:text="${userBooking.Apackage.packageName}">packageName</span></li>
                                         <li><span class="name_first">이용교통</span>
-                                            <span class="last_name" th:text="${userBooking.APackage.transport}">transport</span></li>
+                                            <span class="last_name" th:text="${userBooking.Apackage.transport}">transport</span></li>
                                         <li><span class="name_first">예약기간</span>
                                             <span class="last_name" th:text="|${userBooking.travelPeriod}박 ${userBooking.travelPeriod+1}일|">travelPeriod</span></li>
                                         <li><span class="name_first">출발일</span> <span
@@ -171,8 +171,8 @@
                             <input type="hidden" id="kakaoname" th:value="${userBooking.member.name}">
                             <input type="hidden" id="kakaoemail" th:value="${userBooking.member.email}">
                             <input type="hidden" id="kakaotel" th:value="${userBooking.member.phone}">
-                            <input type="hidden" id="packageName" th:value="${userBooking.APackage.packageName}">
-                            <input type="hidden" id="packageNum" th:value="${userBooking.APackage.id}">
+                            <input type="hidden" id="packageName" th:value="${userBooking.Apackage.packageName}">
+                            <input type="hidden" id="packageNum" th:value="${userBooking.Apackage.id}">
                             <input type="hidden" id="bookingNum" th:value="${userBooking.id}">
                         </div>
                     </div>
