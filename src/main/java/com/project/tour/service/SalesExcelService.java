@@ -80,13 +80,13 @@ public class SalesExcelService {
                 cell.setCellValue(pay.getUserBooking().getMember().getName());
 
                 cell = row.createCell(3);
-                cell.setCellValue(pay.getUserBooking().getAPackage().getPackageName());
+                cell.setCellValue(pay.getUserBooking().getApackage().getPackageName());
 
                 cell = row.createCell(4);
-                cell.setCellValue(pay.getUserBooking().getAPackage().getLocation1());
+                cell.setCellValue(pay.getUserBooking().getApackage().getLocation1());
 
                 cell = row.createCell(5);
-                cell.setCellValue(pay.getUserBooking().getAPackage().getLocation2());
+                cell.setCellValue(pay.getUserBooking().getApackage().getLocation2());
 
                 cell = row.createCell(6);
                 cell.setCellValue(pay.getUserBooking().getDeparture());

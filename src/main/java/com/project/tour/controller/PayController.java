@@ -101,7 +101,7 @@ public class PayController {
 
         //3. packageDate 테이블 remainCount 수정
         int bookingTotalCount = userBooking.getBookingTotalCount();
-        PackageDate packageDate = packageDateService.getPackageDate(userBooking.getAPackage(), userBooking.getDeparture());
+        PackageDate packageDate = packageDateService.getPackageDate(userBooking.getApackage(), userBooking.getDeparture());
         packageDateService.modifyRemainCount(packageDate, bookingTotalCount);
 
         //4. 포인트5% 적립
