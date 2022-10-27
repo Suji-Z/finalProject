@@ -1,4 +1,7 @@
 function emailCheck() {
+
+    var except = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
     $("input[name=checked_id]").val('y');
     $.ajax({
         url: '/join/emailCheck',
@@ -16,11 +19,18 @@ function emailCheck() {
             // 성공 시 실패 메시지 hide, 성공 메시지 show
             $('#emailAlert').hide();
             if($('#email').val()!=''){
+
             $('#emailNotAvailable').hide();
             $('#emailAvailable').show().text(result).append($('<br />'));
             } else{
                 alert("이메일을 입력해주세요.")
             }
+
+            if(except.test($('#email').val())==false && $('#email').val()!=''){
+                $('#emailAvailable').hide();
+                $('#emailNotAvailable').show().text('이메일형식이 올바르지 않습니다.').append($('<br />'));
+            }
+
         }, error: function (error) {
             // 실패 시 실패 메시지 show, 성공 메시지 hide
             $('#emailAlert').hide();

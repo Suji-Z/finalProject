@@ -24,6 +24,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -35,6 +37,8 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JavaMailSender mailSender;
+
+
 
 
     @Value("${spring.mail.username}")
