@@ -5,6 +5,7 @@ import com.project.tour.domain.Package;
 import com.project.tour.domain.PackageCreate;
 import com.project.tour.domain.PackageDate;
 import com.project.tour.repository.AdminPackageDateRepository;
+import com.project.tour.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,8 @@ import java.util.*;
 @Service
 public class AdminPackageDateService {
     private final AdminPackageDateRepository adminPackageDateRepository;
+
+    private  final BookingRepository bookingRepository;
 
     public List<PackageDate> createDate(PackageCreate packageCreate, Package packages) throws ParseException, IOException {
 
@@ -115,6 +118,8 @@ public class AdminPackageDateService {
 
     }
 
+
+
     public Page<PackageDate> getList(Long id,Pageable pageable){
 
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
@@ -126,5 +131,22 @@ public class AdminPackageDateService {
                 pageable.getPageSize(),Sort.by(sorts));
 
         return adminPackageDateRepository.findByPackages_Id(id,pageable);
+    }
+
+    public PackageDate getPackageDate(Long packageNum, String departure) {
+
+        Optional<PackageDate> packageDate = adminPackageDateRepository.findAllByDepartureAndPackages_Id(departure, packageNum);
+        return packageDate.get();
+    }
+
+    public int getBeforePay (Long packageNum, String departure) {
+
+        Optional<Integer> count = bookingRepository.a(packageNum,departure);
+
+        if(count.isPresent())
+            return count.get();
+        else
+            return 0;
+
     }
 }
