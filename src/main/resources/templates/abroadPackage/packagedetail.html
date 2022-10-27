@@ -196,14 +196,16 @@
                                   </span>
 
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="form-froup" th:if="${bookingShortReview.isEmpty()}">
-                                            <textarea rows="6" placeholder="상품을 구매하신 분만 작성이 가능합니다"
+                                <div class="col-lg-12" th:switch="${name}">
+                                    <div class="form-froup" th:case="${null}">
+                                            <textarea  rows="6" placeholder="로그인을 해주세요"
                                                       class="form-control bg_input" disabled="disabled"></textarea>
                                     </div>
-                                    <div class="form-froup" th:unless="${bookingShortReview.isEmpty()}">
-                                            <textarea rows="6" placeholder="리뷰를 입력해주세요"
-                                                      class="form-control bg_input" th:field="${shortReviewForm.content}"></textarea>
+                                    <div class="form-froup" th:case="${name}">
+                                            <textarea th:if="${bookingShortReview.isEmpty()}" rows="6" placeholder="상품을 구매하신 분만 작성이 가능합니다"
+                                                      class="form-control bg_input" disabled="disabled"></textarea>
+                                            <textarea th:unless="${bookingShortReview.isEmpty()}" rows="6" placeholder="리뷰를 입력해주세요"
+                                                      class="form-control bg_input"  id="content" th:field="${shortReviewForm.content}"></textarea>
                                     </div>
                                     <br/>
                                     <div class="comment_form_submit">
@@ -282,20 +284,30 @@
                     </div><br/>
 
                     <div class="all_review_text">
-                        <p th:text="${shortReview.content}"></p>
+                        <p th:id="|shortReviewOri${shortReview.id}|" th:text="${shortReview.content}"></p>
+                        <textarea row="1" th:text="${shortReview.content}" class="form-control bg_input" th:id="|shortReviewBox${shortReview.id}|" style="display:none;"></textarea>
                     </div>
+
+                    <div class="comment_form_submit" align="right">
+                        <span sec:authorize="isAuthenticated()" th:if="${email}==${shortReview.userName.email}">
+                            <button th:id="|updateA${shortReview.id}|" class="btn btn_theme btn_md" type="button" onclick="shortReviewUpdate1(this);" th:value="${shortReview.id}">수정</button>
+                        </span>
+                        <span sec:authorize="isAuthenticated()" th:if="${email}==${shortReview.userName.email}">
+                            <button th:id="|delete${shortReview.id}|" class="btn btn_theme btn_md" type="button" onclick="shortReviewDelete(this);" th:value="${shortReview.id}">삭제</button>
+                        </span>
+                        <span th:if="${shortReview.userName.email}==${email}">
+                                <button th:id="|updateB${shortReview.id}|" class="btn btn-outline-secondary" type="button" onclick="shortReviewUpdate2(this);" th:value="${shortReview.id}" style="display:none;">확인</button></span>
+                        <span th:if="${shortReview.userName.email}==${email}">
+                                <button th:id="|cancle${shortReview.id}|" class="btn btn-outline-secondary" type="button" onclick="shortReviewUpdate1(this);" style="display:none;" th:value="${shortReview.id}">취소</button></span>
+                        <br/><br/>
+                    </div>
+
                 </div>
-            </div>
 
-<!--            <div class="comment_form_submit" align="center">-->
-<!--                <a th:href="@{|/shortReview/update/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"-->
-<!--                   th:if="${email}==${shortReview.userName.email}">수정하기</a>-->
-<!--                <a th:href="@{|/shortReview/delete/${id}|}" class="btn btn_theme btn_md" sec:authorize="isAuthenticated()"-->
-<!--                   th:if="${email}==${shortReview.userName.email}">삭제하기</a>-->
-<!--                <br/><br/>-->
-<!--            </div>-->
-<!--         </div>-->
 
+
+         </div>
+        </div>
 
 <!-- 리뷰 반복문 끝 -->
         </div>

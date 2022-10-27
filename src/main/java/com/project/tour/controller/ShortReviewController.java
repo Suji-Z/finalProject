@@ -40,40 +40,12 @@ public class ShortReviewController {
 
 
 
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("shortReview/create")
-//    public String createShortReview1(Model model, Principal principal,@LoginUser SessionUser user) {
-//
-//        Member member;
-//
-//
-//        if (memberService.existByEmail(principal.getName())) {
-//            member = memberService.getName(principal.getName());
-//
-//
-//
-//        } else {
-//            member = memberService.getName(user.getEmail());
-//            //결제완료된 부킹리스트 가져오기
-//            Long memberId = member.getId();
-//            int status = 2; // 0:예약확인중 1:결제대기중 2:결제완료
-//
-//            List<UserBooking> bookingShortReview = shortReviewService.getBookingShortReview(memberId, status);
-//
-//            model.addAttribute("bookingShortReview", bookingShortReview);
-//
-//        }
-//
-//
-//        return "abroadPackage/packagedetail :: #shortReview";
-//    }
-
 
 
     //텍스트 리뷰 작성
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("shortReview/create")
-    public String createShortReview2(Model model, Principal principal,@LoginUser SessionUser user,
+    @PostMapping("/shortReview/create")
+    public String createShortReview(Model model, Principal principal,@LoginUser SessionUser user,
                                     @RequestParam("packageNum") Long packageNum,
                                     @RequestParam("content") String content,
                                     @RequestParam("score") Double score
@@ -108,7 +80,7 @@ public class ShortReviewController {
 
         }
 
-
+        model.addAttribute("shortReviewList",shortReviewService.getshortReviewList(packageNum));
         model.addAttribute("package", packages);
         model.addAttribute("name",member.getName());
         model.addAttribute("email", member.getEmail());
@@ -121,92 +93,65 @@ public class ShortReviewController {
         return "abroadPackage/packagedetail :: #shortReview";
     }
 
-//    @RequestMapping (value = {"/article/{id}","/article/shortReply"})
-//    public String article(Model model, @PathVariable("id") Long id, ShortReviewReplyForm shortReviewReplyForm,
-//                          Principal principal,@LoginUser SessionUser user){
-//
-//        ShortReview shortReview = shortReviewService.getshortReview(id);
-//
-//        Member member;
-//
-//        if(memberService.existByEmail(principal.getName())){
-//
-//            member = memberService.getName(principal.getName());
-//
-//        }else{
-//
-//            member = memberService.getName(user.getEmail());
-//
-//        }
-//
-//        Long id2 = member.getId();
-//
-//
-//        model.addAttribute("shortReview",shortReview);
-//
-//        return "abroadPackage/packagedetail";
-//
-//    }
 
 
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping(value = "/update/{id}")
-//    public String update1(Model model,ShortReviewForm shortReviewForm, @PathVariable("id") Long id, Principal principal){
-//
-//        ShortReview shortReview = shortReviewService.getshortReview(id);
-//
-//        if(!shortReview.getUserName().getEmail().equals(principal.getName())){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다");
-//        }
-//
-//        shortReviewForm.setContent(shortReview.getContent());
-//        shortReviewForm.setScore(shortReview.getScore());
-//
-//        Member member = memberService.getMember(principal.getName());
-//
-//        //결제완료된 부킹리스트 가져오기
-////        Long memberId = member.getId();
-////        int status = 2; // 0:예약확인중 1:결제대기중 2:결제완료
-////
-////        List<UserBooking> bookingReview =  reviewService.getBookingReview(memberId,status);
-////
-////        System.out.println(bookingReview.size());
-////
-////        model.addAttribute("bookingReview",bookingReview);
-//
-//        model.addAttribute("review", shortReview);
-//
-//        return "abroadPackage/packagedetail";
-//
-//    }
 
 
-//    @PreAuthorize("isAuthenticated()")
-//    @PostMapping(value = "/update/{id}")
-//    public String update2(@Valid ShortReviewForm shortReviewForm, BindingResult bindingResult,
-//                          @PathVariable("id") Long id, Principal principal,
-//                          @RequestParam("packageNum") Long packageNum)  throws IOException {
-//
-//        if(bindingResult.hasErrors()){
-//            return "abroadPackage/packagedetail";
-//        }
-//
-//        ShortReview shortReview = shortReviewService.getshortReview(id);
-//
-//        if(!shortReview.getUserName().getEmail().equals(principal.getName())){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다");
-//        }
-//
-//
-//        Package packages = packageService.getPackage(packageNum);
-//
-//        shortReviewService.update(shortReview,shortReviewForm.getContent(),
-//                shortReviewForm.getScore(),packages);
-//
-//        return String.format("redirect:/review/article/%s",id);
-//
-//    }
-//
+    //텍스트 리뷰 수정
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/shortReview/update")
+    public String updateShortReview(@RequestParam("packageNum") Long packageNum,
+                         @RequestParam("shortReviewNum") Long shortReviewNum,
+                         @RequestParam("content") String content,
+                         Principal principal, @LoginUser SessionUser user,
+                         Model model){
+
+        //로그인 확인
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
+
+       shortReviewService.update(shortReviewNum,packageNum,content);
+        model.addAttribute("shortReviewList",shortReviewService.getshortReviewList(packageNum));
+        model.addAttribute("member",member);
+
+
+
+        return "abroadPackage/packagedetail :: #shortReview";
+
+    }
+
+
+    //텍스트 리뷰 삭제
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/shortReview/delete")
+    public String noticeReplyDelete(@RequestParam("shortReviewNum") Long shortReviewNum, @RequestParam("packageNum") Long packageNum,
+                                    Principal principal, @LoginUser SessionUser user,
+                                    Model model){
+
+        //로그인 확인
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
+        shortReviewService.delete(shortReviewNum);
+        model.addAttribute("shortReviewList", shortReviewService.getshortReviewList(packageNum));
+        model.addAttribute("member",member);
+
+        return "abroadPackage/packagedetail :: #shortReview";
+
+
+    }
+
+
+
 //
 //
 //
@@ -236,6 +181,10 @@ public class ShortReviewController {
 //                shortReviewReply.getShortReviewNum().getId(),shortReviewReply.getId());
 //
 //    }
+
+
+
+
 
 
 }
