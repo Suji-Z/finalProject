@@ -89,7 +89,7 @@
                         <select class="form-select" style="border-radius: 3px" aria-label="Default select example" th:if="${bookingReview.isEmpty()}">
                           <option>구매하신 패키지 상품이 없습니다</option></select>
                         <select th:name="packageNum" class="form-select" style="border-radius: 3px" aria-label="Default select example" th:if="${!bookingReview.isEmpty()}">
-                          <option th:each="bookingReview : ${bookingReview}" th:value="${bookingReview.APackage.id}" th:text="${bookingReview.APackage.packageName}">제주도 어쩌구</option>
+                          <option th:each="bookingReview : ${bookingReview}" th:value="${bookingReview.Apackage.id}" th:text="${bookingReview.Apackage.packageName}">제주도 어쩌구</option>
                         </select>
                       </span>
            <!-- -->

@@ -64,9 +64,20 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/write")
-    public String write1(Model model, ReviewForm reviewForm,Principal principal){
+    public String write1(Model model, ReviewForm reviewForm,Principal principal,@LoginUser SessionUser user){
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
 
         //결제완료된 부킹리스트 가져오기
         Long memberId = member.getId();
@@ -84,8 +95,21 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()") //로그인 해야지만 작성 가능
     @PostMapping(value = "/write")
-    public String write2(@Valid ReviewForm reviewForm, BindingResult bindingResult,Principal principal,
+    public String write2(@Valid ReviewForm reviewForm, BindingResult bindingResult,Principal principal,@LoginUser SessionUser user,
             @RequestParam("image") MultipartFile multipartFile, @RequestParam("packageNum") Long packageNum) throws IOException{
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
+
 
         if(bindingResult.hasErrors()){
             return "review/review_write";
@@ -93,7 +117,7 @@ public class ReviewController {
 
         Package reviewPackage = packageService.getPackage(packageNum);
 
-        Member member = memberService.getMember(principal.getName());
+
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
@@ -112,19 +136,25 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/update/{id}")
-    public String update1(Model model,ReviewForm reviewForm, @PathVariable("id") Long id, Principal principal){
+    public String update1(Model model,ReviewForm reviewForm, @PathVariable("id") Long id, Principal principal,@LoginUser SessionUser user){
 
         Review review = reviewService.getReview(id);
-
-        if(!review.getAuthor().getEmail().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다");
-        }
 
         reviewForm.setSubject(review.getSubject());
         reviewForm.setContent(review.getContent());
         reviewForm.setScore(review.getScore());
 
-        Member member = memberService.getMember(principal.getName());
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
 
         //결제완료된 부킹리스트 가져오기
         Long memberId = member.getId();
@@ -154,9 +184,6 @@ public class ReviewController {
 
         Review review = reviewService.getReview(id);
 
-        if(!review.getAuthor().getEmail().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다");
-        }
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
@@ -263,9 +290,7 @@ public class ReviewController {
 
         Review review = reviewService.getReview(id);
 
-        if(!review.getAuthor().getEmail().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다");
-        }
+
 
         reviewService.delete(review);
 
@@ -312,10 +337,21 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reply/{id}")
     public  String writeReply(Model model, @PathVariable("id") Long id, @Valid ReviewReplyForm reviewReplyForm,
-                              BindingResult bindingResult, Principal principal){
+                              BindingResult bindingResult, Principal principal,@LoginUser SessionUser user){
 
         Review review = reviewService.getReview(id);
-        Member member = memberService.getMember(principal.getName());
+
+        Member member;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else{
+
+            member = memberService.getName(user.getEmail());
+
+        }
 
         if(bindingResult.hasErrors()){
             model.addAttribute("review",review);
@@ -337,9 +373,7 @@ public class ReviewController {
 
         Review_reply review_reply = reviewReplyService.getReply(id);
 
-        if(!review_reply.getAuthor().getEmail().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다");
-        }
+
 
         reviewReplyForm.setContent(review_reply.getContent());
 
@@ -357,9 +391,7 @@ public class ReviewController {
 
         Review_reply review_reply = reviewReplyService.getReply(id);
 
-        if(!review_reply.getAuthor().getEmail().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다");
-        }
+
 
         reviewReplyService.update(review_reply,reviewReplyForm.getContent());
 
@@ -373,9 +405,7 @@ public class ReviewController {
     public String deleteReply(@PathVariable("id")Long id,Principal principal){
         Review_reply review_reply = reviewReplyService.getReply(id);
 
-        if(!review_reply.getAuthor().getEmail().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다");
-        }
+
 
         reviewReplyService.delete(review_reply);
 

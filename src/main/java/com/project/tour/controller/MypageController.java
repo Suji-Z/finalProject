@@ -44,7 +44,7 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping (value = "/")
-    public String main(Model model, Principal principal,@LoginUser SessionUser user){
+    public String main(Model model, Principal principal,@LoginUser SessionUser user,Pageable pageable){
 
         Member member;
 
@@ -58,6 +58,50 @@ public class MypageController {
 
         }
 
+        Long memberId = member.getId();
+
+
+        //예약내역(예약확인 0,결제대기중 1,결제완료2)
+        List<Integer> status = new ArrayList<>();
+
+        status.add(0);
+        status.add(1);
+        status.add(2);
+
+        Page<UserBooking> mypageBooking = mypageService.getMypageCancelBooking(memberId,status,pageable);
+        model.addAttribute("mypageBooking",mypageBooking.getTotalElements());
+
+
+        //취소내역
+        List<Integer> status2 = new ArrayList<>();
+        status2.add(3);
+        status2.add(4);
+
+        Page<UserBooking> mypageBookingCancle =  mypageService.getMypageCancelBooking(memberId,status2,pageable);
+        model.addAttribute("mypageCancel",mypageBookingCancle.getTotalElements());
+
+        //큐앤에이
+        Page<QnA> qnaPaging = mypageService.getMypageQnA(memberId,pageable);
+        model.addAttribute("qnaPaging",qnaPaging.getTotalElements());
+
+        //고객의소리
+        Page<VoiceCus> vcusPaging = mypageService.getMypageVcus(memberId,pageable);
+        model.addAttribute("vcusPaging",vcusPaging.getTotalElements());
+
+        //견적문의
+        String email = member.getEmail();
+        Page<EstimateInquiry> estPaging = mypageService.getMypageEstimate(email,pageable);
+        model.addAttribute("estPaging",estPaging.getTotalElements());
+
+        //리뷰
+        List<Review> mypageReview = mypageService.getMypageReview(memberId);
+        model.addAttribute("mypageReview",mypageReview.size());
+
+        //쇼트리뷰
+        List<ShortReview> mypageShortR = mypageService.getMypageShortR(memberId);
+        model.addAttribute("mypageShortR",mypageShortR.size());
+
+        //위시리스트
         List<WishList> wishList = mypageService.getWishList(member.getId());
 
         model.addAttribute("wishList",wishList);
@@ -94,9 +138,9 @@ public class MypageController {
         System.out.println(status);
 
 
-        List<UserBooking> mypageBookingCancle =  mypageService.getMypageCancelBooking(memberId,status);
+        Page<UserBooking> mypageBookingCancle =  mypageService.getMypageCancelBooking(memberId,status,pageable);
 
-        System.out.println(mypageBookingCancle.size());
+        System.out.println(mypageBookingCancle.getTotalElements());
 
         model.addAttribute("mypageBookingCancle",mypageBookingCancle);
 
@@ -192,14 +236,84 @@ public class MypageController {
         }
 
         List<Pay> mypagePay = mypageService.getMypagePay(member.getId());
-        List<NoticeReply> savedPoint = mypageService.getSavedPoint(member.getId());
 
+        int sum=0; //총 구매금액
+        int sum1=0; //총 사용한 포인트
+
+        for(int i=0;i<mypagePay.size();i++){
+
+            int point = mypagePay.get(i).getPayTotalPrice();
+            sum += point;
+
+        }
+
+        for(int i=0;i<mypagePay.size();i++){
+
+            int totalUsed = mypagePay.get(i).getUsedPoint();
+            sum1 += totalUsed;
+
+        }
+
+        int payPoint = (int)Math.round(sum*0.05); //총 구매적립포인트 계산
+
+        //댓글등록 적립포인트 계산
+        List<NoticeReply> savedPoint = mypageService.getSavedPoint(member.getId());
         int num = savedPoint.size();
         int savePoint1 = 500 * num;
+
+        //소멸예정 포인트(댓글적립포인트)
+
+        int point2 = 0;
+
+        for(int k=0;k<savedPoint.size();k++){
+
+            LocalDateTime time1 =  savedPoint.get(k).getCreated(); //댓글쓴 시간
+            LocalDateTime expired =  time1.plusMonths(9); //플러스 아홉달(현재시간보다 3개월 전에 소멸예정 띄울것임)
+            LocalDateTime current =  LocalDateTime.now(); //현재시간
+
+            if(current.isAfter(expired)){ //현재시간이 포인트 적립 후 11개월 후 보다 넘은 상태라면
+                point2 += 500;
+            }
+
+        }
+
+        if(point2==0){
+            model.addAttribute("expiredPoint",0);
+        }else{
+            model.addAttribute("expiredPoint",point2);
+        }
+
+        //소멸예정 포인트(구매적립포인트)
+
+        int payedAmount = 0;
+
+        for(int j=0;j<mypagePay.size();j++){
+
+            LocalDateTime time2 = mypagePay.get(j).getPayDate(); //결제한 날짜
+            LocalDateTime expired2 = time2.plusMonths(9); //플러스 아홉달
+            LocalDateTime current2 = LocalDateTime.now(); //현재시간
+
+            if(current2.isAfter(expired2)){ //현재시간이 결제 후 11개월 후 보다 넘은 상태라면
+                payedAmount += mypagePay.get(j).getPayTotalPrice();
+            }
+
+        }
+
+        if(payedAmount==0){
+            model.addAttribute("expiredPayedPoint",0);
+        }else{
+            int expiredPoint2  = (int)Math.round(payedAmount*0.05);
+            model.addAttribute("expiredPayedPoint",expiredPoint2);
+        }
+
 
         //적립된 포인트 리스트
         model.addAttribute("savedPoint", savedPoint);
         model.addAttribute("savedPoint1",savePoint1);
+        model.addAttribute("payPoint",payPoint);
+
+        //사용한 포인트 합
+        model.addAttribute("sum1",sum1);
 
         //결제내역 리스트(사용한 포인트)
         model.addAttribute("mypagePay",mypagePay);
@@ -373,6 +487,7 @@ public class MypageController {
 
         Page<QnA> paging = mypageService.getMypageQnA(memberId,pageable);
 
+
         model.addAttribute("paging",paging);
 
         return "mypage/mypage_q&a_list";
@@ -491,35 +606,6 @@ public class MypageController {
         model.addAttribute("paging",paging);
 
         return "mypage/mypage_voicecus_list";
-
-    }
-
-    //리뷰(ShortReview)
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/shortReview")
-    public String shortReview(Model model, Principal principal,@LoginUser SessionUser user) {
-
-        Member member;
-
-        if (memberService.existByEmail(principal.getName())) {
-
-            member = memberService.getName(principal.getName());
-
-        } else {
-
-            member = memberService.getName(user.getEmail());
-
-        }
-
-        Long memberId = member.getId();
-
-        List<ShortReview> mypageShortR = mypageService.getMypageShortR(memberId);
-
-        model.addAttribute("mypageShortR",mypageShortR);
-
-
-        return "mypage/mypage_reviewList";
-
 
     }
 

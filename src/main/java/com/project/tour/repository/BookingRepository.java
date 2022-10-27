@@ -35,7 +35,7 @@ public interface BookingRepository extends JpaRepository<UserBooking, Long> {
     List<UserBooking> findByMember_IdAndBookingStatus(Long id, int status);
 
     //마이페이지에서 사용할 예약취소내역 리스트 가져오기
-    List<UserBooking> findByMember_IdAndBookingStatusIn(Long id, List<Integer> status);
+    Page<UserBooking> findByMember_IdAndBookingStatusIn(Long id, List<Integer> status,Pageable pageable);
 
 
 

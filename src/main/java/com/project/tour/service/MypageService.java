@@ -143,11 +143,18 @@ public class MypageService {
     }
 
     //예약취소내역
-    public List<UserBooking> getMypageCancelBooking(Long id,List<Integer> status){
+    public Page<UserBooking> getMypageCancelBooking(Long id,List<Integer> status,Pageable pageable){
 
-        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatusIn(id,status);
+        List<Sort.Order> sort = new ArrayList<Sort.Order>();
+        sort.add(Sort.Order.desc("id")); //MemberId
 
-        return op;
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ?
+                        0 : pageable.getPageNumber() -1, //반환할 페이지
+                pageable.getPageSize(), //반환할 리스트 갯수
+                Sort.by(sort)); //정렬 매개변수 적용
+
+        return bookingRepository.findByMember_IdAndBookingStatusIn(id,status,pageable);
 
     }
 
