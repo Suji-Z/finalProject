@@ -95,7 +95,7 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()") //로그인 해야지만 작성 가능
     @PostMapping(value = "/write")
-    public String write2(@Valid ReviewForm reviewForm, BindingResult bindingResult,Principal principal,@LoginUser SessionUser user,
+    public String write2(@Valid ReviewForm reviewForm, BindingResult bindingResult,Principal principal,@LoginUser SessionUser user,Model model,
             @RequestParam("image") MultipartFile multipartFile, @RequestParam("packageNum") Long packageNum) throws IOException{
 
         Member member;
@@ -110,10 +110,19 @@ public class ReviewController {
 
         }
 
+        if (bindingResult.hasErrors()){
+            Long memberId = member.getId();
+            int status = 2; // 0:예약확인중 1:결제대기중 2:결제완료
 
-        if(bindingResult.hasErrors()){
+            List<UserBooking> bookingReview =  reviewService.getBookingReview(memberId,status);
+
+            System.out.println(bookingReview.size());
+
+            model.addAttribute("bookingReview",bookingReview);
             return "review/review_write";
         }
+
+
 
         Package reviewPackage = packageService.getPackage(packageNum);
 
@@ -202,7 +211,7 @@ public class ReviewController {
 
     }
 
-    @PreAuthorize("isAuthenticated()")
+
     @RequestMapping (value = {"/article/{id}","/article/reply"})
     public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,
                           Principal principal,@LoginUser SessionUser user,@RequestParam(value = "replyLike",required = false) Boolean replyLike){
@@ -217,13 +226,59 @@ public class ReviewController {
 
         Member member;
 
-        if(memberService.existByEmail(principal.getName())){
+        if(principal==null && user==null){ //로그아웃
+
+            System.out.println("로그아웃이다");
+            model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
+            model.addAttribute("recommendStatus", 0);
+            model.addAttribute("loginStatus1","n");
+            model.addAttribute("member","n");
+
+
+        }else if(user!=null){ //간편로그인
+            System.out.println("간편로그인이다");
+
+            member = memberService.getName(user.getEmail());
+
+            Long id2 = member.getId();
+
+            int reviewRecommend = reviewService.getReviewLike(id2,id);
+
+            if(reviewRecommend==1){
+                model.addAttribute("url","/assets/img/icon/ReviewHeart2.png");
+                model.addAttribute("recommendStatus", 1);
+                model.addAttribute("loginStatus1","y");
+                model.addAttribute("member",member);
+
+
+            }else{
+                model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
+                model.addAttribute("recommendStatus", 0);
+                model.addAttribute("loginStatus1","y");
+                model.addAttribute("member",member);
+            }
+
+        }else if (principal!=null){ //일반회원
+            System.out.println("일반회원이다");
 
             member = memberService.getName(principal.getName());
 
-        }else{
+            Long id2 = member.getId();
 
-            member = memberService.getName(user.getEmail());
+            int reviewRecommend = reviewService.getReviewLike(id2,id);
+
+            if(reviewRecommend==1){
+                model.addAttribute("url","/assets/img/icon/ReviewHeart2.png");
+                model.addAttribute("recommendStatus", 1);
+                model.addAttribute("loginStatus1","y");
+                model.addAttribute("member",member);
+
+            }else{
+                model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
+                model.addAttribute("recommendStatus", 0);
+                model.addAttribute("loginStatus1","y");
+                model.addAttribute("member",member);
+            }
 
         }
 
@@ -231,26 +286,12 @@ public class ReviewController {
         reviewService.updateHitCount(hitCount,id);
 
 
-        Long id2 = member.getId();
-
-        System.out.println("좋아요 상태:" +replyLike);
-
-        int reviewLike = reviewService.getReviewLike(id2,id);
-
-        if(reviewLike==1){
-            model.addAttribute("url","/assets/img/icon/ReviewHeart2.png");
-        }else{
-            model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
-        }
-
-
         model.addAttribute("replyLike",replyLike);
 
         //model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
         model.addAttribute("review",review);
-        model.addAttribute("member",member);
-        model.addAttribute("recommendStatus", reviewLike);
+
 
         return "review/review_article";
 
@@ -308,6 +349,7 @@ public class ReviewController {
         System.out.println(id);
 
         System.out.println("오나요?");
+        System.out.println(recommendStatus);
 
         Member member;
 
@@ -323,7 +365,7 @@ public class ReviewController {
 
         if(recommendStatus==1){
             reviewService.vote(review,member);
-        }else if(recommendStatus==0){
+        }else{
             reviewService.deleteLike(member.getId(),id);
         }
 

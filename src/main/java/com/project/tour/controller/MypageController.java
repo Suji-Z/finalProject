@@ -189,8 +189,8 @@ public class MypageController {
 
             LocalDateTime time = member.getCreatedDate();
 
-            //웰컴쿠폰 유효기간 : '가입 시기'로부터 + 1달
-            LocalDateTime plusTime = time.plusMonths(1);
+            //웰컴쿠폰 유효기간 : '가입 시기'로부터 + 3달
+            LocalDateTime plusTime = time.plusMonths(3);
             model.addAttribute("plusTime",plusTime);
 
 
