@@ -96,7 +96,6 @@ public class HomeController {
 
         /** 인기 여행지 출력 **/
 
-
         List<Package> hitList = packageService.getHitList();
 
         model.addAttribute("hitList",hitList);
