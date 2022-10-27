@@ -94,4 +94,23 @@ public class VoiceCusService {
         voiceCusRepository.delete(voiceCus);
     }
 
+
+    public Page<VoiceCus> search(String types,Pageable pageable){
+
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createdDate"));
+
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
+                pageable.getPageSize(),Sort.by(sorts));
+
+        if(types.equals("total")){
+            return voiceCusRepository.findAll(pageable);
+        }else {
+            return voiceCusRepository.findByTypes(types,pageable);
+        }
+
+    }
+
+
+
 }
