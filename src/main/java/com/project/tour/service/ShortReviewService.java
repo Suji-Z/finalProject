@@ -29,8 +29,7 @@ public class ShortReviewService {
     private final PackageRepository packageRepository;
 
 
-
-
+    //텍스트리뷰 작성
     public ShortReview create(String content, Double score, Member member, Package packages){
 
         ShortReview shortReview = new ShortReview();
@@ -44,16 +43,16 @@ public class ShortReviewService {
         return shortReviewRepository.save(shortReview);
     }
 
+    //결제 완료된 userbooking 가져오기
+    public List<UserBooking> getBookingShortReview(Long id, int status, Package apackage){
 
-    public List<UserBooking> getBookingShortReview(Long id, int status, Package aPackage){
-
-        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatusAndApackage(id,status,aPackage);
+        List<UserBooking> op = bookingRepository.findByMember_IdAndBookingStatusAndApackage(id,status,apackage);
 
         return op;
 
     }
 
-
+    //텍스트리뷰 리스트
     public List<ShortReview> getshortReviewList(Long packageNum){
 
         Optional<Package> packages = packageRepository.findById(packageNum);
@@ -75,19 +74,29 @@ public class ShortReviewService {
     }
 
 
+    //텍스트 리뷰 수정
+    public void update(Long shortReviewNum, Long packageNum,String content){
 
-    public void update(ShortReview shortReview, String content,
-                       Double score, Package packages){
+        ShortReview shortReview = shortReviewRepository.findById(shortReviewNum).get();
 
         shortReview.setContent(content);
-        shortReview.setScore(score);
-        shortReview.setPackages(packages);
 
         shortReviewRepository.save(shortReview);
 
 
     }
 
+
+    //텍스트 리뷰 삭제
+    public void delete(Long shortReviewNum){
+
+        ShortReview shortReview = shortReviewRepository.findById(shortReviewNum).get();
+
+
+        shortReviewRepository.delete(shortReview);
+
+
+    }
 
 
 
