@@ -81,6 +81,9 @@
                     </div>
                       <div align="right">
                           <span><img th:src="${url}" th:height="40" th:width="40" class="reviewHeart"/><br/></span></div>
+                      <input type="hidden" th:value="${loginStatus1}" id="loginStatus1">
+                      <input type="hidden" th:value="${recommendStatus}" id="recommendStatus">
+                      <input type="hidden" th:value="${review.id}" id="reviewId" name="reviewId"/>
            
             <hr/>
 
@@ -107,43 +110,9 @@
 
                                     <br/><br/>
 
-
-                                        <!--                                    <h2 align="right"><a th:if="${reviewLike}" class="cancel" th:href="@{|/review/vote/${review.id}|}">-->
-<!--                                        <i th:class="fas fa-heart"></i></a>-->
-<!--                                    </h2>-->
-
-<!--                                    <input type="text" id="reviewNum" name="reviewNum" th:value="${review.id}" hidden>-->
                                     <h5 th:text="${review.author.name}"></h5>
                              
                              <h5 th:text="${#temporals.format(review.created,'yyyy-MM-dd HH:mm')}"></h5>
-
-                                    <input type="hidden" th:value="${recommendStatus}" id="recommendStatus">
-                                    <input type="hidden" th:value="${review.id}" id="reviewId" name="reviewId"/>
-
-<!--                                    <script type="text/javascript">-->
-<!--                                        const recommendBtn = document.getElementsByClassName("recommend"); //recommend라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라-->
-<!--                                        Array.from(recommendBtn).forEach(function(element){ //여러개 있으면 배열로 받아서 하나씩 꺼내고-->
-<!--                                            element.addEventListener('click',function(){ //그 앨리먼트를 클릭했을때-->
-<!--                                                if(confirm("리뷰를 추천하시겠습니까?")){ //이 함수를 실행시켜라 이게 true 이면-->
-
-<!--                                                    location.href=this.dataset.uri;-->
-<!--                                                }-->
-<!--                                            });-->
-<!--                                        });-->
-
-
-<!--                                        const cancelBtn = document.getElementsByClassName("cancel"); //cancel라는 이름을 가진 특정 클래스에 모두 접근해서 객체화 시켜라-->
-<!--                                        Array.from(cancelBtn).forEach(function(element){ //여러개 있으면 배열로 받아서 하나씩 꺼내고-->
-<!--                                            element.addEventListener('click',function(){ //그 앨리먼트를 클릭했을때-->
-<!--                                                if(confirm("리뷰추천을 취소하시겠습니까?")){ //이 함수를 실행시켜라 이게 true 이면-->
-
-<!--                                                    location.href=this.dataset.uri;-->
-<!--                                                }-->
-<!--                                            });-->
-<!--                                        });-->
-
-<!--                                    </script>-->
-
 
 
 

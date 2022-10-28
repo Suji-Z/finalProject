@@ -36,13 +36,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="common_bannner_text">
-          <h2>개선/건의하기 문의내역</h2>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
-              dashboard</a></li>
-            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
-          </ul>
+          <h2>나의 취소내역</h2>
         </div>
       </div>
     </div>
@@ -76,31 +70,31 @@
                       </div>
 
                   </li>
-                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약현황</b>
                       <span> </span>
                       <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                            style="">
                           <ul>
                               <li><a th:href="@{/mypage/bookingList}">예약내역</a></li>
-                              <li><a th:href="@{/mypage/cancelList}">취소내역</a></li>
+                              <li><a th:href="@{/mypage/cancelList}" class="active">취소내역</a></li>
                           </ul>
                       </div>
 
                   </li>
-                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                  <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>문의내역</b>
                       <span> </span>
                       <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                            style="">
                           <ul>
-                              <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
-                              <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                              <li><a th:href="@{/mypage/qna}">QnA</a></li>
+                              <li><a th:href="@{/mypage/voicecusList}">고객의 소리</a></li>
                               <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
                           </ul>
                       </div>
 
                   </li>
-
-                  <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
+                  <li><a th:href="@{/mypage/reviewList}"><b>나의 여행후기</b></a></li>
+                  <li><a th:href="@{/mypage/point}"><b>포인트</b></a></li>
                   <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
 
 
@@ -128,8 +122,7 @@
               </thead>
               <tbody>
               <tr th:if="${mypageBookingCancle.isEmpty()}"><td colspan="7"> 예약취소내역이 없습니다. </td></tr>
-
-                  <tr th:each="mypageBookingCancle : ${mypageBookingCancle}">
+              <th:block th:each="mypageBookingCancle,loop : ${mypageBookingCancle}">
                       <td th:text="${mypageBookingCancle.id}">예약번호</td>
                       <td th:text="${#temporals.format(mypageBookingCancle.bookingDate,'yyyy-MM-dd')}">예약날짜</td>
                       <td align="center">
@@ -144,13 +137,39 @@
                       </td>
                   </tr>
 
-
+              </th:block>
             
               </tbody>
             </table>
           </div>
          
         </div>
+          <div class="pagination_area" th:if="${!mypageBookingCancle.isEmpty()}">
+              <ul class="pagination" th:with="startNumber=${(mypageBookingCancle.number/10)}*10+1,endNumber=(${mypageBookingCancle.totalPages}>${startNumber+9})?${startNumber+9}:${mypageBookingCancle.totalPages}">
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/cancelList?page=1}" aria-label="Previous">
+                          <span aria-hidden="true">≪</span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                  </li>
+                  <li class="page-item" th:style="${mypageBookingCancle.first}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/cancelList(page=${mypageBookingCancle.number})}">＜</a>
+                  </li>
+                  <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                      th:classappend="(${page}==${mypageBookingCancle.number+1})?'active'">
+                      <a class="page-link" th:href=@{/mypage/cancelList(page=${page})} th:text="${page}"></a>
+                  </li>
+                  <li class="page-item" th:style="${mypageBookingCancle.last}?'display:none'">
+                      <a class="page-link" th:href="@{/mypage/cancelList(page=${mypageBookingCancle.number+2})}">＞</a>
+                  </li>
+                  <li class="page-item">
+                      <a class="page-link" th:href="@{/mypage/cancelList(page=${mypageBookingCancle.totalPages})}" aria-label="Next">
+                          <span aria-hidden="true">≫</span>
+                          <span class="sr-only">Next</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
 
       </div>
     </div>

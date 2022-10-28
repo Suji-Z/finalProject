@@ -37,12 +37,6 @@
       <div class="col-lg-12">
         <div class="common_bannner_text">
           <h2>My Page</h2>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><span><i class="fas fa-circle"></i></span><a href="dashboard.html">Customer
-              dashboard</a></li>
-            <li><span><i class="fas fa-circle"></i></span>Booking history</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -76,7 +70,7 @@
                                     </div>
                                     
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약현황</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                         style="">
@@ -87,20 +81,20 @@
                                     </div>
                                     
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>문의내역</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                         style="">
                                         <ul>
-                                            <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
-                                            <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                                            <li><a th:href="@{/mypage/qna}">QnA</a></li>
+                                            <li><a th:href="@{/mypage/voicecusList}">고객의 소리</a></li>
                                             <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
                                         </ul>
                                     </div>
                                     
                                 </li>
-                                
-                                <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
+                                <li><a th:href="@{/mypage/reviewList}"><b>나의 여행후기</b></a></li>
+                                <li><a th:href="@{/mypage/point}"><b>포인트</b></a></li>
                                 <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
                                 
                                
@@ -112,7 +106,7 @@
           <div class="col-lg-12" >
               <br/><br/>
               <h2> <span>안녕하세요, ㅇㅇ투어 </span>
-              <span th:text="${member.name}"></span>
+              <span style="color: #99E000; font-size:60px;" th:text="${member.name}"></span>
               <span>님 !</span></h2>
               <br/><br/>
                     <div class="counter_area_wrapper" >
@@ -124,7 +118,7 @@
                                     <img src="/assets/img/icon/user.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
-                                   <a href="mypage_profileUpdate.html"> <h4>My profile</h4></a>
+                                   <a th:href="@{/mypage/update}"> <h4>My profile</h4></a>
                                     
                                 </div>
                             </div>
@@ -133,7 +127,7 @@
                                     <img src="/assets/img/icon/bank.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
-                                    <a href="mypage_coupon.html"> <h4><b>내 쿠폰</b></h4></a>
+                                    <a th:href="@{/mypage/coupon}"> <h4><b>내 쿠폰</b></h4></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
@@ -141,7 +135,7 @@
                                     <img src="/assets/img/icon/world-map.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
-                                    <a href="mypage_point.html"><h4><b>내 포인트</b></h4></a> 
+                                    <a th:href="@{/mypage/point}"><h4><b>내 포인트</b></h4></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
@@ -149,7 +143,7 @@
                                     <img src="/assets/img/icon/calander.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
-                                    <a href="mypage_q&a_list.html"><h4><b>문의내역</b></h4></a> 
+                                    <a th:href="@{/mypage/qna}"><h4><b>문의내역</b></h4></a>
                                 </div>
                             </div>
                         </div>
@@ -173,19 +167,19 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="contact_boxed">
                         <h6></h6>
-                         <h3><a href="!#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">예약내역</a></h3>
+                         <h3 style="color: #99E000">예약현황</h3>
                         <br/>
                        <div align="center">
                         <li>
                             <span>예약 내역</span>
                             &nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <a th:href="@{/mypage/bookingList}"><span th:text="${mypageBooking}">0건</span></a>
                         
                         </li>
                         <li>
                             <span>취소 내역</span>
                              &nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <a th:href="@{/mypage/cancelList}"><span th:text="${mypageCancel}">0건</span></a>
                         
                         </li>
                            </div>
@@ -195,25 +189,25 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="contact_boxed">
                         <h6></h6>
-                        <h3><a href="!#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">문의내역</a></h3>
+                        <h3 style="color: #99E000">문의내역</h3>
                         <br/>
                        <div align="center">
                         <li>
-                            <span>여행 문의(Q&A)</span>
-                             &nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <span>여행문의(QnA)</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a th:href="@{/mypage/qna}"><span th:text="${qnaPaging}">0건</span></a>
                         
                         </li>
                         <li>
-                            <span>고객의 소리</span>
+                            <span>고객의 &nbsp;소리</span>
                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <a th:href="@{/mypage/voicecusList}"><span th:text="${vcusPaging}">0건</span></a>
                         
                         </li>
                             <li>
-                            <span>견적 문의</span>
+                            <span>견적 &nbsp;문의</span>
                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <a th:href="@{/mypage/estimateList}"><span th:text="${estPaging}">0건</span></a>
                         
                         </li>
                            </div>
@@ -224,19 +218,19 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="contact_boxed">
                         <h6></h6>
-                        <h3><a href="!#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">참여내역</a></h3>
+                        <h3 style="color: #99E000">참여내역</h3>
                         <br/>
                        <div align="center">
                         <li>
                             <span>나의 여행후기</span>
                              &nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <a th:href="@{/mypage/reviewList}"><span th:text="${mypageReview}">0건</span></a>
                         
                         </li>
                         <li>
                             <span>나의&nbsp;&nbsp;&nbsp;&nbsp;리뷰</span>
                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>0건</span>
+                            <a th:href="@{/mypage/reviewList}"><span th:text="${mypageShortR}">0건</span></a>
                         
                         </li>
                            </div>
