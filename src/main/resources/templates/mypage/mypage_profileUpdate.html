@@ -142,16 +142,13 @@
                         </div>
                         <div class="form-group col-lg-7">
                             <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)"
-                            th:readonly="${social!=null}?'reanonly'">
+                            th:readonly="${social!=null}?'reanonly'" name="name">
                         </div>
                     </li>
-
-                    <li style="margin-top: -40px;">
+                    <li style="margin-top: -30px">
                         <div class="col-lg-2">
                         </div>
-                        <div th:if="${#fields.hasErrors('name')}" role="alert">
-                            <p style="font-size: 10pt;color: red" th:errors="*{name}" th:text="${err}"></p>
-                        </div>
+
                     </li>
 
                     <li style="border-bottom-color: white;">
@@ -207,12 +204,11 @@
                             <input type="text" class="shform-control" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
                         </div>
                     </li>
-
                     <li style="margin-top: -40px;">
                         <div class="col-lg-2">
                         </div>
-                        <div th:if="${#fields.hasErrors('birth')}" role="alert">
-                            <p style="font-size: 10pt;color: red" th:errors="*{birth}" th:text="${err}"></p>
+                        <div>
+                            <span id="birthAvailable" class="valid-feedback" style="display: none"></span><span id="birthNotAvailable" class="invalid-feedback" style="display: none"></span>
                         </div>
                     </li>
 
