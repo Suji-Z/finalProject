@@ -122,11 +122,12 @@ public class AdminPackageService {
     }
 
     //회원 정보 수정
-    public void updateUser(Member member, String name, String birth, String keyword,String phone){
+    public void updateUser(Member member, String name, String birth, String keyword,String phone,int point){
         member.setName(name);
         member.setBirth(birth);
         member.setKeyword(keyword);
         member.setPhone(phone);
+        member.setPoint(point);
 
         memberRepository.save(member);
     }

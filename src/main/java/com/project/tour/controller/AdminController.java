@@ -25,10 +25,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -67,7 +64,7 @@ public class AdminController {
 
         Page<PackageDate> paging = adminPackageDateService.getList(packageNum,pageable);
         model.addAttribute("paging",paging);
-      // model.addAttribute("date",packageDate);
+        // model.addAttribute("date",packageDate);
 
         return "admin/admin_Booking";
     }
@@ -76,15 +73,84 @@ public class AdminController {
     //예약 회원 조회
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/bookingUser")
-    public String admin_bookingUser(Model model, @PageableDefault Pageable pageable,Package aPackage, Member member) {
+    public String admin_bookingUser(Model model, @PageableDefault Pageable pageable,Package aPackage,PackageDate packageDate,Member member) {
 
         Page<UserBooking> paging = userBookingService.getBookingList(pageable);
         model.addAttribute("Member",member);
         model.addAttribute("Package",aPackage);
+        model.addAttribute("remain",packageDate.getRemaincount());
         model.addAttribute("paging",paging);
         model.addAttribute("localDateTime", LocalDateTime.now());
 
         return "admin/admin_BookingUser";
+    }
+
+    //회원 예약 관리
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping
+    public String bookingCheckdfs(Model model, Principal principal, UserBookingForm userBookingForm,@PathVariable("id") Long id){
+
+        UserBooking userBooking1 = userBookingService.getUserBooking(id);
+
+//        PackageDate packageDate = adminPackageDateService
+
+//        PackageDate packagedate = adminPackageDateService.getDate(id.intValue());
+//        System.out.println("아이디 : " + packagedate.getId());
+//        Integer remaincount = packagedate.getRemaincount();
+
+        model.addAttribute("userBooking",userBooking1);
+//        model.addAttribute("remaincount",remaincount);
+//        model.addAttribute("PackageDate",packagedate);
+
+        return "admin/admin_BookingUser";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("package/bookingCheck")
+    public @ResponseBody HashMap<String,String> bookingCheck1(@RequestParam ("packageNum") Long packageNum, @RequestParam("departure") String departure,
+                               @RequestParam ("bookingNum") Long bookingNum, @RequestParam("bookingcount") Integer bookingcount){
+
+        PackageDate packageDate = adminPackageDateService.getPackageDate(packageNum, departure);
+        int remainCount = packageDate.getRemaincount();
+
+        int a = adminPackageDateService.getBeforePay(packageNum,departure);
+
+
+        String msg;
+//        String msg2;
+        System.out.println("남은자리"+remainCount);
+
+        UserBooking userBooking= userBookingService.getUserBooking(bookingNum);
+
+        if(remainCount-a>=bookingcount) {
+            //승인
+            userBookingService.modifyBookingStatus(userBooking,1);
+
+            msg ="none";
+//            System.out.println(msg);
+
+
+
+        }else {
+            userBookingService.modifyBookingStatus(userBooking,3);
+            msg = "마감";
+
+            System.out.println(msg);
+
+
+
+        }
+
+        HashMap<String,String> info = new HashMap<String,String>();
+
+            info.put("msg",msg);
+
+
+        System.out.println("사이즈" + info.size());
+
+
+        return info;
+
     }
 
     //패키지 상품 등록
@@ -205,17 +271,7 @@ public class AdminController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
-    public String bookingCheck(Model model, Principal principal, UserBookingForm userBookingForm,@PathVariable("id") Long id){
 
-        UserBooking userBooking = userBookingService.getUserBooking(id);
-
-        UserBooking userBooking1 = userBookingService.getUserBooking(id);
-        model.addAttribute("userBooking",userBooking1);
-
-        return "admin/admin_BookingUser";
-    }
 
 
     // 패키지  출발일 수정
@@ -237,7 +293,7 @@ public class AdminController {
 
     @PostMapping("/package/departure/modify/{id}")
     public String departureModify2(@Valid PackageCreate packageCreate,BindingResult bindingResult,
-                                 @PathVariable("id") Integer id) throws IOException {
+                                   @PathVariable("id") Integer id) throws IOException {
 
 
         PackageDate packageDate = adminPackageDateService.getDate(id);
@@ -249,20 +305,7 @@ public class AdminController {
     }
 
 
-    //회원 예약 관리
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("package/bookingCheck/{id}")
-    public String bookingCheck(@Validated UserBookingForm userBookingForm, @PathVariable("id") Long id){
-
-        UserBooking userBooking = userBookingService.getUserBooking(id);
-
-        userBookingForm.setBookingStatus(1);
-        adminPackageService.userBookingCheck(userBooking,userBookingForm);
-
-        return "redirect:/admin/bookingUser";
-
-    }
 
 //회원 관리
 
@@ -310,7 +353,7 @@ public class AdminController {
         System.out.println(keyword);
 
 
-        adminPackageService.updateUser(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword(),memberCreate.getPhone_num());
+        adminPackageService.updateUser(member,memberCreate.getName(),memberCreate.getBirth(), memberCreate.getKeyword(),memberCreate.getPhone_num(), memberCreate.getPoint());
 
         return "redirect:/admin/user";
     }
@@ -328,9 +371,9 @@ public class AdminController {
 
 //판매관련
 
-//패키지 상품별 판매 관리
-@PreAuthorize("hasRole('ROLE_ADMIN')")
-@GetMapping("/sales/package")
+    //패키지 상품별 판매 관리
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/sales/package")
     public String salesPackage(Model model,@PageableDefault Pageable pageable, Pay pay, Package aPackage) {
 
         Page<Pay> paging =adminSalesService.getPayList(pageable);

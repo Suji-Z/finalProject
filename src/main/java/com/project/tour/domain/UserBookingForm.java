@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -20,8 +22,13 @@ public class UserBookingForm {
     private int bCount;
     private int cCount;
 
+    @NotEmpty
     private String travelerName;
+
+    @NotEmpty
     private String travelerTel;
+
+    @NotEmpty
     private String travelerBirth;
 
     private String request;

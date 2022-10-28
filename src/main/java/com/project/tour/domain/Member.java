@@ -59,5 +59,9 @@ public class Member {
 
     }
 
+    public void updateSocailInfo(String email,String name){
+        this.name = name;
+        this.email = email;
+    }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -108,14 +109,10 @@ public class BookingController {
     /* 예약확인 저장 및 창띄우기*/
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @PostMapping("/confirmation/{id}") //id=packageNum
-    public String confirmation(@Validated UserBookingForm userBookingForm, BindingResult bindingResult, BookingPriceDTO priceForm,
-                               @LoginUser SessionUser user, Principal principal, Model model, @PathVariable("id") Long id) {
+    public String confirmation(@Valid UserBookingForm userBookingForm, BindingResult bindingResult, BookingPriceDTO priceForm,
+                               @LoginUser SessionUser user, Principal principal, Model model, @PathVariable("id") Long id){
 
-        if(bindingResult.hasErrors()){
-            return "booking-pay/booking";
-        }
-
-        //로그인 정보
+        //로그인 정보 확인
         Member member;
         if(memberService.existByEmail(principal.getName())){
             member = memberService.getName(principal.getName());
@@ -123,13 +120,16 @@ public class BookingController {
             member = memberService.getName(user.getEmail());
         }
 
+        //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
+        Package apackage = packageService.getPackage(id);
+
+        model.addAttribute("member", member);
+
+
         //bookingTotalPrice 검증
         if(priceForm.getBookingTotalPrice() == 0){
             priceForm.setBookingTotalPrice(userBookingForm.getBookingTotalPrice());
         }
-
-        //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
-        Package apackage = packageService.getPackage(id);
 
         /** 예약시 패키지테이블에 예약횟수 누적 **/
         if(apackage.getBookingCnt()==null){
@@ -143,9 +143,6 @@ public class BookingController {
         UserBooking userBooking = userBookingService.create(userBookingForm,
                 priceForm.getBookingTotalPrice(), apackage, member, bookingCnt);
 
-        //confirmation에 띄울 정보 
-        //1.memberm,userbooking 테이블
-        model.addAttribute("member",member);
         model.addAttribute("userBooking",userBooking);
 
         return "booking-pay/booking_confirmation";

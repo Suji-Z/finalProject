@@ -8,6 +8,7 @@ import com.project.tour.oauth.dto.OAuthAttributes;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.model.BaseAuthUser;
 import com.project.tour.repository.MemberRepository;
+import com.project.tour.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +23,10 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,6 +42,8 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
     private final MemberRepository memberRepository;
     @Autowired
     private final HttpSession httpSession;
+
+
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -61,7 +67,6 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
         //로그인을 통해 가져온 Oauth2User의 속성을 담아두는 of메소드
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-
         //응답 받은 속성(JSON)
         System.out.print(attributes.getAttributes());
 
@@ -80,6 +85,8 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
     //사용자의 이름이나 프로필 사진이 변경되면 User Entity에도 반영됨
     private BaseAuthUser saveOrUpdate(OAuthAttributes attributes) {
 
+
+
         BaseAuthUser authUser = baseAuthUserRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
@@ -90,6 +97,11 @@ public class BaseCustomOauth2UserService implements OAuth2UserService<OAuth2User
 
             memberRepository.save(member);
 
+        }else {
+
+            Optional<Member> savedMember = memberRepository.findByEmail(authUser.getEmail());
+
+            savedMember.get().updateSocailInfo(authUser.getEmail(), authUser.getName());
         }
 
         return baseAuthUserRepository.save(authUser);

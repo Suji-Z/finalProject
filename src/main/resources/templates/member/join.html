@@ -51,7 +51,7 @@
                   <li  style="border-bottom-color: white">
 
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                    <label style="text-align:center;" th:for="email">이메일</label>
+                    <label style="text-align:center;" th:for="email">이메일<span style="color: red">&nbsp;*</span></label>
                     </div>
                     <div class="form-group col-lg-7">
                     <input type="email" class="shform-control" th:field="*{email}" style="border-radius: 3px;font-size: 10pt" placeholder="이메일을 입력해주세요(예: abc123@naver.com)">
@@ -62,7 +62,7 @@
                           <input type="hidden" name="checked_id" value="">
                       </div>
                   </li>
-                    <li style="margin-top: -30px">
+                    <li style="margin-top: -30px;padding-bottom: 10px">
                         <div class="col-lg-2">
                         </div>
 
@@ -78,51 +78,57 @@
                     
                 <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
-                      <label style="text-align:center;" th:for="password1">비밀번호</label>
+                      <label style="text-align:center;" th:for="password1">비밀번호<span style="color: red">&nbsp;*</span></label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" th:field="*{password1}" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
+                      <input type="text" class="shform-control" th:field="*{password1}" id="password1" style="border-radius: 3px; font-size: 10pt" placeholder="비밀번호(영문 숫자 특수문자 조합,8~16자리)">
                     </div>
                   </li>
 
-                    <li style="margin-top: -30px;padding-bottom: -20px">
+                    <li style="margin-top: -30px;padding-bottom: 10px">
                         <div class="col-lg-2">
                         </div>
 
                         <div th:if="${#fields.hasErrors('password1')}" role="alert">
                             <p style="font-size: 10pt;color: red" th:errors="*{password1}" th:text="${err}"></p>
                         </div>
+                        <div style="margin-top: -10px;">
+                            <span id="pwdAvailable" class="valid-feedback" style="display: none"></span><span id="pwdNotAvailable" class="invalid-feedback" style="display: none"></span>
+                        </div>
 
                     </li>
 
                    
                    <li style="border-bottom-color: white;">
-                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <label style="text-align:center;" th:for="password2">비밀번호<br/>재확인</label>
+                    <div class="col-lg-2" style="text-align: center;">
+                      <label style="text-align:center;" th:for="password2">비밀번호&nbsp;&nbsp;<br/>&nbsp;재확인<span style="color: red">&nbsp;*</span></label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control"    th:field="*{password2}" style="border-radius: 3px; font-size: 10pt;margin-top: 15px" placeholder="비밀번호 확인">
+                      <input type="text" class="shform-control" th:field="*{password2}" id="password2" style="border-radius: 3px; font-size: 10pt;" placeholder="비밀번호 확인">
                     </div>
                   </li>
 
-                    <li style="margin-top: -40px;padding-bottom: -10px">
+                    <li style="margin-top: -40px;padding-bottom: 10px">
                         <div class="col-lg-2">
                         </div>
                         <div th:if="${#fields.hasErrors('password2')}" role="alert">
                             <p style="font-size: 10pt;color: red" th:errors="*{password2}" th:text="${err}"></p>
                         </div>
+                        <div style="margin-top: -10px;">
+                            <span id="repwdAvailable" class="valid-feedback" style="display: none"></span><span id="repwdNotAvailable" class="invalid-feedback" style="display: none"></span>
+                        </div>
                     </li>
                     
                 <li style="border-bottom-color: white;">
-                    <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <label th:for="name" style="text-align:center;">이름</label>
+                    <div class="col-lg-2" style="text-align: center;">
+                      <label th:for="name" style="text-align:center;">이름<span style="color: red">&nbsp;*</span></label>
                     </div>
                     <div class="form-group col-lg-7">
                       <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
                     </div>
                   </li>
 
-                    <li style="margin-top: -40px;">
+                    <li style="margin-top: -40px;padding-bottom: 10px">
                         <div class="col-lg-2">
                         </div>
                         <div th:if="${#fields.hasErrors('name')}" role="alert">
@@ -132,13 +138,13 @@
                    
                     <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <label th:for="phone_num" style="text-align:center;">연락처</label>
+                      <label th:for="phone_num" style="text-align:center;">연락처<span style="color: red">&nbsp;*</span></label>
                     </div>
                     <div class="form-group col-lg-5">
                       <input type="text" class="shform-control" th:field="*{phone_num}" id="phone_num" name="phone_num" style="border-radius: 3px; font-size: 10pt" placeholder="휴대폰번호(숫자만 입력)">
                     </div>&nbsp;&nbsp;
                     <div class="">
-                    <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" onclick="phoneCheck()" style="height: 35px;font-size: 11pt">인증번호 전송</button>
+                    <button class="btn btn_theme" type="button" id="phoneChk" name="phoneChk" onclick="return phoneCheck()" style="height: 35px;font-size: 11pt">인증번호 전송</button>
                     </div>
                   </li>
 
@@ -152,7 +158,7 @@
                     
                     <li style=" border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px;">
-                      <span style="text-align:center;">인증번호</span>
+                      <span style="text-align:center;">인증번호<span style="color: red">&nbsp;*</span></span>
                     </div>
                     <div class="form-group col-lg-5">
                       <input type="text" class="shform-control" id="sms_num" style="border-radius: 3px; font-size: 10pt" placeholder="인증번호 6자리">
@@ -174,24 +180,24 @@
                     
                     <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <label th:for="birth" style="text-align:center;">생년월일</label>
+                      <label th:for="birth" style="text-align:center;">생년월일&nbsp;&nbsp;</label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
+                      <input type="text" class="shform-control" id="birth" th:field="*{birth}" style="border-radius: 3px; font-size: 10pt" placeholder="생년월일(예: 19900101)">
                     </div>
                   </li>
 
                     <li style="margin-top: -40px;">
                         <div class="col-lg-2">
                         </div>
-                        <div th:if="${#fields.hasErrors('birth')}" role="alert">
-                            <p style="font-size: 10pt;color: red" th:errors="*{birth}" th:text="${err}"></p>
+                        <div>
+                            <span id="birthAvailable" class="valid-feedback" style="display: none"></span><span id="birthNotAvailable" class="invalid-feedback" style="display: none"></span>
                         </div>
                     </li>
                  
                     <li style="border-bottom-color: white">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">약관 동의</span>
+                      <span style="text-align:center;">약관 동의<span style="color: red">&nbsp;*</span></span>
                     </div>
 
 
@@ -237,7 +243,7 @@
 
                                 <li style="border-bottom-color: white;">
                     <div class="col-lg-2" style="text-align: center; margin-top: 10px">
-                      <span style="text-align:center;">선호테마</span>
+                      <span style="text-align:center;">선호테마<span style="color: red">&nbsp;*</span></span>
                     </div>
 
                       <div class="col-lg-2">
