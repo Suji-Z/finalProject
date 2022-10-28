@@ -211,16 +211,16 @@
                                         <h4 th:text="${reviewReply.author.name}">배수지</h4> &nbsp;
                                         <h5 th:text="${#temporals.format(reviewReply.created,'yyyy-MM-dd HH:mm')}"></h5>&nbsp;
 
-                                        <a  class="replyRecommend" id="likeOff" onclick="likeBtn()" type="button">
 
-                                            <i class="fa-regular fa-heart"></i>좋아요</a>&nbsp;
+                                        <div th:if="${reviewReply.likeStatus==1}"><span><img src="/assets/img/icon/ReviewHeart2.png"
+                                                        th:height="20" th:width="20" class="replyHeart" id="likeOn"/></span></div>
 
-                                        <a class="replyCancel" id="likeOn" style="display: none" type="button" onclick="dislikeBtn()">
-
-                                            <i class="fas fa-heart"></i>좋아요</a>&nbsp;
-
+                                        <div th:if="${reviewReply.likeStatus==0}"><span><img src="/assets/img/icon/ReviewHeart1.png"
+                                                         th:height="20" th:width="20" class="replyHeart" id="likeOff"/></span></div>
 
                                         <input type="hidden" th:value="${reviewReply.id}" id="replyId"/>
+                                        <input type="hidden" th:value="${reviewReply.likeStatus}" id="likeStatus"/>
+
 
 
                                         <a th:href="@{|/review/replyUpdate/${reviewReply.id}|}"
@@ -228,31 +228,6 @@
                                            th:if="${reviewReply.author.id}==${member.id}">수정</a>&nbsp;
                                         <a th:href="@{|/review/replyDelete/${reviewReply.id}|}" sec:authorize="isAuthenticated()"
                                            th:if="${reviewReply.author.id}==${member.id}">삭제</a>
-
-<!--                                        <script type="text/javascript">-->
-<!--                                            const replyRecommendBtn = document.getElementsByClassName("replyRecommend");-->
-<!--                                            Array.from(replyRecommendBtn).forEach(function(element){-->
-<!--                                                element.addEventListener('click',function(){-->
-<!--                                                    if(confirm("댓글을 추천하시겠습니까?")){-->
-
-<!--                                                        location.href=this.dataset.uri;-->
-<!--                                                    }-->
-<!--                                                });-->
-<!--                                            });-->
-
-
-<!--                                            const replyCancelBtn = document.getElementsByClassName("replyCancel");-->
-<!--                                            Array.from(replyCancelBtn).forEach(function(element){-->
-<!--                                                element.addEventListener('click',function(){-->
-<!--                                                    if(confirm("댓글추천을 취소하시겠습니까?")){-->
-
-<!--                                                        location.href=this.dataset.uri;-->
-<!--                                                    }-->
-<!--                                                });-->
-<!--                                            });-->
-
-<!--                                        </script>-->
-
 
                                     </div>
                                       <p th:text="${reviewReply.content}"></p>

@@ -2,6 +2,7 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,11 +30,9 @@ public class Review_reply {
     @ManyToOne
     private Member author;
 
-    @ManyToMany
-    Set<Member> voter;
-
     ////결제완료한 패키지 정보
     @ManyToOne
     @JoinColumn(name = "packageNum")
     private Package reviewPackages;
+
 }

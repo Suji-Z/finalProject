@@ -1,54 +1,42 @@
-function likeBtn(){
+$(function () {
 
-    var reviewName = $('#reviewId').val();
-    var replyName = $('#replyId').val();
+    let replyId = $("#replyId").val();
+    let likeStatus = $("#likeStatus").val();
+    let loginStatus1 = $("#loginStatus1").val();
 
-    console.log(replyName);
+    $('.replyHeart').on('click',function(){
 
-    $.ajax({
-        url: reviewName+'/?replyName='+replyName,
-        type: 'GET',
-        data: {
-            replyLike : true
-        },
+        if(loginStatus1=='n'){
+            alert('로그인 후 가능한 서비스입니다.');
+            location.href="http://localhost:8088/member/login";
+        }else{
 
-        success: function (data) {
-            $('#likeOff').hide();
-            $('#likeOn').show();
-
-
-
-        },
-        error: function (error) {
-            alert("실패")
+            if(likeStatus==0){ //비어있다가 채우는 행위
+                $('#likeOn').show();
+            }else if(likeStatus==1){ //채웠다가 비우는 행위
+                $('#likeOff').show();
+            }
         }
+
+
+        // alert("추천"+i);
+        // alert("글번호"+reviewId);
+
+        $.ajax({
+            url: '/review/replyVote',
+            type: 'GET',
+            data: {
+                likeStatus : likeStatus,
+                id : replyId
+
+            },
+            contentType: "application/json",
+
+            success: function(result) {
+            }
+
+        })
+
+
     });
-
-};
-
-function dislikeBtn(){
-
-    var reviewName = $('#reviewId').val();
-    var replyName = $('#replyId').val();
-
-    console.log(replyName);
-
-    $.ajax({
-        url: reviewName+'?replyName='+replyName,
-        type: 'GET',
-        data: {
-            replyLike : false
-        },
-        success: function (data) {
-
-
-            $('#likeOn').hide();
-            $('#likeOff').show();
-
-        },
-        error: function (error) {
-            alert("실패")
-        }
-    });
-
-};
+});
