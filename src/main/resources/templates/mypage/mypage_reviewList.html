@@ -35,11 +35,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="common_bannner_text">
-                    <h2>회원가입</h2>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><span><i class="fas fa-circle"></i></span> Join</li>
-                    </ul>
+                    <h2>나의 여행후기</h2>
                 </div>
             </div>
         </div>
@@ -74,7 +70,7 @@
                                     </div>
 
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약조회</b>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>예약현황</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
@@ -85,20 +81,20 @@
                                     </div>
 
                                 </li>
-                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>상담내역</b>
+                                <li class="dashboard_dropdown_button" id="dashboard_dropdowns"><b>문의내역</b>
                                     <span> </span>
                                     <div class="booing_sidebar_dashboard" id="show_dropdown_item"
                                          style="">
                                         <ul>
-                                            <li><a th:href="@{/mypage/qna}">여행 1:1 문의</a></li>
-                                            <li><a th:href="@{/mypage/voicecusList}">개선/건의하기</a></li>
+                                            <li><a th:href="@{/mypage/qna}">QnA</a></li>
+                                            <li><a th:href="@{/mypage/voicecusList}">고객의 소리</a></li>
                                             <li><a th:href="@{/mypage/estimateList}">여행 견적문의</a></li>
                                         </ul>
                                     </div>
 
                                 </li>
-
-                                <li><a th:href="@{/mypage/point}"><b>마일리지</b></a></li>
+                                <li><a th:href="@{/mypage/reviewList}" class="active"><b>나의 여행후기</b></a></li>
+                                <li><a th:href="@{/mypage/point}"><b>포인트</b></a></li>
                                 <li><a th:href="@{/mypage/coupon}"><b>할인쿠폰</b></a></li>
 
 

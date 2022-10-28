@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -35,7 +36,7 @@ public interface BookingRepository extends JpaRepository<UserBooking, Long> {
     List<UserBooking> findByMember_IdAndBookingStatus(Long id, int status);
 
     //마이페이지에서 사용할 예약취소내역 리스트 가져오기
-    List<UserBooking> findByMember_IdAndBookingStatusIn(Long id, List<Integer> status);
+    Page<UserBooking> findByMember_IdAndBookingStatusIn(Long id, List<Integer> status,Pageable pageable);
 
 
 
@@ -43,7 +44,8 @@ public interface BookingRepository extends JpaRepository<UserBooking, Long> {
     List<UserBooking> findByMember_IdAndBookingStatusAndApackage(Long id, int status, Package apackage);
 
 
-
+    @Query(value = "select sum(u.booking_Total_Count) from user_Booking u where u.package_Num=:packageNum and u.departure = :departure and u.booking_Status = 1", nativeQuery = true)
+    Optional<Integer> a (@Param("packageNum") Long packageNum, @Param("departure") String departure);
 
 
 }

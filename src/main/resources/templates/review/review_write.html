@@ -89,7 +89,7 @@
                         <select class="form-select" style="border-radius: 3px" aria-label="Default select example" th:if="${bookingReview.isEmpty()}">
                           <option>구매하신 패키지 상품이 없습니다</option></select>
                         <select th:name="packageNum" class="form-select" style="border-radius: 3px" aria-label="Default select example" th:if="${!bookingReview.isEmpty()}">
-                          <option th:each="bookingReview : ${bookingReview}" th:value="${bookingReview.APackage.id}" th:text="${bookingReview.APackage.packageName}">제주도 어쩌구</option>
+                          <option th:each="bookingReview : ${bookingReview}" th:value="${bookingReview.Apackage.id}" th:text="${bookingReview.Apackage.packageName}">제주도 어쩌구</option>
                         </select>
                       </span>
            <!-- -->
@@ -109,6 +109,7 @@
                             <option th:value="1">★☆☆☆☆</option>
                         </select>
                       </span>
+                      <div th:errors="*{score}" style="color: #dc3545; margin-top: 5px"></div>
                     </div>
                   </li>
                     <li>
@@ -117,6 +118,7 @@
                     </div>
                     <div class="form-group col-lg-7">
                     <span><input type="text" class="shform-control" th:field="*{subject}" style="border-radius: 3px"></span>
+                      <div th:errors="*{subject}" style="color: #dc3545; margin-top: 5px"></div>
                     </div>
                   </li>
                 <li>
@@ -129,13 +131,17 @@
                     </span></div>
                     </li>
 
-                  <li>
+                  <li style="border-bottom-color: white">
                     <div class="col-lg-2" style="text-align: center; margin-top: 15px">
                       <span style="text-align:center;margin-top: 15px">내용</span>
                     </div>
                     <div class="form-group col-lg-7">
                       <span><textarea type="text" class="shform-control" th:field="*{content}" style="border-radius: 3px" rows="10"></textarea></span>
-                    </div>
+                      </div>
+                  </li>
+                  <li >
+                    <div class="col-lg-2"></div>
+                    <div th:errors="*{content}" style="color: #dc3545;margin-top: -30px"></div>
                   </li>
 
                 </ul>

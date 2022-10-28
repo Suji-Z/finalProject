@@ -129,7 +129,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/mypage/}" class="nav-link">
                                     마이페이지
                                 </a>
                             </li>
@@ -154,7 +154,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/review}" class="nav-link">
                                     여행후기
                                 </a>
                             </li>
@@ -707,11 +707,11 @@
                 </div>
                 <div class="footer_link_area">
                     <ul>
-                        <li><a href="room-details.html">내정보</a></li>
-                        <li><a href="hotel-details.html">예약조회</a></li>
-                        <li><a href="hotel-booking.html">문의내역</a></li>
-                        <li><a href="tour-search.html">포인트</a></li>
-                        <li><a href="tour-booking.html">할인쿠폰 </a></li>
+                        <li><a th:href="@{/mypage/update}">내정보</a></li>
+                        <li><a th:href="@{/mypage/bookingList}">예약현황</a></li>
+                        <li><a th:href="@{/mypage/qna}">문의내역</a></li>
+                        <li><a th:href="@{/mypage/point}">포인트</a></li>
+                        <li><a th:href="@{/mypage/coupon}">할인쿠폰 </a></li>
                     </ul>
                 </div>
             </div>
