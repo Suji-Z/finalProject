@@ -1,4 +1,15 @@
 
+function noticeSearch(){
+
+    alert("여기");
+
+    let searchKeyword = $("#searchKeyword").val();
+    let category = $("#noticeFilter").val();
+    let pageNum = $("#pageNum").val();
+
+    location.href="searching?page="+pageNum+"&category="+category+"&searchKeyword="+searchKeyword;
+}
+
 
 // function noticeSearch(){
 //
@@ -24,15 +35,3 @@
 //       })
 //
 // }
-
-
-function noticeSearch(){
-
-    alert("여기");
-
-    let searchKeyword = $("#searchKeyword").val();
-    let category = $("#noticeFilter").val();
-    let pageNum = $("#pageNum").val();
-
-    location.href="searching?page="+pageNum+"&category="+category+"&searchKeyword="+searchKeyword;
-}

@@ -4,7 +4,6 @@ $(document).ready(function() {
 document.getElementById('noticeFilter').onchange = function() {
 
     let categorychk = this.value;
-    alert(categorychk);
 
     $.ajax({
              url: '/notice/category',
@@ -12,6 +11,7 @@ document.getElementById('noticeFilter').onchange = function() {
              data: {
                  category : categorychk
              },
+
              success : function(data) {
 
                  $('#commentTable').replaceWith(data);
@@ -25,3 +25,17 @@ document.getElementById('noticeFilter').onchange = function() {
 
 }
 });
+
+//$(document).ready(function() {
+//
+//document.getElementById('noticeFilter').onchange = function() {
+//
+//    let categorychk = this.value;
+//    alert(categorychk);
+//
+//    var f = document.myForm;
+//    	f.submit();
+//}
+//
+//
+//});
