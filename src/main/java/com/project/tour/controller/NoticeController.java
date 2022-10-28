@@ -240,11 +240,16 @@ public class NoticeController {
                             @PageableDefault Pageable pageable, Model model){
 
 
-        Page<Notice> paging = noticeService.getListBySearch(category, searchKeyword, pageable);
+        if(category.equals("")||category==null){
+            category="0";
+        }
+
+        Page<Notice> paging = noticeService.getListBySearch("0", searchKeyword, pageable);
         model.addAttribute("paging",paging);
 
         return "notice/notice_list";
     }
+
 
 
 
