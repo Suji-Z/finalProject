@@ -48,5 +48,7 @@ public class MemberCreate {
     */
     private String keyword;
 
+    private int point;
+
 
 }

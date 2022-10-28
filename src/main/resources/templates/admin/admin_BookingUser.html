@@ -89,15 +89,17 @@
 
             <div class="col-lg-8-sally">
 
-                <div class="dashboard_common_table">
+                <div class="dashboard_common_table" >
                     <h3>예약 현황 관리</h3>
-                    <div class="table-responsive-lg table_common_area">
+                    <div class="table-responsive-lg table_common_area" >
                         <table class="table">
                             <thead>
                             <tr>
+                                <th>예약 일자</th>
+                                <th>예약번호</th>
                                 <th>아이디</th>
                                 <th>상품명</th>
-                                <th>예약 일자</th>
+                                <th>출발일</th>
                                 <th>금액</th>
                                 <th>진행상황</th>
                             </tr>
@@ -105,16 +107,33 @@
                             <tbody>
                             <tr th:if="${paging.isEmpty()}"><td colspan="8"> 예약된 상품이 없습니다. </td></tr>
                             <th:block th:each="bookingUser,loop : ${paging}">
-                                <td th:text="${bookingUser.member.email}"></td>
-                                <td th:text="${bookingUser.APackage.packageName}"></td>
+                                <td th:text="${bookingUser.id}"></td>
                                 <td th:text="|${#strings.substring(bookingUser.bookingDate,0,10)}|"></td>
+                                <td th:text="${bookingUser.member.email}"></td>
+                                <td th:text="${bookingUser.apackage.packageName}"></td>
+                                <td th:text="${bookingUser.departure}"></td>
                                 <td th:text="${#numbers.formatInteger(bookingUser.bookingTotalPrice,3,'COMMA')+'원'}"></td>
-                                <td th:switch="${bookingUser.bookingStatus}">
-                                            <span th:case="0">예약 확인 중
-                                               <a th:href="@{|/admin/package/bookingCheck/${bookingUser.id}|}" th:text="승인" class="btn btn-sm btn-outline-secondary"></a>
-                                            </span>
+                                <td th:switch="${bookingUser.bookingStatus}" id="bookingListTable">
+                                            <div th:case="0">
+                                               <button th:id="|check${bookingUser.id}|" type="button" class="btn btn-sm btn-outline-secondary"
+                                               onclick="remainApply(this)" th:value="${bookingUser.id}">확인</button></span>
+
+                                                <!--넘길데이터 남은인원수랑 예약인원수-->
+                                                <input type="hidden" th:value="${bookingUser.departure}" th:id="|checkdeparture${bookingUser.id}|">
+                                                <input type="hidden" th:value="${bookingUser.apackage.id}" th:id="|checkpackagenum${bookingUser.id}|">
+                                                <input type="hidden" th:value="${bookingUser.id}"th:id="|check${bookingUser.id}|">
+                                                <input type="hidden" th:value="${bookingUser.bookingTotalCount}" th:id="|checkcount${bookingUser.id}|">
+
+                                            </div>
+
+<!--                                    <li><a style="color: red" id="countMessage"></a></li>-->
+
+
                                     <span th:case="1" style="color:#46a546">결제 대기 중 </span>
                                     <span th:case="2" style="color: #0044cc">결제 완료 </span>
+                                    <span th:case="3" style="color: red">예약 취소</span>
+                                    <span th:case="4" style="color: red">결제 취소</span>
+
                                 </td>
                                 </td>
                                 </tr>
