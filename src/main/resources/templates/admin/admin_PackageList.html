@@ -120,9 +120,9 @@
                                     <td th:text="${package.packageName}"></td>
                                     <td th:text="|${package.location1} ${package.location2}|"></td>
                                     <td>
-                                        <span th:text="${#strings.substring(package.postStart,0,10)}"/>
+                                        <span th:text="${package.postStart}"/>
                                         <span>~</span>
-                                        <span th:text="${#strings.substring(package.postEnd,0,10)}"/> </td>
+                                        <span th:text="${package.postEnd}"/> </td>
 
                                     <td>
                                         <a th:href="@{|/admin/package/modify/${package.id}|}" th:text="수정"  class="btn btn-sm btn-outline-secondary" />

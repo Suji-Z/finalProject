@@ -108,7 +108,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("package/bookingCheck")
     public @ResponseBody HashMap<String,String> bookingCheck1(@RequestParam ("packageNum") Long packageNum, @RequestParam("departure") String departure,
-                               @RequestParam ("bookingNum") Long bookingNum, @RequestParam("bookingcount") Integer bookingcount){
+                                                              @RequestParam ("bookingNum") Long bookingNum, @RequestParam("bookingcount") Integer bookingcount){
 
         PackageDate packageDate = adminPackageDateService.getPackageDate(packageNum, departure);
         int remainCount = packageDate.getRemaincount();
@@ -143,7 +143,7 @@ public class AdminController {
 
         HashMap<String,String> info = new HashMap<String,String>();
 
-            info.put("msg",msg);
+        info.put("msg",msg);
 
 
         System.out.println("사이즈" + info.size());
@@ -164,9 +164,9 @@ public class AdminController {
     @PostMapping("/packageForm")
     public String createPackagePost(@Valid PackageCreate packageCreate,  BindingResult bindingResult,@RequestParam("image1") MultipartFile multipartFile1,
                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
-//        if(bindingResult.hasErrors()){
-//            return "admin/admin_Package";
-//        }
+        if(bindingResult.hasErrors()){
+            return "admin/admin_Package";
+        }
 
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
@@ -363,7 +363,7 @@ public class AdminController {
     @GetMapping("/user/delete/{email}")
     public String packageDelete(@PathVariable("email") String email) {
         Member member = memberService.getMember(String.valueOf(email));
-        adminPackageService.delete(member);
+        adminPackageService.memberDelete(member);
         return "redirect:/admin/user";
     }
 
