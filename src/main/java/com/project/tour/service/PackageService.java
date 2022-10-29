@@ -139,25 +139,6 @@ public class PackageService {
 
     }
 
-//    public Page<Package> getList(Pageable pageable){
-//
-//
-//        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-//        sorts.add(Sort.Order.desc("packageName"));
-//
-//
-//        pageable = PageRequest.of(
-//                pageable.getPageNumber() <= 0 ? 0 :
-//                        pageable.getPageNumber() -1,	//spring paging index는 0부터 시작하기 때문에 -1
-//                pageable.getPageSize(),Sort.by(sorts));
-//
-//        //getPageNumber : 반환할 페이지
-//        //getPageSize : 반환할 항목수
-//        //PageRequest : 정렬 매개변수가 적용된 새로운 항목을 생성
-//
-//
-//        return packageRepository.findAll(pageable);
-//    }
 
 
 
