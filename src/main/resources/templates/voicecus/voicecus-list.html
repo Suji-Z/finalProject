@@ -68,8 +68,11 @@
                 <td th:if="${voiceCus.types=='good'}">칭찬의 소리</td>
                 <td th:if="${voiceCus.types=='bad'}">불만의 소리</td>
                 <td th:if="${voiceCus.types=='suggestion'}">건의사항</td>
-                <td th:align="left">
+                <td th:align="left" th:if="${email==voiceCus.author.email} or email=='admin@naver.com'">
                   <a th:href="@{|/voiceCus/article/${voiceCus.id}|}" th:text="${voiceCus.subject}"></a>
+                </td>
+                <td th:align="left" th:if="${email!=voiceCus.author.email} and email!='admin@naver.com'">
+                  <a th:href="@{|/voiceCus/article/chkPwd/${voiceCus.id}|}" th:text="${voiceCus.subject}"></a>
                 </td>
                 <td th:text="${voiceCus.author.getName()}"></td>
                 <td th:text="${#temporals.format(voiceCus.createdDate,'yyyy-MM-dd HH:mm')}">2022-09-25</td>
@@ -79,11 +82,15 @@
 
                   <td></td>
                   <td></td>
-                  <td th:align="left">
+                  <td th:align="left" th:if="${email==voiceCus.author.email} or email=='admin@naver.com'">
                     <a style="color: black" th:href="@{|/reVoiceCus/article/${reply.id}|}">&nbsp;&nbsp;└[답변]소중한 의견 감사합니다.</a>
+                  </td>
+                  <td th:align="left" th:if="${email!=voiceCus.author.email} and email!='admin@naver.com'">
+                    <a style="color: black" th:href="@{|/reVoiceCus/article/chkPwd/${reply.id}|}">&nbsp;&nbsp;└[답변]소중한 의견 감사합니다.</a>
                   </td>
                   <td th:text="관리자"></td>
                   <td th:text="${#temporals.format(reply.createdDate,'yyyy-MM-dd')}"></td>
+
 
                 </tr>
               </th:block>
@@ -136,6 +143,8 @@
 </section>
 
 <!-- Cta Area -->
-
+<script>
+  ${}
+</script>
 
 </body></html>

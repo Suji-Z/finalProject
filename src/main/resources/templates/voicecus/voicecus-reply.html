@@ -32,18 +32,18 @@
                                 <ul>
                                     <li>
                                         <span style="font-size: 15pt;margin: auto"
-                                              th:text="${voiceCus.subject}"></span></li>
+                                              th:text="${reply.voiceCus.getSubject()}"></span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성자</span>
-                                        <span th:text="${voiceCus.author.getName()}"></span>
+                                        <span th:text="${reply.voiceCus.author.getName()}"></span>
                                         <span style="width: 40%"></span>
                                         <colspan style="text-align:center;width: 100px">분류</colspan>
-                                        <span th:if="${voiceCus.types=='good'}"><b>칭찬의 소리</b></span>
-                                        <span th:if="${voiceCus.types=='bad'}"><b>불만의 소리</b></span>
-                                        <span th:if="${voiceCus.types=='suggestion'}"><b>건의사항</b></span></li>
+                                        <span th:if="${reply.voiceCus.getTypes()=='good'}"><b>칭찬의 소리</b></span>
+                                        <span th:if="${reply.voiceCus.getTypes()=='bad'}"><b>불만의 소리</b></span>
+                                        <span th:if="${reply.voiceCus.getTypes()=='suggestion'}"><b>건의사항</b></span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성일</span>
-                                        <span th:text="${#temporals.format(voiceCus.createdDate,'yyyy-MM-dd HH:mm')}"></span>
+                                        <span th:text="${#temporals.format(reply.voiceCus.getCreatedDate(),'yyyy-MM-dd HH:mm')}"></span>
                                         <span style="width: 38%"></span>
 
 
@@ -52,7 +52,7 @@
                                         <div class="col-lg-8">
                                          <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
                                             resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
-                                                   th:text="${voiceCus.content}" disabled="disabled"></textarea>
+                                                   th:text="${reply.voiceCus.getContent()}" disabled="disabled"></textarea>
                                         </div> </li>
 
 
@@ -66,13 +66,7 @@
 
         </div>
 
-        <div style="float: right">
-        <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==voiceCus.author.email
-        or #authentication.getPrincipal().getUsername()=='admin@naver.com' and voiceCus.author!=null}">
-            <button type="button" th:onclick="|location.href='@{|/voiceCus/modify/${voiceCus.id}|}'|" class="btn btn-outline-secondary">수정</button>
-            <button type="button" th:onclick="|location.href='@{|/voiceCus/delete/${voiceCus.id}|}'|" class="btn btn-outline-secondary">삭제</button>
-        </a>
-        </div>
+
 
         <br/><br/><br/><br/>
         <div class="container" style="width: 80%;">
@@ -86,9 +80,9 @@
                                         <span>관리자</span>
                                         <span style="width: 40%"></span>
                                         <colspan style="text-align:center;width: 100px">분류</colspan>
-                                        <span th:if="${voiceCus.types=='good'}"><b>칭찬의 소리</b></span>
-                                        <span th:if="${voiceCus.types=='bad'}"><b>불만의 소리</b></span>
-                                        <span th:if="${voiceCus.types=='suggestion'}"><b>건의사항</b></span></li>
+                                        <span th:if="${reply.voiceCus.getTypes()=='good'}"><b>칭찬의 소리</b></span>
+                                        <span th:if="${reply.voiceCus.getTypes()=='bad'}"><b>불만의 소리</b></span>
+                                        <span th:if="${reply.voiceCus.getTypes()=='suggestion'}"><b>건의사항</b></span></li>
 
                                     <li><span style="text-align:center;width: 14%">작성일</span>
                                         <span th:text="${#temporals.format(reply.createdDate,'yyyy-MM-dd')}"></span>
@@ -109,11 +103,12 @@
                         </div>
         </div>
     </div>
-    <div class="col-lg-8">
-        <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==voiceCus.author.email
-        or #authentication.getPrincipal().getUsername()=='admin@naver.com' and voiceCus.author!=null}">
-            <button type="button" th:onclick="|location.href='@{|/reVoiceCus/modify/${voiceCus.id}|}'|" class="btn btn-outline-secondary">수정</button>
-            <button type="button" th:onclick="|location.href='@{|/reVoiceCus/delete/${voiceCus.id}|}'|" class="btn btn-outline-secondary">삭제</button>
+    <div class="col-lg-9" align="right">
+        <br/>
+        <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==reply.voiceCus.author.getEmail()
+        or #authentication.getPrincipal().getUsername()=='admin@naver.com' and reply.voiceCus.getAuthor()!=null}">
+            <button type="button" th:onclick="|location.href='@{|/reVoiceCus/modify/${reply.id}|}'|" class="btn btn-outline-secondary">수정</button>
+            <button type="button" th:onclick="|location.href='@{|/reVoiceCus/delete/${reply.id}|}'|" class="btn btn-outline-secondary">삭제</button>
         </a>
     </div>
 
