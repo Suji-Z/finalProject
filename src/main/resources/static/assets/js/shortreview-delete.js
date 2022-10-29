@@ -14,7 +14,6 @@ function shortReviewDelete(event){
 
             alert("리뷰를 삭제하였습니다.");
             $('#shortReview').replaceWith(data);
-            location.reload();
 
         },
         error: function(xhr, status, error) {

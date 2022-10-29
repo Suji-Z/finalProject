@@ -21,7 +21,6 @@ function shortreview(){
 
             document.getElementById("content").value='';
             $('#shortReview').replaceWith(data);
-            location.reload();
 
         },
         error: function(xhr, status, error) {
