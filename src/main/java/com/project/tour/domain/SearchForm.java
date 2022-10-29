@@ -9,7 +9,8 @@ import java.util.List;
 @Setter
 public class SearchForm {
 
-    private String location;
+    private String location1;
+    private String location2;
     private String departure;
     private Integer totcount;
     private String keyword;

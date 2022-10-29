@@ -42,6 +42,8 @@
                             <h2 th:text="${packages.packageName}"></h2>
                         </div>
                         <div class="tour_details_top_heading_right">
+                            <h4 th:if="${sum==0}">★ 0/5</h4>
+                            <h4 th:if="${sum!=0}" th:text="|★ ${#numbers.formatDecimal((sum/size),1,1)}/5|"></h4>
 
                             <p th:text="|(리뷰 ${size})|"></p>
                         </div>

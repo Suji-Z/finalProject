@@ -76,7 +76,8 @@ public class AbroadPackageController {
 
 
     @GetMapping("/abroad")
-    public String packagelist(@RequestParam(value = "location", required = false) String location,
+    public String packagelist(@RequestParam(value = "location1", required = false) String location1,
+                              @RequestParam(value = "location2", required = false) String location2,
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
                               @RequestParam(value = "keyword", required = false) String keyword,
@@ -125,7 +126,8 @@ public class AbroadPackageController {
 
 
         log.info("DATE : " + date);
-        log.info("LOCATION : " + location);
+        log.info("LOCATION1 : " + location1);
+        log.info("LOCATION2 : " + location2);
         log.info("COUNT : " + String.valueOf(count));
         log.info("KEYWORD : " + keyword);
         log.info("TRANSPORTS : " + transports);
@@ -133,7 +135,7 @@ public class AbroadPackageController {
 
 
 
-        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,hitCount,pageable,searchForm);
+        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location1,location2, date, count,keyword,transport,period,pricerangestr,pricerangeend,hitCount,pageable);
 
 
 
@@ -144,61 +146,6 @@ public class AbroadPackageController {
     }
 
 
-
-
-    /**
-     * 상세페이지 여행날짜별 가격출력
-     */
-    @GetMapping("/dateprice/abroad")
-    @ResponseBody
-    public HashMap<String, Object> datecountpriceabroad(@RequestParam("acount") Integer acount, @RequestParam("ccount") Integer ccount,
-                                                  @RequestParam("bcount") Integer bcount, @RequestParam("date") String date,
-                                                  @RequestParam("packagenum") Long packagenum) {
-
-        HashMap<String, Object> priceInfo = new HashMap<String, Object>();
-        int aprice, bprice, cprice, dcaprice, dcbprice, dccprice;
-
-        date = date.replaceAll("-", "");
-
-        log.info(date.getClass().getTypeName());
-
-        /* 해당 날짜에 어른/아이/유아 타입별 가격*/
-        PackageDate getPackage = packagedateService.getPrice(packagenum, date);
-        Integer discount = getPackage.getDiscount();
-
-        /* 잔여좌석 여부 */
-        Integer remaincount = getPackage.getRemaincount();
-        Integer totcount = acount + bcount + ccount;
-
-        /** 정가 */
-        aprice = getPackage.getAprice() * acount;
-        bprice = getPackage.getBprice() * bcount;
-        cprice = getPackage.getCprice() * ccount;
-
-        if (getPackage.getDiscount() == null) {
-        } else {/** 할인가 */
-
-            dcaprice = (int) (aprice - (aprice * (discount * 0.01)));
-            dcbprice = (int) (bprice - (bprice * (discount * 0.01)));
-            dccprice = (int) (cprice - (cprice * (discount * 0.01)));
-            priceInfo.put("dcaprice", dcaprice);
-            priceInfo.put("dcbprice", dcbprice);
-            priceInfo.put("dccprice", dccprice);
-        }
-
-        //json형태 데이터로 넘기기
-        priceInfo.put("acount", acount);
-        priceInfo.put("aprice", aprice);
-        priceInfo.put("ccount", ccount);
-        priceInfo.put("cprice", cprice);
-        priceInfo.put("bcount", bcount);
-        priceInfo.put("bprice", bprice);
-        priceInfo.put("discount", discount);
-        priceInfo.put("remaincount", remaincount);
-        priceInfo.put("totcount", totcount);
-
-        return priceInfo;
-    }
 
 
 
