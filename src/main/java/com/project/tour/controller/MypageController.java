@@ -373,6 +373,11 @@ public class MypageController {
     @PostMapping(value = "/update")
     public String update2(@Valid MemberCreate memberCreate,BindingResult bindingResult,Principal principal,@LoginUser SessionUser user){
 
+
+//        if(bindingResult.hasErrors()){
+//            return "mypage/mypage_profileUpdate";
+//        }
+
         Member member;
 
         if(memberService.existByEmail(principal.getName())){

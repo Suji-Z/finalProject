@@ -46,8 +46,6 @@ public class Review {
     @OneToMany(mappedBy = "reviewNum", cascade = CascadeType.REMOVE)
     private List<Review_reply> replyList;
 
-//    @ManyToMany
-//    Set<Member> voter;
 
     @Transient
     public String getPhotosImagePath() {

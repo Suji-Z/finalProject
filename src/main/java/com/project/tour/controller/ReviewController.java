@@ -212,17 +212,11 @@ public class ReviewController {
     }
 
 
-    @RequestMapping (value = {"/article/{id}","/article/reply"})
+    @RequestMapping (value = "/article/{id}")
     public String article(Model model, @PathVariable("id") Long id, ReviewReplyForm reviewReplyForm,
-                          Principal principal,@LoginUser SessionUser user,@RequestParam(value = "replyLike",required = false) Boolean replyLike){
+                          Principal principal,@LoginUser SessionUser user){
 
         Review review = reviewService.getReview(id);
-
-        if(replyLike==null||replyLike.equals("")){
-
-            replyLike=false;
-
-        }
 
         Member member;
 
@@ -285,8 +279,6 @@ public class ReviewController {
         int hitCount = review.getHitCount()+1;
         reviewService.updateHitCount(hitCount,id);
 
-
-        model.addAttribute("replyLike",replyLike);
 
         //model.addAttribute("reviewLike",reviewService.getReviewLike(id2,id));
 
@@ -455,46 +447,59 @@ public class ReviewController {
 
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/replyVote/{id}")
-    public String reviewReplyVote(Principal principal, @PathVariable("id") Long id,@LoginUser SessionUser user){
-
-
-        Review_reply review_reply = reviewReplyService.getReply(id);
-
-        Review review = reviewService.getReview(review_reply.getReviewNum().getId());
-
-        Member member;
-
-        if(memberService.existByEmail(principal.getName())){
-
-            member = memberService.getName(principal.getName());
-
-        }else{
-
-            member = memberService.getName(user.getEmail());
-
-        }
-
-        member = memberService.getMember(principal.getName());
-
-        Long id2 = member.getId();
-
-        if(reviewReplyService.getReplyLike(id2, review.getId())){
-
-            reviewReplyService.deleteReplyLike(id2, review.getId());
-
-
-        }else{
-            reviewReplyService.vote(review_reply,member,review);
-
-        }
-
-
-
-        return String.format("redirect:/review/article/%s#reply_%s",
-                review_reply.getReviewNum().getId(),review_reply.getId());
-
-    }
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/replyVote")
+//    public @ResponseBody HashMap<String,Object> reviewReplyVote
+//            (@RequestParam("id") Long id,@RequestParam("likeStatus") int likeStatus,
+//             Principal principal,@LoginUser SessionUser user){
+//
+//
+//
+//
+//
+//        //Review review = reviewService.getReview(review_reply.getReviewNum().getId());
+//
+//        Member member;
+//
+//        if(memberService.existByEmail(principal.getName())){
+//
+//            member = memberService.getName(principal.getName());
+//
+//        }else{
+//
+//            member = memberService.getName(user.getEmail());
+//
+//        }
+//
+//        Review_reply review_reply = reviewReplyService.getReplyStatus(id,member.getId());
+//
+//        if(likeStatus==0){
+//            reviewReplyService.updateLikeStatus(review_reply,1);
+//
+//        }else{
+//            reviewReplyService.updateLikeStatus(review_reply,0);
+//        }
+//
+////        if(reviewReplyService.getReplyLike(id2, review.getId())){
+////
+////            reviewReplyService.deleteReplyLike(id2, review.getId());
+////
+////
+////        }else{
+////            reviewReplyService.vote(review_reply,member,review);
+////
+////        }
+//
+////
+////
+////        return String.format("redirect:/review/article/%s#reply_%s",
+////                review_reply.getReviewNum().getId(),review_reply.getId());
+//
+//        HashMap<String,Object> recommendInfo = new HashMap<>();
+//        recommendInfo.put("reviewReply.likeStatus",review_reply.getLikeStatus());
+//
+//        return recommendInfo;
+//
+//    }
 
 }

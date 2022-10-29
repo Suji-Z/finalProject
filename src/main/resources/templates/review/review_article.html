@@ -104,6 +104,7 @@
                              <h2>&nbsp;</h2>
                              <h5>작성자</h5>
                              <h5>작성일</h5>
+                             <h5>조회수</h5>
                                     </div>
 
                                 <div class="valid_date_area_one">
@@ -113,6 +114,7 @@
                                     <h5 th:text="${review.author.name}"></h5>
                              
                              <h5 th:text="${#temporals.format(review.created,'yyyy-MM-dd HH:mm')}"></h5>
+                                    <h5 th:text="${review.hitCount}"></h5>
 
 
 
@@ -153,12 +155,14 @@
                         </div>
                          <div class="valid_date_area">
                                     <div class="valid_date_area_one">
-                                        <h5>지   역</h5>
+                                        <h5>지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;역</h5>
                                         <h5>이용상품</h5>
+                                        <h5>여행기간</h5>
                                     </div>
                                     <div class="valid_date_area_one">
                                         <h5 th:text="|${review.reviewPackages.location1}&nbsp;${review.reviewPackages.location2}|">제주도</h5>
                                         <h5 th:text="${review.reviewPackages.packageName}">어쩌구 패키지</h5>
+                                        <h5 th:text="|${review.reviewPackages.travelPeriod}박 ${review.reviewPackages.travelPeriod+1}일|"></h5>
                                     </div>
                                 
                         </div>
@@ -211,16 +215,16 @@
                                         <h4 th:text="${reviewReply.author.name}">배수지</h4> &nbsp;
                                         <h5 th:text="${#temporals.format(reviewReply.created,'yyyy-MM-dd HH:mm')}"></h5>&nbsp;
 
-                                        <a  class="replyRecommend" id="likeOff" onclick="likeBtn()" type="button">
 
-                                            <i class="fa-regular fa-heart"></i>좋아요</a>&nbsp;
+<!--                                        <div th:if="${reviewReply.likeStatus==1}"><span><img src="/assets/img/icon/ReviewHeart2.png"-->
+<!--                                                        th:height="20" th:width="20" class="replyHeart" id="likeOn"/></span></div>-->
 
-                                        <a class="replyCancel" id="likeOn" style="display: none" type="button" onclick="dislikeBtn()">
+<!--                                        <div th:if="${reviewReply.likeStatus==0}"><span><img src="/assets/img/icon/ReviewHeart1.png"-->
+<!--                                                         th:height="20" th:width="20" class="replyHeart" id="likeOff"/></span></div>-->
 
-                                            <i class="fas fa-heart"></i>좋아요</a>&nbsp;
+<!--                                        <input type="hidden" th:value="${reviewReply.id}" id="replyId"/>-->
+<!--                                        <input type="hidden" th:value="${reviewReply.likeStatus}" id="likeStatus"/>-->
 
-
-                                        <input type="hidden" th:value="${reviewReply.id}" id="replyId"/>
 
 
                                         <a th:href="@{|/review/replyUpdate/${reviewReply.id}|}"
@@ -228,31 +232,6 @@
                                            th:if="${reviewReply.author.id}==${member.id}">수정</a>&nbsp;
                                         <a th:href="@{|/review/replyDelete/${reviewReply.id}|}" sec:authorize="isAuthenticated()"
                                            th:if="${reviewReply.author.id}==${member.id}">삭제</a>
-
-<!--                                        <script type="text/javascript">-->
-<!--                                            const replyRecommendBtn = document.getElementsByClassName("replyRecommend");-->
-<!--                                            Array.from(replyRecommendBtn).forEach(function(element){-->
-<!--                                                element.addEventListener('click',function(){-->
-<!--                                                    if(confirm("댓글을 추천하시겠습니까?")){-->
-
-<!--                                                        location.href=this.dataset.uri;-->
-<!--                                                    }-->
-<!--                                                });-->
-<!--                                            });-->
-
-
-<!--                                            const replyCancelBtn = document.getElementsByClassName("replyCancel");-->
-<!--                                            Array.from(replyCancelBtn).forEach(function(element){-->
-<!--                                                element.addEventListener('click',function(){-->
-<!--                                                    if(confirm("댓글추천을 취소하시겠습니까?")){-->
-
-<!--                                                        location.href=this.dataset.uri;-->
-<!--                                                    }-->
-<!--                                                });-->
-<!--                                            });-->
-
-<!--                                        </script>-->
-
 
                                     </div>
                                       <p th:text="${reviewReply.content}"></p>
@@ -274,11 +253,11 @@
                                     <div class="col-lg-12">
                                         <div class="form-froup">
                                             <textarea rows="6" placeholder="댓글을 입력해 주세요"
-                                                class="form-control bg_input" th:field="*{content}" name="content"></textarea>
+                                                class="form-control bg_input" th:field="*{content}" id="reviewReplyContent"></textarea>
                                         </div>
                                         <br/>
                                         <div class="comment_form_submit">
-                                            <button class="btn btn_theme btn_md" type="submit">등록하기</button>
+                                            <button class="btn btn_theme btn_md" type="submit" onclick="return reviewReplyCheck()">등록하기</button>
                                             <a th:href="@{/review}" class="btn btn_theme btn_md">취소하기</a>
                                         </div>
                                     </div>

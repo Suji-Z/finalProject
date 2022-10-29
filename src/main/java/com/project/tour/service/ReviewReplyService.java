@@ -69,28 +69,40 @@ public class ReviewReplyService {
 
     }
 
-    public void vote(Review_reply review_reply, Member member , Review review){
 
-        ReplyLike replyLike = new ReplyLike();
+    public Review_reply getReplyStatus(Long id1,Long id2){
 
-        replyLike.setReply(review_reply);
-        replyLike.setMember(member);
-        replyLike.setReview(review);
+        Optional<Review_reply> reviewReply = reviewReplyRepository.findByIdAndAuthor_Id(id1,id2);
 
-        replyLikeRepository.save(replyLike);
-
-
+        if(reviewReply.isPresent()){
+            return reviewReply.get();
+        }else {
+            throw new DataNotFoundException("멤버댓글이 없습니다");
+        }
     }
 
-    public boolean getReplyLike(Long id1,Long id2){
-        Optional<ReplyLike> op2 = replyLikeRepository.findByMember_IdAndReview_Id(id1,id2);
+//    public void vote(Review_reply review_reply, Member member , Review review){
+//
+//        ReplyLike replyLike = new ReplyLike();
+//
+//        replyLike.setReply(review_reply);
+//        replyLike.setMember(member);
+//        replyLike.setReview(review);
+//
+//        replyLikeRepository.save(replyLike);
+//
+//
+//    }
 
-        if(op2.isPresent())
-            return true;
-        else
-            return false;
-
-    }
+//    public boolean getReplyLike(Long id1,Long id2){
+//        Optional<ReplyLike> op2 = replyLikeRepository.findByMember_IdAndReview_Id(id1,id2);
+//
+//        if(op2.isPresent())
+//            return true;
+//        else
+//            return false;
+//
+//    }
 
 
 
