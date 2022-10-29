@@ -132,8 +132,9 @@ public class AdminPackageService {
         memberRepository.save(member);
     }
 
+
     //회원탈퇴
-    public void delete(Member member) {
+    public void memberDelete(Member member) {
         memberRepository.delete(member);
     }
 

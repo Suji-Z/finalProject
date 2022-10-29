@@ -113,7 +113,7 @@
                                 <td th:text="${bookingUser.apackage.packageName}"></td>
                                 <td th:text="${bookingUser.departure}"></td>
                                 <td th:text="${#numbers.formatInteger(bookingUser.bookingTotalPrice,3,'COMMA')+'원'}"></td>
-                                <td th:switch="${bookingUser.bookingStatus}" id="bookingListTable">
+                                <td th:switch="${bookingUser.bookingStatus}">
                                             <div th:case="0">
                                                <button th:id="|check${bookingUser.id}|" type="button" class="btn btn-sm btn-outline-secondary"
                                                onclick="remainApply(this)" th:value="${bookingUser.id}">확인</button></span>
