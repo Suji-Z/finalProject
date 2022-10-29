@@ -94,12 +94,14 @@
 
                        <div class="valid_date_area">
                                     <div class="valid_date_area_one">
-                                        <h5>지   역</h5>
+                                        <h5>지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;역</h5>
                                         <h5>이용상품</h5>
+                                        <h5>여행기간</h5>
                                     </div>
                                     <div class="valid_date_area_one">
                                         <h5 th:text="|${review.reviewPackages.location1}&nbsp;${review.reviewPackages.location2}|">베트남 다낭</h5>
                                         <h5 th:text="${review.reviewPackages.packageName}">어쩌구 패키지</h5>
+                                        <h5 th:text="|${review.reviewPackages.travelPeriod}박 ${review.reviewPackages.travelPeriod+1}일|"></h5>
                                     </div>
                                 
                         </div>
