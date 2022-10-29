@@ -32,8 +32,5 @@ public class ShortReview {
     @JoinColumn(name = "packageNum")
     private Package packages;
 
-    //하나의 리뷰에 많은 댓글
-    @OneToMany(mappedBy = "shortReviewNum", cascade = CascadeType.REMOVE)
-    private List<ShortReviewReply> shortReplyList;
 
 }

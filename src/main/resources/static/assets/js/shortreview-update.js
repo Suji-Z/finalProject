@@ -43,7 +43,6 @@ function shortReviewUpdate2(event){
 
                 alert("리뷰를 수정하였습니다.");
                 $('#shortReview').replaceWith(data);
-                location.reload();
 
             },
             error: function(xhr, status, error) {

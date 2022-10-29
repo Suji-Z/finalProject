@@ -45,12 +45,36 @@ public class AbroadPackageController {
 
     private final ShortReviewService shortReviewService;
 
-    private final ShortReviewReplyService shortReviewReplyService;
 
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    /** 전체리스트 */
+
+    @ModelAttribute("transports")
+    public Map<String, String> transport() {
+        Map<String, String> transport = new LinkedHashMap<>();
+        transport.put("대한항공", "대한항공");
+        transport.put("아시아나항공", "아시아나항공");
+        transport.put("제주항공", "제주항공");
+        transport.put("진에어", "진에어");
+        transport.put("티웨이", "티웨이");
+        return transport;
+    }
+
+    @ModelAttribute("travelPeriods")
+    public Map<String, String> travelPeriod() {
+        Map<String, String> travelPeriod = new LinkedHashMap<>();
+        travelPeriod.put("1,2", "2일 ~ 3일");
+        travelPeriod.put("3,4", "4일 ~ 5일");
+        travelPeriod.put("5,6", "6일 ~ 7일");
+        travelPeriod.put("7,8,9", "8일 ~ 10일");
+        return travelPeriod;
+    }
+
+
+
+
+
     @GetMapping("/abroad")
     public String packagelist(@RequestParam(value = "location", required = false) String location,
                               @RequestParam(value = "date", required = false) String date,
@@ -71,16 +95,9 @@ public class AbroadPackageController {
 
         //날짜가 선택되지 않았을때
         if (date == null || date.equals("")) {
-            LocalDate today = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-            date = today.format(formatter);
-
+            date = null;
         } else {//날짜포맷 db와 맞추기
             date = date.replaceAll("-", "");
-        }
-
-        if(keyword==null || keyword.equals("")){
-            keyword=null;
         }
 
         //항공사 다중선택시
@@ -106,14 +123,6 @@ public class AbroadPackageController {
             }
         }
 
-        //가격범위
-        if(pricerangestr==null || pricerangestr.equals("") && pricerangeend==null || pricerangeend.equals("")){
-            pricerangestr =null;
-            pricerangeend = null;
-        }else{
-            log.info("pricerangestr : " + pricerangestr);
-            log.info("pricerangeend : " + pricerangeend);
-        }
 
         log.info("DATE : " + date);
         log.info("LOCATION : " + location);
@@ -125,6 +134,8 @@ public class AbroadPackageController {
 
 
         Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,hitCount,pageable,searchForm);
+
+
 
         model.addAttribute("paging", paging);
         model.addAttribute("searchForm", searchForm);
@@ -283,19 +294,32 @@ public class AbroadPackageController {
 
         }
 
-            //hitCount 증가
-//        int hitCount = packages.getHitCount()+1;
-//        packageService.updateHitCount(hitCount,id);
+        //hitCount 증가
+        int hitCount = packages.getHitCount()+1;
+        packageService.updateHitCount(hitCount,id);
 
         List<ShortReview> shortReviewList = shortReviewService.getshortReviewList(id);
         Integer size = shortReviewList.size();
 
+        Double sum = 0.0;
 
-        model.addAttribute("shortReviewList", shortReviewService.getshortReviewList(id));
+        Iterator<ShortReview> it = shortReviewList.iterator();
+
+
+        while(it.hasNext()){
+            
+            sum += it.next().getScore();
+        }
+
+        System.out.println("합계" + sum);
+
+
+        model.addAttribute("shortReviewList", shortReviewList);
         model.addAttribute("size",size);
         model.addAttribute("packages",packages);
         model.addAttribute("shortReviewForm",shortReviewForm);
         model.addAttribute("bookingform",new BookingDTO());
+        model.addAttribute("sum",sum);
 
 
         return "abroadPackage/packagedetail";

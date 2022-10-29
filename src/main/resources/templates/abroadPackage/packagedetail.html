@@ -28,9 +28,9 @@
                             <h2 th:text="${packages.packageName}"></h2>
                         </div>
                         <div class="tour_details_top_heading_right">
-                            <h4>★ 4.8/5</h4>
+                            <h4 th:text="|★ ${#numbers.formatDecimal((sum/size),1,1)}/5|"></h4>
 
-                            <p>(리뷰 1244)</p>
+                            <p th:text="|(리뷰 ${size})|"></p>
                         </div>
                     </div>
 
@@ -175,8 +175,6 @@
         <div class="row">
             <div class="review_col-md-7">
                 <div class="write_your_review_wrapper">
-<!--                    <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==shortReview.userName.email-->
-<!--                    or #authentication.getPrincipal().getUsername()=='admin@naver.com' and shortReview.userName!=null}">-->
                         <div class="review_col-md-7">
                     <h3 class="heading_theme"></h3>
                     <div class="write_review_inner_boxed">
@@ -239,9 +237,9 @@
                         <div class="all_review_date_name">
                             <h5 th:text="${shortReview.userName.name}"></h5>
                         </div>
-                        <div class="all_review_date">
+                        <div class="all_review_date" style="margin-left: 50px;">
                             <h5 th:text="${#temporals.format(shortReview.created,'yy-MM-dd')}"></h5>
-                        </div>
+                        </div><br/>
 
 
 <!--                        <div class="all_review_star">-->
@@ -252,39 +250,39 @@
 <!--                                <h5><input type="text" id="score" th:value="${shortReview.score}" disabled="disabled"  style="background: white; border: none;"></h5>-->
 <!--                            </div>-->
 <!--                        </div>-->
+                    <div class="all_review_star">
+                        <div th:if="${shortReview.score.toString().equals('5.0')}" class="review_star_all" style="">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('4.0')}" class="review_star_all" style="padding-left: 0px;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('3.0')}" class="review_star_all" style="margin-left: 50px;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('2.0')}" class="review_star_all" style="margin-left: 50px;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${shortReview.score.toString().equals('1.0')}" class="review_star_all" style="margin-left: 50px;">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
 
-                        <div th:if="${shortReview.score.toString().equals('5.0')}" class="review_star_all" style="float: left">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div th:if="${shortReview.score.toString().equals('4.0')}" class="review_star_all" style="float: left">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div th:if="${shortReview.score.toString().equals('3.0')}" class="review_star_all" align="left">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div th:if="${shortReview.score.toString().equals('2.0')}" class="review_star_all" align="left">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div th:if="${shortReview.score.toString().equals('1.0')}" class="review_star_all" align="left">
-                            <i class="fas fa-star"></i>
-                        </div>
 
-
-
-                    </div><br/>
+                    </div><br/><br/>
 
                     <div class="all_review_text">
-                        <p th:id="|shortReviewOri${shortReview.id}|" th:text="${shortReview.content}"></p>
+                        <h5 th:id="|shortReviewOri${shortReview.id}|" th:text="${shortReview.content}"></h5>
                         <textarea row="1" th:text="${shortReview.content}" class="form-control bg_input" th:id="|shortReviewBox${shortReview.id}|" style="display:none;"></textarea>
                     </div>
 

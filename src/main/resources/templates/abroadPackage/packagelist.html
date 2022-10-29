@@ -233,7 +233,7 @@
     </div>
 
 <!-- Flight Search Areas -->
-<div id="explore_area" class="section_padding">
+  <div id="explore_area" class="section_padding" style="padding-top:50px;">
   <div class="row">
     <div class="col-lg-10 offset-lg-1">
       <div class="">
@@ -243,7 +243,6 @@
               <div class="theme_nav_tab">
                 <nav class="theme_nav_tab_item">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  </div>
                     <button class="nav-link" th:field="*{keyword}" name="keyword" value="healing"
                                 th:classappend="*{keyword == 'healing'} ? 'active' : ''" data-bs-toggle="tab" role="tab">힐링
                     </button>
@@ -268,6 +267,7 @@
                     <button class="nav-link" th:field="*{keyword}" name="keyword" value="animal"
                             th:classappend="*{keyword == 'animal'} ? 'active' : ''" data-bs-toggle="tab" role="tab">애견동반
                     </button>
+                  </div>
                 </nav>
               </div>
             </div>
@@ -357,7 +357,7 @@
                       <a th:href="@{|/package/${package.id}|}"><img th:src="@{|/package-preview/${package.id}/${package.previewImage}|}"/></a>
 
                       <div class="multi_city_flight_lists_content">
-                        <h3><a th:href="@{|/package/${package.location2}/${package.id}|}" th:text="${package.packageName}"></a></h3>
+                        <h3><a th:href="@{|/package/${package.id}|}" th:text="${package.packageName}"></a></h3>
                         <br/>
                         <h5 th:text="${package.packageInfo}"></h5>
                       </div>
@@ -366,11 +366,12 @@
                   <div class="flight_search_right">
                     <div class="flight_search_right_content">
                       <th:block th:if="${not #strings.isEmpty(package.discount)}">
-                        <h5>
+                        <div class="package_discount_sally">
+                          <p th:text="|${package.discount}%|"></p>
+                        </div>                        <h5>
                           <del th:text="|${#numbers.formatInteger(package.aprice,1,'COMMA')}원|"></del>
                         </h5>
-                        <h2><span th:text="|${#numbers.formatInteger(package.aprice - (package.aprice *(package.aprice * 0.01)),1,'COMMA')}원|"></span>
-                          <sup th:text="|${package.discount}% 할인|"></sup>
+                        <h2><span th:text="|${#numbers.formatInteger(package.aprice - (package.aprice *(package.discount * 0.01)),1,'COMMA')}원|"></span>
                         </h2>
                       </th:block>
                       <th:block th:if="${#strings.isEmpty(package.discount)}">
@@ -381,17 +382,25 @@
 
                       <div class="all_review_star">
                         <div class="review_star_all">
-                          <i class="fas fa-star"></i>
-                          <span class="review_rating" th:text="|리뷰자리/5|"></span>
-                          <span class="review_count" th:text="|(리뷰 갯수) reviews|"></span>
-                          <span class="review_rating" th:text="|조회수: ${package.hitCount}|"></span>
-
+                          <span class="review_rating" th:text="|리뷰     ${#numbers.formatDecimal((package.reviewScore/package.reviewCount),1,1)}/5 점|"></span>&nbsp;&nbsp;
+                            <span class="review_count" th:text="|${package.reviewCount} reviews|"></span><br/>
+                          <span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
                         </div>
                       </div>
+                      <div class="tour_package_details_bar_list">
+                        <ul>
+                          <li><i class="bi bi-person-check-fill"  style="font-size: 20px; "></i><span th:text="|최대 수량 ${package.count}|"></span></li>
+                          <li><i class="bi bi-calendar-check"  style="font-size: 20px; "></i><span>예약가능 날짜</span></li>
+                          <li style="padding-top: 0px;"><span th:text="|${package.postStart} ~ ${package.postEnd}|" style="margin-left:30px;"></span></li>
+                          <li><i  class="bi bi-sun" style="font-size: 18px;"></i><span th:text="|여행기간 ${package.travelPeriod}박 ${package.travelPeriod+1}일|"></span></li>
+                          <li><i class="bi bi-tags-fill" style="font-size: 20px;"></i><span th:text="|테마 #${package.keyword}|"></span></li>
+                        </ul>
+                      </div>
                     </div>
-                    <span>
-                                            <a th:href="@{|/package/${package.id}|}" class="btn btn_theme btn_sm">예약하기</a>
-                                        </span>
+                    <div class="flight_search_right_button">
+                      <a th:href="@{|/package/${package.id}|}" class="btn btn_theme btn_sm" >예약하기</a>
+                      <input type="hidden" id="packageNum" th:value="${package.id}">
+                    </div>
                   </div>
                 </div>
               </div>

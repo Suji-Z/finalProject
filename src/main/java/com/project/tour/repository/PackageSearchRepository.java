@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.project.tour.domain.QPackageDate.packageDate;
 import static com.project.tour.domain.QPackage.package$;
+import static com.project.tour.domain.QShortReview.shortReview;
 
 @Repository
 @RequiredArgsConstructor
@@ -45,10 +46,15 @@ public class PackageSearchRepository {
                         packageDate.aprice,
                         packageDate.discount,
                         package$.count,
-                        package$.hitCount
+                        package$.hitCount,
+                        shortReview.count(),
+                        shortReview.score.sum()
+
+
                 ))
                 .from(package$)
                 .leftJoin(package$.packagedatelist, packageDate)
+                .leftJoin(shortReview).on(shortReview.packages.id.eq(package$.id))
                 .where(
                     location1Eq(condition.getLocation1()),
                     location2Eq(condition.getLocation2()),
@@ -60,7 +66,7 @@ public class PackageSearchRepository {
                     remaincountGoe(condition.getTotcount()),
                     keywordEq(condition.getKeyword())
                 )
-                .groupBy(package$.id)
+                .groupBy(package$.id,shortReview.packages.id)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(package$.id.desc())

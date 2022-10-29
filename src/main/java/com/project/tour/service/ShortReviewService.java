@@ -57,19 +57,7 @@ public class ShortReviewService {
 
         Optional<Package> packages = packageRepository.findById(packageNum);
 
-        return shortReviewRepository.findAllByPackages(packages.get());
-
-    }
-
-
-    public ShortReview getshortReviewId(Long id,Long packageNum){
-
-        Optional<ShortReview> op = shortReviewRepository.findByIdAndPackages_Id(id,packageNum);
-
-        if(op.isPresent())
-            return op.get();
-        else
-            throw new DataNotFoundException("리뷰가 없습니다");
+        return shortReviewRepository.findAllByPackagesOrderByIdDesc(packages.get());
 
     }
 

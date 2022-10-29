@@ -36,7 +36,6 @@ public class ShortReviewController {
 
     private final PackageDateService packagedateService;
 
-    private final ShortReviewReplyService shortReviewReplyService;
 
 
 
@@ -80,14 +79,22 @@ public class ShortReviewController {
 
         }
 
-        model.addAttribute("shortReviewList",shortReviewService.getshortReviewList(packageNum));
-        model.addAttribute("package", packages);
-        model.addAttribute("name",member.getName());
-        model.addAttribute("email", member.getEmail());
+
 
 
         //데이터저장
         shortReviewService.create(content,score,member,packages);
+
+        List<ShortReview> shortReviewList = shortReviewService.getshortReviewList(packageNum);
+        Integer size = shortReviewList.size();
+
+        model.addAttribute("shortReviewList",shortReviewService.getshortReviewList(packageNum));
+        model.addAttribute("name",member.getName());
+        model.addAttribute("email", member.getEmail());
+        model.addAttribute("size", size);
+
+
+
 
 
         return "abroadPackage/packagedetail :: #shortReview";
@@ -108,16 +115,28 @@ public class ShortReviewController {
 
         //로그인 확인
         Member member;
+        String  email;
+
+
         if(memberService.existByEmail(principal.getName())){
             member = memberService.getName(principal.getName());
+            email = member.getEmail();
+
         }else{
             member = memberService.getName(user.getEmail());
+            email = member.getEmail();
         }
 
 
        shortReviewService.update(shortReviewNum,packageNum,content);
+
+        List<ShortReview> shortReviewList = shortReviewService.getshortReviewList(packageNum);
+        Integer size = shortReviewList.size();
+
+
         model.addAttribute("shortReviewList",shortReviewService.getshortReviewList(packageNum));
-        model.addAttribute("member",member);
+        model.addAttribute("email",email);
+        model.addAttribute("size",size);
 
 
 
@@ -135,52 +154,32 @@ public class ShortReviewController {
 
         //로그인 확인
         Member member;
+        String email;
+
+
         if(memberService.existByEmail(principal.getName())){
             member = memberService.getName(principal.getName());
+            email = member.getEmail();
         }else{
             member = memberService.getName(user.getEmail());
+            email = member.getEmail();
         }
 
         shortReviewService.delete(shortReviewNum);
+
+        List<ShortReview> shortReviewList = shortReviewService.getshortReviewList(packageNum);
+        Integer size = shortReviewList.size();
+
         model.addAttribute("shortReviewList", shortReviewService.getshortReviewList(packageNum));
         model.addAttribute("member",member);
+        model.addAttribute("size",size);
+        model.addAttribute("email", email);
+
 
         return "abroadPackage/packagedetail :: #shortReview";
 
 
     }
-
-
-
-//
-//
-//
-//
-//    // 텍스트 리뷰 댓글 작성
-//    @RequestMapping("/shortreply/{id}")
-//    public String createShortReply(Model model, @PathVariable("id") Long id, Principal principal,
-//                                   @PageableDefault Pageable pageable, ShortReviewReplyForm shortReviewReplyForm,
-//                                   BindingResult bindingResult){
-//
-//        ShortReview shortReview = shortReviewService.getshortReview(id);
-//        Member userName = memberService.getMember(principal.getName());
-//
-//        if(bindingResult.hasErrors()){
-//            model.addAttribute("shortReview",shortReview);
-//            return "abroadPackage/packagedetail"; //실패하면 디테일 띄우기
-//
-//        }
-//
-//        System.out.println("쇼트리뷰:" + shortReview.getId());
-//        System.out.println("패키지:" + shortReview.getPackages().getId());
-//
-//
-//        ShortReviewReply shortReviewReply = shortReviewReplyService.create(shortReview, shortReviewReplyForm.getContent(),userName);
-//
-//        return String.format("redirect:/package/%s#shortReply%s",
-//                shortReviewReply.getShortReviewNum().getId(),shortReviewReply.getId());
-//
-//    }
 
 
 

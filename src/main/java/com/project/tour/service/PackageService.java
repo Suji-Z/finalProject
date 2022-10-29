@@ -26,7 +26,17 @@ import java.util.*;
 @Service
 public class PackageService {
 
-    @Transactional
+
+    @Autowired
+    private final PackageRepository packageRepository;
+
+    @Autowired
+    private final JejuPackageRepository jejuRepository;
+    @Autowired
+    private final PackageSearchRepository searchRepository;
+
+
+    //조회수 증가
     public void updateHitCount(int hitCount, Long id){
 
         Optional<Package> packages = packageRepository.findById(id);
@@ -36,14 +46,6 @@ public class PackageService {
 
     }
 
-
-    @Autowired
-    private final PackageRepository packageRepository;
-
-    @Autowired
-    private final JejuPackageRepository jejuRepository;
-    @Autowired
-    private final PackageSearchRepository searchRepository;
 
 
     public List<Package> getHitList(){
@@ -99,15 +101,16 @@ public class PackageService {
 
         PackageSearchCondition condition = new PackageSearchCondition();
 
-        if(searchForm.getLocation() == "유럽"){
-            condition.setLocation1("유럽");
-
-        } else if (searchForm.getLocation() == "아시아") {
-            condition.setLocation1("아시아");
-
-        }else if (searchForm.getLocation() == "미국") {
-            condition.setLocation1("미국");
-        }
+//        if(searchForm.getLocation() == "유럽"){
+//            condition.setLocation1("유럽");
+//
+//        } else if (searchForm.getLocation() == "아시아") {
+//            condition.setLocation1("아시아");
+//
+//        }else if (searchForm.getLocation() == "미국") {
+//            condition.setLocation1("미국");
+//        }
+        condition.setLocation1("유럽");
         condition.setLocation2(location2);
         condition.setStartday(date);
         condition.setTotcount(count);
@@ -134,7 +137,7 @@ public class PackageService {
 
 
 
-    //특정 packageNum으로 package data 출력(임시)
+    //특정 packageNum으로 package data 출력
     public Package getPackage(long packageNum) {
 
         Optional<Package> packageData = packageRepository.findById(packageNum);
@@ -143,5 +146,27 @@ public class PackageService {
 
 
     }
+
+    public Page<Package> getList(Pageable pageable){
+
+
+        List<Sort.Order> sorts = new ArrayList<Sort.Order>();
+        sorts.add(Sort.Order.desc("packageName"));
+
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ? 0 :
+                        pageable.getPageNumber() -1,	//spring paging index는 0부터 시작하기 때문에 -1
+                pageable.getPageSize(),Sort.by(sorts));
+
+        //getPageNumber : 반환할 페이지
+        //getPageSize : 반환할 항목수
+        //PageRequest : 정렬 매개변수가 적용된 새로운 항목을 생성
+
+
+        return packageRepository.findAll(pageable);
+    }
+
+
 
 }

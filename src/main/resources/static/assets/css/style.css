@@ -2844,6 +2844,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     border-radius: 10px;
     padding: 60px 20px ;
     margin-top: 60px;
+    width: 800px;
+
 }
 
 .write_review_inner_boxed {
@@ -2864,7 +2866,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     padding: 10px 20px 40px 20px;
     position: relative;
     margin-top: 55px;
-    width: 70%;
+    width: 800px;
 }
 
 .all_review_date_area {
@@ -2873,6 +2875,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     display: flex;
     justify-content: left;
     align-items: center;
+    width: 75%;
+
 }
 
 .all_review_date h5{
@@ -2897,23 +2901,29 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 
 .all_review_star {
+    padding-left: 0px;
+    margin-left: 10px;
     text-align: left;
     margin-top: 40px;
 }
 
 .all_review_star h5 {
     font-size: 18px;
+    margin-left: 10px;
+    padding-right: 0px;
 }
 
 .review_star_all i {
     font-size: 14px;
     color: var(--main-color);
+
 }
 
 .all_review_text {
     text-align: left;
     margin-top: -100px;
     margin-left: 10px;
+    font-size: 15px;
 }
 
 .all_review_text img {
@@ -2960,7 +2970,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .review_col-md-7{
     flex: 0 0 auto;
-    width: 75%;
+    width: 100%;
+
 }
 
 
