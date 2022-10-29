@@ -217,11 +217,12 @@ public class AbroadPackageController {
         String email;
         String name;
 
-
         if(principal==null && user==null){ //로그아웃
 
             System.out.println("로그아웃이다");
-            model.addAttribute("wishList","fa-regular fa-heart fa-2x");
+            model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
+            model.addAttribute("recommendStatus", 0);
+            model.addAttribute("loginStatus","n");
 
         }else if(user!=null){ //간편로그인
             System.out.println("간편로그인이다");
@@ -249,10 +250,15 @@ public class AbroadPackageController {
             int wish = wishListService.getWishList(id2,id);
 
             if(wish==1){
-                model.addAttribute("wishList","fas fa-heart fa-2x");
+                model.addAttribute("url","/assets/img/icon/ReviewHeart2.png");
+                model.addAttribute("recommendStatus", 1);
+                model.addAttribute("loginStatus","y");
+
 
             }else{
-                model.addAttribute("wishLike","fa-regular fa-heart fa-2x");
+                model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
+                model.addAttribute("recommendStatus", 0);
+                model.addAttribute("loginStatus","y");
             }
 
         }else if (principal!=null){ //일반회원
@@ -286,10 +292,14 @@ public class AbroadPackageController {
             System.out.println(wish);
 
             if(wish==1){
-                model.addAttribute("wishList","fas fa-heart fa-2x");
+                model.addAttribute("url","/assets/img/icon/ReviewHeart2.png");
+                model.addAttribute("recommendStatus", 1);
+                model.addAttribute("loginStatus","y");
 
             }else{
-                model.addAttribute("wishList","fa-regular fa-heart fa-2x");
+                model.addAttribute("url","/assets/img/icon/ReviewHeart1.png");
+                model.addAttribute("recommendStatus", 0);
+                model.addAttribute("loginStatus","y");
             }
 
         }

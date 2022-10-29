@@ -23,12 +23,25 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="tour_details_leftside_wrapper">
+                    <!-- 위시리스트 출력 -->
+                    <div class="tour_details_heading_wrapper">
+                        <div class="tour_details_top_heading">
+                            <h2></h2>
+                        </div>
+                        <div class="tour_details_top_heading_right">
+                            <span><img th:src="${url}" th:height="40" th:width="40" class="wishListHeart" style="cursor: pointer"/><br/></span>
+                        </div>
+                    </div>
+                    <input type="hidden" th:value="${packages.id}" id="packageId">
+                    <input type="hidden" th:value="${recommendStatus}" id="recommendStatus">
+                    <input type="hidden" th:value="${loginStatus}" id="loginStatus">
+                    <!-- 위시리스트 출력 -->
+                    <br/>
                     <div class="tour_details_heading_wrapper">
                         <div class="tour_details_top_heading">
                             <h2 th:text="${packages.packageName}"></h2>
                         </div>
                         <div class="tour_details_top_heading_right">
-                            <h4 th:text="|★ ${#numbers.formatDecimal((sum/size),1,1)}/5|"></h4>
 
                             <p th:text="|(리뷰 ${size})|"></p>
                         </div>
