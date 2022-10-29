@@ -202,7 +202,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr th:if="${mypagePay.isEmpty() and mypagePay.get(0).getUsedPoint()==0}"><td th:colspan="4">사용하신 포인트가 없습니다</td></tr>
+              <tr th:if="${mypagePay.isEmpty() or sum1==0}"><td th:colspan="4">사용하신 포인트가 없습니다</td></tr>
               <tr th:each="mypagePay : ${mypagePay}" th:unless="${mypagePay.usedPoint==0}">
                 <td th:text="${#temporals.format(mypagePay.payDate,'yyyy-MM-dd')}">2022-01-01</td>
                 <td align="center">결제단계에서 사용</td>
