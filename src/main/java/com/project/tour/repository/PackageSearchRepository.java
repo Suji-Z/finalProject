@@ -37,6 +37,7 @@ public class PackageSearchRepository {
                         package$.id,
                         package$.packageName,
                         package$.previewImage,
+                        package$.location1,
                         package$.location2,
                         package$.packageInfo,
                         package$.postStart,
@@ -56,15 +57,15 @@ public class PackageSearchRepository {
                 .leftJoin(package$.packagedatelist, packageDate)
                 .leftJoin(shortReview).on(shortReview.packages.id.eq(package$.id))
                 .where(
-                    location1Eq(condition.getLocation1()),
-                    location2Eq(condition.getLocation2()),
-                    priceGoe(condition.getPricerangestr()),
-                    priceLoe(condition.getPricerangeend()),
-                    startDayEq(condition.getStartday()),
-                    transportIn(condition.getTransport()),
-                    travelPeriodIn(condition.getTravelPeriod()),
-                    remaincountGoe(condition.getTotcount()),
-                    keywordEq(condition.getKeyword())
+                        location1Eq(condition.getLocation1()),
+                        location2Eq(condition.getLocation2()),
+                        priceGoe(condition.getPricerangestr()),
+                        priceLoe(condition.getPricerangeend()),
+                        startDayEq(condition.getStartday()),
+                        transportIn(condition.getTransport()),
+                        travelPeriodIn(condition.getTravelPeriod()),
+                        remaincountGoe(condition.getTotcount()),
+                        keywordEq(condition.getKeyword())
                 )
                 .groupBy(package$.id,shortReview.packages.id)
                 .offset(pageable.getOffset())
@@ -79,20 +80,20 @@ public class PackageSearchRepository {
                 .where(
                         package$.id.in(
                                 JPAExpressions
-                                .select(package$.id).distinct()
-                                .from(package$)
-                                .leftJoin(package$.packagedatelist, packageDate)
-                                .where(
-                                        location1Eq(condition.getLocation1()),
-                                        location2Eq(condition.getLocation2()),
-                                        priceGoe(condition.getPricerangestr()),
-                                        priceLoe(condition.getPricerangeend()),
-                                        startDayEq(condition.getStartday()),
-                                        transportIn(condition.getTransport()),
-                                        travelPeriodIn(condition.getTravelPeriod()),
-                                        remaincountGoe(condition.getTotcount()),
-                                        keywordEq(condition.getKeyword())
-                                )
+                                        .select(package$.id).distinct()
+                                        .from(package$)
+                                        .leftJoin(package$.packagedatelist, packageDate)
+                                        .where(
+                                                location1Eq(condition.getLocation1()),
+                                                location2Eq(condition.getLocation2()),
+                                                priceGoe(condition.getPricerangestr()),
+                                                priceLoe(condition.getPricerangeend()),
+                                                startDayEq(condition.getStartday()),
+                                                transportIn(condition.getTransport()),
+                                                travelPeriodIn(condition.getTravelPeriod()),
+                                                remaincountGoe(condition.getTotcount()),
+                                                keywordEq(condition.getKeyword())
+                                        )
                         )
                 );
 

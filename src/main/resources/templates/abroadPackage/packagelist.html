@@ -2,16 +2,12 @@
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org"> <!-- 템플릿 엔진 선언 -->
 <body>
 <!-- Common Banner Area -->
-<section id="common_banner" style="background-image: url('/assets/img/banner/abroad.jpg');">
+<section id="common_banner" style="background-image: url('/assets/img/banner/jeju.png');">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="common_bannner_text">
-          <h2>패키지 리스트</h2>
-          <ul>
-            <li><a th:href="@{/main}">Home</a></li>
-            <li><span><i class="fas fa-circle"></i></span> 패키지 리스트</li>
-          </ul>
+          <h2>해외여행 패키지</h2>
         </div>
       </div>
     </div>
@@ -21,7 +17,7 @@
 <!-- Form Area -->
 <section>
 <form th:action="@{/package/abroad}" th:object="${searchForm}" method="get" id="pagingForm">
-<div id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
+  <div id="theme_search_form_tour" class="fligth_top_search_main_form_wrapper">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -42,14 +38,14 @@
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="oneway_search_form">
-                          <form action="#!">
-                            <div class="row">
-                              <div class="col-lg-3 col-md-3 col-sm-12 col-12">
-                                <div class="flight_Search_boxed">
+
+                          <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                              <div class="flight_Search_boxed">
 
                                   <p>지역</p>
-                                  <span th:switch="*{location}">
-                                    <select th:case="유럽">
+                                  <span th:switch="*{location1}" name="location1">
+                                    <select th:case="유럽" th:field="*{location2}">
                                       <option th:value="스페인">스페인</option>
                                       <option th:value="영국">영국</option>
                                       <option th:value="프랑스">프랑스</option>
@@ -58,7 +54,7 @@
                                       <option th:value="그리스">그리스</option>
                                       <option th:value="터키">터키</option>
                                     </select>
-                                     <select th:case="미국">
+                                     <select th:case="미국" th:field="*{location2}">
                                       <option th:value="하와이">하와이</option>
                                       <option th:value="뉴욕">뉴욕</option>
                                       <option th:value="LA">LA</option>
@@ -67,7 +63,7 @@
                                       <option th:value="시카고">시카고</option>
                                       <option th:value="캐나다">캐나다</option>
                                     </select>
-                                     <select th:case="아시아">
+                                     <select th:case="아시아" th:field="*{location2}">
                                       <option th:value="일본">일본</option>
                                       <option th:value="중국">중국</option>
                                       <option th:value="홍콩">홍콩</option>
@@ -77,7 +73,7 @@
                                       <option th:value="베트남">베트남</option>
                                       <option th:value="필리핀">필리핀</option>
                                     </select>
-                                     <select th:case="*">
+                                     <select th:case="*" th:field="*{location2}">
                                       <option th:value="스페인">스페인</option>
                                       <option th:value="영국">영국</option>
                                       <option th:value="프랑스">프랑스</option>
@@ -203,6 +199,7 @@
                                                         class="btn-add-in">
                                                   <i class="fas fa-plus"
                                                      aria-hidden="true"></i>
+                                                  aria-hidden="true"></i>
                                                 </button>
                                               </div>
                                             </div>
@@ -230,7 +227,7 @@
         </div>
       </div>
     </div>
-    </div>
+</div>
 
 <!-- Flight Search Areas -->
   <div id="explore_area" class="section_padding" style="padding-top:50px;">
@@ -381,9 +378,14 @@
 
 
                       <div class="all_review_star">
-                        <div class="review_star_all">
+                        <div class="review_star_all" th:if="${package.reviewScore == null || package.reviewCount == null}">
+                          <span class="review_rating" th:text="|리뷰     0/5 점|"></span>&nbsp;&nbsp;
+                            <span class="review_count" th:text="|0 reviews|"></span><br/>
+                          <span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
+                        </div>
+                        <div class="review_star_all" th:if="${package.reviewScore != null && package.reviewCount != null}">
                           <span class="review_rating" th:text="|리뷰     ${#numbers.formatDecimal((package.reviewScore/package.reviewCount),1,1)}/5 점|"></span>&nbsp;&nbsp;
-                            <span class="review_count" th:text="|${package.reviewCount} reviews|"></span><br/>
+                          <span class="review_count" th:text="|${package.reviewCount} reviews|"></span><br/>
                           <span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
                         </div>
                       </div>
@@ -405,6 +407,34 @@
                 </div>
               </div>
               <!-- 패키지 반복문 끝-->
+              <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                <ul class="pagination"
+                    th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                  <li class="page-item">
+                    <a class="page-link" th:href="@{/package/abroad?(page=1,location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
+                      <span aria-hidden="true">≪</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item" th:style="${paging.first}?'display:none'">
+                    <a class="page-link" th:href="@{/package/abroad(page=${paging.number},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
+                  </li>
+                  <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                      th:classappend="(${page}==${paging.number+1})?'active'">
+                    <a class="page-link" th:href=@{/package/abroad(page=${page},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
+                  </li>
+                  <li class="page-item" th:style="${paging.last}?'display:none'">
+                    <a class="page-link" th:href="@{/package/abroad(page=${paging.number+2},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" th:href="@{/package/abroad(page=${paging.totalPages},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
+                       aria-label="Next">
+                      <span aria-hidden="true">≫</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
               </div>
               </div>
             </div>
