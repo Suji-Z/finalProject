@@ -13,10 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -35,10 +32,9 @@ public class VoiceCusReplyController {
     @GetMapping("/article/{id}")
     public String articleReply(Model model,@PathVariable("id") Integer id){
 
-        VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
         VoiceCusReply reply = voiceCusReplyService.getReply(id);
 
-        model.addAttribute("voiceCus",voiceCus);
+
         model.addAttribute("reply",reply);
 
         return "voicecus/voicecus-reply";
@@ -123,6 +119,35 @@ public class VoiceCusReplyController {
         voiceCusReplyService.delete(reply);
 
         return "redirect:/voiceCus/list";
+    }
+
+    /** 비밀글 패스워드 비교 **/
+    @GetMapping("/article/chkPwd/{id}")
+    public String chkPwd(Model model,@PathVariable("id") Integer id){
+
+        VoiceCusReply reply = voiceCusReplyService.getReply(id);
+        Integer userId = reply.getVoiceCus().getId();
+        VoiceCus voiceCus = voiceCusService.getVoiceCus(userId);
+
+        model.addAttribute("replyNum",id);
+        model.addAttribute("userInfo",voiceCus);
+
+        return "voicecus/voicecus-reply-pwd";
+    }
+
+    @PostMapping("/article/chkPwd")
+    @ResponseBody
+    public String chkPwd(@RequestParam(name = "pwd") String pwd,@RequestParam(name = "id") Integer id){
+
+        VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
+        Boolean pwdChk = memberService.secretPwd(pwd,voiceCus.getAuthor().getPassword());
+
+        if(pwdChk==true){
+            return "true";
+        }else {
+            return "false";
+        }
+
     }
 
 }

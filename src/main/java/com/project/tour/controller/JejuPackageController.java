@@ -64,7 +64,7 @@ public class JejuPackageController {
      * 전체리스트
      */
     @GetMapping("/jeju")
-    public String packagelist(@RequestParam(value = "location", required = false) String location,
+    public String packagelist(@RequestParam(value = "location2", required = false) String location2,
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
                               @RequestParam(value = "keyword", required = false) String keyword,
@@ -111,13 +111,13 @@ public class JejuPackageController {
         }
 
         log.info("DATE : " + date);
-        log.info("LOCATION : " + location);
+        log.info("LOCATION : " + location2);
         log.info("COUNT : " + String.valueOf(count));
         log.info("KEYWORD : " + keyword);
         log.info("TRANSPORTS : " + transports);
         log.info("TRAVELPERIOD : " + travelPeriods);
 
-        Page<PackageSearchDTO> paging = packageService.getSearchList(location, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
+        Page<PackageSearchDTO> paging = packageService.getSearchList(location2, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
         model.addAttribute("paging", paging);
         model.addAttribute("searchForm", searchForm);

@@ -159,6 +159,11 @@ public class MemberService {
         return str;
     }
 
+    public Boolean secretPwd(String pwd,String userPwd){
+
+        return passwordEncoder.matches(pwd,userPwd);
+    }
+
     public void updatePassword(String tmpPassword,String email){
         String encPwd = passwordEncoder.encode(tmpPassword);
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("사용자 정보를 찾을 수 없습니다."));
