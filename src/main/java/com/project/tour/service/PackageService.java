@@ -66,13 +66,13 @@ public class PackageService {
         return packageRepository.findByKeywordIn(keyword);
     }
 
-    public Page<PackageSearchDTO> getSearchList(String location2, String date, Integer count, String keyword,List<String> transport,
+    public Page<PackageSearchDTO> getSearchList(String location1,String location2, String date, Integer count, String keyword,List<String> transport,
                                                 List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Pageable pageable) {
 
 
         PackageSearchCondition condition = new PackageSearchCondition();
 
-        condition.setLocation1("제주");
+        condition.setLocation1(location1);
         condition.setLocation2(location2);
         condition.setStartday(date);
         condition.setTotcount(count);
@@ -95,7 +95,7 @@ public class PackageService {
     }
 
     public Page<PackageSearchDTO> getSearchListabroad(String location1,String location2, String date, Integer count, String keyword,List<String> transport,
-                                                List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Integer hitCount, Pageable pageable) {
+                                                List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend , Pageable pageable) {
 
 
         PackageSearchCondition condition = new PackageSearchCondition();
@@ -111,7 +111,6 @@ public class PackageService {
         condition.setTravelPeriod(travelPeriod);
         condition.setPricerangestr(pricerangestr);
         condition.setPricerangeend(pricerangeend);
-        condition.setHitCount(hitCount);
 
         //페이징처리
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
