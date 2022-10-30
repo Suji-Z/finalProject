@@ -48,6 +48,8 @@ public class MemberService {
         return memberRepository.existsByEmail(email);
     }
 
+    public boolean existByPhone(String phone) { return  memberRepository.existsByPhone(phone);}
+
 
     public Member create(MemberCreate memberCreate) {
         Member member = new Member();

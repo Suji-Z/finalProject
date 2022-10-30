@@ -22,13 +22,16 @@ function emailCheck() {
 
             $('#emailNotAvailable').hide();
             $('#emailAvailable').show().text(result).append($('<br />'));
+                $('#signup').attr("disabled",false);
             } else{
                 alert("이메일을 입력해주세요.")
+                $('#signup').attr("disabled",true);
             }
 
             if(except.test($('#email').val())==false && $('#email').val()!=''){
                 $('#emailAvailable').hide();
                 $('#emailNotAvailable').show().text('이메일형식이 올바르지 않습니다.').append($('<br />'));
+                $('#signup').attr("disabled",true);
             }
 
         }, error: function (error) {
@@ -36,6 +39,7 @@ function emailCheck() {
             $('#emailAlert').hide();
             $('#emailAvailable').hide();
             $('#emailNotAvailable').show().text('이미 사용중인 아이디 입니다.').append($('<br />'));
+            $('#signup').attr("disabled",true);
         }
     });
 
