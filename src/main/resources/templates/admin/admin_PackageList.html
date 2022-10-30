@@ -108,7 +108,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:if="${paging.isEmpty()}"><td colspan="4"> 등록된 패키지 상품이 없습니다. </td></tr>
+                            <tr th:if="${paging.isEmpty()}"><td colspan="6"> 등록된 패키지 상품이 없습니다. </td></tr>
                             <th:block th:each="package,loop : ${paging}">
                                 <tr>
                                     <td>
