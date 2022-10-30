@@ -69,7 +69,7 @@ function payConfirm() {
     }, function (rsp) {
 
         if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-            alert(rsp.imp_uid +" / " + rsp.merchant_uid);
+            //alert(rsp.imp_uid +" / " + rsp.merchant_uid);
 
         $.ajax({
             url: "/pay/payments/complete/", // 예: https://www.myservice.com/payments/complete

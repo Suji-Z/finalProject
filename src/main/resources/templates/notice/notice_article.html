@@ -60,17 +60,16 @@
                                         <span th:text="${notice.hitCount}">10</span></li>
 
 
-                                    <li><span style="padding: 20px 80px 20px 0px;" valign="top" height="200"></span>
+                                    <li style="line-height: 500%; margin-bottom: 20px;"><span style="padding: 20px 80px 20px 0px;" valign="top" height="300"></span>
                                         <div class="col-lg-8">
                                          <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
                                             resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
                                                    th:text="${notice.content}"></textarea>
-                                            <div class="">
-                                            <span><h5> <img th:src="${url}" th:height="30" th:width="30" class="recommend"/>이 글이 도움되었습니다.<br/></h5></span>
-                                            <br/><br/>
-                                            </div>
+                                            <h5> <br/><img th:src="${url}" th:height="30" th:width="30" class="recommend"/>이 글이 도움되었습니다.<br/></h5>
                                         </div>
                                     </li>
+
+
 
                                     <!--보내는 데이터-->
                                     <input type="hidden" th:value="${notice.id}" id="noticeNum">

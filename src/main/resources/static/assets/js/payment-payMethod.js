@@ -14,10 +14,3 @@ $(document).ready(function () {
     })
     )
 });
-
-/*
-inputValue
-red : 신용카드
-green : 계좌이체
-white : 카카오페이
-*/
