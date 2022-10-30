@@ -319,19 +319,21 @@
 
 
                                             <div class="all_review_star" style="margin-top:20px;">
-                                                <div class="review_star_all">
+                                                <div class="review_star_all" th:if="${package.reviewScore != null}">
                                                     <i class="fas fa-star"></i>
-                                                <span class="review_rating" th:text="|리뷰자리/5|"></span>
-                                                <span class="review_count" th:text="|(리뷰 갯수) reviews|"></span>
+                                                <span class="review_rating" th:text="|${#numbers.formatDecimal((package.reviewScore/package.reviewCount),1,1)}/5|"></span>
+                                                <span class="review_count" th:text="|${package.reviewCount} reviews|"></span>
                                                 </div>
                                             </div>
                                             <div class="tour_package_details_bar_list">
                                                 <ul>
-                                                    <li><i class="bi bi-person-check-fill"  style="font-size: 20px; "></i><span th:text="|최대 수량 ${package.count}|"></span></li>
+                                                    <li><i class="bi bi-person-check-fill"  style="font-size: 20px;"></i><span th:text="|최대 수량 ${package.count}|"></span></li>
                                                     <li><i class="bi bi-calendar-check"  style="font-size: 20px; "></i><span>예약가능 날짜</span></li>
                                                     <li style="padding-top: 0px;"><span th:text="|${package.postStart} ~ ${package.postEnd}|" style="margin-left:30px;"></span></li>
                                                     <li><i  class="bi bi-sun" style="font-size: 18px;"></i><span th:text="|여행기간 ${package.travelPeriod}박 ${package.travelPeriod+1}일|"></span></li>
                                                     <li><i class="bi bi-tags-fill" style="font-size: 20px;"></i><span th:text="|테마 #${package.keyword}|"></span></li>
+                                                    <li><i class="bi bi-eye-fill" style="font-size: 20px;"></i>&nbsp;<span class="review_rating" th:text="|조회수 ${package.hitCount}|"></span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -346,23 +348,23 @@
                                 <ul class="pagination"
                                     th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/package/jeju?(page=1,location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
+                                        <a class="page-link" th:href="@{/package/jeju?(page=1,location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}" aria-label="Previous">
                                             <span aria-hidden="true">≪</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <li class="page-item" th:style="${paging.first}?'display:none'">
-                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.number},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
+                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.number},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＜</a>
                                     </li>
                                     <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
                                         th:classappend="(${page}==${paging.number+1})?'active'">
-                                        <a class="page-link" th:href=@{/package/jeju(page=${page},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
+                                        <a class="page-link" th:href=@{/package/jeju(page=${page},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})} th:text="${page}"></a>
                                     </li>
                                     <li class="page-item" th:style="${paging.last}?'display:none'">
-                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.number+2},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
+                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.number+2},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}">＞</a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.totalPages},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
+                                        <a class="page-link" th:href="@{/package/jeju(page=${paging.totalPages},location1=${param.location1},location2=${param.location2},date=${param.date},totcount=${param.totcount},keyword=${param.keyword},transports=${param.transports},travelPeriods=${param.travelPeriods},pricerangestr=${param.pricerangestr},pricerangeend=${param.pricerangeend})}"
                                            aria-label="Next">
                                             <span aria-hidden="true">≫</span>
                                             <span class="sr-only">Next</span>
