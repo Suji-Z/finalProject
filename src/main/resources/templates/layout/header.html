@@ -101,7 +101,9 @@
                   여행후기
                 </a>
               </li>
+
                 <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? true : false}">
+
                 <li class="nav-item">
                   <a  th:href="@{/admin/main}" class="nav-link">관리자</a>
 
