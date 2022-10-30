@@ -176,11 +176,19 @@
                                         <li><span style="text-align:center;width: 14%">썸네일 이미지</span>
                                             <span>
                                                <input type="file" name="image1" accept="image/png, image/jpeg" style="border-radius: 3px">
-                                            </span></li>
+                                            </span>
+                                            <div th:if="${#fields.hasErrors('previewImage')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{previewImage}" th:text="${err}"></p>
+                                            </div>
+                                        </li>
                                         <li><span style="text-align:center;width: 14%">패키지 상세 이미지</span>
                                             <span>
                                                 <input type="file"  name="image2" accept="image/png, image/jpeg" style="border-radius: 3px">
-                                            </span></li>
+                                            </span>
+                                            <div th:if="${#fields.hasErrors('detailImage')}" role="alert">
+                                                <p style="font-size: 10pt;color: red" th:errors="*{detailImage}" th:text="${err}"></p>
+                                            </div>
+                                        </li>
 
                                         <li><span style="text-align:center;width: 14%">패키지 키워드 </span>
 
