@@ -9,10 +9,17 @@ import java.util.Date;
 
 @Entity
 @Getter @Setter
+@SequenceGenerator(
+        name = "BOOKING_SEQ_GENERATOR",
+        sequenceName = "BOOKING_SEQ", // 매핑할 데이터베이스 시퀀스 이름
+        initialValue = 19012032,
+        allocationSize = 51
+)
 public class UserBooking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator = "BOOKING_SEQ_GENERATOR")
     @Column(name = "bookingNum")
     private Long id;
 

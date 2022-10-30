@@ -151,7 +151,7 @@ public class BookingController {
 
     //마이페이지 - 예약화면띄우기
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
-    @GetMapping("/confirmation/{id}") //id=packageNum
+    @GetMapping("/confirmation/{id}") //id=bookingNum
     public String confirmation1(@LoginUser SessionUser user, Principal principal, Model model,
                                 @PathVariable("id") Long id) {
 

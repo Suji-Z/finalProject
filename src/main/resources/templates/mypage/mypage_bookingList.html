@@ -132,7 +132,7 @@
                       <td th:text="|${mypageBooking.bookingTotalCount}명|">총인원</td>
                       <td th:text="|${mypageBooking.bookingTotalPrice}원|">금액</td>
                       <td th:switch="${mypageBooking.bookingStatus}">
-                          <a th:href="@{|/booking/confirmation/${mypageBooking.Apackage.id}|}"><span th:case="'0'">예약확인중</span></a>
+                          <a th:href="@{|/booking/confirmation/${mypageBooking.id}|}"><span th:case="'0'">예약확인중</span></a>
                           <a th:href="@{|/pay/${mypageBooking.id}|}"><span th:case="'1'">결제대기중</span></a>
                           <a th:href="@{/pay/complete}"><span th:case="'2'">결제완료</span></a>
                           <span th:case="'3'">예약취소</span>
