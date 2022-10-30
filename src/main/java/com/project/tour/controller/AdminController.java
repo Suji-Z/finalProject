@@ -6,6 +6,7 @@ import com.project.tour.service.*;
 import com.project.tour.util.FileUploadUtil;
 import com.project.tour.util.PackageFileUpload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,6 +28,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -164,10 +166,12 @@ public class AdminController {
     @PostMapping("/packageForm")
     public String createPackagePost(@Valid PackageCreate packageCreate,  BindingResult bindingResult,@RequestParam("image1") MultipartFile multipartFile1,
                                     @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
-        if(bindingResult.hasErrors()){
-            return "admin/admin_Package";
-        }
-
+//        if(bindingResult.hasErrors()){
+//            //이미지 비어있지 않으면 리턴
+//            if(packageCreate!=null || !packageCreate.getDetailImage().isEmpty() && !packageCreate.getPreviewImage().isEmpty()){
+//                log.info(bindingResult.toString());
+//                    return "admin/admin_Package";}
+//        }
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
 
@@ -363,7 +367,7 @@ public class AdminController {
     @GetMapping("/user/delete/{email}")
     public String packageDelete(@PathVariable("email") String email) {
         Member member = memberService.getMember(String.valueOf(email));
-        adminPackageService.memberDelete(member);
+        adminPackageService.deletePackage(member.getId());
         return "redirect:/admin/user";
     }
 

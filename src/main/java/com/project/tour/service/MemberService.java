@@ -222,5 +222,4 @@ public class MemberService {
         member.get().setPoint(member.get().getPoint()+500);
 
     }
-
 }

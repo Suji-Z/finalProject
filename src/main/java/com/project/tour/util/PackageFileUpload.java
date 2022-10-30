@@ -38,9 +38,9 @@ public class PackageFileUpload {
         }
 
         try (InputStream inputStream = multipartFile2.getInputStream()) {
-            Path filePath = uploadPath2.resolve(fileName2);
+            Path filePath2 = uploadPath2.resolve(fileName2);
 
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, filePath2, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {
             throw new IOException("Could not save image file: " + fileName2, ioe);
         }
