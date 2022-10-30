@@ -76,7 +76,7 @@ public class AbroadPackageController {
 
 
     @GetMapping("/abroad")
-    public String packagelist(@RequestParam(value = "location1", required = false) String location1,
+    public String packagelist(@RequestParam(value = "location1", required = false) List<String> location1,
                               @RequestParam(value = "location2", required = false) String location2,
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,
@@ -85,7 +85,6 @@ public class AbroadPackageController {
                               @RequestParam(value = "travelPeriods", required = false) String travelPeriods,
                               @RequestParam(value = "pricerangestr", required = false) Integer pricerangestr,
                               @RequestParam(value = "pricerangeend", required = false) Integer pricerangeend,
-                              @RequestParam(value = "hitCount", required = false) Integer hitCount,
                               Model model, @PageableDefault(size = 5) Pageable pageable,
                               SearchForm searchForm) {
 
@@ -135,7 +134,7 @@ public class AbroadPackageController {
 
 
 
-        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location1,location2, date, count,keyword,transport,period,pricerangestr,pricerangeend,hitCount,pageable);
+        Page<PackageSearchDTO> paging = packageService.getSearchListabroad(location1,location2, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 
 
 

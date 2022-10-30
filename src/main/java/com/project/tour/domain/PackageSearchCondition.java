@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class PackageSearchCondition {
 
-    private String location1;
+    private List<String> location1;
     private String location2;
     private String startday;
     private Integer pricerangestr;
@@ -16,9 +16,5 @@ public class PackageSearchCondition {
     private List<String> transport;
     private Integer totcount;
     private String keyword;
-    private Integer hitCount;
-
-
-
 
 }
