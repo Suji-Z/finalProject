@@ -44,14 +44,58 @@ public class VoiceCusController {
     private final HttpSession httpSession;
 
     @RequestMapping("/list")
-    public String list(Model model, @PageableDefault(size = 5) Pageable pageable){
+    public String list(Model model, @PageableDefault(size = 5) Pageable pageable,@LoginUser SessionUser user,Principal principal){
 
         Page<VoiceCus> paging = voiceCusService.getList(pageable);
+
+        String email;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            Member member = memberService.getName(principal.getName());
+            email = member.getEmail();
+
+        }else {
+
+            email = user.getEmail();
+
+        }
+
+        model.addAttribute("email",email);
 
         model.addAttribute("paging",paging);
         return "voicecus/voicecus-list";
     }
 
+    /** 비밀글 패스워드 비교 **/
+    @GetMapping("/article/chkPwd/{id}")
+    public String chkPwd(Model model,@PathVariable("id") Integer id){
+
+        VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
+
+        model.addAttribute("articleNum",id);
+        model.addAttribute("userInfo",voiceCus);
+
+        return "voicecus/voicecus-pwd";
+    }
+
+    @PostMapping("/article/chkPwd")
+    @ResponseBody
+    public String chkPwd(@RequestParam(name = "pwd") String pwd,@RequestParam(name = "id") Integer id){
+
+        VoiceCus voiceCus = voiceCusService.getVoiceCus(id);
+        Boolean pwdChk = memberService.secretPwd(pwd,voiceCus.getAuthor().getPassword());
+
+        if(pwdChk==true){
+            return "true";
+        }else {
+            return "false";
+        }
+
+    }
+
+    /** 게시판 글 확인 **/
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping("/article/{id}")
     public String article(Model model, @PathVariable("id") Integer id,@LoginUser SessionUser user,Principal principal){
 

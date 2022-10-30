@@ -2,7 +2,7 @@
 <html th:replace="~{layout/layoutFile :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org"> <!-- 템플릿 엔진 선언 -->
 <body>
 <!-- Common Banner Area -->
-<section id="common_banner" style="background-image: url('/assets/img/banner/jeju.png');">
+<section id="common_banner" style="background-image: url('/assets/img/banner/abroad.jpg');">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -44,7 +44,7 @@
                               <div class="flight_Search_boxed">
 
                                   <p>지역</p>
-                                  <span th:switch="*{location1}" name="location1">
+                                  <span th:switch="*{location1}">
                                     <select th:case="유럽" th:field="*{location2}">
                                       <option th:value="스페인">스페인</option>
                                       <option th:value="영국">영국</option>
@@ -98,6 +98,7 @@
                                       <option th:value="필리핀">필리핀</option>
                                     </select>
                                   </span>
+                                <input type="hidden" name="location1" th:value="*{location1}"/>
 
                                   <div class="plan_icon_posation">
                                     <i class="fas fa-plane-departure"></i>
@@ -379,14 +380,14 @@
 
                       <div class="all_review_star">
                         <div class="review_star_all" th:if="${package.reviewScore == null || package.reviewCount == null}">
-                          <span class="review_rating" th:text="|리뷰     0/5 점|"></span>&nbsp;&nbsp;
+                          <i class="fas fa-star"></i>&nbsp;<span class="review_rating" th:text="|리뷰     0/5 점|"></span>&nbsp;&nbsp;
                             <span class="review_count" th:text="|0 reviews|"></span><br/>
-                          <span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
+                          <i class="bi bi-eye-fill" style="color: black; "></i>&nbsp;<span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
                         </div>
                         <div class="review_star_all" th:if="${package.reviewScore != null && package.reviewCount != null}">
-                          <span class="review_rating" th:text="|리뷰     ${#numbers.formatDecimal((package.reviewScore/package.reviewCount),1,1)}/5 점|"></span>&nbsp;&nbsp;
+                          <i class="fas fa-star"></i>&nbsp;<span class="review_rating" th:text="|리뷰     ${#numbers.formatDecimal((package.reviewScore/package.reviewCount),1,1)}/5 점|"></span>&nbsp;&nbsp;
                           <span class="review_count" th:text="|${package.reviewCount} reviews|"></span><br/>
-                          <span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
+                          <i class="bi bi-eye-fill" style="color: black;"></i>&nbsp;<span class="review_rating" th:text="|조회수    ${package.hitCount}|"></span>
                         </div>
                       </div>
                       <div class="tour_package_details_bar_list">

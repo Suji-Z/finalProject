@@ -1,5 +1,6 @@
-function searchIdBtn(){
+function searchEmailBtn() {
 
+        console.log("되는거냐고")
         alert("아작스전");
 
     $.ajax({
@@ -13,12 +14,14 @@ function searchIdBtn(){
         success: function (data) {
 
             alert("헤이")
+            alert("data:"+data);
             // 성공 시 실패 메시지 hide, 성공 메시지 show
-            if ($('#inputPhone').val() != '') {
+            if (data!=null&&data!='') {
 
-                $('#id_value').show().text('회원님의 아이디는 '+data+' 입니다.').append($('<br />'));
+                $('#id_value').show().text('회원님의 아이디는 ' + data + ' 입니다.').append($('<br />'));
+
             } else {
-                alert("회원 정보를 입력해주세요.")
+                alert("올바른 회원 정보를 입력해주세요.")
             }
         }, error: function (error) {
 
@@ -30,5 +33,7 @@ function searchIdBtn(){
         }
     });
 
-};
+
+    };
+
 

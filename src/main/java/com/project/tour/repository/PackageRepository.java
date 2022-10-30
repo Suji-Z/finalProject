@@ -14,7 +14,6 @@ import java.util.Set;
 public interface PackageRepository extends JpaRepository<Package,Long> {
 
     Optional<Package> findById(long id);
-    Package findByPackageName(String packageName);
     Page<Package> findAll(Pageable pageable);
 
     List<Package> findByIdIn(List<Long> packageNums);
@@ -23,5 +22,6 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
     List<Package> findByKeywordIn(List<String> keyword);
 
     List<Package> findAllByOrderByBookingCntDesc();
+
 
 }
