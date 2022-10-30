@@ -29,7 +29,6 @@ public class MemberCreate {
     private String birth;
 
     @NotEmpty(message = "필수 입력 항목 입니다.")
-    @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
     private String phone_num;
 
     private String sms_num;

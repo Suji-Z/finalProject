@@ -109,6 +109,12 @@ public class MemberController {
 
     @GetMapping("/join/phoneCheck")
     public @ResponseBody String sendSMS(@RequestParam(value="phone_num") String phone_num) throws CoolsmsException {
+
+        if(memberService.existByPhone(phone_num)){
+
+            return "false";
+        }
+
         return memberService.PhoneNumberCheck(phone_num);
     }
 
