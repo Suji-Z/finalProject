@@ -64,7 +64,7 @@ public class JejuPackageController {
      * 전체리스트
      */
     @GetMapping("/jeju")
-    public String packagelist(@RequestParam(value = "location1", required = false) String location1,
+    public String packagelist(@RequestParam(value = "location1", required = false) List<String> location1,
                               @RequestParam(value = "location2", required = false) String location2,
                               @RequestParam(value = "date", required = false) String date,
                               @RequestParam(value = "totcount", required = false) Integer count,

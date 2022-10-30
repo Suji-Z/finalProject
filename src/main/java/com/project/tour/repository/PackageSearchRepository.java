@@ -100,8 +100,8 @@ public class PackageSearchRepository {
         return PageableExecutionUtils.getPage(content, pageable, () -> count.fetchOne());
     }
 
-    private BooleanExpression location1Eq(String location1) {
-        return StringUtils.hasText(location1) ? package$.location1.eq(location1) : null;
+    private BooleanExpression location1Eq(List<String> location1) {
+        return location1 != null ? package$.location1.in(location1) : null;
     }
     private BooleanExpression location2Eq(String location2) {
         return StringUtils.hasText(location2) ? package$.location2.eq(location2) : null;

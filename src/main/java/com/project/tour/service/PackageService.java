@@ -66,7 +66,7 @@ public class PackageService {
         return packageRepository.findByKeywordIn(keyword);
     }
 
-    public Page<PackageSearchDTO> getSearchList(String location1,String location2, String date, Integer count, String keyword,List<String> transport,
+    public Page<PackageSearchDTO> getSearchList(List<String> location1,String location2, String date, Integer count, String keyword,List<String> transport,
                                                 List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend ,Pageable pageable) {
 
 
@@ -94,7 +94,7 @@ public class PackageService {
         return searchRepository.searchByWhere(condition,pageable);
     }
 
-    public Page<PackageSearchDTO> getSearchListabroad(String location1,String location2, String date, Integer count, String keyword,List<String> transport,
+    public Page<PackageSearchDTO> getSearchListabroad(List<String> location1,String location2, String date, Integer count, String keyword,List<String> transport,
                                                 List<Integer> travelPeriod, Integer pricerangestr, Integer pricerangeend , Pageable pageable) {
 
 
