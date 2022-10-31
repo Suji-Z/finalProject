@@ -4933,6 +4933,12 @@ textarea {
     display: flex;
 }
 
+.your_info_arae_jennie li {
+    padding-bottom: 80px;
+    margin-bottom: 80px;
+    display: flex;
+}
+
 .your_info_arae ul li:last-child {
     padding-bottom: 0px;
     margin-bottom: 0px;
