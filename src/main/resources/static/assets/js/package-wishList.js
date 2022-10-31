@@ -12,11 +12,23 @@ $(function () {
             location.href="http://localhost:8088/member/login";
         }else{
             if(i==0){ //비어있다가 채우는 행위
-                $(this).attr('src','/assets/img/icon/ReviewHeart2.png');
-                i++; // i=1
+                if(confirm('위시리스트에 추가하시겠습니까?')) {
+                    alert('추가되었습니다.')
+                    $(this).attr('src', '/assets/img/icon/ReviewHeart2.png');
+                    i++; // i=1
+                }else{
+                    return;
+                }
+
             }else if(i==1){ //채웠다가 비우는 행위
-                $(this).attr('src','/assets/img/icon/ReviewHeart1.png');
-                i--; // i=0
+                if(confirm('위시리스트를 삭제하시겠습니까?')){
+                    alert('삭제되었습니다.')
+                    $(this).attr('src','/assets/img/icon/ReviewHeart1.png');
+                    i--; // i=0
+                }else{
+                    return;
+                }
+
             }
 
         }

@@ -270,7 +270,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" id="wishListTable">
                     <!-- 위시리스트 반복 -->
                     <div th:if="${wishList.isEmpty()}" align="center">위시리스트가 없습니다.</div>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="wishList : ${wishList}">
@@ -287,8 +287,13 @@
                                 <h5>[[${wishList.Packages.packagedatelist.get(0).getAprice()}]]&nbsp;원 ~</h5>
                             </div>
                         </div>
-                    </div>
-                    <!--위시리스트 반복 끝 -->
+                        <!-- 위시리스트 하트 -->
+                        <div>
+                            <button style="border-color: white" th:align="right" onclick="wishListCancel(this)" th:value="${wishList.Packages.id}" type="button" th:id="|cancel${wishList.Packages.id}|">
+                                <img src="/assets/img/icon/ReviewHeart2.png" th:height="20" th:width="20" style="cursor: pointer;"/></button></div>
+                        </div>
+                    <!-- 위시리스트 하트 -->
+       <!--위시리스트 반복 끝 -->
 
 
                 </div>
