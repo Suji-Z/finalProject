@@ -100,7 +100,7 @@
                                         <input type="checkbox" id="allCheckBox" onclick="allChecked()">
                                     </label>
                                 </th>
-                                <th>패키지 번호</th>
+                                <th>번호</th>
                                 <th>패키지 이름</th>
                                 <th>여행지 </th>
                                 <th>시작일 / 마감일 </th>
@@ -112,11 +112,12 @@
                             <th:block th:each="package,loop : ${paging}">
                                 <tr>
                                     <td>
+                                        <span style="text-align: center">
                                         <label class="checkbox-inline">
                                             <input type="checkbox" name="chk" class="chk"onclick="chkClicked()" th:value="${package.id}">
-                                        </label>
+                                        </label></span>
                                     </td>
-                                    <td th:text="${package.id}"></td>
+                                    <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                                     <td th:text="${package.packageName}"></td>
                                     <td th:text="|${package.location1} ${package.location2}|"></td>
                                     <td>
