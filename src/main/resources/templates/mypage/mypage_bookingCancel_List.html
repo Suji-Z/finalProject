@@ -126,11 +126,12 @@
                       <td th:text="${mypageBookingCancle.id}">예약번호</td>
                       <td th:text="${#temporals.format(mypageBookingCancle.bookingDate,'yyyy-MM-dd')}">예약날짜</td>
                       <td align="center">
-                          <a style="color: black;" th:text="${mypageBookingCancle.Apackage.packageName}">패키지이름</a>
+                          <a style="color: black; display: block; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" th:text="${mypageBookingCancle.Apackage.packageName}"
+                          th:href="@{|/package/${mypageBookingCancle.Apackage.id}|}">패키지이름</a>
                       </td>
                       <td th:text="${#temporals.createDate(mypageBookingCancle.arrival,'yyyyMMdd')}">출발일</td>
                       <td th:text="|${mypageBookingCancle.bookingTotalCount}명|">총인원</td>
-                      <td th:text="|${mypageBookingCancle.bookingTotalPrice}원|">금액</td>
+                      <td th:text="|${#numbers.formatInteger((mypageBookingCancle.bookingTotalPrice),3,'COMMA')}원|">금액</td>
                       <td th:switch="${mypageBookingCancle.bookingStatus}">
                           <span th:case="3">예약취소</span>
                           <span th:case="4">결제취소</span>

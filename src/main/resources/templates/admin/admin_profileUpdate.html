@@ -186,7 +186,8 @@
                             <label th:for="name" style="text-align:center;">이름</label>
                         </div>
                         <div class="form-group col-lg-7">
-                            <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
+                            <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)"
+                                   th:readonly="${social!=null}?'reanonly'" name="name">
                         </div>
                     </li>
 
