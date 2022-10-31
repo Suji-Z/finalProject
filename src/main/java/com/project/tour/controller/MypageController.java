@@ -3,10 +3,7 @@ package com.project.tour.controller;
 import com.project.tour.domain.*;
 import com.project.tour.oauth.dto.SessionUser;
 import com.project.tour.oauth.service.LoginUser;
-import com.project.tour.service.MemberService;
-import com.project.tour.service.MypageService;
-import com.project.tour.service.ReviewReplyService;
-import com.project.tour.service.ReviewService;
+import com.project.tour.service.*;
 import lombok.RequiredArgsConstructor;
 import org.sonatype.plexus.components.sec.dispatcher.PasswordDecryptor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,10 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -40,6 +34,10 @@ public class MypageController {
     private final MypageService mypageService;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final WishListService wishListService;
+
+    private final ReviewService reviewService;
 
 
     @PreAuthorize("isAuthenticated()")
@@ -89,7 +87,7 @@ public class MypageController {
         model.addAttribute("vcusPaging",vcusPaging.getTotalElements());
 
         //견적문의
-        String email = member.getEmail();
+        String email = member.getName();
         Page<EstimateInquiry> estPaging = mypageService.getMypageEstimate(email,pageable);
         model.addAttribute("estPaging",estPaging.getTotalElements());
 
@@ -546,7 +544,7 @@ public class MypageController {
 
         }
 
-        String email = member.getEmail();
+        String email = member.getName();
 
         Page<EstimateInquiry> paging = mypageService.getMypageEstimate(email,pageable);
 
@@ -612,6 +610,31 @@ public class MypageController {
 
         return "mypage/mypage_voicecus_list";
 
+    }
+
+    @PostMapping("/wishListCancel")
+    public String wishListCancel(@RequestParam("packageNum") Long packageNum,
+                                    Principal principal, @LoginUser SessionUser user,
+                                    Model model){
+
+        //로그인 확인
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
+        wishListService.deleteWish(member.getId(),packageNum);
+
+        List<WishList> wishList = mypageService.getWishList(member.getId());
+
+        System.out.println("위시리스트사이즈"+wishList.size());
+
+        model.addAttribute("wishList",wishList);
+
+
+        return "mypage/mypage_main :: #wishListTable";
     }
 
 

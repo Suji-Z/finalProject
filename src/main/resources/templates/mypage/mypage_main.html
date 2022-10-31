@@ -105,7 +105,7 @@
       <div class="col-lg-8-sally">
           <div class="col-lg-12" >
               <br/><br/>
-              <h2> <span>안녕하세요, ㅇㅇ투어 </span>
+              <h2> <span>안녕하세요, 여행어때 </span>
               <span style="color: #99E000; font-size:60px;" th:text="${member.name}"></span>
               <span>님 !</span></h2>
               <br/><br/>
@@ -115,7 +115,7 @@
                             
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                <div class="counter_item">
-                                    <img src="/assets/img/icon/user.png" alt="icon">
+                                    <img th:width="100px" src="/assets/img/icon/user.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
                                    <a th:href="@{/mypage/update}"> <h4>My profile</h4></a>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                 <div class="counter_item">
-                                    <img src="/assets/img/icon/bank.png" alt="icon">
+                                    <img th:width="100px" src="/assets/img/icon/promo-code.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
                                     <a th:href="@{/mypage/coupon}"> <h4><b>내 쿠폰</b></h4></a>
@@ -132,7 +132,7 @@
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                 <div class="counter_item">
-                                    <img src="/assets/img/icon/world-map.png" alt="icon">
+                                    <img th:width="100px" src="/assets/img/icon/coins.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
                                     <a th:href="@{/mypage/point}"><h4><b>내 포인트</b></h4></a>
@@ -140,7 +140,7 @@
                             </div>
                             <div class="col-lg-3 col-md-6 clo-sm-12 col-12">
                                 <div class="counter_item">
-                                    <img src="/assets/img/icon/calander.png" alt="icon">
+                                    <img th:width="100px" src="/assets/img/icon/conversation.png" alt="icon">
                                     <h3 class="counter"></h3>
                                     <br/>
                                     <a th:href="@{/mypage/qna}"><h4><b>문의내역</b></h4></a>
@@ -263,14 +263,14 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="left_side_search_area">
-                        
-                        
-                        
-                       
+
+
+
+
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" id="wishListTable">
                     <!-- 위시리스트 반복 -->
                     <div th:if="${wishList.isEmpty()}" align="center">위시리스트가 없습니다.</div>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="wishList : ${wishList}">
@@ -281,22 +281,26 @@
 
                             </div>
                             <div class="theme_two_box_content">
-                                <h4><a href="tour-details.html" th:text="${wishList.Packages.packageName}">제주도 우도 어쩌구</a></h4>
-                                <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                        class="review_count">(1214
-                                            reviewes)</span></p>
-                                <h3>[[${wishList.Packages.packagedatelist.get(0).getAprice()}]]&nbsp;원</h3>
+                                <h4><a th:href="@{|/package/${wishList.Packages.id}|}" th:text="${wishList.Packages.packageName}">제주도 우도 어쩌구</a></h4>
+                                <p><span class="review_rating">4.8/5</span>
+                                    <span class="review_count">(1214 reviewes)</span></p>
+                                <h5>[[${wishList.Packages.packagedatelist.get(0).getAprice()}]]&nbsp;원 ~</h5>
                             </div>
                         </div>
-                    </div>
-                    <!--위시리스트 반복 끝 -->
+                        <!-- 위시리스트 하트 -->
+                        <div>
+                            <button style="border-color: white" th:align="right" onclick="wishListCancel(this)" th:value="${wishList.Packages.id}" type="button" th:id="|cancel${wishList.Packages.id}|">
+                                <img src="/assets/img/icon/ReviewHeart2.png" th:height="20" th:width="20" style="cursor: pointer;"/></button></div>
+                        </div>
+                    <!-- 위시리스트 하트 -->
+       <!--위시리스트 반복 끝 -->
 
 
                 </div>
 
-                
 
-                
+
+
             </div>
 
                     <br/><br/><br/><br/>

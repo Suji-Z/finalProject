@@ -12,11 +12,23 @@ $(function () {
         }else{
 
             if(i==0){ //비어있다가 채우는 행위
-                $(this).attr('src','/assets/img/icon/ReviewHeart2.png');
-                i++; // i=1
+                if(confirm('리뷰를 추천하시겠습니까?')){
+                    alert('추천되었습니다.')
+                    $(this).attr('src','/assets/img/icon/ReviewHeart2.png');
+                    i++; // i=1
+                }else{
+                    return;
+                }
+
             }else if(i==1){ //채웠다가 비우는 행위
-                $(this).attr('src','/assets/img/icon/ReviewHeart1.png');
-                i--; // i=0
+                if(confirm('리뷰추천을 취소하시겠습니까?')){
+                    alert('취소되었습니다.')
+                    $(this).attr('src','/assets/img/icon/ReviewHeart1.png');
+                    i--; // i=0
+                }else{
+                    return;
+                }
+
             }
         }
 
