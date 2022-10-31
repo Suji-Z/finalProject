@@ -3,10 +3,10 @@ function packageSubmit(){
     let image2 = $('#image2').val();
 
     if(image1==""||image1==null) {
-        alert("상품 이미지를 확인해주세요");
+        $("#image1Message").text("상품 미리보기 이미지를 확인해주세요.");
         return false;
     }else if(image2==""||image2==null){
-        alert("상품 상세이미지를 확인해주세요");
+        $("#image2Message").text("상품 상세 이미지를 확인해주세요.");
         return false;
     }
 }
