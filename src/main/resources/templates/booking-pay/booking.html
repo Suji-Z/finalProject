@@ -163,7 +163,7 @@
                         <input type="text" name="bCount" th:value="${bookingForm.bookingbcount}" hidden>
                         <input type="text" name="cCount" th:value="${bookingForm.bookingccount}" hidden>
                         <input type="text" name="travelPeriod" th:value="${apackage.travelPeriod}" hidden>
-                        <input type="text" id="bookingPrice" name="bookingTotalPrice" th:value="${((packageDate.cprice)*(bookingForm.bookingacount)+(packageDate.cprice)*(bookingForm.bookingccount)+(packageDate.bprice)*(bookingForm.bookingbcount))*(100-packageDate.discount)/100}" hidden>
+                        <input type="text" id="bookingPrice" name="bookingTotalPrice" th:value="${((packageDate.aprice)*(bookingForm.bookingacount)+(packageDate.cprice)*(bookingForm.bookingccount)+(packageDate.bprice)*(bookingForm.bookingbcount))*(100-packageDate.discount)/100}" hidden>
 
                         <!--인원수-->
 
@@ -216,7 +216,7 @@
                                 </ul>
                                 <ul>
                                     <li> 패키지금액 <del><span th:text="|${(packageDate.aprice)*(bookingForm.bookingacount)+(packageDate.cprice)*(bookingForm.bookingccount)+(packageDate.bprice)*(bookingForm.bookingbcount)}원|"></span></del></li>
-                                    <li> 할인금액<span th:text="|${((packageDate.aprice)*(bookingForm.bookingacount)+(packageDate.cprice)*(bookingForm.bookingccount)+(packageDate.bprice)*(bookingForm.bookingbcount))*(100-packageDate.discount)/100}원|">할인적용금액</span></li>
+                                    <li> 할인금액<span th:text="|${((packageDate.aprice)*(bookingForm.bookingacount)+(packageDate.cprice)*(bookingForm.bookingccount)+(packageDate.bprice)*(bookingForm.bookingbcount))*(100-(packageDate.discount))/100}원|">할인적용금액</span></li>
 
                                 </ul>
                             </div>
