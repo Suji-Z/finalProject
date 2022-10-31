@@ -62,7 +62,7 @@ public class MypageService {
 
 
     //견적문의
-    public Page<EstimateInquiry> getMypageEstimate(String email, Pageable pageable){
+    public Page<EstimateInquiry> getMypageEstimate(String name, Pageable pageable){
 
         List<Sort.Order> sort = new ArrayList<Sort.Order>();
         sort.add(Sort.Order.desc("id")); //MemberId
@@ -74,7 +74,7 @@ public class MypageService {
                 Sort.by(sort)); //정렬 매개변수 적용
 
 
-        return  estimateRepository.findByEmail(email,pageable);
+        return  estimateRepository.findByEmail(name,pageable);
     }
 
     //QnA

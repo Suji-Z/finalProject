@@ -60,20 +60,26 @@
                                         <span th:text="${notice.hitCount}">10</span></li>
 
 
-                                    <li style="line-height: 500%; margin-bottom: 20px;"><span style="padding: 20px 80px 20px 0px;" valign="top" height="300"></span>
+                                    <li style="line-height: 500%; border:none;"><span style="padding: 20px 80px 20px 0px;" valign="top" height="600"></span>
                                         <div class="col-lg-8">
-                                         <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
-                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
-                                                   th:text="${notice.content}"></textarea>
-                                            <h5> <br/><img th:src="${url}" th:height="30" th:width="30" class="recommend"/>이 글이 도움되었습니다.<br/></h5>
+                                            <img th:src="@{${notice.photosImagePath}}">
                                         </div>
                                     </li>
 
+                                    <li style="line-height: 500%; border:none;"><span style="padding: 0px 80px 0px 0px;" valign="top" height="600"></span>
+                                        <div class="col-lg-8" th:if="${notice.content!=null && notice.content!=''}">
+                                            <textarea class="form-control" type="text" rows="8" style="padding-left: 20px;
+                                            resize: none;border: none; background-color: #FFFFFF" readonly="readonly"
+                                                      th:text="${notice.content}"></textarea>
+                                        </div>
 
+                                    </li>
 
-                                    <!--보내는 데이터-->
-                                    <input type="hidden" th:value="${notice.id}" id="noticeNum">
-                                    <input type="hidden" th:value="${recommendStatus}" id="recommendStatus">
+                                    <li><span style="padding: 0px 80px 0px 0px;" valign="top" height="600"></span>
+                                        <div class="col-lg-8">
+                                        <h7><img th:src="${url}" th:height="30" th:width="30" class="recommend"/>이 글이 도움되었습니다.</h7>
+                                        </div>
+                                    </li>
 
                                     <li>
                                         <span th:if="${afterSubject}==''" style="padding-left: 50px;padding-right: 30px;"
@@ -88,6 +94,10 @@
                                         <a th:href="@{|/notice/article/${notice.id-1}|}" ><span th:if="${beforeSubject}!=''" style="padding-left: 50px;padding-right: 30px;"
                                                                                                 th:text="|이전글 : ${beforeSubject}|" ></span></a>
                                     </li>
+
+                                    <!--보내는 데이터-->
+                                    <input type="hidden" th:value="${notice.id}" id="noticeNum">
+                                    <input type="hidden" th:value="${recommendStatus}" id="recommendStatus">
 
                                 </ul>
                             </div>
@@ -106,20 +116,20 @@
         <span>* 본문을 읽고 댓글을 남기면 500point 제공됩니다.</span>
 
         <!--댓글출력-->
-        <div  id="commentTable">
-            <div th:each="comment,loop:${commentList}">
+        <div class="comment_area" id="commentTable">
+            <div class="comment_area_boxed" th:each="comment,loop:${commentList}">
                 <div class="comment_text">
-                    <div class="comment_author_name">
+                    <div class="comment_author_name_jennie">
                     <form method="POST">
-                            <div th:text="${comment.member.name}"></div>
-                            <div th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></div>
-                            <div th:id="|commentOri${comment.id}|" th:text="${comment.content}"></div>
+                        <div th:text="${comment.member.name}"></div>
+                        <div th:text="${#temporals.format(comment.created,'yyyy-MM-dd HH:mm')}"></div>
+                        <div th:id="|commentOri${comment.id}|" th:text="${comment.content}"></div>
                         <div class="form-froup">
-                                <textarea row="1" th:text="${comment.content}" class="form-control bg_input" th:id="|commentBox${comment.id}|" style="display:none;"></textarea></div>
-                      <div style="display: inline-block; margin: 0 5px;  float: right;">
+                            <textarea row="1" th:text="${comment.content}" class="form-control bg_input" th:id="|commentBox${comment.id}|" style="display:none;"></textarea></div>
+                        <div style="margin: 0 20px;  float: right; padding-right: 30px;">
                             <span th:if="${comment.member.id}==${member.id}">
                                 <button th:id="|updateA${comment.id}|" class="btn btn-outline-secondary" type="button" onclick="noticeUpdateReply1(this);" th:value="${comment.id}">수정</button></span>
-                            <span th:if="${comment.member.id}==${member.id}">
+                            <span th:if="${comment.member.id==member.id || member.email=='admin@naver.com'}">
                                 <button th:id="|delete${comment.id}|" class="btn btn-outline-secondary" type="button" onclick="noticeDeleteReply(this);" th:value="${comment.id}">삭제</button></span>
                             <span th:if="${comment.member.id}==${member.id}">
                                 <button th:id="|updateB${comment.id}|" class="btn btn-outline-secondary" type="button" onclick="noticeUpdateReply2(this);" th:value="${comment.id}" style="display:none;">확인</button></span>

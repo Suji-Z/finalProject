@@ -34,11 +34,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="common_bannner_text">
-                    <h2>여행후기</h2>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><span><i class="fas fa-circle"></i></span>News</li>
-                    </ul>
+                    <h2>제주패키지 후기</h2>
                 </div>
             </div>
         </div>
@@ -84,7 +80,7 @@
                             <br/><br/>
                             <div class="section_heading_center">
 
-                                <img th:width="300" th:height="300" th:src="@{${review.reviewPackages.photosImagePath1}}"/>
+                                <img th:width="400" th:src="@{${review.reviewPackages.photosImagePath1}}"/>
 
                             </div>
                         </div>
@@ -100,7 +96,8 @@
                                     </div>
                                     <div class="valid_date_area_one">
                                         <h5 th:text="|${review.reviewPackages.location1}&nbsp;${review.reviewPackages.location2}|">베트남 다낭</h5>
-                                        <h5 th:text="${review.reviewPackages.packageName}">어쩌구 패키지</h5>
+                                        <h5 th:text="${review.reviewPackages.packageName}"
+                                            style="color: black; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">어쩌구 패키지</h5>
                                         <h5 th:text="|${review.reviewPackages.travelPeriod}박 ${review.reviewPackages.travelPeriod+1}일|"></h5>
                                     </div>
 
@@ -141,7 +138,8 @@
 
                                     </div>
                                 </div>
-                                <p th:text="${review.content}"></p>
+                                <p th:text="${review.content}"
+                                   style="color: black; width:500px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;"></p>
                                 <a th:href="@{|/review/article/${review.id}|}">자세히 보기 <i class="fas fa-arrow-right"></i></a>
 
 
@@ -163,31 +161,31 @@
 
                 </div>
 
-                <div class="col-lg-12" th:if="${!paging.isEmpty()}">
-                    <div class="pagination_area">
-                        <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,
-                    endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
-
-                            <li><a class="page-link" th:href="@{/review/abroadList?page=1}">&laquo;</a></li>
-
-                            <li class="page-item" th:style="${paging.first}?'display:none'">
-                                <a class="page-link" th:href="@{/review/abroadList(page=${paging.number})}">&lsaquo;</a>
-                            </li>
-
-                            <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
-                                th:classappend="(${page}==${paging.number+1})?'active'">
-                                <a class="page-link" th:href="@{/review/abroadList(page=${page})}" th:text="${page}"></a>
-                            </li>
-
-                            <li class="page-item" th:style="${paging.last}?'display:none'">
-                                <a class="page-link" th:href="@{/review/abroadList(page=${paging.number+2})}">&rsaquo;</a>
-                            </li>
-
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/review/abroadList(page=${paging.totalPages})}" >&rsaquo;</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="pagination_area" th:if="${!paging.isEmpty()}">
+                    <ul class="pagination" th:with="startNumber=${(paging.number/10)}*10+1,endNumber=(${paging.totalPages}>${startNumber+9})?${startNumber+9}:${paging.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/review/jejuList?page=1}" aria-label="Previous">
+                                <span aria-hidden="true">≪</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:style="${paging.first}?'display:none'">
+                            <a class="page-link" th:href="@{/review/jejuList(page=${paging.number})}">＜</a>
+                        </li>
+                        <li class="page-item" th:each="page : ${#numbers.sequence(startNumber,endNumber)}"
+                            th:classappend="(${page}==${paging.number+1})?'active'">
+                            <a class="page-link" th:href="@{/review/jejuList(page=${page})}" th:text="${page}"></a>
+                        </li>
+                        <li class="page-item" th:style="${paging.last}?'display:none'">
+                            <a class="page-link" th:href="@{/review/jejuList(page=${paging.number+2})}">＞</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/review/jejuList(page=${paging.totalPages})}" aria-label="Next">
+                                <span aria-hidden="true">≫</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
 

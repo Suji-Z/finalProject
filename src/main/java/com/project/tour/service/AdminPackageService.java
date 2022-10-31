@@ -32,7 +32,7 @@ public class AdminPackageService {
 
 
     //패키지 상품 업로드
-    public Package create(PackageCreate packageCreate) {
+    public Package create(PackageCreate packageCreate,String image1,String image2) {
 
         Package aPackage = new Package();
 
@@ -47,8 +47,8 @@ public class AdminPackageService {
         aPackage.setPostEnd(packageCreate.getPostEnd());
         aPackage.setTravelPeriod(packageCreate.getTravelPeriod());
         aPackage.setKeyword(packageCreate.getKeyword());
-        aPackage.setPreviewImage(packageCreate.getPreviewImage());
-        aPackage.setDetailImage(packageCreate.getDetailImage());
+        aPackage.setPreviewImage(image1);
+        aPackage.setDetailImage(image2);
 
 
         return adminPackageRepository.save(aPackage);
@@ -92,7 +92,7 @@ public class AdminPackageService {
     }
 
     //패키지 상품 수정
-    public void modify(Package aPackage, PackageCreate packageCreate) {
+    public void modify(Package aPackage, PackageCreate packageCreate,String image1,String image2) {
 
         aPackage.setPackageName(packageCreate.getPackageName());
         aPackage.setLocation1(packageCreate.getLocation1());
@@ -105,8 +105,8 @@ public class AdminPackageService {
         aPackage.setPostEnd(packageCreate.getPostEnd());
         aPackage.setTravelPeriod(packageCreate.getTravelPeriod());
         aPackage.setKeyword(packageCreate.getKeyword());
-        aPackage.setPreviewImage(packageCreate.getPreviewImage());
-        aPackage.setDetailImage(packageCreate.getDetailImage());
+        aPackage.setPreviewImage(image1);
+        aPackage.setDetailImage(image2);
 
 
 
