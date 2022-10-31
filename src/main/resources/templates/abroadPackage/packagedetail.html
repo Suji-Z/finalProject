@@ -256,15 +256,6 @@
                             <h5 th:text="${#temporals.format(shortReview.created,'yy-MM-dd')}"></h5>
                         </div><br/>
 
-
-<!--                        <div class="all_review_star">-->
-<!--                            <div class="review_star_all">-->
-<!--                                <span id="scorestar">별점</span>-->
-<!--                            </div>-->
-<!--                            <div class="review_star_all">-->
-<!--                                <h5><input type="text" id="score" th:value="${shortReview.score}" disabled="disabled"  style="background: white; border: none;"></h5>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     <div class="all_review_star">
                         <div th:if="${shortReview.score.toString().equals('5.0')}" class="review_star_all" style="">
                             <i class="fas fa-star"></i>
@@ -301,7 +292,7 @@
                         <textarea row="1" th:text="${shortReview.content}" class="form-control bg_input" th:id="|shortReviewBox${shortReview.id}|" style="display:none;"></textarea>
                     </div>
 
-                    <div class="comment_form_submit" align="right">
+                    <div class="comment_form_submit" align="right" style="padding-top: 30px;">
                         <span sec:authorize="isAuthenticated()" th:if="${email}==${shortReview.userName.email}">
                             <button th:id="|updateA${shortReview.id}|" class="btn btn_theme btn_md" type="button" onclick="shortReviewUpdate1(this);" th:value="${shortReview.id}">수정</button>
                         </span>
