@@ -164,21 +164,20 @@ public class AdminController {
     }
 
     @PostMapping("/packageForm")
-    public String createPackagePost(@Valid PackageCreate packageCreate,  BindingResult bindingResult,@RequestParam("image1") MultipartFile multipartFile1,
-                                    @RequestParam("image2") MultipartFile multipartFile2) throws IOException, ParseException {
-//        if(bindingResult.hasErrors()){
-//            //이미지 비어있지 않으면 리턴
-//            if(packageCreate!=null || !packageCreate.getDetailImage().isEmpty() && !packageCreate.getPreviewImage().isEmpty()){
-//                log.info(bindingResult.toString());
-//                    return "admin/admin_Package";}
-//        }
+    public String createPackagePost(@Valid PackageCreate packageCreate, BindingResult bindingResult,@RequestParam(name = "image1",required = false) MultipartFile multipartFile1,
+                                    @RequestParam(name = "image2",required = false) MultipartFile multipartFile2) throws IOException, ParseException {
+
         String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String fileName2 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
 
-        packageCreate.setPreviewImage(fileName1);
-        packageCreate.setDetailImage(fileName2);
 
-        Package aPackage = adminPackageService.create(packageCreate);
+        if(bindingResult.hasErrors()){
+            //이미지 비어있지 않으면 리턴
+            log.info(bindingResult.toString());
+            return "admin/admin_Package";
+        }
+
+        Package aPackage = adminPackageService.create(packageCreate,fileName1,fileName2);
         String uploadDir1 =  "package-preview/" + aPackage.getId();
         String uploadDir2 =  "package-detail/" + aPackage.getId();
         PackageFileUpload.saveFile1(uploadDir1,fileName1,multipartFile1);
@@ -260,10 +259,8 @@ public class AdminController {
 
         String preview = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
         String detail = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
-        packageCreate.setPreviewImage(preview);
-        packageCreate.setDetailImage(detail);
 
-        adminPackageService.modify(aPackage,packageCreate);
+        adminPackageService.modify(aPackage,packageCreate,preview,detail);
 
         String uploadDir1 = "package-preview/" + aPackage.getId();
         String uploadDir2 = "package-detail/" + aPackage.getId();

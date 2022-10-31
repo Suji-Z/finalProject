@@ -52,12 +52,6 @@ public class PackageCreate {
     @NotNull
     private Integer travelPeriod;
 
-    @NotEmpty(message = "미리보기 이미지를 첨부해주세요.")
-    private String previewImage;
-
-    @NotEmpty(message = "상품 상세 이미지를 첨부해주세요.")
-    private String detailImage;
-
     private String packageInfo;
 
     private String hitCount;
