@@ -24,6 +24,7 @@ function shortreview(){
             document.querySelector(`#result`).innerText = "별점을 드래그 해주세요";
             $('#shortReview').replaceWith(data);
 
+
         },
         error: function(xhr, status, error) {
             alert('error');
