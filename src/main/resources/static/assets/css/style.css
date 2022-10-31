@@ -3752,7 +3752,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .comment_area_boxed {
-    display: flex;
+    /*display: flex;*/
     padding-bottom: 35px;
     border-bottom: 1px solid #dddddd;
     margin-bottom: 35px;
@@ -3770,6 +3770,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .comment_author_name {
     display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.comment_author_name_jennie {
     justify-content: space-between;
     padding-bottom: 10px;
 }
@@ -4934,8 +4939,6 @@ textarea {
 }
 
 .your_info_arae_jennie li {
-    padding-bottom: 80px;
-    margin-bottom: 80px;
     display: flex;
 }
 
