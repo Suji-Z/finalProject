@@ -109,10 +109,10 @@
             <table class="table">
               <thead>
               <tr>
-                <th width="130">예약번호</th>
-                <th width="150">상품명</th>
-                <th width="200">제목</th>
-                <th width="100">등록일</th>
+                  <th width="200">상품명</th>
+                  <th width="300">제목</th>
+                  <th width="100">별점</th>
+                  <th width="100">등록일</th>
 
 
 
@@ -122,10 +122,27 @@
               <tbody>
               <tr th:if="${mypageReview.isEmpty()}"><td th:colspan="4">작성하신 여행후기가 없습니다</td></tr>
               <tr th:each="mypageReview : ${mypageReview}">
-                <td th:text="${mypageReview.reviewPackages.id}">01</td>
-                <td th:text="${mypageReview.reviewPackages.packageName}">제주 어쩌구</td>
-                  <td><a th:text="${mypageReview.subject}" th:href="@{|/review/article/${mypageReview.id}|}"></a></td>
-                <td th:text="${#temporals.format(mypageReview.created,'yyyy-MM-dd')}"></td>
+                  <td align="center"><a style="color: black; display: block; width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" th:text="${mypageReview.reviewPackages.packageName}"
+                  th:href="@{|/package/${mypageReview.reviewPackages.id}|}">제주 어쩌구</a></td>
+                  <td><a style="color: black;" th:text="${mypageReview.subject}" th:href="@{|/review/article/${mypageReview.id}|}"></a></td>
+                  <td th:switch="${mypageReview.score}" class="review_star_all">
+                      <span th:case="'1.0'"><i class="fas fa-star"></i></span>
+                      <span th:case="'2.0'"><i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i></span>
+                      <span th:case="'3.0'"><i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i></span>
+                      <span th:case="'4.0'"><i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i></span>
+                      <span th:case="'5.0'"><i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i></span>
+                  </td>
+                  <td th:text="${#temporals.format(mypageReview.created,'yyyy-MM-dd')}"></td>
               </tr>
 
 
@@ -157,7 +174,8 @@
                           <tbody>
                           <tr th:if="${mypageShortR.isEmpty()}"><td th:colspan="4">작성하신 리뷰가 없습니다</td></tr>
                           <tr th:each="mypageShortR : ${mypageShortR}">
-                              <td th:text="${mypageShortR.packages.packageName}">상품명</td>
+                              <td align="center"><a style="color: black; width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;" th:text="${mypageShortR.packages.packageName}"
+                              th:href="@{|/package/${mypageShortR.packages.id}|}">상품명</a></td>
                               <td th:text="${mypageShortR.content}">내용</td>
                               <td th:switch="${mypageShortR.score}" class="review_star_all">
                                 <span th:case="'1.0'"><i class="fas fa-star"></i></span>
