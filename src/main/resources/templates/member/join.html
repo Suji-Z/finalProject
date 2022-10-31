@@ -124,15 +124,15 @@
                       <label th:for="name" style="text-align:center;">이름<span style="color: red">&nbsp;*</span></label>
                     </div>
                     <div class="form-group col-lg-7">
-                      <input type="text" class="shform-control" th:field="*{name}" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
+                      <input type="text" class="shform-control" th:field="*{name}" id="name" onfocus="nameChk()" onchange="nameChk2()" style="border-radius: 3px; font-size: 10pt" placeholder="이름(실명)">
                     </div>
                   </li>
 
                     <li style="margin-top: -40px;padding-bottom: 10px">
                         <div class="col-lg-2">
                         </div>
-                        <div th:if="${#fields.hasErrors('name')}" role="alert">
-                            <p style="font-size: 10pt;color: red" th:errors="*{name}" th:text="${err}"></p>
+                        <div>
+                            <span id="nameAvailable" class="valid-feedback" style="display: none"></span><span id="nameNotAvailable" class="invalid-feedback" style="display: none"></span>
                         </div>
                     </li>
                    
