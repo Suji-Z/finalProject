@@ -89,7 +89,7 @@ public class MypageController {
         model.addAttribute("vcusPaging",vcusPaging.getTotalElements());
 
         //견적문의
-        String email = member.getEmail();
+        String email = member.getName();
         Page<EstimateInquiry> estPaging = mypageService.getMypageEstimate(email,pageable);
         model.addAttribute("estPaging",estPaging.getTotalElements());
 
@@ -546,7 +546,7 @@ public class MypageController {
 
         }
 
-        String email = member.getEmail();
+        String email = member.getName();
 
         Page<EstimateInquiry> paging = mypageService.getMypageEstimate(email,pageable);
 
