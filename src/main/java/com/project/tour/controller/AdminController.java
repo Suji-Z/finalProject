@@ -337,11 +337,19 @@ public class AdminController {
         memberCreate.setName(member.getName());
         memberCreate.setPhone_num(member.getPhone());
         memberCreate.setPassword1(member.getPassword());
+        memberCreate.setPoint(member.getPoint());
 
         String keywords = member.getKeyword();
+        if(keywords!=null) {
+            System.out.println(keywords);
+            model.addAttribute("keywords",keywords);
+        }else{
+            model.addAttribute("keywords","n");
+
+        }
         System.out.println(keywords);
 
-        model.addAttribute("keywords",keywords);
+        model.addAttribute("social",member.getSocial());
 
         return "admin/admin_profileUpdate";
 
