@@ -3,6 +3,7 @@ package com.project.tour.service;
 import com.project.tour.controller.DataNotFoundException;
 import com.project.tour.domain.EstimateInquiry;
 import com.project.tour.domain.EstimateInquiryForm;
+import com.project.tour.domain.Member;
 import com.project.tour.repository.EstimateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class EstimateInquiryService {
     }
 
     //나의문의글 페이징처리
-    public Page<EstimateInquiry> getMyList(String name, Pageable pageable){
+    public Page<EstimateInquiry> getMyList(Member member, Pageable pageable){
 
         List<Sort.Order> sort = new ArrayList<Sort.Order>();
         sort.add(Sort.Order.desc("id")); //EstimateNum
@@ -49,29 +50,32 @@ public class EstimateInquiryService {
                 pageable.getPageSize(), //반환할 리스트 갯수
                 Sort.by(sort)); //정렬 매개변수 적용
 
-        return estimateRepository.findByEmail(name,pageable);
+        return estimateRepository.findByMember(member,pageable);
     }
 
     //문의 올리기
-    public void create(EstimateInquiryForm estimateInquiryForm,String loginUser){
+    public void create(EstimateInquiryForm estimateInquiryForm, Member member){
 
-        EstimateInquiry inquiry = new EstimateInquiry();
+        for(int i=0;i<100; i++) {
 
-        inquiry.setTitle(estimateInquiryForm.getTitle());
-        inquiry.setLocation1(estimateInquiryForm.getLocation1());
-        inquiry.setLocation2(estimateInquiryForm.getLocation2());
-        inquiry.setACount(estimateInquiryForm.getACount());
-        inquiry.setBCount(estimateInquiryForm.getBCount());
-        inquiry.setCCount(estimateInquiryForm.getCCount());
-        inquiry.setStartDay(estimateInquiryForm.getStartDay());
-        inquiry.setEndDay(estimateInquiryForm.getEndDay());
-        inquiry.setPrice(estimateInquiryForm.getPrice());
-        inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
-        inquiry.setContent(estimateInquiryForm.getContent());
-        inquiry.setCreated(LocalDateTime.now());
-        inquiry.setEmail(loginUser);
+            EstimateInquiry inquiry = new EstimateInquiry();
 
-        estimateRepository.save(inquiry);
+            inquiry.setTitle(estimateInquiryForm.getTitle()+i);
+            inquiry.setLocation1(estimateInquiryForm.getLocation1());
+            inquiry.setLocation2(estimateInquiryForm.getLocation2());
+            inquiry.setACount(estimateInquiryForm.getACount());
+            inquiry.setBCount(estimateInquiryForm.getBCount());
+            inquiry.setCCount(estimateInquiryForm.getCCount());
+            inquiry.setStartDay(estimateInquiryForm.getStartDay());
+            inquiry.setEndDay(estimateInquiryForm.getEndDay());
+            inquiry.setPrice(estimateInquiryForm.getPrice());
+            inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
+            inquiry.setContent(estimateInquiryForm.getContent()+i);
+            inquiry.setCreated(LocalDateTime.now());
+            inquiry.setMember(member);
+
+            estimateRepository.save(inquiry);
+        }
     }
     //문의 수정하기
     public void modify(EstimateInquiry inquiry,EstimateInquiryForm inquiryForm){
