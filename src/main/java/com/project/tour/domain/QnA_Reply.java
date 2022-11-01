@@ -28,7 +28,4 @@ public class QnA_Reply {
     @JoinColumn(name="qnaNum")
     private QnA qnaNum;
 
-    @ManyToOne
-    private Member member;
-
 }
