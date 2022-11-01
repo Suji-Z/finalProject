@@ -274,10 +274,13 @@
                     <!-- 위시리스트 반복 -->
                     <div th:if="${wishList.isEmpty()}" align="center">위시리스트가 없습니다.</div>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="wishList : ${wishList}">
-                        <div class="theme_common_box_two img_hover">
-                            <div class="theme_two_box_img">
-
-                                <a th:href="@{|/package/${wishList.Packages.id}|}"><img th:src="@{|/package-preview/${wishList.Packages.id}/${wishList.Packages.previewImage}|}"/></a>
+                        <div class="theme_common_box_two">
+                            <div class="theme_two_box_img" style="position: relative; top:-30px;">
+                                <div style="float: right; position: relative; top: 35px;">
+                                    <button style="background-color: transparent; border: none" th:align="right" onclick="wishListCancel(this)" th:value="${wishList.Packages.id}" type="button" th:id="|cancel${wishList.Packages.id}|">
+                                        <img src="/assets/img/icon/ReviewHeart2.png" style="cursor: pointer; width: 30px; height: 25px;"/></button>
+                                </div>
+                                <img th:src="@{|/package-preview/${wishList.Packages.id}/${wishList.Packages.previewImage}|}"/>
 
                             </div>
                             <div class="theme_two_box_content">
@@ -288,9 +291,7 @@
                             </div>
                         </div>
                         <!-- 위시리스트 하트 -->
-                        <div>
-                            <button style="border-color: white" th:align="right" onclick="wishListCancel(this)" th:value="${wishList.Packages.id}" type="button" th:id="|cancel${wishList.Packages.id}|">
-                                <img src="/assets/img/icon/ReviewHeart2.png" th:height="20" th:width="20" style="cursor: pointer;"/></button></div>
+
                         </div>
                     <!-- 위시리스트 하트 -->
        <!--위시리스트 반복 끝 -->
