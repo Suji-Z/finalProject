@@ -17,6 +17,7 @@ $("#pointApply").on("property change paste input", function() {
 
     if(pointApply > point){
         $("#pointMessage").text("보유 포인트보다 더 많은 포인트는 사용할 수 없습니다.");
+        $("#remainPoint").text("(보유포인트 0)");
         return false;
     }else
     if(bookingPrice-pointApply <0){

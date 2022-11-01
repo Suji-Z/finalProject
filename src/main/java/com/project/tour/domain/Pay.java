@@ -10,11 +10,18 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@SequenceGenerator(
+        name = "PAY_SEQ_GENERATOR",
+        sequenceName = "PAY_SEQ", // 매핑할 데이터베이스 시퀀스 이름
+        initialValue = 21302078,
+        allocationSize = 51
+)
 public class Pay {
 
     @Id
     @Column(name = "payNum")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "PAY_SEQ_GENERATOR")
     long id;
 
     @OneToOne
