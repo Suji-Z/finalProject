@@ -293,10 +293,10 @@
                     </div>
 
                     <div class="comment_form_submit" align="right" style="padding-top: 30px;">
-                        <span sec:authorize="isAuthenticated()" th:if="${email}==${shortReview.userName.email}">
+                        <span sec:authorize="isAuthenticated()" th:if="${email==shortReview.userName.email or email=='admin@naver.com'}">
                             <button th:id="|updateA${shortReview.id}|" class="btn btn_theme btn_md" type="button" onclick="shortReviewUpdate1(this);" th:value="${shortReview.id}">수정</button>
                         </span>
-                        <span sec:authorize="isAuthenticated()" th:if="${email}==${shortReview.userName.email}">
+                        <span sec:authorize="isAuthenticated()" th:if="${email==shortReview.userName.email or email=='admin@naver.com'}">
                             <button th:id="|delete${shortReview.id}|" class="btn btn_theme btn_md" type="button" onclick="shortReviewDelete(this);" th:value="${shortReview.id}">삭제</button>
                         </span>
                         <span th:if="${shortReview.userName.email}==${email}">
