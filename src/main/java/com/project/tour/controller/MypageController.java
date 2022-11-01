@@ -88,7 +88,7 @@ public class MypageController {
 
         //견적문의
         String email = member.getName();
-        Page<EstimateInquiry> estPaging = mypageService.getMypageEstimate(email,pageable);
+        Page<EstimateInquiry> estPaging = mypageService.getMypageEstimate(member,pageable);
         model.addAttribute("estPaging",estPaging.getTotalElements());
 
         //리뷰
@@ -546,7 +546,7 @@ public class MypageController {
 
         String email = member.getName();
 
-        Page<EstimateInquiry> paging = mypageService.getMypageEstimate(email,pageable);
+        Page<EstimateInquiry> paging = mypageService.getMypageEstimate(member,pageable);
 
         model.addAttribute("paging",paging);
 

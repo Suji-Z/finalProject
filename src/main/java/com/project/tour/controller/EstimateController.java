@@ -63,7 +63,7 @@ public class EstimateController {
             member = memberService.getName(user.getEmail());
         }
 
-        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(member.getEmail(),pageable);
+        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(member,pageable);
 
         model.addAttribute("paging",paging);
 
@@ -98,7 +98,7 @@ public class EstimateController {
             member = memberService.getName(user.getEmail());
         }
 
-        estimateInquiryService.create(estimateInquiryForm,member.getName());
+        estimateInquiryService.create(estimateInquiryForm,member);
 
         return "redirect:/estimate/list";
     }
@@ -106,7 +106,7 @@ public class EstimateController {
     /** 견적문의 게시글이동 */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/inquiry/article/{id}")
-    public String estimateInquiryArticle(@PathVariable("id") Long id,Model model,@LoginUser SessionUser user,Principal principal) {
+    public String estimateInquiryArticle(@RequestParam("page") String page,@PathVariable("id") Long id,Model model,@LoginUser SessionUser user,Principal principal) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -123,6 +123,7 @@ public class EstimateController {
         }
 
         model.addAttribute("inquiry",inquiry);
+        model.addAttribute("page",page);
         model.addAttribute("email", email);
         model.addAttribute("name", name);
 
@@ -132,7 +133,7 @@ public class EstimateController {
     /** 견적문의 삭제 */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/inquiry/delete/{id}")
-    public String estimateInquiryDelete(@PathVariable("id") Long id,@LoginUser SessionUser user,Principal principal) {
+    public String estimateInquiryDelete(@RequestParam("page") String page,@PathVariable("id") Long id,@LoginUser SessionUser user,Principal principal) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -145,19 +146,19 @@ public class EstimateController {
             member = memberService.getName(user.getEmail());
         }
 
-       if(!inquiry.getEmail().equals(member.getEmail())) {
+       if(!inquiry.getMember().getEmail().equals(member.getEmail())) {
            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다.");
         }
 
         estimateInquiryService.delete(inquiry);
 
-        return "redirect:/estimate/list";
+        return "redirect:/estimate/list?page="+page;
     }
 
     /** 견적문의 수정 */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/inquiry/modify/{id}")
-    public String estimateInquiryModify(@PathVariable("id") Long id,EstimateInquiryForm inquiryForm) {
+    public String estimateInquiryModify(@RequestParam("page") String page,@PathVariable("id") Long id,EstimateInquiryForm inquiryForm) {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -177,7 +178,7 @@ public class EstimateController {
     }
 
     @PostMapping("/inquiry/modify/{id}")
-    public String estimateInquiryModify(@Validated EstimateInquiryForm inquiryForm, BindingResult bindingResult,@PathVariable("id") Long id) {
+    public String estimateInquiryModify(@RequestParam("page") String page,@Validated EstimateInquiryForm inquiryForm, BindingResult bindingResult,@PathVariable("id") Long id) {
 
         /* 검증에 실패하면 다시 입력폼으로 */
         if(bindingResult.hasErrors()){
@@ -189,7 +190,7 @@ public class EstimateController {
 
         estimateInquiryService.modify(inquiry,inquiryForm);
 
-        return String.format("redirect:/estimate/inquiry/article/%s", id);
+        return String.format("redirect:/estimate/inquiry/article/%s?page=%s", id,page);
     }
 
     /** 답변달기 */

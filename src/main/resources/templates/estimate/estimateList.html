@@ -53,9 +53,9 @@
               <tr>
                 <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                 <td align="left">
-                  <a style="color: black;" th:href="@{|/estimate/inquiry/article/${inquiry.id}|}" th:text="${inquiry.title}"></a>
+                  <a style="color: black;" th:href="@{|/estimate/inquiry/article/${inquiry.id}?page=${paging.number+1}|}" th:text="${inquiry.title}"></a>
                 </td>
-                <td th:text="${inquiry.email}"></td>
+                <td th:text="${inquiry.member.name}"></td>
                 <td th:text="${#temporals.format(inquiry.created,'yyyy-MM-dd')}"></td>
               </tr>
                 <!-- 답변 -->

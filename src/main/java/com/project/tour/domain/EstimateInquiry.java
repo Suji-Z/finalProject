@@ -20,7 +20,8 @@ public class EstimateInquiry {
     @Column(name = "EstimateNum")
     private Long id;
 
-    private String email;
+    @ManyToOne
+    private Member member;
 
     @Column(length = 500)
     private String title;
