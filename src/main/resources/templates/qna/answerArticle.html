@@ -60,8 +60,7 @@
 
         </div>
         <div class="col-lg-8">
-            <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()==qna.member.email
-        or #authentication.getPrincipal().getUsername()=='admin@naver.com' and qna.member!=null}">
+            <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()=='admin@naver.com'}">
                 <button type="button" th:onclick="|location.href='@{|/qna/answer/modify/${qna.id}|}'|" class="btn btn-outline-secondary">수정</button>
                 <button type="button" th:onclick="|location.href='@{|/qna/answer/delete/${qna.id}|}'|" class="btn btn-outline-secondary">삭제</button>
             </a>
