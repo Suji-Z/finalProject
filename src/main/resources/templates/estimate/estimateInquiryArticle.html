@@ -50,7 +50,7 @@
                     </span>
                   </li>
                   <li><span style="text-align:center;width: 14%">가격</span>
-                    <span th:if="${inquiry.price=='-500000'}" th:text="|50만원 이하|"></span>
+                    <span th:if="${inquiry.price=='0-500000'}" th:text="|50만원 이하|"></span>
                     <span th:if="${inquiry.price=='500000-1000000'}"  th:text="|51만원 ~ 100만원|"></span>
                     <span th:if="${inquiry.price=='1000000-2000000'}" th:text="|100만원 ~ 200만원|"></span>
                     <span th:if="${inquiry.price=='2000000-3000000'}"  th:text="|200만원 ~ 300만원|"></span>
