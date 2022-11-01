@@ -29,7 +29,7 @@
             <h3 class="heading_theme">견적문의</h3>
             <div class="tour_booking_form_box">
               <div class="your_info_arae" sec:authorize="isAuthenticated"
-                   th:if="${inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
+                   th:if="${email!=null and email=='admin@naver.com' or inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
                 <ul>
                   <li><span style="text-align:center;width: 14%">제목</span>
                     <span th:text="${inquiry.title}"></span></li>
@@ -66,7 +66,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="your_info_arae" sec:authorize="isAuthenticated" th:unless="${inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
+              <div class="your_info_arae" sec:authorize="isAuthenticated" th:unless="${email!=null and email=='admin@naver.com' or inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
                 <div style="border-top: 1px solid #dadada;
                       border-bottom: 1px solid #dadada;
                       padding: 10 20 20 10;
