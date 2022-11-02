@@ -11,12 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -564,7 +566,7 @@ public class MypageController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/unregister2")
-    public String unregister(Principal principal,@LoginUser SessionUser user){
+    public String unregister(Principal principal, @LoginUser SessionUser user, SessionStatus sessionStatus){
 
         Member member;
 
@@ -579,6 +581,8 @@ public class MypageController {
         }
 
         mypageService.unregister(member);
+
+        SecurityContextHolder.clearContext();
 
         return "redirect:/";
 
