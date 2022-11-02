@@ -48,9 +48,8 @@ public class PackageSearchRepository {
                         packageDate.discount,
                         package$.count,
                         package$.hitCount,
-                        shortReview.count(),
-                        shortReview.score.sum()
-
+                        shortReview.score.sum(),
+                        shortReview.count()
 
                 ))
                 .from(package$)
