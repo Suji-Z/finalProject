@@ -131,7 +131,7 @@
                       </td>
                       <td th:text="${#temporals.createDate(mypageBooking.arrival,'yyyyMMdd')}">출발일</td>
                       <td th:text="|${mypageBooking.bookingTotalCount}명|">총인원</td>
-                      <td th:text="|${#numbers.formatInteger((mypageBooking.bookingTotalPrice), 3, 'COMMA')}원|">금액</td>
+                      <td th:text="|${#numbers.formatInteger((mypageBooking.bookingTotalPrice), 1, 'COMMA')}원|">금액</td>
                       <td th:switch="${mypageBooking.bookingStatus}">
                           <a th:href="@{|/booking/confirmation/${mypageBooking.id}|}"><span th:case="'0'">예약확인중</span></a>
                           <a th:href="@{|/pay/${mypageBooking.id}|}"><span th:case="'1'">결제대기중</span></a>

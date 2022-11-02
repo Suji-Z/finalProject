@@ -64,4 +64,43 @@ public class Member {
         this.email = email;
     }
 
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<EstimateInquiry>  estimateInquiries;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<NoticeRecommend> noticeRecommends;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<NoticeReply> noticeReplies;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<Pay> pays;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<QnA> qnAS;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<ReviewLike> reviewLikes;
+
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "userName", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<ShortReview> shortReviews;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<UserBooking> userBookings;
+
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<VoiceCus> voiceCuses;
+
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<WishList> wishLists;
+
+
+
+
+
+
+
 }
