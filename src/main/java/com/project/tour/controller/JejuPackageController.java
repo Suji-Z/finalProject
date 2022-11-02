@@ -118,6 +118,8 @@ public class JejuPackageController {
         log.info("KEYWORD : " + keyword);
         log.info("TRANSPORTS : " + transports);
         log.info("TRAVELPERIOD : " + travelPeriods);
+        log.info("PRICERANGESTR : " + String.valueOf(pricerangestr));
+        log.info("PRICERANGEEND : " + String.valueOf(pricerangeend));
 
         Page<PackageSearchDTO> paging = packageService.getSearchList(location1,location2, date, count,keyword,transport,period,pricerangestr,pricerangeend,pageable);
 

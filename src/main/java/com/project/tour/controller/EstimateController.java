@@ -196,7 +196,7 @@ public class EstimateController {
     /** 답변달기 */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reply/{id}")
-    public String estimateReply(@PathVariable("id") Long id,Model model,Principal principal) throws ParseException {
+    public String estimateReply(@PathVariable("id") Long id,Model model) throws ParseException {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -234,10 +234,11 @@ public class EstimateController {
     /** 답변게시글 이동 */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/article/{id}")
-    public String estimateReplyArticle(@PathVariable("id") Long id,Model model,Principal principal) {
+    public String estimateReplyArticle(@PathVariable("id") Long id,Model model,@LoginUser SessionUser user,Principal principal) {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 
+        //추천패키지 
         String[] packages;
         List<Package> recomPackages = null;
         if(reply.getRecomPackage()!=null) {
@@ -245,8 +246,19 @@ public class EstimateController {
             recomPackages = estimateReplyService.recom(packages);
         }
 
+        //관리자,글쓴이 외 비밀글처리
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else {
+            member = memberService.getName(user.getEmail());
+        }
         model.addAttribute("reply",reply);
         model.addAttribute("recomPackages",recomPackages);
+        model.addAttribute("member",member);
+
 
         return "estimate/estimateReplyArticle";
     }
