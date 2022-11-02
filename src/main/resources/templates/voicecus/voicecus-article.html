@@ -66,6 +66,7 @@
 
         </div>
 
+        <div class="col-lg-13" align="right" style="padding-right: 10px">
         <a sec:authorize="isAuthenticated" th:if="${email==voiceCus.author.email
         or email=='admin@naver.com' and voiceCus.author!=null}">
         <button type="button" th:onclick="|location.href='@{|/voiceCus/modify/${voiceCus.id}|}'|" class="btn btn-outline-secondary">수정</button>
@@ -74,7 +75,7 @@
         <a sec:authorize="isAuthenticated" th:if="${email=='admin@naver.com'}">
         <button type="button"  th:onclick="|location.href='@{|/reVoiceCus/create/${voiceCus.id}|}'|" class="btn btn-outline-secondary">답변</button>
         </a>
-
+        </div>
 
 
     </div>

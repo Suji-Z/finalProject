@@ -217,26 +217,7 @@
 
             </div>
         </div>
-        <div class="banner_two_slider_item fadeInUp" data-wow-duration="2s"
-             style="background-image: url(/assets/img/banner/banner-two-bg-2.png);">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="banner_two_text">
-                            <h3 class="title">BEST TRAVEL AGENCY</h3>
-                            <h1 class="slider-sttle">EXPLORE</h1>
-                            <h2 class="slider-pararp">The world with us!</h2>
-                            <h4 class="slider-pararp">Find awesome flights, hotel, tour, car and packages</h4>
-                            <div class="home_two_button btn-animation">
-                                <a href="top-destinations.html" class="btn btn_theme_white btn_md">Discover</a>
-                                <a href="top-destinations.html" class="btn btn_theme_transparent btn_md">Know
-                                    more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
     </div>
 </section>
@@ -297,14 +278,19 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>[[${package.packagedatelist.get(0).getAprice()}]]&nbsp;원</span></h3>
+                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
+                                                [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
+                                                </span>
+                                            </h3>
+                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
                             </th:block>
+
 
                             <th:block th:each="package,loop:${theme}" th:if="${loop.index<4}">
                                 <div class="col-lg-3 col-md-6 col-sm-6 col-12" th:if="${keyword}==activity">
@@ -317,10 +303,14 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>[[${package.packagedatelist.get(0).getAprice()}]]&nbsp;원</span></h3>
+                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
+                                                [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
+                                                </span>
+                                            </h3>
+                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -337,10 +327,14 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>[[${package.packagedatelist.get(0).getAprice()}]]&nbsp;원</span></h3>
+                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
+                                                [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
+                                                </span>
+                                            </h3>
+                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -357,10 +351,14 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>[[${package.packagedatelist.get(0).getAprice()}]]&nbsp;원</span></h3>
+                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
+                                                [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
+                                                </span>
+                                            </h3>
+                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                                <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -369,97 +367,6 @@
                         </div>
                     </div>
 
-                    <!-- 테마여행 힐링 리스트 끝 -->
-
-
-                    <!-- 테마여행 액티비티 리스트 -->
-
-                    <!--
-
-                    <div class="tab-pane fade" id="nav-activity" role="tabpanel" aria-labelledby="nav-activity-tab">
-                        <div class="row" id="viewTable" name="viewTable">
-
-                            <th:block th:each="package,loop:${theme}" th:if="${theme.get(0).getKeyword()}==activity">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12" id="view">
-                                    <div class="theme_common_box_two img_hover">
-                                        <div class="theme_two_box_img">
-                                            <a id="href1" th:href="@{|/package/${package.id}|}">
-                                                <img th:src="@{${package.photosImagePath1}}" alt="img">
-                                            </a>
-                                            <p id="location" th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
-                                        </div>
-                                        <div class="theme_two_box_content">
-                                            <h4 id="packName" th:text="${package.packageName}"><a id="href2" th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>Price starts from</span></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </th:block>
-
-                        </div>
-                    </div>
-
-                    테마추천 식도락여행 시작
-
-                    <div class="tab-pane fade" id="nav-food" role="tabpanel" aria-labelledby="nav-food-tab">
-                        <div class="row" name="viewTable">
-
-                            <th:block th:each="package,loop:${theme}" th:if="${theme.get(0).getKeyword()}==food">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                    <div class="theme_common_box_two img_hover">
-                                        <div class="theme_two_box_img">
-                                            <a th:href="@{|/package/${package.id}|}">
-                                                <img th:src="@{${package.photosImagePath1}}" alt="img">
-                                            </a>
-                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
-                                        </div>
-                                        <div class="theme_two_box_content">
-                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>Price starts from</span></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </th:block>
-
-                        </div>
-                    </div>
-
-
-                     테마추천 문화/예술 시작
-
-                    <div class="tab-pane fade" id="nav-culture" role="tabpanel" aria-labelledby="nav-culture-tab">
-                        <div class="row" name="viewTable">
-
-                            <th:block th:each="package,loop:${theme}" th:if="${theme.get(0).getKeyword()}==culutre">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                    <div class="theme_common_box_two img_hover">
-                                        <div class="theme_two_box_img">
-                                            <a th:href="@{|/package/${package.id}|}">
-                                                <img th:src="@{${package.photosImagePath1}}" alt="img">
-                                            </a>
-                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
-                                        </div>
-                                        <div class="theme_two_box_content">
-                                            <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <p><span class="review_rating">4.8/5 Excellent</span> <span
-                                                    class="review_count">(1214
-                                                    reviewes)</span></p>
-                                            <h3> <span>Price starts from</span></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </th:block>
-
-
-
-                        </div>
-                    </div> -->
 
 
                 </div>
@@ -486,12 +393,21 @@
             <div class="col-lg-3 col-md-6 col-sm-12 col-8" th:if="${loop.index<4}">
                 <div class="choose_desti_wrapper">
                     <div class="choose_inner_wrap">
-                        <div class="choose_boxed_inner">
+                        <div class="choose_boxed_inner" style="position: relative;">
                             <a th:href="@{|/package/${hitLists.id}|}">
-                            <img th:src="@{${hitLists.photosImagePath1}}" style="height: 300px" alt="img">
-                            <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;">
-                                <h2 style="font-size: 20pt">[[${hitLists.location1}]] | </h2>
-                                <h3 style="font-size: 18pt">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
+                            <img th:src="@{${hitLists.photosImagePath1}}" style="height: 350px" alt="img">
+                            <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;
+                                    position: relative;bottom: 115px;">
+                                <h2 th:if="${not #strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 20pt;padding-left: 10px">
+                                    [[${hitLists.location1}]] | <br/>
+                                    <del th:text="${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>&nbsp;
+                                    [[${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice() - (hitLists.packagedatelist.get(0).getAprice() *(hitLists.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
+                                </h2>
+
+                                <h2 th:if="${#strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 20pt;padding-left: 10px">
+                                    [[${hitLists.location1}]] | [[${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
+                                </h2>
+                                <h3 style="font-size: 18pt;padding-left: 10px">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
                             </div>
                             </a>
                         </div>
@@ -526,18 +442,9 @@
                                 <a th:href="@{|/package/${recom.id}|}">
                                     <img th:src="@{${recom.photosImagePath1}}" style="height: 350px" alt="img">
                                     <div class="holiday_small_box_content">
-                                        <div class="holiday_inner_content">
-                                            <div class="rating_outof">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <h5>5 Out of 5</h5>
-                                            </div>
-                                            <h3 style="font-size: 16pt">[[${recom.location1}]] | [[${recom.packagedatelist.get(0).getAprice()}]]원</h3>
-                                            <h4 style="font-size: 14pt">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h4>
-                                            <p th:text="${recom.packageInfo}"></p>
+                                        <div class="holiday_inner_content" style="margin-bottom: -20px">
+                                            <h3 style="font-size: 18pt">[[${recom.location1}]] | [[${recom.packagedatelist.get(0).getAprice()}]]원</h3>
+                                            <h4 style="font-size: 16pt">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h4>
                                         </div>
                                     </div>
                                 </a>
@@ -551,47 +458,13 @@
 
         </div>
     </div>
+    <div></div><br/><br/>
 </section>
     </a>
 <!-- About Area -->
 
 <!-- 여행후기 -->
-<section id="partner_area" class="section_padding_top">
-    <div class="container">
-        <div class="partner_area_bg">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="partner_area_left">
-                        <h2>BEST REVIEW</h2>
-                        <br/>
-                        <h3>[베스트]이탈리아 일주 9일 - 10대 맛기행, 이탈리아소도시</h3>
-                        <p>어쩌구저쩌구 후기 어쩌구저쩌구 어쩌구저쩌구 어쩌구저쩌구 후기 어쩌구저쩌구 어쩌구저쩌구어쩌구저쩌구 후기 어쩌구저쩌구 어쩌구저쩌구어쩌구저쩌구 후기 어쩌구저쩌구 어쩌구저쩌구어쩌구저쩌구 후기 어쩌구저쩌구 어쩌구저쩌구어쩌구저쩌구 후기 어쩌구저쩌구 어쩌구저쩌구...
-                        </p>
 
-                        <div class="local_counter_area">
-                            <div class="local_counter_box">
-                                <h2>Photo</h2>
-                                <img src="#"/>
-                                <h5>관련 투어 사진</h5>
-                            </div>
-                            <div class="local_counter_box">
-                                <h2>Photo</h2>
-                                <img src="#"/>
-                                <h5>관련 투어 사진</h5>
-                            </div>
-                            <div class="local_counter_box">
-                                <h2>Photo</h2>
-                                <img src="#"/>
-                                <h5>관련 투어 사진</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
 
 
 
