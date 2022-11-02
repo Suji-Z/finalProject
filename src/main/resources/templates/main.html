@@ -395,9 +395,9 @@
                     <div class="choose_inner_wrap">
                         <div class="choose_boxed_inner" style="position: relative;">
                             <a th:href="@{|/package/${hitLists.id}|}">
-                            <img th:src="@{${hitLists.photosImagePath1}}" style="height: 350px" alt="img">
+                            <img th:src="@{${hitLists.photosImagePath1}}" style="height: 330px" alt="img">
                             <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;
-                                    position: relative;bottom: 115px;">
+                                    position: relative;bottom: 110px;">
                                 <h2 th:if="${not #strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 20pt;padding-left: 10px">
                                     [[${hitLists.location1}]] | <br/>
                                     <del th:text="${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>&nbsp;
@@ -407,7 +407,7 @@
                                 <h2 th:if="${#strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 20pt;padding-left: 10px">
                                     [[${hitLists.location1}]] | [[${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
                                 </h2>
-                                <h3 style="font-size: 18pt;padding-left: 10px">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
+                                <h3 style="font-size: 18pt;padding-left: 10px;margin-top: -10px">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
                             </div>
                             </a>
                         </div>

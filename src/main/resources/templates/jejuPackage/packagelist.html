@@ -230,7 +230,9 @@
                 <div class="left_side_search_area">
                     <div class="left_side_search_boxed">
                         <div class="left_side_search_heading">
-                            <h5>가격필터</h5>
+                            <h5 style="padding-bottom: 20px;">가격필터
+                                <button class="btn btn_theme" style="float: right;margin-top: -10px;">적용</button>
+                            </h5>
                         </div>
                         <div class="filter-price">
                             <p style="margin-bottom:10px;">
@@ -239,13 +241,14 @@
                             </p>
                             <div id="slider-range"></div>
                         </div>
-                        <button class="apply">적용하기</button>
                         <input type="hidden" id="pricerangestr" th:field="*{pricerangestr}"/>
                         <input type="hidden" id="pricerangeend" th:field="*{pricerangeend}"/>
                     </div>
                     <div class="left_side_search_boxed">
                         <div class="left_side_search_heading">
-                            <h5>항공사</h5>
+                            <h5 style="padding-bottom: 20px;">항공사
+                                <button class="btn btn_theme" style="float: right;margin-top: -10px;">적용</button>
+                            </h5>
                         </div>
                         <div class="tour_search_type">
                             <div class="form-check" th:each="transport : ${transports}">
@@ -256,12 +259,13 @@
                                     </span>
                                 </label>
                             </div>
-                            <button class="apply">적용하기</button>
                         </div>
                     </div>
                     <div class="left_side_search_boxed">
                         <div class="left_side_search_heading">
-                            <h5>여행기간</h5>
+                            <h5 style="padding-bottom: 20px;">여행기간
+                                <button class="btn btn_theme" style="float: right;margin-top: -10px;">적용</button>
+                            </h5>
                         </div>
                         <div class="tour_search_type">
                             <div class="form-check" th:each="travelPeriod : ${travelPeriods}">
@@ -272,7 +276,6 @@
                                         </span>
                                 </label>
                             </div>
-                            <button class="apply">적용하기</button>
                         </div>
                     </div>
                 </div>
