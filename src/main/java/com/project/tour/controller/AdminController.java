@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -367,12 +368,12 @@ public class AdminController {
         return "redirect:/admin/user";
     }
 
-    //회원 탈퇴 시키기
+    //회원 탈퇴 (관리자)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/user/delete/{email}")
     public String packageDelete(@PathVariable("email") String email) {
         Member member = memberService.getMember(String.valueOf(email));
-        adminPackageService.deletePackage(member.getId());
+        adminPackageService.memberDelete(member);
         return "redirect:/admin/user";
     }
 
