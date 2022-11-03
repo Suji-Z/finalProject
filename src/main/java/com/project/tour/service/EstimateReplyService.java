@@ -129,9 +129,6 @@ public class EstimateReplyService {
             price = Integer.parseInt(inquiry.getPrice());
        }
 
-        /** 5. 지역이 같을때 */
-        String location2 = inquiry.getLocation2();
-
         //검색조건 객체생성
         EstimateSearchCondition condition = new EstimateSearchCondition();
 
@@ -143,7 +140,7 @@ public class EstimateReplyService {
         condition.setMinPrice(minPrice);
         condition.setMaxPrice(maxPrice);
         condition.setRemaincount(totcount);
-        condition.setLcoation2(location2);
+        condition.setLcoation2(inquiry.getLocation2());
 
         return searchRepository.searchByWhere(condition);
 
