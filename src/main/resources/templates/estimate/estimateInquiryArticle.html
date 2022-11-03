@@ -29,7 +29,7 @@
             <h3 class="heading_theme">견적문의</h3>
             <div class="tour_booking_form_box">
               <div class="your_info_arae" sec:authorize="isAuthenticated"
-                   th:if="${email!=null and email=='admin@naver.com' or inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
+                   th:if="${email!=null and email=='admin@naver.com' or inquiry.member!=null and email==inquiry.member.email}">
                 <ul>
                   <li><span style="text-align:center;width: 14%">제목</span>
                     <span th:text="${inquiry.title}"></span></li>
@@ -66,7 +66,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="your_info_arae" sec:authorize="isAuthenticated" th:unless="${email!=null and email=='admin@naver.com' or inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
+              <div class="your_info_arae" sec:authorize="isAuthenticated" th:unless="${email!=null and email=='admin@naver.com' or inquiry.member!=null and email==inquiry.member.email}">
                 <div style="border-top: 1px solid #dadada;
                       border-bottom: 1px solid #dadada;
                       padding: 10 20 20 10;
@@ -84,20 +84,20 @@
     </div>
   </div>
   <div class="common_form_submit">
-    <a th:href="@{|/estimate/inquiry/modify/${inquiry.id}?page=${page}|}" sec:authorize="isAuthenticated"
-       th:if="${inquiry.member!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}">
+    <a th:href="@{|/estimate/inquiry/modify/${inquiry.id}?page=${page}|}"
+       th:if="${inquiry.member!=null and email==inquiry.member.email}">
     <button type="button" class="btn btn_theme btn_md">수정</button>
     </a>
-    <button class="delete btn btn_theme btn_md" sec:authorize="isAuthenticated"
-            th:if="${inquiry.member.email!=null and #authentication.getPrincipal().getUsername()==inquiry.member.email}"
+    <button class="delete btn btn_theme btn_md"
+            th:if="${inquiry.member.email!=null and email==inquiry.member.email}"
             href="javascript:void(0);" th:data-uri="@{|/estimate/inquiry/delete/${inquiry.id}?page=${page}|}">삭제</button>
 
-    <a sec:authorize="isAuthenticated" th:if="${email!=null and email=='admin@naver.com'}"
+    <a  th:if="${email!=null and email=='admin@naver.com'}"
        th:href="@{|/estimate/reply/${inquiry.id}|}">
       <button type="button" class="btn btn_theme btn_md">답변달기</button>
     </a>
-    <a th:href="@{/estimate/list(page=${param.page})}" sec:authorize="isAuthenticated"
-       th:if="${inquiry.member.email!=null and #authentication.getPrincipal().getUsername()!=inquiry.member.email}" class="btn btn_theme btn_md">돌아가기</a>
+    <a th:href="@{/estimate/list(page=${param.page})}"
+       th:if="${inquiry.member.email!=null and email!=inquiry.member.email}" class="btn btn_theme btn_md">돌아가기</a>
 <script type="text/javascript">
 	const deleteBtn = document.getElementsByClassName("delete");
 
