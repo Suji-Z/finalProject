@@ -424,6 +424,7 @@ section {
     z-index: 0;
 }
 
+
 .btn:hover {
     color: var(--white-color);
 }
