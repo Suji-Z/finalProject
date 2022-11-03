@@ -283,12 +283,17 @@
                                 <img th:src="@{|/package-preview/${wishList.Packages.id}/${wishList.Packages.previewImage}|}"/>
 
                             </div>
-                            <div class="theme_two_box_content">
-                                <h4><a th:href="@{|/package/${wishList.Packages.id}|}" th:text="${wishList.Packages.packageName}">제주도 우도 어쩌구</a></h4>
-                                <p><span class="review_rating">4.8/5</span>
-                                    <span class="review_count">(1214 reviewes)</span></p>
-                                <h5 align="right">[[${wishList.Packages.packagedatelist.get(0).getAprice()}]]&nbsp;원 ~</h5>
-                            </div>
+
+                                <h4><a style="color: black" th:href="@{|/package/${wishList.Packages.id}|}" th:text="${wishList.Packages.packageName}">제주도 우도 어쩌구</a></h4>
+
+                                <h3 align="right" th:if="${not #strings.isEmpty(wishList.Packages.packagedatelist.get(0).getDiscount())}">
+                                    <del th:text="${#numbers.formatInteger(wishList.Packages.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>
+                                    <h5 align="right">[[${#numbers.formatInteger(wishList.Packages.packagedatelist.get(0).getAprice()-
+                                        (wishList.Packages.packagedatelist.get(0).getAprice() * (wishList.Packages.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원 ~</h5></h3>
+
+                            <h3 align="right" th:if="${#strings.isEmpty(wishList.Packages.packagedatelist.get(0).getDiscount())}">
+                                    [[${#numbers.formatInteger(wishList.Packages.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원 ~</h3>
+<br/>
                         </div>
                         <!-- 위시리스트 하트 -->
 
