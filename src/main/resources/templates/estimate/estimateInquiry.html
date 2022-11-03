@@ -58,18 +58,21 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-lg-3">
-                                                <input type="hidden" id="inquiry_location2" th:value="*{location2}">
                                                 <select th:field="*{location2}" style="width:90%;" class="form-select" aria-label="Default select example">
-                                                    <option value="">상세 지역을 선택하세요</option>
+                                                    <option value="" selected="selected">상세 지역을 선택하세요</option>
                                                 </select>
                                             </div>
+                                            <input type="hidden" id="inquiry_location2" th:value="*{location2}"/>
+
                                             <script  th:inline="javascript">
 
                                             $( function() {
+
                                                     var location1 = $( "#inquiry_location1" ).val();
                                                     var location2 = $( "#inquiry_location2" ).val();
 
-                                                    categoryModify(location1,location2);
+                                                    if(location1 !="" && location2 !=""){
+                                                    categoryModify(location1,location2);}
                                                 } );
                                                         <!-- 업로드시 -->
                                                         function categoryChange(f) {
@@ -117,8 +120,6 @@
                                                             opt.innerHTML = e[x];
 
                                                             if(f2==e[x]){
-                                                                alert(f2);
-                                                                alert(x);
                                                                 opt.setAttribute("selected","selected");
                                                             }
 
