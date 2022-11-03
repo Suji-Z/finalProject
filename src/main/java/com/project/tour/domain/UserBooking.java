@@ -12,7 +12,7 @@ import java.util.Date;
 @SequenceGenerator(
         name = "BOOKING_SEQ_GENERATOR",
         sequenceName = "BOOKING_SEQ", // 매핑할 데이터베이스 시퀀스 이름
-        initialValue = 19012032,
+        initialValue = 1901203201,
         allocationSize = 51
 )
 public class UserBooking {

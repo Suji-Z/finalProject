@@ -18,6 +18,6 @@ public class Coupon {
 
     private String couponName;
 
-    private double couponRate;
+    private int couponRate;
 
 }

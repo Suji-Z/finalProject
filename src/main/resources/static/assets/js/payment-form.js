@@ -54,6 +54,7 @@ function payConfirm() {
         IMP.init('imp40260603'); // 팝업창으로 뜨게 아임포트 가맹점 식별코드
 
         let payTotalPrice1 = parseInt($("#payTotalPrice").text().replace(/,/g,'')); //결제금액
+    alert(payTotalPrice1);
 
     IMP.request_pay({ //요청하는 것들
         pg : pgName, //카카오페이 API래핑
@@ -80,7 +81,8 @@ function payConfirm() {
                 merchantUid: rsp.merchant_uid,
                 payMethod: $("#payMethod").val(),
                 payTotalPrice :payTotalPrice1,
-                bookingNum : $("#bookingNum").val()
+                bookingNum : $("#bookingNum").val(),
+
             },
             success : function(url){
                 location.href=url;

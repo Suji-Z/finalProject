@@ -186,8 +186,8 @@
                             <div class="coupon_code_area_booking">
                                     <div class="form-group">
 
-                                        <select class="form-control form-select bg_input" id="couponNum">
-                                            <option value="0">사용가능한 쿠폰 보기</option>
+                                        <select class="form-control form-select bg_input" id="couponNum" th:name="couponNum">
+                                            <option value="0" selected>사용가능한 쿠폰 보기</option>
                                             <option th:each="c: ${coupons}" th:value="${c.id}" th:text="${c.couponName}"></option>
                                         </select>
                                     </div>
