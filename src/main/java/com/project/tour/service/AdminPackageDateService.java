@@ -55,6 +55,11 @@ public class AdminPackageDateService {
         cal3.setTime(cal1.getTime());
         cal3.add(Calendar.DATE,-1);
 
+        //Discount가 설정되지 않으면 default값으로 0이 들어가게 설정
+        if(packageCreate.getDiscount()==null){
+            packageCreate.setDiscount(0);
+        }
+
 
         long a = (end.getTime() - start.getTime())/(1000*60*60*24);
 
