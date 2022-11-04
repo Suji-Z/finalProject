@@ -27,7 +27,7 @@ public class UserBookingService {
 
     //예약 데이터 저장하기
     public UserBooking create(UserBookingForm userBookingForm, int bookingTotalPrice,
-                       Package apackage, Member member,int bookingCnt){
+                       Package apackage, Member member,int bookingCnt,String couponNum){
 
         UserBooking userBooking = new UserBooking();
 
@@ -48,6 +48,7 @@ public class UserBookingService {
                 userBooking.getBCount()+ userBooking.getCCount()); //성인, 아동, 유아 인원수 합산
         userBooking.setApackage(apackage);
         userBooking.setMember(member);
+        userBooking.setUsedCoupon(couponNum);
 
         apackage.setBookingCnt(bookingCnt);
 
