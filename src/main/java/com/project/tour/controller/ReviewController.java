@@ -51,7 +51,7 @@ public class ReviewController {
 
     //모든 리뷰 보기
     @RequestMapping
-    public String allReviewList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user ){
+    public String allReviewList(Model model, @PageableDefault(size = 5) Pageable pageable,Principal principal,@LoginUser SessionUser user ){
 
 
         Page<Review> paging = reviewService.getList(pageable);
@@ -290,7 +290,7 @@ public class ReviewController {
     }
 
     @RequestMapping (value = "/abroadList")
-    public String abroadList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user ){
+    public String abroadList(Model model, @PageableDefault(size = 5) Pageable pageable,Principal principal,@LoginUser SessionUser user ){
 
 
         List<String> location = new ArrayList<>();
@@ -308,7 +308,7 @@ public class ReviewController {
     }
 
     @RequestMapping (value = "/jejuList")
-    public String jejuList(Model model, @PageableDefault Pageable pageable){
+    public String jejuList(Model model, @PageableDefault(size = 5) Pageable pageable){
 
         Page<Review> paging = reviewService.getJejuList("제주",pageable);
         model.addAttribute("paging",paging);
@@ -446,60 +446,5 @@ public class ReviewController {
         return String.format("redirect:/review/article/%s",review_reply.getReviewNum().getId());
 
     }
-
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("/replyVote")
-//    public @ResponseBody HashMap<String,Object> reviewReplyVote
-//            (@RequestParam("id") Long id,@RequestParam("likeStatus") int likeStatus,
-//             Principal principal,@LoginUser SessionUser user){
-//
-//
-//
-//
-//
-//        //Review review = reviewService.getReview(review_reply.getReviewNum().getId());
-//
-//        Member member;
-//
-//        if(memberService.existByEmail(principal.getName())){
-//
-//            member = memberService.getName(principal.getName());
-//
-//        }else{
-//
-//            member = memberService.getName(user.getEmail());
-//
-//        }
-//
-//        Review_reply review_reply = reviewReplyService.getReplyStatus(id,member.getId());
-//
-//        if(likeStatus==0){
-//            reviewReplyService.updateLikeStatus(review_reply,1);
-//
-//        }else{
-//            reviewReplyService.updateLikeStatus(review_reply,0);
-//        }
-//
-////        if(reviewReplyService.getReplyLike(id2, review.getId())){
-////
-////            reviewReplyService.deleteReplyLike(id2, review.getId());
-////
-////
-////        }else{
-////            reviewReplyService.vote(review_reply,member,review);
-////
-////        }
-//
-////
-////
-////        return String.format("redirect:/review/article/%s#reply_%s",
-////                review_reply.getReviewNum().getId(),review_reply.getId());
-//
-//        HashMap<String,Object> recommendInfo = new HashMap<>();
-//        recommendInfo.put("reviewReply.likeStatus",review_reply.getLikeStatus());
-//
-//        return recommendInfo;
-//
-//    }
 
 }
