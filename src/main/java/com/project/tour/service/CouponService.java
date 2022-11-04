@@ -2,8 +2,10 @@ package com.project.tour.service;
 
 import com.project.tour.domain.Coupon;
 import com.project.tour.domain.Member;
-import com.project.tour.repository.CouponRepository;
-import com.project.tour.repository.MemberRepository;
+import com.project.tour.domain.Package;
+import com.project.tour.domain.PackageDate;
+import com.project.tour.domain.UserBooking;
+import com.project.tour.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +24,9 @@ public class CouponService {
     @Autowired
     private final CouponRepository couponRepository;
     private final MemberRepository memberRepository;
+    private final PackageDateRepository packageDateRepository;
+    private final BookingRepository bookingRepository;
+    private final PackageRepository packageRepositody;
 
     //user 가지고 있는 쿠폰번호로 쿠폰 정보 검색
     public List<Coupon> getCoupon(String couponNum){
@@ -60,18 +65,29 @@ public class CouponService {
     public void deleteCoupon(String couponNum, Member member){
 
         int length = member.getCoupons().length();
-        String nowCoupons = "";
-
-        if(member.getCoupons().indexOf(couponNum)==length/2){
-            //마지막 순서의 쿠폰을 사용함
-            nowCoupons = member.getCoupons().substring(0,length-2);
-
-        }else{ //중간 순서의 쿠폰 사용함
-            nowCoupons = member.getCoupons().replaceAll(couponNum+",","");
-        }
+        String nowCoupons = member.getCoupons().replaceAll(couponNum,"");
 
         member.setCoupons(nowCoupons);
         memberRepository.save(member);
+
+    }
+
+    //취소하면 쿠폰 재발급
+    public void reCoupon(Member member, Long bookingNum){
+
+        //bookingNum으로 packageDate 정보 가져오기
+        UserBooking userBooking = bookingRepository.findById(bookingNum).get();
+        PackageDate packageDate = packageDateRepository.findByPackagesAndDeparture(userBooking.getApackage(),userBooking.getDeparture()).get();
+
+        int originalTotalPrice = (((packageDate.getAprice()*userBooking.getACount())+ (packageDate.getBprice()* userBooking.getBCount())
+                + (packageDate.getCprice()* userBooking.getCCount()))*(100-packageDate.getDiscount())/100);
+        int couponRate = 100*(originalTotalPrice-userBooking.getBookingTotalPrice())/(originalTotalPrice);
+
+        Optional<Coupon> coupon = couponRepository.findByCouponRate(couponRate);
+        member.setCoupons(member.getCoupons()+","+coupon.get().getId());
+
+        memberRepository.save(member);
+
 
     }
 
