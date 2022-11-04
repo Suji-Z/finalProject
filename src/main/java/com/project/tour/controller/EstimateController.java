@@ -9,6 +9,7 @@ import com.project.tour.service.EstimateReplyService;
 import com.project.tour.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -66,7 +67,7 @@ public class EstimateController {
         Page<EstimateInquiry> paging = estimateInquiryService.getMyList(member,pageable);
 
         model.addAttribute("paging",paging);
-
+        model.addAttribute("member",member);
         return "estimate/estimateList";
     }
 
@@ -110,9 +111,10 @@ public class EstimateController {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
+        EstimateReply reply = estimateReplyService.getArticle(inquiry);
+
         String email;
         String name;
-
         if (memberService.existByEmail(principal.getName())) {
             Member member = memberService.getName(principal.getName());
             email = member.getEmail();
@@ -126,6 +128,7 @@ public class EstimateController {
         model.addAttribute("page",page);
         model.addAttribute("email", email);
         model.addAttribute("name", name);
+        model.addAttribute("reply", reply);
 
         return "estimate/estimateInquiryArticle";
     }
