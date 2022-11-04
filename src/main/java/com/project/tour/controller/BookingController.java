@@ -141,7 +141,7 @@ public class BookingController {
 
         //데이터 저장
         UserBooking userBooking = userBookingService.create(userBookingForm,
-                bookingTotalPrice, apackage, member, bookingCnt);
+                bookingTotalPrice, apackage, member, bookingCnt, couponNum);
 
         model.addAttribute("userBooking",userBooking);
 
