@@ -111,6 +111,9 @@ public class EstimateController {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
+        /** 한게시글에 답변이 두개이상 달리면 작동할 수 없는 코드임
+         * 나중에 두개이상 답변달았을때 어떤 형식으로 할지 고민중이기 때문에
+         * 일단 이렇게 해두고 나중에 고치는걸로 */
         EstimateReply reply = estimateReplyService.getArticle(inquiry);
 
         String email;
