@@ -72,9 +72,8 @@
           </div>
           <div class="option-item">
             <button th:onclick="|location.href='@{/estimate/inquiry/upload}'|" class="btn btn_theme" style="height: 35px;font-size: 11pt;float: right" >글올리기</button>
-            <button th:if="${type!=null && type=='true'}"  th:onclick="|location.href='@{/estimate/list(type='false')}'|" class="btn btn_theme" style="margin-right:10px; height: 35px;font-size: 11pt;float: right" >내문의보기</button>
-            <button th:if="${type==null || type=='false'}" th:onclick="|location.href='@{/estimate/list(type='true')}'|" class="btn btn_theme" style="margin-right:10px; height: 35px;font-size: 11pt;float: right; background:white;color: #99E000;
-               border: 2px solid #99E000;" >내문의보기</button>
+            <button th:if="${type!=null && type=='true'}"  th:onclick="|location.href='@{/estimate/list(type='false')}'|" class="btn btn_theme" style="margin-right:10px; height: 35px;font-size: 11pt;float: right;" >전체보기</button>
+            <button th:if="${type==null || type=='false'}" th:onclick="|location.href='@{/estimate/list(type='true')}'|" class="btn btn_theme" style="margin-right:10px; height: 35px;font-size: 11pt;float: right;" >내문의보기</button>
           </div>
         </div>
 
