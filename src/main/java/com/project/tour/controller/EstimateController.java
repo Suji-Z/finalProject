@@ -38,38 +38,39 @@ public class EstimateController {
     private final EstimateReplyService estimateReplyService;
     private final MemberService memberService;
 
-    /** 견적문의 리스트 출력 */
+    /** 견적문의 리스트 출력 (전체리스트 / 내문의만보기)*/
     @GetMapping("/list")
-    public String estimateList(Model model, @PageableDefault Pageable pageable) {
+    public String estimateList(@RequestParam(value = "type",required = false) String type, Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user) {
 
-        Page<EstimateInquiry> paging = estimateInquiryService.getList(pageable);
+        Page<EstimateInquiry> paging = null;
 
-        model.addAttribute("paging",paging);
+        if(type!=null && type.equals("true")) {
 
-        return "estimate/estimateList";
-    }
+            Member member = null;
+            if (user != null) {
+                member = memberService.getName(user.getEmail());
+                log.info(user.toString());
+                log.info(" <user> MEMBER.GETEMAIL() : " + member.getEmail());
+                paging = estimateInquiryService.getMyList(member, pageable);
+            }
+            else if (principal != null) {
+                member = memberService.getName(principal.getName());
+                log.info(principal.toString());
+                log.info(" <principal> MEMBER.GETEMAIL() : " + member.getEmail());
+                paging = estimateInquiryService.getMyList(member, pageable);
+            }else {
+                return "redirect:/member/login";
+            }
 
-    /** 마이 견적문의 리스트 출력 */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/mylist")
-    public String estimateMyList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user) {
-
-
-        Member member = null;
-        if(memberService.existByEmail(principal.getName())){
-
-            member = memberService.getName(principal.getName());
-
-        }else {
-            member = memberService.getName(user.getEmail());
+        }else if (type==null || type.equals("false")){
+            paging = estimateInquiryService.getList(pageable);
         }
 
-        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(member,pageable);
-
         model.addAttribute("paging",paging);
-        model.addAttribute("member",member);
+        model.addAttribute("type",type);
         return "estimate/estimateList";
     }
+
 
     /** 견적문의 업로드 */
     @PreAuthorize("isAuthenticated()") //로그인해야지 접근가능
