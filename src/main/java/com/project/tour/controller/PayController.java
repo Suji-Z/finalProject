@@ -105,7 +105,7 @@ public class PayController {
         packageDateService.modifyRemainCount(packageDate, bookingTotalCount);
 
         //4. 포인트5% 적립
-        payService.getPoint(member, payTotalPrice);
+        payService.getPoint(member, payTotalPrice, payForm.getUsedPoint());
 
 
         return new ResponseEntity("/pay/complete", HttpStatus.OK);
