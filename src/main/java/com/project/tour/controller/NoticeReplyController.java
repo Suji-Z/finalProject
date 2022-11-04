@@ -69,8 +69,12 @@ public class NoticeReplyController {
             member = memberService.getName(user.getEmail());
         }
 
-        //댓글달면 포인트 적립
-        memberService.getPoint(memberNum);
+        //포인트 적립 전에 여기에 단 댓글 있는지 확인 : 처음 단 댓글일 경우에만 포인트 적립
+        if(!noticeReplyService.findReply(memberNum,noticeNum)) {
+
+            memberService.getPoint(memberNum);
+
+        }
 
         noticeReplyService.create(content, memberNum, noticeNum);
         model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
@@ -97,7 +101,16 @@ public class NoticeReplyController {
             member = memberService.getName(user.getEmail());
         }
 
+        //댓글삭제
         noticeReplyService.delete(replyNum);
+
+        //포인트 회수
+        if(!noticeReplyService.findReply(member.getId(),noticeNum)) {
+
+            noticeReplyService.deletePoint(member);
+
+        }
+
         model.addAttribute("commentList", noticeReplyService.getList(noticeNum));
         model.addAttribute("member",member);
 

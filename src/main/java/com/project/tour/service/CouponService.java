@@ -64,11 +64,13 @@ public class CouponService {
     //사용한 쿠폰 삭제
     public void deleteCoupon(String couponNum, Member member){
 
-        int length = member.getCoupons().length();
-        String nowCoupons = member.getCoupons().replaceAll(couponNum,"");
+        if(member.getCoupons()!=null) {
+            String nowCoupons = member.getCoupons().replaceAll(couponNum, "");
 
-        member.setCoupons(nowCoupons);
-        memberRepository.save(member);
+            member.setCoupons(nowCoupons);
+            memberRepository.save(member);
+        }
+
 
     }
 
