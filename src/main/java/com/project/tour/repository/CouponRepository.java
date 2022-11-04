@@ -18,6 +18,8 @@ public interface CouponRepository extends JpaRepository<Coupon,String> {
 
     List<Coupon> findByIdIn(List<String> coupons); //list안의 스트링을 or가지고 있는 애들 다 뽑아내라
     Optional<Coupon> findById(String id);
+
+    Optional<Coupon> findByCouponRate(int counponRate);
 }
 
 

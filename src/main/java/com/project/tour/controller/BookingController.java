@@ -94,8 +94,8 @@ public class BookingController {
         Coupon coupon = couponService.getApplyCoupon(chkCoupon);
 
         //할인금액,총 금액 계산
-        int couponDiscountPrice = ((int)(bookingPrice*coupon.getCouponRate()*(-1))); //할인금액
-        int bookingTotalPrice = ((int)(bookingPrice*(1-coupon.getCouponRate()))); //총금액
+        int couponDiscountPrice = (-1)*bookingPrice*(coupon.getCouponRate())/100; //할인금액
+        int bookingTotalPrice = bookingPrice+couponDiscountPrice;//총금액
 
         //json형태 데이터로 넘기기
         HashMap<String,Object> couponInfo = new HashMap<String,Object>();
@@ -129,7 +129,7 @@ public class BookingController {
         int couponRate = couponService.getCouponRate(couponNum);
         int bookingTotalPrice = userBookingForm.getBookingTotalPrice()*(100-couponRate)/100;
 
-        //쿠폰삭제..
+        //쿠폰삭제
         couponService.deleteCoupon(couponNum, member);
 
         /** 예약시 패키지테이블에 예약횟수 누적 **/
@@ -138,10 +138,6 @@ public class BookingController {
         }
         //예약시 해당 package_num 라인의 cnt에 ++ ---> 예약횟수 조회
         int bookingCnt = apackage.getBookingCnt()+1;
-
-        //사용한 쿠폰 삭제...
-
-
 
         //데이터 저장
         UserBooking userBooking = userBookingService.create(userBookingForm,
@@ -187,8 +183,19 @@ public class BookingController {
     public String cancle(@LoginUser SessionUser user, Principal principal, Model model,
                          @PathVariable("id") Long id) {
 
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
         UserBooking userBooking = userBookingService.getUserBooking(id);
         userBookingService.modifyBookingStatus(userBooking,3);
+
+        //쿠폰 재발급
+        couponService.reCoupon(member,id);
 
         return "redirect:/mypage/cancelList";
 
