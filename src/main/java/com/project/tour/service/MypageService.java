@@ -41,6 +41,8 @@ public class MypageService {
 
     private final NoticeReplyRepository noticeReplyRepository;
 
+    private final NoticeRepository noticeRepository;
+
     //여행후기
     public List<Review> getMypageReview(Long id){
 
@@ -196,6 +198,15 @@ public class MypageService {
         List<NoticeReply> result = noticeReplyRepository.findByMember_Id(id);
 
         return result;
+    }
+
+    //멤버가 댓글 쓴 공지 list
+    public List<Notice> getNoticeList(List<Long> noticeNum){
+
+        List<Notice> result = noticeRepository.findByIdIn(noticeNum);
+
+        return result;
+
     }
 
     //회원탈퇴

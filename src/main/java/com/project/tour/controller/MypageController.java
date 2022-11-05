@@ -269,6 +269,8 @@ public class MypageController {
 
         List<Long> result = noticeReplyNum.stream().distinct().collect(Collectors.toList());
 
+        //댓글작성한 공지의 list
+        List<Notice> noticeList = mypageService.getNoticeList(result);
 
         //소멸예정 포인트(댓글적립포인트)
 
@@ -317,7 +319,7 @@ public class MypageController {
 
 
         //적립된 포인트 리스트
-        model.addAttribute("savedPoint", savedPoint);
+        model.addAttribute("savedPoint", noticeList);
         model.addAttribute("savedPoint1",result.size()*500);
         model.addAttribute("payPoint",payPoint);
 
