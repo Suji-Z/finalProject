@@ -25,6 +25,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -258,8 +259,18 @@ public class MypageController {
 
         //댓글등록 적립포인트 계산
         List<NoticeReply> savedPoint = mypageService.getSavedPoint(member.getId());
-        int num = savedPoint.size();
-        int savePoint1 = 500 * num;
+
+        List<Long> noticeReplyNum = new ArrayList<>();
+
+        for(int z=0; z<savedPoint.size();z++){
+
+            noticeReplyNum.add(savedPoint.get(z).getNotice().getId());
+        }
+
+        List<Long> result = noticeReplyNum.stream().distinct().collect(Collectors.toList());
+
+        //댓글작성한 공지의 list
+        List<Notice> noticeList = mypageService.getNoticeList(result);
 
         //소멸예정 포인트(댓글적립포인트)
 
@@ -308,8 +319,8 @@ public class MypageController {
 
 
         //적립된 포인트 리스트
-        model.addAttribute("savedPoint", savedPoint);
-        model.addAttribute("savedPoint1",savePoint1);
+        model.addAttribute("savedPoint", noticeList);
+        model.addAttribute("savedPoint1",result.size()*500);
         model.addAttribute("payPoint",payPoint);
 
         //사용한 포인트 합
