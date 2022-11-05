@@ -86,4 +86,16 @@ public class PayService {
         payRepository.delete(pay);
     }
 
+    public void rePoint(Member member, Long id){
+
+        Optional<Pay> pay = payRepository.findById(id);
+
+        //결제시 적립해줬던 포인트
+        int point = (int)Math.round(pay.get().getPayTotalPrice() * 0.05);
+
+        member.setPoint(member.getPoint()+pay.get().getUsedPoint()-point);
+
+        memberRepository.save(member);
+    }
+
 }

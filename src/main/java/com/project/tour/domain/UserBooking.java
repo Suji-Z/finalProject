@@ -47,6 +47,8 @@ public class UserBooking {
 
     private int bookingTotalCount;
 
+    private String usedCoupon;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;

@@ -66,4 +66,26 @@ public class NoticeReplyService {
 
         noticeReplyRepository.delete(noticeReply);
     }
+
+    //댓글 삭제할 때 포인트 회수
+    public void deletePoint(Member member){
+
+        member.setPoint(member.getPoint()-500);
+        memberRepository.save(member);
+
+    }
+
+    //특정 회원이 댓글 단 적있는지 찾기
+    public boolean findReply(Long memberNum, Long noticeNum){
+
+        boolean result=false;
+
+        Optional<NoticeReply> noticeReply = noticeReplyRepository.findByNotice_IdAndMember_Id(noticeNum,memberNum);
+        if(noticeReply.isPresent()){
+            result = true;
+        }
+        System.out.println("result = " + result);
+
+        return result;
+    }
 }

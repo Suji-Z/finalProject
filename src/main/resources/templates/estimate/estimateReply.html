@@ -91,7 +91,7 @@
                     <div style="width: 58.3%;">
                     <div th:if="${packages.isEmpty()}"> 해당 조건의 패키지상품이 없습니다. </div>
                       <div class="form-check" th:each="package : ${packages}">
-                        <label>
+                        <label style="width:100%;">
                         <input class="form-check-input" type="checkbox" th:field="*{recomPackage}" th:value="${package.id}"/>
                                         <span class="area_flex_one">
                                             <span th:text="${package.packageName}"></span>

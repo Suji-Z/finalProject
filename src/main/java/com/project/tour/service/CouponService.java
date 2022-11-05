@@ -64,29 +64,25 @@ public class CouponService {
     //사용한 쿠폰 삭제
     public void deleteCoupon(String couponNum, Member member){
 
-        int length = member.getCoupons().length();
-        String nowCoupons = member.getCoupons().replaceAll(couponNum,"");
+        if(member.getCoupons()!=null) {
+            String nowCoupons = member.getCoupons().replaceAll(couponNum, "");
 
-        member.setCoupons(nowCoupons);
-        memberRepository.save(member);
+            member.setCoupons(nowCoupons);
+            memberRepository.save(member);
+        }
+
 
     }
 
     //취소하면 쿠폰 재발급
     public void reCoupon(Member member, Long bookingNum){
 
-        //bookingNum으로 packageDate 정보 가져오기
         UserBooking userBooking = bookingRepository.findById(bookingNum).get();
-        PackageDate packageDate = packageDateRepository.findByPackagesAndDeparture(userBooking.getApackage(),userBooking.getDeparture()).get();
 
-        int originalTotalPrice = (((packageDate.getAprice()*userBooking.getACount())+ (packageDate.getBprice()* userBooking.getBCount())
-                + (packageDate.getCprice()* userBooking.getCCount()))*(100-packageDate.getDiscount())/100);
-        int couponRate = 100*(originalTotalPrice-userBooking.getBookingTotalPrice())/(originalTotalPrice);
-
-        Optional<Coupon> coupon = couponRepository.findByCouponRate(couponRate);
-        member.setCoupons(member.getCoupons()+","+coupon.get().getId());
-
-        memberRepository.save(member);
+        if(!userBooking.getUsedCoupon().equals("0")) {
+            member.setCoupons(member.getCoupons() + "," + userBooking.getUsedCoupon());
+            memberRepository.save(member);
+        }
 
 
     }
