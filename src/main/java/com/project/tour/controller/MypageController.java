@@ -272,6 +272,18 @@ public class MypageController {
         //댓글작성한 공지의 list
         List<Notice> noticeList = mypageService.getNoticeList(result);
 
+        List<NoticeReply> notReply = new ArrayList<>();
+
+        for(int x=0;x<result.size();x++){
+
+            List<NoticeReply> oneReply = mypageService.getOneReply(member.getId(), result.get(x));
+
+                notReply.add(oneReply.get(0));
+
+        }
+
+
+
         //소멸예정 포인트(댓글적립포인트)
 
         int point2 = 0;
@@ -319,7 +331,7 @@ public class MypageController {
 
 
         //적립된 포인트 리스트
-        model.addAttribute("savedPoint", noticeList);
+        model.addAttribute("savedPoint", notReply);
         model.addAttribute("savedPoint1",result.size()*500);
         model.addAttribute("payPoint",payPoint);
 

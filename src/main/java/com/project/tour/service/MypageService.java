@@ -209,6 +209,13 @@ public class MypageService {
 
     }
 
+    public List<NoticeReply> getOneReply(Long id1, Long id2){
+        List<NoticeReply> result
+                = noticeReplyRepository.findByMember_IdAndNotice_IdOrderByCreatedAsc(id1,id2);
+
+        return result;
+    }
+
     //회원탈퇴
     public void unregister(Member member){
         memberRepository.delete(member);

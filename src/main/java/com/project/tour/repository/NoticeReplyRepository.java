@@ -16,6 +16,9 @@ public interface NoticeReplyRepository extends JpaRepository<NoticeReply,Long> {
     //마이페이지에 적립포인트 계산(댓글달면 500포인트 적립)
     List<NoticeReply> findByMember_Id(Long id);
 
+    //마이페이지 댓글 출력
+    List<NoticeReply> findByMember_IdAndNotice_IdOrderByCreatedAsc(Long id1, Long id2);
+
     Optional<NoticeReply> findByNotice_IdAndMember_Id(Long noticeNum, Long memberNum);
 
 
