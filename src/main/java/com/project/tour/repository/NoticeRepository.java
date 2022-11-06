@@ -25,6 +25,9 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
     @Query(value = "select count(*) from notice where pin=true", nativeQuery = true)
     int countPin();
 
+    //마이페이지 - 멤버가 댓글 쓴 Notice list 출력
+    List<Notice> findByIdIn(List<Long> noticeNum);
+
 
 
 

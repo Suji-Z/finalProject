@@ -129,6 +129,11 @@ public class MemberController {
    @ResponseBody
     public boolean findPwd(@RequestParam("pwdEmail") String email){
 
+        if(memberService.getMember(email).getSocial()!=null){
+
+            return false;
+        }
+
         //이메일 DB에서 조회하여 반환. 있으면 true?
         return memberService.checkEmail(email);
    }

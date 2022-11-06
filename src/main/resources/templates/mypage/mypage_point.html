@@ -166,7 +166,7 @@
               <tr th:if="${savedPoint.isEmpty() and mypagePay.isEmpty()}"><td th:colspan="4">적립된 포인트가 없습니다.</td></tr>
               <tr th:each="savedPoint : ${savedPoint}">
                   <td th:text="${#temporals.format(savedPoint.created,'yyyy-MM-dd')}">2022-09-01</td>
-                  <td align="center"><a th:href="@{|/notice/article/${savedPoint.notice.id}|}">공지사항 댓글작성</a></td>
+                  <td align="center"><a style="color: black" th:href="@{|/notice/article/${savedPoint.notice.id}|}">공지사항 댓글작성</a></td>
                   <td>500</td>
                   <td th:text="${#temporals.format(savedPoint.created.plusYears(1),'yyyy-MM-dd')}">2022-09-01</td>
               </tr>
