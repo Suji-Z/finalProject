@@ -23,12 +23,10 @@
         <div class="dashboard_sidebar">
           <div class="dashboard_menu_area">
             <ul>
-              <li><a href="dashboard.html">공지사항</a></li>
+              <li><a th:href="@{/notice/list}">공지사항</a></li>
               <li ><a th:href="@{/voiceCus/list}" class="active">고객의소리</a></li>
-              <li><a href="dashboard.html">QnA</a></li>
-              <li><a href="dashboard.html">FAQ</a></li>
-              <li><a href="dashboard.html">여행후기</a></li>
-              <li><a href="dashboard.html">1:1 문의</a></li>
+              <li><a th:href="@{/qna/list}">QnA</a></li>
+              <li><a th:href="@{/review}">여행후기</a></li>
               <li><a th:href="@{/estimate/list}">견적문의</a></li>
             </ul>
           </div>
