@@ -110,7 +110,9 @@
                                 <td th:text="${bookingUser.id}"></td>
                                 <td th:text="|${#strings.substring(bookingUser.bookingDate,0,10)}|"></td>
                                 <td th:text="${bookingUser.member.email}"></td>
-                                <td th:text="${bookingUser.apackage.packageName}"></td>
+                                <td align="center">
+                                    <a style="color: black; display: block; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" th:text="${bookingUser.apackage.packageName}"></a>
+                                </td>
                                 <td th:text="${bookingUser.departure}"></td>
                                 <td th:text="${#numbers.formatInteger(bookingUser.bookingTotalPrice,3,'COMMA')+'원'}"></td>
                                 <td th:switch="${bookingUser.bookingStatus}">

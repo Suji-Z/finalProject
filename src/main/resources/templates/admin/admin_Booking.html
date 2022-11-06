@@ -120,7 +120,9 @@
                                     </label>
                                 </td>
                                 <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
-                                <td th:text="${packageDate.packages.packageName}"></td>
+                                <td align="center">
+                                    <a style="color: black; display: block; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" th:text="${packageDate.packages.packageName}"></a>
+                                </td>
                                 <td th:text="${packageDate.departure}"></td>
                                 <td th:text="|${packageDate.packages.travelPeriod}박 ${packageDate.packages.travelPeriod+1}일|"></td>
                                 <td th:text="|${packageDate.packages.count - packageDate.remaincount} / ${packageDate.packages.count}|"></td>

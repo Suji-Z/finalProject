@@ -2,6 +2,7 @@ package com.project.tour.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -20,7 +21,9 @@ public class PackageDate {
     private Integer bprice;
     private Integer cprice;
 
+    @ColumnDefault("0")
     private Integer discount;
+
     private Integer remaincount;
 
 
