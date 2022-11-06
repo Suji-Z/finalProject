@@ -176,7 +176,8 @@
                             <hr/>
                             <div class="news_item_content">
                                 <h3 th:text="${review.subject}"></h3>
-                                <p th:text="${review.content}"></p>
+                                <br/>
+                                <textarea type="text" th:text="${review.content}" style="width: 650px;border: none; resize: none;background-color:white;" rows="5" disabled="disabled"></textarea>
                                 <br/>
                                 
                             </div>

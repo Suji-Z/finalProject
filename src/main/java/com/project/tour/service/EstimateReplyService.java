@@ -72,6 +72,15 @@ public class EstimateReplyService {
             throw new DataNotFoundException("확인할수 없는 게시물 입니다.");
     }
 
+    //문의글을 통한 답변 검색
+    public EstimateReply getArticle(EstimateInquiry inquiry) {
+
+        EstimateReply reply = estimateReplyRepository.findByEstimateInquiry(inquiry);
+
+        return reply;
+
+    }
+
     //답변에 출력할 패키지 정보 가져오기
     public List<Package> recom(String[] packages){
 
@@ -129,9 +138,6 @@ public class EstimateReplyService {
             price = Integer.parseInt(inquiry.getPrice());
        }
 
-        /** 5. 지역이 같을때 */
-        String location2 = inquiry.getLocation2();
-
         //검색조건 객체생성
         EstimateSearchCondition condition = new EstimateSearchCondition();
 
@@ -143,7 +149,7 @@ public class EstimateReplyService {
         condition.setMinPrice(minPrice);
         condition.setMaxPrice(maxPrice);
         condition.setRemaincount(totcount);
-        condition.setLcoation2(location2);
+        condition.setLcoation2(inquiry.getLocation2());
 
         return searchRepository.searchByWhere(condition);
 

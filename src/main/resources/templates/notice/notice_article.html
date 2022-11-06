@@ -113,11 +113,11 @@
 
         <!--댓글-->
         <hr/>
-        <span>* 본문을 읽고 댓글을 남기면 500point 제공됩니다.</span>
+        <span>* 본문을 읽고 댓글을 남기면 500point 제공됩니다.(최초 댓글만 포인트 제공)</span>
 
         <!--댓글출력-->
         <div class="comment_area" id="commentTable">
-            <div class="comment_area_boxed" th:each="comment,loop:${commentList}">
+            <div class="comment_area_boxed_jennie" th:each="comment,loop:${commentList}">
                 <div class="comment_text">
                     <div class="comment_author_name_jennie">
                     <form method="POST">

@@ -12,7 +12,7 @@ import java.util.Date;
 @SequenceGenerator(
         name = "BOOKING_SEQ_GENERATOR",
         sequenceName = "BOOKING_SEQ", // 매핑할 데이터베이스 시퀀스 이름
-        initialValue = 19012032,
+        initialValue = 1901203201,
         allocationSize = 51
 )
 public class UserBooking {
@@ -46,6 +46,8 @@ public class UserBooking {
     private int bookingStatus; // 0:예약확인중 1:결제대기중 2:결제완료
 
     private int bookingTotalCount;
+
+    private String usedCoupon;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

@@ -9,6 +9,7 @@ import com.project.tour.service.EstimateReplyService;
 import com.project.tour.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -37,38 +38,39 @@ public class EstimateController {
     private final EstimateReplyService estimateReplyService;
     private final MemberService memberService;
 
-    /** 견적문의 리스트 출력 */
+    /** 견적문의 리스트 출력 (전체리스트 / 내문의만보기)*/
     @GetMapping("/list")
-    public String estimateList(Model model, @PageableDefault Pageable pageable) {
+    public String estimateList(@RequestParam(value = "type",required = false) String type, Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user) {
 
-        Page<EstimateInquiry> paging = estimateInquiryService.getList(pageable);
+        Page<EstimateInquiry> paging = null;
 
-        model.addAttribute("paging",paging);
+        if(type!=null && type.equals("true")) {
 
-        return "estimate/estimateList";
-    }
+            Member member = null;
+            if (user != null) {
+                member = memberService.getName(user.getEmail());
+                log.info(user.toString());
+                log.info(" <user> MEMBER.GETEMAIL() : " + member.getEmail());
+                paging = estimateInquiryService.getMyList(member, pageable);
+            }
+            else if (principal != null) {
+                member = memberService.getName(principal.getName());
+                log.info(principal.toString());
+                log.info(" <principal> MEMBER.GETEMAIL() : " + member.getEmail());
+                paging = estimateInquiryService.getMyList(member, pageable);
+            }else {
+                return "redirect:/member/login";
+            }
 
-    /** 마이 견적문의 리스트 출력 */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/mylist")
-    public String estimateMyList(Model model, @PageableDefault Pageable pageable,Principal principal,@LoginUser SessionUser user) {
-
-
-        Member member = null;
-        if(memberService.existByEmail(principal.getName())){
-
-            member = memberService.getName(principal.getName());
-
-        }else {
-            member = memberService.getName(user.getEmail());
+        }else if (type==null || type.equals("false")){
+            paging = estimateInquiryService.getList(pageable);
         }
 
-        Page<EstimateInquiry> paging = estimateInquiryService.getMyList(member,pageable);
-
         model.addAttribute("paging",paging);
-
+        model.addAttribute("type",type);
         return "estimate/estimateList";
     }
+
 
     /** 견적문의 업로드 */
     @PreAuthorize("isAuthenticated()") //로그인해야지 접근가능
@@ -110,9 +112,13 @@ public class EstimateController {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
+        /** 한게시글에 답변이 두개이상 달리면 작동할 수 없는 코드임
+         * 나중에 두개이상 답변달았을때 어떤 형식으로 할지 고민중이기 때문에
+         * 일단 이렇게 해두고 나중에 고치는걸로 */
+        EstimateReply reply = estimateReplyService.getArticle(inquiry);
+
         String email;
         String name;
-
         if (memberService.existByEmail(principal.getName())) {
             Member member = memberService.getName(principal.getName());
             email = member.getEmail();
@@ -126,6 +132,7 @@ public class EstimateController {
         model.addAttribute("page",page);
         model.addAttribute("email", email);
         model.addAttribute("name", name);
+        model.addAttribute("reply", reply);
 
         return "estimate/estimateInquiryArticle";
     }
@@ -196,7 +203,7 @@ public class EstimateController {
     /** 답변달기 */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reply/{id}")
-    public String estimateReply(@PathVariable("id") Long id,Model model,Principal principal) throws ParseException {
+    public String estimateReply(@PathVariable("id") Long id,Model model) throws ParseException {
 
         EstimateInquiry inquiry = estimateInquiryService.getArticle(id);
 
@@ -234,10 +241,11 @@ public class EstimateController {
     /** 답변게시글 이동 */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/article/{id}")
-    public String estimateReplyArticle(@PathVariable("id") Long id,Model model,Principal principal) {
+    public String estimateReplyArticle(@PathVariable("id") Long id,Model model,@LoginUser SessionUser user,Principal principal) {
 
         EstimateReply reply = estimateReplyService.getArticle(id);
 
+        //추천패키지 
         String[] packages;
         List<Package> recomPackages = null;
         if(reply.getRecomPackage()!=null) {
@@ -245,8 +253,19 @@ public class EstimateController {
             recomPackages = estimateReplyService.recom(packages);
         }
 
+        //관리자,글쓴이 외 비밀글처리
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+
+            member = memberService.getName(principal.getName());
+
+        }else {
+            member = memberService.getName(user.getEmail());
+        }
         model.addAttribute("reply",reply);
         model.addAttribute("recomPackages",recomPackages);
+        model.addAttribute("member",member);
+
 
         return "estimate/estimateReplyArticle";
     }

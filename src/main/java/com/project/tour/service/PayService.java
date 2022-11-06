@@ -1,6 +1,7 @@
 package com.project.tour.service;
 
 import com.project.tour.domain.*;
+import com.project.tour.repository.MemberRepository;
 import com.project.tour.repository.PayRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import java.util.*;
 public class PayService {
 
     private final PayRepository payRepository;
+    private final MemberRepository memberRepository;
 
     //pay테이블 저장하기
     public Pay create(UserBooking userBooking, Member member, PayForm payForm){
@@ -66,10 +68,14 @@ public class PayService {
     }
 
 
-    public void getPoint(Member member,int payTotalCount){
+    public void getPoint(Member member,int payTotalCount, int usingPoint){
 
         int point = (int)Math.round(payTotalCount * 0.05); //포인트 적립
-        member.setPoint(member.getPoint()+point);
+        int nowPoint = member.getPoint()+point-usingPoint;
+
+        member.setPoint(nowPoint); //포인트 정리
+        memberRepository.save(member);
+
 
     }
 
@@ -78,6 +84,18 @@ public class PayService {
 
         Pay pay = payRepository.findById(id).get();
         payRepository.delete(pay);
+    }
+
+    public void rePoint(Member member, Long id){
+
+        Optional<Pay> pay = payRepository.findById(id);
+
+        //결제시 적립해줬던 포인트
+        int point = (int)Math.round(pay.get().getPayTotalPrice() * 0.05);
+
+        member.setPoint(member.getPoint()+pay.get().getUsedPoint()-point);
+
+        memberRepository.save(member);
     }
 
 }

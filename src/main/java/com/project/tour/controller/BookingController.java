@@ -87,21 +87,21 @@ public class BookingController {
 
     /*쿠폰 적용했을 때 */
     @GetMapping("/detail/applyCoupon")
-    public @ResponseBody HashMap<String,Object> applyCoupon(@RequestParam("chkCoupon") String chkCoupon, BookingPriceDTO priceForm,
+    public @ResponseBody HashMap<String,Object> applyCoupon(@RequestParam("chkCoupon") String chkCoupon,
                                                             @RequestParam("bookingPrice") int bookingPrice) throws Exception{
 
         //쿠폰선택시 비동기 ajax
         Coupon coupon = couponService.getApplyCoupon(chkCoupon);
 
         //할인금액,총 금액 계산
-        priceForm.setCouponDiscountPrice((int)(bookingPrice*coupon.getCouponRate()*(-1))); //할인금액
-        priceForm.setBookingTotalPrice((int)(bookingPrice*(1-coupon.getCouponRate()))); //총금액
+        int couponDiscountPrice = (-1)*bookingPrice*(coupon.getCouponRate())/100; //할인금액
+        int bookingTotalPrice = bookingPrice+couponDiscountPrice;//총금액
 
         //json형태 데이터로 넘기기
         HashMap<String,Object> couponInfo = new HashMap<String,Object>();
         couponInfo.put("couponName",coupon.getCouponName());
-        couponInfo.put("couponDiscountPrice",priceForm.getCouponDiscountPrice());
-        couponInfo.put("bookingTotalPrice",priceForm.getBookingTotalPrice());
+        couponInfo.put("couponDiscountPrice",couponDiscountPrice);
+        couponInfo.put("bookingTotalPrice",bookingTotalPrice);
 
         return couponInfo;
     }
@@ -109,8 +109,9 @@ public class BookingController {
     /* 예약확인 저장 및 창띄우기*/
     @PreAuthorize("isAuthenticated()") //로그인 안하면 접근불가
     @PostMapping("/confirmation/{id}") //id=packageNum
-    public String confirmation(@Valid UserBookingForm userBookingForm, BindingResult bindingResult, BookingPriceDTO priceForm,
-                               @LoginUser SessionUser user, Principal principal, Model model, @PathVariable("id") Long id){
+    public String confirmation(@Valid UserBookingForm userBookingForm, BindingResult bindingResult, @PathVariable("id") Long id,
+                               @LoginUser SessionUser user, Principal principal, Model model,
+                               @RequestParam(value = "couponNum", required = false) String couponNum){
 
         //로그인 정보 확인
         Member member;
@@ -122,14 +123,14 @@ public class BookingController {
 
         //데이터 저장때 넘겨야할 정보 : bookingTotalPrice, Member, Package, bookingDate
         Package apackage = packageService.getPackage(id);
-
         model.addAttribute("member", member);
 
+        //쿠폰 적용가격 정리
+        int couponRate = couponService.getCouponRate(couponNum);
+        int bookingTotalPrice = userBookingForm.getBookingTotalPrice()*(100-couponRate)/100;
 
-        //bookingTotalPrice 검증
-        if(priceForm.getBookingTotalPrice() == 0){
-            priceForm.setBookingTotalPrice(userBookingForm.getBookingTotalPrice());
-        }
+        //쿠폰삭제
+        couponService.deleteCoupon(couponNum, member);
 
         /** 예약시 패키지테이블에 예약횟수 누적 **/
         if(apackage.getBookingCnt()==null){
@@ -138,10 +139,9 @@ public class BookingController {
         //예약시 해당 package_num 라인의 cnt에 ++ ---> 예약횟수 조회
         int bookingCnt = apackage.getBookingCnt()+1;
 
-
         //데이터 저장
         UserBooking userBooking = userBookingService.create(userBookingForm,
-                priceForm.getBookingTotalPrice(), apackage, member, bookingCnt);
+                bookingTotalPrice, apackage, member, bookingCnt, couponNum);
 
         model.addAttribute("userBooking",userBooking);
 
@@ -183,8 +183,19 @@ public class BookingController {
     public String cancle(@LoginUser SessionUser user, Principal principal, Model model,
                          @PathVariable("id") Long id) {
 
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
+
         UserBooking userBooking = userBookingService.getUserBooking(id);
         userBookingService.modifyBookingStatus(userBooking,3);
+
+        //쿠폰 재발급
+        couponService.reCoupon(member,id);
 
         return "redirect:/mypage/cancelList";
 

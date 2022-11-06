@@ -1,7 +1,11 @@
 package com.project.tour.service;
 
 import com.project.tour.domain.Coupon;
-import com.project.tour.repository.CouponRepository;
+import com.project.tour.domain.Member;
+import com.project.tour.domain.Package;
+import com.project.tour.domain.PackageDate;
+import com.project.tour.domain.UserBooking;
+import com.project.tour.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +23,10 @@ public class CouponService {
 
     @Autowired
     private final CouponRepository couponRepository;
+    private final MemberRepository memberRepository;
+    private final PackageDateRepository packageDateRepository;
+    private final BookingRepository bookingRepository;
+    private final PackageRepository packageRepositody;
 
     //user 가지고 있는 쿠폰번호로 쿠폰 정보 검색
     public List<Coupon> getCoupon(String couponNum){
@@ -40,6 +48,43 @@ public class CouponService {
     public Coupon getApplyCoupon(String couponNum){
         Optional<Coupon> coupon = couponRepository.findById(couponNum);
         return coupon.get();
+    }
+
+    public int getCouponRate(String couponNum){
+
+        int couponRate = 0;
+        if(!couponNum.equals("0")) {
+            Optional<Coupon> coupon = couponRepository.findById(couponNum);
+            couponRate = coupon.get().getCouponRate();
+        }
+
+        return couponRate;
+    }
+
+    //사용한 쿠폰 삭제
+    public void deleteCoupon(String couponNum, Member member){
+
+        if(member.getCoupons()!=null) {
+            String nowCoupons = member.getCoupons().replaceAll(couponNum, "");
+
+            member.setCoupons(nowCoupons);
+            memberRepository.save(member);
+        }
+
+
+    }
+
+    //취소하면 쿠폰 재발급
+    public void reCoupon(Member member, Long bookingNum){
+
+        UserBooking userBooking = bookingRepository.findById(bookingNum).get();
+
+        if(!userBooking.getUsedCoupon().equals("0")) {
+            member.setCoupons(member.getCoupons() + "," + userBooking.getUsedCoupon());
+            memberRepository.save(member);
+        }
+
+
     }
 
 }

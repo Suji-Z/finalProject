@@ -55,6 +55,7 @@ function payConfirm() {
 
         let payTotalPrice1 = parseInt($("#payTotalPrice").text().replace(/,/g,'')); //결제금액
 
+
     IMP.request_pay({ //요청하는 것들
         pg : pgName, //카카오페이 API래핑
         pay_method : pgMethod,
@@ -80,7 +81,8 @@ function payConfirm() {
                 merchantUid: rsp.merchant_uid,
                 payMethod: $("#payMethod").val(),
                 payTotalPrice :payTotalPrice1,
-                bookingNum : $("#bookingNum").val()
+                bookingNum : $("#bookingNum").val(),
+
             },
             success : function(url){
                 location.href=url;

@@ -3753,7 +3753,13 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .comment_area_boxed {
-    /*display: flex;*/
+    display: flex;
+    padding-bottom: 35px;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 35px;
+}
+
+.comment_area_boxed_jennie {
     padding-bottom: 35px;
     border-bottom: 1px solid #dddddd;
     margin-bottom: 35px;

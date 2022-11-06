@@ -26,7 +26,7 @@
           <div class="booking_tour_form">
             <h3 class="heading_theme">답변</h3>
             <div class="tour_booking_form_box">
-              <div class="your_info_arae">
+              <div class="your_info_arae" th:if="${reply.estimateInquiry.member!=null and member.email=='admin@naver.com' or  member.email== reply.estimateInquiry.member.email}">
                 <ul>
                   <li><span style="text-align:center;width: 14%">제목</span>
                     <span th:text="${reply.title}"></span>
@@ -71,20 +71,33 @@
                   </li>
                 </ul>
               </div>
+                <div class="your_info_arae" th:unless="${reply.estimateInquiry.member!=null and member.email=='admin@naver.com' or  member.email== reply.estimateInquiry.member.email}">
+                    <div style="border-top: 1px solid #dadada;
+                      border-bottom: 1px solid #dadada;
+                      padding: 10 20 20 10;
+                      padding: 30px;
+                      text-align: center;
+                      font-size: 17pt;">
+                        답변은 본인만 확인 가능합니다.
+                    </div>
+                </div>
             </div>
           </div>
+        <div class="col-lg-13" align="right" style="padding-right: 10px">
+            <a th:if="${member.email=='admin@naver.com'}"
+               th:href="@{|/estimate/reply/modify/${reply.id}|}" >
+            <button type="button"  onclick="return confirm('답변을 수정하실 경우 추천패키지 리스트가 최신정보로 초기화 됩니다. 계속 진행하시겠습니까?');" class="btn btn-outline-secondary">수정</button>
+            </a>
+            <button  th:if="${member.email=='admin@naver.com'}"
+                     href="javascript:void(0);" th:data-uri="@{|/estimate/reply/delete/${reply.id}|}" class="delete btn btn-outline-secondary">삭제</button>
+        </div>
         </div>
       </div>
     </div>
   </div>
   <div class="common_form_submit">
-      <a sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()=='admin@naver.com'}"
-         th:href="@{|/estimate/reply/modify/${reply.id}|}" >
-          <button type="button" class="btn btn_theme btn_md" onclick="return confirm('답변을 수정하실 경우 추천패키지 리스트가 최신정보로 초기화 됩니다. 계속 진행하시겠습니까?');">수정</button>
-      </a>
-      <button class="delete btn btn_theme btn_md"
-              sec:authorize="isAuthenticated" th:if="${#authentication.getPrincipal().getUsername()=='admin@naver.com'}"
-              href="javascript:void(0);" th:data-uri="@{|/estimate/reply/delete/${reply.id}|}">삭제</button>
+      <a th:href="@{/estimate/list(page=${param.page})}"
+         class="btn btn_theme btn_md">돌아가기</a>
   </div>
     <script type="text/javascript">
 	const deleteBtn = document.getElementsByClassName("delete");

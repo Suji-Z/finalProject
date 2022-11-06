@@ -105,7 +105,7 @@ public class PayController {
         packageDateService.modifyRemainCount(packageDate, bookingTotalCount);
 
         //4. 포인트5% 적립
-        payService.getPoint(member, payTotalPrice);
+        payService.getPoint(member, payTotalPrice, payForm.getUsedPoint());
 
 
         return new ResponseEntity("/pay/complete", HttpStatus.OK);
@@ -146,12 +146,24 @@ public class PayController {
     //결제취소 : 결제 테이블 삭제 및 예약상태 4로 변경
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/cancle/{id}") //id:payNum
-    public String cancle(@PathVariable("id") Long id) {
+    public String cancle(@PathVariable("id") Long id, @LoginUser SessionUser user, Principal principal) {
+
+        //로그인 정보
+        Member member;
+        if(memberService.existByEmail(principal.getName())){
+            member = memberService.getName(principal.getName());
+        }else{
+            member = memberService.getName(user.getEmail());
+        }
 
         UserBooking userBooking = payService.getPay(id).getUserBooking();
 
-        payService.delete(id);
-        userBookingService.modifyBookingStatus(userBooking,4);
+
+        payService.rePoint(member,id); //사용 포인트는 넣고 적립 포인트는 빼기
+        payService.delete(id); //paytable에서 삭제하기
+        userBookingService.modifyBookingStatus(userBooking,4); //상태변경해주기
+
+
 
         return "redirect:/mypage/cancelList";
 
