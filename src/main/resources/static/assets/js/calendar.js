@@ -1,7 +1,15 @@
 $(function() {
+            var date = new Date();
+
+            var year = date.getFullYear(); // 년도
+            var month = date.getMonth() + 1;  // 월
+            var date = date.getDate();
+
+            var today = year + '-' + month + '-' + date;
+
 		$('#datePicker').datepicker({
 		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-		    startDate: '0d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+		    startDate: new Date($('#packagePostStart').val() < today ? today : $('#packagePostStart').val() ),	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
 		    endDate: new Date($('#packagePostEnd').val()),
 		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
 		    templates : {
@@ -13,6 +21,7 @@ $(function() {
 		    weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일
 		    language : "ko"	//달력의 언어 선택
 		});//datepicker end
+		alert($('#packagePostStart').val());
 	});//ready end
 
 $(function() {

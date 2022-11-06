@@ -79,6 +79,7 @@
                                 <div class="edit_date_form">
                                     <div class="form-group">
                                         <label for="datePicker">출발일 선택</label>
+                                        <input type="hidden" id="packagePostStart" th:field="${package.postStart}">
                                         <input type="hidden" id="packagePostEnd" th:field="${package.postEnd}">
                                         <input type="text" id="datePicker" placeholder="날짜를 선택해주세요" class="form-control"
                                                th:field="*{departure}"
