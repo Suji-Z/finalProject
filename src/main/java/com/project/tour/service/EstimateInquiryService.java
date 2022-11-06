@@ -56,11 +56,9 @@ public class EstimateInquiryService {
     //문의 올리기
     public void create(EstimateInquiryForm estimateInquiryForm, Member member){
 
-        for(int i=0;i<100; i++) {
-
             EstimateInquiry inquiry = new EstimateInquiry();
 
-            inquiry.setTitle(estimateInquiryForm.getTitle()+i);
+            inquiry.setTitle(estimateInquiryForm.getTitle());
             inquiry.setLocation1(estimateInquiryForm.getLocation1());
             inquiry.setLocation2(estimateInquiryForm.getLocation2());
             inquiry.setACount(estimateInquiryForm.getACount());
@@ -70,12 +68,12 @@ public class EstimateInquiryService {
             inquiry.setEndDay(estimateInquiryForm.getEndDay());
             inquiry.setPrice(estimateInquiryForm.getPrice());
             inquiry.setFlexibleDay(estimateInquiryForm.getFlexibleDay());
-            inquiry.setContent(estimateInquiryForm.getContent()+i);
+            inquiry.setContent(estimateInquiryForm.getContent());
             inquiry.setCreated(LocalDateTime.now());
             inquiry.setMember(member);
 
             estimateRepository.save(inquiry);
-        }
+
     }
     //문의 수정하기
     public void modify(EstimateInquiry inquiry,EstimateInquiryForm inquiryForm){
