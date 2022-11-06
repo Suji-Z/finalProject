@@ -370,7 +370,7 @@
                   </div>
                   <div class="flight_search_right">
                     <div class="flight_search_right_content">
-                      <th:block th:if="${not #strings.isEmpty(package.discount)}">
+                      <th:block th:if="${package.discount!=0}">
                         <div class="package_discount_sally">
                           <p th:text="|${package.discount}%|"></p>
                         </div>                        <h5>
@@ -379,7 +379,7 @@
                         <h2><span th:text="|${#numbers.formatInteger(package.aprice - (package.aprice *(package.discount * 0.01)),1,'COMMA')}원|"></span>
                         </h2>
                       </th:block>
-                      <th:block th:if="${#strings.isEmpty(package.discount)}">
+                      <th:block th:unless="${package.discount!=0}">
                         <h2><span th:text="|${#numbers.formatInteger(package.aprice,1,'COMMA')}원|"></span>
                         </h2>
                       </th:block>
