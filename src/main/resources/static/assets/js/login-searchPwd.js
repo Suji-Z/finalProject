@@ -1,8 +1,6 @@
 
 function searchPwdBtn(){
     const pwdEmail = $('#pwdEmail').val();
-    
-    alert("오나요")
 
     if(!pwdEmail || pwdEmail.trim() === ""){
         alert("이메일을 입력하세요.");
@@ -14,8 +12,6 @@ function searchPwdBtn(){
                 'pwdEmail': pwdEmail
             },
         }).done(function(result){
-            console.log("result :" + result);
-            console.log(typeof result);
 
             if (result==true) {
                 console.log("on");
