@@ -2,10 +2,8 @@ $(function() {
             var date = new Date();
 
             var year = date.getFullYear(); // 년도
-            var month = date.getMonth() + 1;  // 월
-            var date = date.getDate();
-
-            var today = year + '-' + month + '-' + date;
+            var month = ('0' + (date.getMonth() + 1)).slice(-2);  // 월
+            var date = ('0' + date.getDate()).slice(-2);
 
 		$('#datePicker').datepicker({
 		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
