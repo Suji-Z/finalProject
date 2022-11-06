@@ -118,7 +118,9 @@
                                         </label></span>
                                     </td>
                                     <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
-                                    <td th:text="${package.packageName}"></td>
+                                    <td align="center">
+                                        <a style="color: black; display: block; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"
+                                            th:text="${package.packageName}"></a></td>
                                     <td th:text="|${package.location1} ${package.location2}|"></td>
                                     <td>
                                         <span th:text="${package.postStart}"/>

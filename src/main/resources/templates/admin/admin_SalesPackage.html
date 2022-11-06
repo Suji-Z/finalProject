@@ -108,7 +108,9 @@
                                 <th:block th:each="pay,loop : ${paging}">
                                     <td th:text="${pay.userBooking.apackage.id}"></td>
                                     <td th:text="${pay.member.email}"></td>
-                                    <td th:text="${pay.userBooking.apackage.packageName}"></td>
+                                    <td align="center">
+                                        <a style="color: black; display: block; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" th:text="${pay.userBooking.apackage.packageName}"></a>
+                                    </td>
                                     <td th:text="|${pay.userBooking.apackage.location1} ${pay.userBooking.apackage.location2}|"></td>
                                     <td th:text="${pay.payMethod}"/>
                                     <td th:text="${#numbers.formatInteger(pay.payTotalPrice,3,'COMMA') + '원'}">
