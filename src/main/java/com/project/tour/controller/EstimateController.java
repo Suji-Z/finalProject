@@ -44,7 +44,11 @@ public class EstimateController {
 
         Page<EstimateInquiry> paging = null;
 
-        if(type!=null && type.equals("true")) {
+        if ( type==null || type.equals("")  || type.equals("false")){
+            paging = estimateInquiryService.getList(pageable);
+            type = "";
+        }
+        else if(type!=null || !type.equals("") && type.equals("true")) {
 
             Member member = null;
             if (user != null) {
@@ -62,8 +66,6 @@ public class EstimateController {
                 return "redirect:/member/login";
             }
 
-        }else if (type==null || type.equals("false")){
-            paging = estimateInquiryService.getList(pageable);
         }
 
         model.addAttribute("paging",paging);
