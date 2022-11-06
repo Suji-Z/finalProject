@@ -86,7 +86,7 @@
                     <a style="color: black" th:href="@{|/reVoiceCus/article/chkPwd/${reply.id}|}">&nbsp;&nbsp;└[답변]소중한 의견 감사합니다.</a>
                   </td>
                   <td th:text="관리자"></td>
-                  <td th:text="${#temporals.format(reply.createdDate,'yyyy-MM-dd')}"></td>
+                  <td th:text="${#temporals.format(reply.createdDate,'yyyy-MM-dd HH:mm')}"></td>
 
 
                 </tr>

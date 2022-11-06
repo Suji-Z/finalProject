@@ -207,13 +207,31 @@ public class VoiceCusController {
     }
 
     @RequestMapping("/searching")
-    public String search(@RequestParam("types") String types,@PageableDefault(size = 5) Pageable pageable,
-                         Model model){
+    public String search(@RequestParam("types") String types,@PageableDefault(size = 5) Pageable pageable,Principal principal,
+                         Model model,@LoginUser SessionUser user){
 
         if(types.equals("")||types==null){
             types="total";
         }
 
+        String email;
+        String name;
+
+        if(memberService.existByEmail(principal.getName())){
+
+            Member member = memberService.getName(principal.getName());
+            email = member.getEmail();
+            name = member.getName();
+
+        }else {
+
+            email = user.getEmail();
+            name = user.getName();
+
+        }
+
+        model.addAttribute("email",email);
+        model.addAttribute("name",name);
         Page<VoiceCus> paging = voiceCusService.search(types,pageable);
         model.addAttribute("paging",paging);
 
