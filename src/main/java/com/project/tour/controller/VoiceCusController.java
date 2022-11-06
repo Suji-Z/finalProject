@@ -43,6 +43,7 @@ public class VoiceCusController {
     @Autowired
     private final HttpSession httpSession;
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping("/list")
     public String list(Model model, @PageableDefault(size = 5) Pageable pageable,@LoginUser SessionUser user,Principal principal){
 
