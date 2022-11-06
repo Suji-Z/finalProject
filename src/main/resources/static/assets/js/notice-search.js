@@ -1,8 +1,6 @@
 
 function noticeSearch(){
 
-    alert("여기");
-
     let searchKeyword = $("#searchKeyword").val();
     let category = $("#noticeFilter").val();
     let pageNum = $("#pageNum").val();
