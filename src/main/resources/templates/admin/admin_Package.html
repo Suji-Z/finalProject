@@ -132,14 +132,22 @@
                                         </div>
                                        </li>
 
+
+
                                         <li><span style="text-align:center;width: 14%">상품 게시 마감일</span>
                                             <span>
-                                            <input class="shform-control" style="border-radius: 3px;width: 500px; font-size: 10pt"type="date" th:field="*{postEnd}"></span>
+                                            <input class="shform-control" style="border-radius: 3px;width: 500px; font-size: 10pt"type="date" th:field="*{postEnd}" id="postEnd" name="postEnd"></span>
                                             <span>&nbsp;&nbsp;&nbsp;</span>
                                             <div th:if="${#fields.hasErrors('postEnd')}" role="alert">
                                                 <p style="font-size: 10pt;color: red" th:errors="*{postEnd}" th:text="${err}"></p>
                                             </div>
+                                            &nbsp;<a style="color : red;font-size: 10pt" id="postMessage" ></a>
+
                                         </li>
+
+                                <!--             넘길데이터                           -->
+                                        <input type="hidden" th:value="${packageCreate.postStart}" th:id="|postStart${packageCreate.packageNum}|">
+                                        <input type="hidden" th:value="${packageCreate.postEnd}" th:id="|postSEnd${packageCreate.packageNum}|">
 
 
                                         <li><span style="text-align:center;width: 14%">여행 기간</span>
