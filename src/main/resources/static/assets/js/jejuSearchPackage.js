@@ -68,7 +68,7 @@ function selectdatePackage(){
                 $('#remaincount_hidden').val(data.remaincount);
 
                 //선택인원별 가격 정보 출력
-                if(data.discount==null){
+                if(data.discount==0){
 
                 $('#aprice').html(data.aprice.toLocaleString()+'원');
                 $('#cprice').html(data.cprice.toLocaleString()+'원');
