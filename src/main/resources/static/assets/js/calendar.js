@@ -2,8 +2,8 @@ $(function() {
             var date = new Date();
 
             var year = date.getFullYear(); // 년도
-            var month = date.getMonth() + 1;  // 월
-            var date = date.getDate();
+            var month = ('0' + (date.getMonth() + 1)).slice(-2);  // 월
+            var date = ('0' + date.getDate()).slice(-2);
 
             var today = year + '-' + month + '-' + date;
 
