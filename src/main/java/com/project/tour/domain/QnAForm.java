@@ -13,7 +13,6 @@ public class QnAForm {
 
     private String qnacategory;
 
-    private String name;
 
 
 }

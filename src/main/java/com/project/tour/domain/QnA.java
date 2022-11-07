@@ -29,7 +29,6 @@ public class QnA {
     @ManyToOne
     private Member member;
 
-    private String Name;
 
     @OneToMany(mappedBy = "qnaNum", cascade = CascadeType.REMOVE)
     private List<QnA_Reply> replyList;
