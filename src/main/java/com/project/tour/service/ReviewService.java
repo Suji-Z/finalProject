@@ -74,7 +74,7 @@ public class ReviewService {
     public Page<Review> getList(Pageable pageable){
 
         List<Sort.Order> sorts = new ArrayList<Sort.Order>();
-        sorts.add(Sort.Order.desc("created"));
+        sorts.add(Sort.Order.desc("id"));
 
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ? 0 :
