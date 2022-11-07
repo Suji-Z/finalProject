@@ -157,8 +157,8 @@
                                     </div>
                                     <div class="valid_date_area_one">
                                         <h5 th:text="|${review.reviewPackages.location1}&nbsp;${review.reviewPackages.location2}|">제주도</h5>
-                                        <h5 th:text="${review.reviewPackages.packageName}"
-                                            style="color: black; width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">어쩌구 패키지</h5>
+                                        <a style="color: black" th:href="@{|/package/${review.reviewPackages.id}|}">
+                                            <h5 th:text="${review.reviewPackages.packageName}" style="width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;">어쩌구 패키지</h5></a>
                                         <h5 th:text="|${review.reviewPackages.travelPeriod}박 ${review.reviewPackages.travelPeriod+1}일|"></h5>
                                     </div>
                                 
