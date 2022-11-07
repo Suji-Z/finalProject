@@ -274,7 +274,7 @@
                                             <a th:href="@{|/package/${package.id}|}">
                                                 <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
                                             </a>
-                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                            <p>[[${package.location1}]] | [[${package.location2}]] &nbsp;<i class="fas fa-map-marker-alt"></i></p>
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
@@ -299,7 +299,7 @@
                                             <a th:href="@{|/package/${package.id}|}">
                                                 <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
                                             </a>
-                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                            <p>[[${package.location1}]] | [[${package.location2}]] &nbsp;<i class="fas fa-map-marker-alt"></i></p>
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
@@ -323,7 +323,7 @@
                                             <a th:href="@{|/package/${package.id}|}">
                                                 <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
                                             </a>
-                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                            <p>[[${package.location1}]] | [[${package.location2}]] &nbsp;<i class="fas fa-map-marker-alt"></i></p>
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
@@ -347,7 +347,7 @@
                                             <a th:href="@{|/package/${package.id}|}">
                                                 <img th:src="@{${package.photosImagePath1}}" style="height: 200px;" alt="img">
                                             </a>
-                                            <p th:text="${package.location1}"><i class="fas fa-map-marker-alt"></i></p>
+                                            <p>[[${package.location1}]] | [[${package.location2}]] &nbsp;<i class="fas fa-map-marker-alt"></i></p>
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
@@ -399,7 +399,7 @@
                             <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;
                                     position: relative;bottom: 105px;">
                                 <h2 th:if="${not #strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;padding-left: 10px">
-                                    [[${hitLists.location1}]] | <br/>
+                                    [[${hitLists.location1}]] | [[${hitLists.location2}]]<br/>
                                     <del th:text="${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>&nbsp;
                                     [[${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice() - (hitLists.packagedatelist.get(0).getAprice() *(hitLists.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                 </h2>
@@ -443,8 +443,15 @@
                                     <img th:src="@{${recom.photosImagePath1}}" style="height: 350px" alt="img">
                                     <div class="holiday_small_box_content">
                                         <div class="holiday_inner_content" style="margin-bottom: -20px">
-                                            <h3 style="font-size: 18pt">[[${recom.location1}]] | [[${recom.packagedatelist.get(0).getAprice()}]]원</h3>
-                                            <h4 style="font-size: 16pt">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h4>
+                                            <h3 th:if="${not #strings.isEmpty(recom.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;">
+                                                [[${recom.location1}]] | [[${recom.location2}]]<br/>
+                                                <del th:text="${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>&nbsp;
+                                                [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice() - (recom.packagedatelist.get(0).getAprice() *(recom.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
+                                            </h3>
+                                            <h3 th:if="${#strings.isEmpty(recom.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;">
+                                                [[${recom.location1}]] | [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
+                                            </h3>
+                                            <h3 style="font-size: 16pt;">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h3>
                                         </div>
                                     </div>
                                 </a>
