@@ -46,7 +46,6 @@ public class QnAService {
         qna.setContent(qnAForm.getContent());
         qna.setQnacategory(qnAForm.getQnacategory());
         qna.setCreated(LocalDateTime.now());
-        qna.setName(member.getName());
         qna.setMember(member);
 
         return qnARepository.save(qna);
