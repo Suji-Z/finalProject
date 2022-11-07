@@ -5,6 +5,12 @@ function wishListCancel(event){
     let i = $("#recommendStatus").val();
     let wishListNum = $('#cancel'+packageNum).val();
 
+    if(!confirm('위시리스트를 삭제하시겠습니까?')){
+        return;
+    }else{
+
+    }
+
 
     $.ajax({
         url: '/mypage/wishListCancel',
@@ -14,14 +20,8 @@ function wishListCancel(event){
         },
 
         success : function(data) {
-            if(confirm('위시리스트를 삭제하시겠습니까?')){
-                alert("삭제되었습니다.");
-                $('#wishListTable').replaceWith(data);
-            }else{
-                return;
-            }
-
-
+            alert('삭제되었습니다.');
+            $('#wishListTable').replaceWith(data);
 
         },
         error: function(xhr, status, error) {
