@@ -278,12 +278,12 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()!=0}">
                                                 <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
                                                 [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                                 </span>
                                             </h3>
-                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()==0}">
                                                 <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
                                             </h3>
                                         </div>
@@ -303,12 +303,12 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()!=0}">
                                                 <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
                                                 [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                                 </span>
                                             </h3>
-                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()==0}">
                                                 <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
                                             </h3>
                                         </div>
@@ -327,12 +327,12 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()!=0}">
                                                 <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
                                                 [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                                 </span>
                                             </h3>
-                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()==0}">
                                                 <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
                                             </h3>
                                         </div>
@@ -351,12 +351,12 @@
                                         </div>
                                         <div class="theme_two_box_content">
                                             <h4 th:text="${package.packageName}"><a th:href="@{|/package/${package.id}|}"></a></h4>
-                                            <h3 th:if="${not #strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()!=0}">
                                                 <span> <del>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;</del>
                                                 [[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice() - (package.packagedatelist.get(0).getAprice() *(package.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                                 </span>
                                             </h3>
-                                            <h3 th:if="${#strings.isEmpty(package.packagedatelist.get(0).getDiscount())}">
+                                            <h3 th:if="${package.packagedatelist.get(0).getDiscount()==0}">
                                                 <span>[[${#numbers.formatInteger(package.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원</span>
                                             </h3>
                                         </div>
@@ -398,13 +398,13 @@
                             <img th:src="@{${hitLists.photosImagePath1}}" style="height: 330px" alt="img">
                             <div class="choose_img_text" style="background: linear-gradient(359deg, #111018 0%, rgb(217 217 217 / 50%) 70%); width: 100%;
                                     position: relative;bottom: 105px;">
-                                <h2 th:if="${not #strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;padding-left: 10px">
+                                <h2 th:if="${hitLists.packagedatelist.get(0).getDiscount()!=0}" style="font-size: 18pt;padding-left: 10px">
                                     [[${hitLists.location1}]] | [[${hitLists.location2}]]<br/>
                                     <del th:text="${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>&nbsp;
                                     [[${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice() - (hitLists.packagedatelist.get(0).getAprice() *(hitLists.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                 </h2>
 
-                                <h2 th:if="${#strings.isEmpty(hitLists.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;padding-left: 10px">
+                                <h2 th:if="${hitLists.packagedatelist.get(0).getDiscount()==0}" style="font-size: 18pt;padding-left: 10px">
                                     [[${hitLists.location1}]] | [[${#numbers.formatInteger(hitLists.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
                                 </h2>
                                 <h3 style="font-size: 16pt;padding-left: 10px;margin-top: -10px">[[${hitLists.travelPeriod}]]박 [[${hitLists.travelPeriod}+1]]일</h3>
@@ -443,12 +443,12 @@
                                     <img th:src="@{${recom.photosImagePath1}}" style="height: 350px" alt="img">
                                     <div class="holiday_small_box_content">
                                         <div class="holiday_inner_content" style="margin-bottom: -20px">
-                                            <h3 th:if="${not #strings.isEmpty(recom.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;">
+                                            <h3 th:if="${recom.packagedatelist.get(0).getDiscount()!=0}" style="font-size: 18pt;">
                                                 [[${recom.location1}]] | [[${recom.location2}]]<br/>
                                                 <del th:text="${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice(),1,'COMMA')}"></del>&nbsp;
                                                 [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice() - (recom.packagedatelist.get(0).getAprice() *(recom.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                             </h3>
-                                            <h3 th:if="${#strings.isEmpty(recom.packagedatelist.get(0).getDiscount())}" style="font-size: 18pt;">
+                                            <h3 th:if="${recom.packagedatelist.get(0).getDiscount()==0}" style="font-size: 18pt;">
                                                 [[${recom.location1}]] | [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
                                             </h3>
                                             <h3 style="font-size: 16pt;">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h3>
@@ -578,7 +578,7 @@
                 <div class="footer_link_area">
                     <ul>
                         <li><a th:href="@{/notice/list}">공지사항</a></li>
-                        <li><a href="top-destinations-details.html">QnA</a></li>
+                        <li><a th:href="@{/qna/list}">QnA</a></li>
                         <li><a th:href="@{/estimate/list}">견적문의</a></li>
                         <li><a th:href="@{/voiceCus/list}">고객의소리</a></li>
                     </ul>

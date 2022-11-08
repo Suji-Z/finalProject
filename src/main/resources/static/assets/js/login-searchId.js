@@ -1,8 +1,5 @@
 function searchEmailBtn() {
 
-        console.log("되는거냐고")
-        alert("아작스전");
-
     $.ajax({
         url: '/member/login/findId',
         type: 'GET',
@@ -12,9 +9,6 @@ function searchEmailBtn() {
         },
 
         success: function (data) {
-
-            alert("헤이")
-            alert("data:"+data);
             // 성공 시 실패 메시지 hide, 성공 메시지 show
             if (data!=null&&data!='') {
 
@@ -25,7 +19,6 @@ function searchEmailBtn() {
             }
         }, error: function (error) {
 
-            alert("ㅠㅠ")
             // 실패 시 실패 메시지 show, 성공 메시지 hide
             $('#emailAlert').hide();
 

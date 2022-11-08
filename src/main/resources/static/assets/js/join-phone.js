@@ -27,7 +27,7 @@ function phoneCheck() {
                 }
 
                 else {
-                    alert('checkNum:' + checkNum);
+                    alert("인증번호를 전송하였습니다.");
 
                     //인증하기 버튼 클릭 이벤트
                     $(function () {
