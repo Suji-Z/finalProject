@@ -449,7 +449,8 @@
                                                 [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice() - (recom.packagedatelist.get(0).getAprice() *(recom.packagedatelist.get(0).getDiscount() * 0.01)),1,'COMMA')}]]&nbsp;원
                                             </h3>
                                             <h3 th:if="${recom.packagedatelist.get(0).getDiscount()==0}" style="font-size: 18pt;">
-                                                [[${recom.location1}]] | [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
+                                                [[${recom.location1}]] | [[${recom.location2}]]<br/>
+                                                [[${#numbers.formatInteger(recom.packagedatelist.get(0).getAprice(),1,'COMMA')}]]&nbsp;원
                                             </h3>
                                             <h3 style="font-size: 16pt;">[[${recom.travelPeriod}]]박 [[${recom.travelPeriod}+1]]일</h3>
                                         </div>
