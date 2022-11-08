@@ -109,7 +109,7 @@ public class MemberService {
         params.put("type", "SMS");
         params.put("text", "[TEST] 인증번호는" + "[" + numStr + "]" + "입니다."); // 문자 내용 입력
 
-        //coolsms.send(params);
+        coolsms.send(params);
 
         return numStr;
 
